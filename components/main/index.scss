@@ -1,0 +1,57 @@
+﻿@import "../css/base.scss";
+.layout{
+	.layout-logo{
+		color: #FFF;
+		img{
+			height: 35px;
+			width: auto;
+		}
+	}
+
+	.ivu-layout-sider-children{
+		overflow: hidden;
+	}
+
+	.layout-nav{
+		li>a{
+			color:rgba(255, 255, 255, 0.7);
+			&:hover{
+				color:rgba(255, 255, 255, 1);
+			}
+		
+			&.router-link-active{
+				color:rgba(255, 255, 255, 1);
+			}
+		}
+	}
+
+	.symbin-main-menu{
+		background: #333744!important;
+		li{
+			@include pos(r);
+		}
+		a{
+			@include pos(a);
+			width: 100%;
+			height: 100%;
+			color:inherit;
+			left: 0;
+			top:0;
+			text-align: center;
+			line-height: 50px;
+		}
+		a:hover{
+			color: inherit;
+		}
+	}
+
+	i.ivu-icon-ionic{
+		opacity: 0;
+	}
+	.ivu-menu-item > a > i{
+		margin-right: 6px;
+	}
+	.ivu-menu-submenu .ivu-menu-item{
+		padding-left: 24px!important;
+	}
+}

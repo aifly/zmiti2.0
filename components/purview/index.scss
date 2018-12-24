@@ -1,0 +1,50 @@
+﻿@import "../css/base.scss";
+
+.symbin-purview-ui{
+	padding:0 10px;
+	background-color:#ffffff;
+	.symbin-purview-title{
+		padding: 16px 0px;
+	    min-height: 70px;
+	    border-bottom: 1px solid #ddd;
+	    h5 {
+		    margin: 8px;
+		    border-left: 2px solid #88B7E0;
+		    text-indent: 8px;
+		    display: inline-block;
+		    vertical-align: top;
+		    font-size: 14px;
+		    font-weight: normal;
+		}
+	}
+	.text-right{
+		text-align:right;
+	}
+	.symbin-purview-addinfo{
+		padding:20px 0;
+		width:750px;
+	}
+	td.ivu-table-expanded-cell{
+		padding-top:0;
+		padding-bottom:0;
+		padding-right:0;
+		background:none;
+	}
+	.symbin-purview-subtable{
+		thead{
+			display:none;
+		}
+		.ivu-table-wrapper{
+			border-top:none;
+			border-bottom:none;
+		}
+	}
+}
+.symbin-purview-det{
+	label{
+		display:inline-block;
+		text-align:right;
+		width:120px;
+		margin-right:10px;
+	}
+}

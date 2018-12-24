@@ -1,0 +1,95 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0; }
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem; }
+  .zmiti-play.rotate {
+    -webkit-animation: rotate 5s linear infinite;
+    animation: rotate 5s linear infinite; }
+
+.symbin-left {
+  float: left !important; }
+
+.symbin-right {
+  float: right !important; }
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+.sysbin-group-ui .ivu-menu-item > a {
+  color: #495060;
+  display: block;
+  width: 100%;
+  height: 100%; }
+.sysbin-group-ui .symbin-tab-menu li {
+  -webkit-user-select: none;
+  cursor: pointer;
+  line-height: 30px;
+  text-indent: 3em;
+  position: relative; }
+  .sysbin-group-ui .symbin-tab-menu li a {
+    color: inherit;
+    display: block;
+    width: 100%;
+    height: 100%; }
+  .sysbin-group-ui .symbin-tab-menu li.open:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    z-index: 10;
+    width: 0;
+    height: 0;
+    left: 1.5em;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid #000; }
+  .sysbin-group-ui .symbin-tab-menu li.level1:before {
+    content: '';
+    position: absolute;
+    left: 1.6em;
+    top: 10px;
+    z-index: 10;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-left: 8px solid #000;
+    border-bottom: 5px solid transparent; }
+  .sysbin-group-ui .symbin-tab-menu li:hover {
+    background: #F4F6F8; }
+  .sysbin-group-ui .symbin-tab-menu li ol {
+    overflow: hidden;
+    height: 100%;
+    -webkit-transition: 0.2s height;
+    transition: 0.2s height; }
+    .sysbin-group-ui .symbin-tab-menu li ol.close {
+      height: 0; }
+  .sysbin-group-ui .symbin-tab-menu li ol > li {
+    text-indent: 4em; }
+  .sysbin-group-ui .symbin-tab-menu li.active {
+    background: #fff; }
+
+/*# sourceMappingURL=index.css.map */

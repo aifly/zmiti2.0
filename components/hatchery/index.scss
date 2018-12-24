@@ -1,0 +1,58 @@
+﻿@import "../css/base.scss";
+
+.symbin-hatchery-ui {
+    padding: 0 10px;
+    background-color: #ffffff;
+
+    .symbin-hatchery-title {
+        padding: 16px 0px;
+        min-height: 70px;
+        border-bottom: 1px solid #ddd;
+
+        h5 {
+            margin: 8px;
+            border-left: 2px solid #88B7E0;
+            text-indent: 8px;
+            display: inline-block;
+            vertical-align: top;
+            font-size: 14px;
+            font-weight: normal;
+        }
+    }
+
+    .text-right {
+        text-align: right;
+    }
+}
+
+.symbin-hatchery-addinfo {
+    textarea.ivu-input {
+        resize: none;
+    }
+
+    .ivu-input-wrapper {
+        width: 90%;
+	}	
+	
+	.ivu-col-span-15{
+		.ivu-input-wrapper {
+			width: 100%;
+		}	
+	}
+
+    .symbin-upload-C {
+		@include pos(r);
+		margin-left: 8px;
+
+        & > input[type='file'] {
+            @include pos(a);
+			height: 100%;
+			
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 19;
+        }
+    }
+}

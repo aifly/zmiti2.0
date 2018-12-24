@@ -1,0 +1,35 @@
+﻿@import "../css/base.scss";
+
+.symbin-column-ui{
+	.symbin-admin-count{
+		padding: 0 15px;
+	}
+	.symbin-console-title{
+		padding: 16px 0px;
+		min-height: 70px;
+		border-bottom: 1px solid #ddd;
+
+	}
+	h5{
+		margin: 8px;
+		border-left: 2px solid #88B7E0;
+		text-indent: 8px;
+		display: inline-block;
+		vertical-align: top;
+		font-size: 14px;
+		font-weight: normal;
+
+		}
+	.ivu-table-cell{
+		.ivu-btn{
+			padding-right:8px!important;
+			padding-left: 0px!important; 
+			}
+		}
+	.ivu-table-expanded-cell{
+		padding: 15px;
+		.ivu-table-header{
+			display: none;//本地应该用show-header:设置，但不知道什么原因不正确，暂用此方式
+		}
+	}
+}

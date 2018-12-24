@@ -1,0 +1,44 @@
+﻿@import "../css/base.scss";
+
+.symbin-farmer-ui{
+    $baseColor:#46c85d;
+    @include displayFlex(column);
+    padding:10px;
+    &>div{
+        &:nth-of-type(1){
+            height: 55px;
+            @include displayFlex(row);
+            &>header{
+                height: 40px;
+                width: 100%;
+                line-height: 40px;
+                font-weight: bold;
+                text-indent: 2em;
+                background:#f3f3f3;
+                @include pos(r);
+                @include br(4px);
+                overflow: hidden;
+                font-size:14px;
+                &>button{
+                    @include pos(a);
+                    right: 10px;
+                    top: 50%;
+                    @include transform(translate3d(0,-50%,0));
+                }
+                &:before{
+                    content:"";
+                    @include pos(a);
+                    width: 4px;
+                    height:100%;
+                    background:$baseColor;
+                    left: 0;;
+                }
+
+            }
+        }
+        &:nth-of-type(2){
+            -webkit-flex-grow:1;
+            flex-grow:1;
+        }
+    }
+}

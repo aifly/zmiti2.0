@@ -1,0 +1,45 @@
+﻿@import "../css/base.scss";
+.top20{
+	margin-top: 20px;
+}
+.top10{
+	margin-top: 10px;
+}
+.text-rig{
+		text-align: right;
+}
+.text-danger{
+	color: #ff0000;
+}
+.top7{
+	padding-top: 7px;
+}
+.ivu-icon{
+	margin-right: 8px;
+}
+.rig8{
+	margin-right: 8px;
+}
+
+.symbin-adminuser-ui {
+	.symbin-admin-count{
+		padding: 0 15px;
+	}
+	.symbin-console-title{
+		padding: 16px 0px;
+		min-height: 70px;
+		border-bottom: 1px solid #ddd;
+
+	}
+	h5{
+		margin: 8px;
+		border-left: 2px solid #88B7E0;
+		text-indent: 8px;
+		display: inline-block;
+		vertical-align: top;
+		font-size: 14px;
+		font-weight: normal;
+		}
+}
+
+
