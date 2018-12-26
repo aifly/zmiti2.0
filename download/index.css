@@ -1,0 +1,1414 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0; }
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem; }
+  .zmiti-play.rotate {
+    -webkit-animation: rotate 5s linear infinite;
+    animation: rotate 5s linear infinite; }
+
+.symbin-left {
+  float: left !important; }
+
+.symbin-right {
+  float: right !important; }
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+.wm-user-dowload-ui {
+  width: 1240px;
+  margin: 344px auto 0;
+  padding: 5px 20px;
+  border-radius: 8px;
+  background: #fff;
+  position: relative;
+  z-index: 1000; }
+  .wm-user-dowload-ui .wm-href a {
+    color: #fff; }
+  .wm-user-dowload-ui.showpreview {
+    position: fixed;
+    left: 0;
+    top: 0; }
+  .wm-user-dowload-ui.isAdmin {
+    width: 100%;
+    margin: 0 auto 0; }
+    .wm-user-dowload-ui.isAdmin .wm-collection-left-main-ui {
+      padding: 0; }
+    .wm-user-dowload-ui.isAdmin .wm-collection-report-item .wm-report-item-name {
+      text-align: left !important; }
+    .wm-user-dowload-ui.isAdmin .wm-collection-report-list > ul {
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      -webkit-justify-content: space-between; }
+      .wm-user-dowload-ui.isAdmin .wm-collection-report-list > ul li {
+        display: block !important; }
+    .wm-user-dowload-ui.isAdmin .wm-collection-check-action a,
+    .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-btn,
+    .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-checkbox {
+      padding: 0; }
+      .wm-user-dowload-ui.isAdmin .wm-collection-check-action a span,
+      .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-btn span,
+      .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-checkbox span {
+        text-align: center;
+        padding: 0 3px; }
+        .wm-user-dowload-ui.isAdmin .wm-collection-check-action a span:hover,
+        .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-btn span:hover,
+        .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-checkbox span:hover {
+          border: none; }
+    .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-checkbox {
+      height: auto;
+      margin: 0;
+      width: 24px; }
+      .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-checkbox .ivu-checkbox-inner {
+        border: 1px solid #dcdee2; }
+      .wm-user-dowload-ui.isAdmin .wm-collection-check-action .ivu-checkbox span {
+        height: 14px; }
+  .wm-user-dowload-ui.isUser {
+    overflow: auto; }
+  .wm-user-dowload-ui .wm-collection-left-pannel {
+    width: 140px;
+    height: 300px;
+    background: #eee;
+    position: relative; }
+    .wm-user-dowload-ui .wm-collection-left-pannel > h2 {
+      font-size: 14px;
+      padding: 60px 0;
+      text-align: center; }
+    .wm-user-dowload-ui .wm-collection-left-pannel > ul li {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      cursor: pointer;
+      text-indent: 2em; }
+      .wm-user-dowload-ui .wm-collection-left-pannel > ul li.active {
+        background: #fff;
+        color: #b20000;
+        font-weight: bold; }
+  .wm-user-dowload-ui .wm-collection-left-main-ui:before {
+    content: '';
+    width: 100%;
+    height: 10px;
+    background: #fbfbfb;
+    position: absolute;
+    left: 0;
+    top: 0; }
+  .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header {
+    height: 60px;
+    line-height: 80px;
+    border-bottom: 1px solid #fbfbfb;
+    padding-bottom: 8px;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row;
+    width: 100%; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-title {
+      font-size: 16px;
+      width: 50%; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content {
+      width: 100%;
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      justify-content: flex-end;
+      align-items: flex-end;
+      -webkit-justify-content: flex-end;
+      -webkit-align-items: flex-end; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content > div {
+        width: 100%; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action {
+        width: 30%;
+        height: 36px;
+        line-height: 36px;
+        position: relative; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action a {
+          background: #f5a420; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action.wm-collection-check-action-reset ul li:nth-of-type(2) {
+          color: #333; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action.wm-collection-check-action-reset ul li:nth-of-type(2) i {
+            color: #333; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action.wm-collection-check-action-reset ul li:nth-of-type(1) {
+          color: #be0000; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action.wm-collection-check-action-reset ul li:nth-of-type(1) i {
+            color: #be0000; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action.wm-collection-check-action-reset ul li:hover {
+          background: #be0000;
+          color: white; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action.wm-collection-check-action-reset ul li:hover i {
+            color: #fff; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul {
+          width: 90px;
+          margin-left: 40px;
+          position: absolute;
+          border: 1px solid #ccc;
+          background: #fff;
+          margin-top: 2px;
+          border-radius: 4px; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li {
+            padding-left: 10px;
+            cursor: pointer;
+            width: 100%;
+            line-height: 30px;
+            height: 30px; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li i {
+              font-size: 16px;
+              vertical-align: middle;
+              color: #be0000;
+              font-weight: bold;
+              margin-top: -3px; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:nth-of-type(1) {
+              color: yellowgreen; }
+              .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:nth-of-type(1) i {
+                color: yellowgreen; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:nth-of-type(2) {
+              color: #be0000; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:nth-of-type(3) {
+              color: #333; }
+              .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:nth-of-type(3) i {
+                color: #333; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:hover {
+              background: #be0000;
+              color: white; }
+              .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:hover:before {
+                background: #be0000 !important; }
+              .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:hover i {
+                color: #fff; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li span {
+              position: absolute;
+              width: 25px;
+              height: 25px;
+              border-radius: 50%; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:nth-of-type(1) {
+              position: relative; }
+              .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .wm-collection-check-action ul li:nth-of-type(1):before {
+                content: "";
+                width: 10px;
+                height: 10px;
+                background: #fff;
+                position: absolute;
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+                border-left: 1px solid #ccc;
+                border-top: 1px solid #ccc;
+                top: -6px;
+                left: 30px;
+                border-radius: 2px; }
+  .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header {
+    height: 80px;
+    line-height: 38px;
+    margin-top: 12px;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    border-radius: 4px;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row;
+    -webkit-justify-content: space-between;
+    justify-content: space-between; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div {
+      background: #fbfbfb;
+      padding-left: 20px;
+      box-sizing: border-box; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(1) span {
+        display: inline-block;
+        margin: 0 10px;
+        padding: 0 10px;
+        height: 24px;
+        line-height: 24px;
+        cursor: pointer;
+        border: 1px solid transparent; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(1) span:hover {
+          border: 1px solid #be0000;
+          box-sizing: border-box; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(1) span.active {
+          background: #be0000;
+          color: #fff;
+          text-align: center;
+          border-radius: 3px; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(1) span i {
+          font-size: 16px;
+          vertical-align: middle;
+          margin-top: -4px; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(2) {
+        flex: 1;
+        -webkit-flex: 1;
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: row;
+        -webkit-justify-content: center;
+        justify-content: center;
+        align-items: center;
+        -webkit-align-items: center; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(2) > div {
+          width: 100%; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(3) {
+        width: 250px;
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: row;
+        -webkit-justify-content: center;
+        justify-content: center;
+        align-items: center;
+        -webkit-align-items: center; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header .wm-collection-search-content {
+      flex: 1;
+      -webkit-flex: 1; }
+  .wm-collection-pagetion {
+    width: 100%;
+    height: 40px;
+    line-height: 100px;
+    height: 100px;
+    text-align: center;
+    cursor: pointer;
+    float: left;
+    -webkit-user-select: none; }
+  .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item {
+    display: inline-block;
+    width: 285px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-left: 0;
+    background: #fff;
+    box-sizing: border-box;
+    height: 390px;
+    position: relative;
+    cursor: pointer; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item:nth-of-type(4n) {
+      margin-right: 0; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg {
+      width: 100%;
+      height: 72%;
+      border: 1px solid #eee;
+      background: #f4f4f4;
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      box-sizing: border-box;
+      position: relative;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      overflow: hidden; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg .wm-report-shadow {
+        position: absolute;
+        width: 100px;
+        left: 50%;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: -50px;
+        top: 70%;
+        background: rgba(0, 0, 0, 0.1);
+        filter: blur(3px);
+        -webkit-filter: blur(3px); }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg:hover button {
+        display: block; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg button {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        display: none; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg.active {
+        border-color: #f5a420; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-item-name {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #333; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-item-attr {
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      justify-content: space-between;
+      color: #999999; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-collection-check {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 10; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-collection-report-status {
+      position: absolute;
+      width: 50px;
+      top: 0;
+      right: 0; }
+@-webkit-keyframes warning-animation {
+  0% {
+    background-position: 0 0; }
+  100% {
+    background-position: 3em 0; } }
+@keyframes warning-animation {
+  0% {
+    background-position: 0 0; }
+  100% {
+    background-position: 3em 0; } }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-disabled-mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: rgba(255, 255, 255, 0.7); }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled {
+      color: #be0000;
+      font-size: 12px;
+      z-index: 10;
+      width: 85%;
+      padding-left: 20px;
+      left: 50%;
+      border: 1px solid #be0000;
+      border-radius: 3px;
+      -webkit-transform: translate3d(-50%, 0, 0);
+      transform: translate3d(-50%, 0, 0);
+      background: rgba(255, 255, 255, 0.8); }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span {
+        position: absolute;
+        left: 0;
+        top: 0px; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span:before {
+          content: '';
+          width: 18px;
+          height: 18px;
+          position: absolute;
+          border: 1px solid #be0000;
+          border-radius: 50%;
+          left: 2px;
+          top: 5px; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span:after {
+          content: "";
+          position: absolute;
+          width: 18px;
+          height: 2px;
+          background: #be0000;
+          left: 2px;
+          top: 13px;
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action {
+      position: absolute;
+      top: 10px;
+      right: 0;
+      z-index: 1000; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action .wm-report-action-icon {
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-radius: 2px;
+        position: absolute;
+        right: 10px; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action .wm-report-action-icon:before {
+          content: "";
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          border: 1px solid #bbb;
+          left: 4px;
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+          border-left: none;
+          border-top: none; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action:hover ul {
+        display: block; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action:hover ul i {
+          color: #fff; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul {
+        display: none;
+        background: #fff;
+        width: 80px;
+        margin-top: 20px;
+        margin-right: 10px; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul .wm-del-ico {
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          position: absolute;
+          left: 0;
+          top: 0;
+          text-indent: -.4rem; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul .wm-del-ico i {
+            vertical-align: middle; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li {
+          display: block;
+          height: 30px;
+          cursor: pointer;
+          line-height: 30px;
+          width: 100%;
+          margin: 0;
+          text-indent: .5em;
+          vertical-align: middle; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li .ivu-poptip-rel {
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            position: absolute; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li:hover {
+            background: #be0000;
+            color: #fff; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li:hover div {
+              color: #fff; }
+            .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li:hover .ivu-poptip-body-message {
+              color: #000; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li > div {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li i {
+            font-size: 20px; }
+  .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list {
+    width: 100%; }
+    .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item {
+      width: 100%;
+      height: 150px;
+      line-height: 150px;
+      text-align: center;
+      display: block;
+      display: -webkit-box;
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+      -webkit-box-orient: horizontal;
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      clear: both; }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div {
+        float: left;
+        box-sizing: border-box;
+        display: -webkit-box;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+        -webkit-box-orient: horizontal;
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: row; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(1) {
+          width: 60px; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(2) {
+          width: 80%;
+          flex: 1;
+          line-height: 20px; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(3) {
+          width: 280px;
+          text-align: right; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(3) a {
+            margin: 0 5px; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(3) i {
+            font-size: 20px; }
+        .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div > div {
+          margin-right: 20px;
+          font-size: 12px;
+          text-align: left; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div > div .wm-unit {
+            font-size: 12px;
+            color: #ccc; }
+          .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div > div:nth-of-type(2) {
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9); }
+      .wm-user-dowload-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item img {
+        width: 60px; }
+  .wm-user-dowload-ui .wm-download-loading-C {
+    position: fixed;
+    z-index: 1002;
+    background: rgba(0, 0, 0, 0.4);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; }
+  .wm-user-dowload-ui .wm-download-loading {
+    position: fixed;
+    width: 400px;
+    background: #fff;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+    z-index: 100; }
+    .wm-user-dowload-ui .wm-download-loading:before {
+      content: '';
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      position: absolute;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); }
+    .wm-user-dowload-ui .wm-download-loading > header {
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      background: #b20000;
+      color: #fff;
+      padding: 0 20px;
+      height: 40px;
+      line-height: 40px;
+      justify-content: space-between;
+      -webkit-justify-content: space-between;
+      position: relative;
+      z-index: 10; }
+      .wm-user-dowload-ui .wm-download-loading > header i {
+        cursor: pointer; }
+    .wm-user-dowload-ui .wm-download-loading .wm-download-tip {
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      width: 70%;
+      justify-content: space-between;
+      -webkit-justify-content: space-between;
+      margin: 0 auto;
+      padding: 60px 0; }
+      .wm-user-dowload-ui .wm-download-loading .wm-download-tip img {
+        width: 100px; }
+  .wm-user-dowload-ui .wm-report-C {
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    position: fixed !important;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center; }
+    .wm-user-dowload-ui .wm-report-C > div {
+      max-width: 80vw;
+      max-height: 60vh;
+      position: relative; }
+      .wm-user-dowload-ui .wm-report-C > div .xlsx,
+      .wm-user-dowload-ui .wm-report-C > div .pdf,
+      .wm-user-dowload-ui .wm-report-C > div .doc,
+      .wm-user-dowload-ui .wm-report-C > div .ppt,
+      .wm-user-dowload-ui .wm-report-C > div .xlsx,
+      .wm-user-dowload-ui .wm-report-C > div .doc,
+      .wm-user-dowload-ui .wm-report-C > div .docx,
+      .wm-user-dowload-ui .wm-report-C > div .pdf,
+      .wm-user-dowload-ui .wm-report-C > div .txt,
+      .wm-user-dowload-ui .wm-report-C > div .ppt,
+      .wm-user-dowload-ui .wm-report-C > div .pptx,
+      .wm-user-dowload-ui .wm-report-C > div .xls,
+      .wm-user-dowload-ui .wm-report-C > div .rar,
+      .wm-user-dowload-ui .wm-report-C > div .html,
+      .wm-user-dowload-ui .wm-report-C > div .css,
+      .wm-user-dowload-ui .wm-report-C > div .scss,
+      .wm-user-dowload-ui .wm-report-C > div .js,
+      .wm-user-dowload-ui .wm-report-C > div .vb,
+      .wm-user-dowload-ui .wm-report-C > div .shtml,
+      .wm-user-dowload-ui .wm-report-C > div .zip {
+        display: block;
+        margin: 0 auto;
+        position: relative !important; }
+      .wm-user-dowload-ui .wm-report-C > div .wm-report-detail {
+        padding: 10px;
+        box-sizing: border-box;
+        position: absolute;
+        width: 103%;
+        min-width: 300px;
+        bottom: 0;
+        left: 49%;
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-50%, 0, 0);
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        -webkit-transition: 0.4s;
+        transition: 0.4s; }
+        .wm-user-dowload-ui .wm-report-C > div .wm-report-detail.hide {
+          height: 40px;
+          overflow: hidden; }
+          .wm-user-dowload-ui .wm-report-C > div .wm-report-detail.hide > span:before, .wm-user-dowload-ui .wm-report-C > div .wm-report-detail.hide > span:after {
+            -webkit-transform: rotate(225deg);
+            transform: rotate(225deg);
+            top: 4px; }
+          .wm-user-dowload-ui .wm-report-C > div .wm-report-detail.hide > span:after {
+            top: 8px; }
+        .wm-user-dowload-ui .wm-report-C > div .wm-report-detail.wm-audio {
+          position: relative; }
+        .wm-user-dowload-ui .wm-report-C > div .wm-report-detail.wm-video-detail.hide {
+          bottom: -40px; }
+        .wm-user-dowload-ui .wm-report-C > div .wm-report-detail > span {
+          position: absolute;
+          right: 30px;
+          top: 10px;
+          cursor: pointer; }
+          .wm-user-dowload-ui .wm-report-C > div .wm-report-detail > span:before, .wm-user-dowload-ui .wm-report-C > div .wm-report-detail > span:after {
+            content: '';
+            right: -12px;
+            top: 0px;
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 1px solid #fff;
+            border-left: none;
+            border-top: none;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg); }
+          .wm-user-dowload-ui .wm-report-C > div .wm-report-detail > span:after {
+            top: 4px; }
+        .wm-user-dowload-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item {
+          background: transparent;
+          display: flex;
+          display: -webkit-flex;
+          flex-flow: row; }
+          .wm-user-dowload-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item > div {
+            text-align: left;
+            line-height: 30px; }
+            .wm-user-dowload-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item > div:nth-of-type(1) {
+              width: 60px;
+              text-align: right;
+              margin-right: 20px; }
+            .wm-user-dowload-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item > div::nth-of-type(2) {
+              flex: 1;
+              -webkit-flex: 1; }
+          .wm-user-dowload-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C {
+            display: flex;
+            display: -webkit-flex;
+            flex-flow: row;
+            -webkit-flex: 1;
+            flex: 1; }
+            .wm-user-dowload-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C > div:nth-of-type(1) {
+              width: 40px; }
+            .wm-user-dowload-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C > div:nth-of-type(2) {
+              margin-left: 20px;
+              max-width: 200px; }
+      .wm-user-dowload-ui .wm-report-C > div img {
+        width: auto;
+        height: auto;
+        max-height: 60vh;
+        max-width: 80vh; }
+      .wm-user-dowload-ui .wm-report-C > div video {
+        width: auto;
+        max-height: 60vh; }
+
+@media all and (max-width: 1025px) {
+  .wm-collection-ui {
+    width: 1000px; }
+    .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item {
+      display: inline-block;
+      width: 302px;
+      margin-right: 18px;
+      margin-top: 20px;
+      box-sizing: border-box;
+      height: 370px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item:nth-of-type(3n+3) {
+        margin-right: 0; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item:nth-of-type(4n) {
+        margin-right: 18px; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg {
+        width: 100%;
+        height: 80%;
+        border: 1px solid #eee;
+        background: #f4f4f4;
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: row;
+        box-sizing: border-box;
+        position: relative;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        align-items: center;
+        overflow: hidden; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg .wm-report-shadow {
+          position: absolute;
+          width: 100px;
+          left: 50%;
+          height: 10px;
+          border-radius: 50%;
+          margin-left: -50px;
+          top: 70%;
+          background: rgba(0, 0, 0, 0.1);
+          filter: blur(3px);
+          -webkit-filter: blur(3px); }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg img {
+          display: block;
+          width: auto;
+          height: auto;
+          max-width: 100%;
+          max-height: 100%; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg:hover button {
+          display: block; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg button {
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          display: none; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg.active {
+          border-color: #f5a420; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-item-name {
+        margin: 4px 0;
+        font-size: 14px;
+        color: #333; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-item-attr {
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: row;
+        justify-content: space-between;
+        color: #999999; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-collection-check {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        z-index: 10; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-collection-report-status {
+        position: absolute;
+        width: 50px;
+        top: 0;
+        right: 0; }
+  @-webkit-keyframes warning-animation {
+    0% {
+      background-position: 0 0; }
+    100% {
+      background-position: 3em 0; } }
+  @keyframes warning-animation {
+    0% {
+      background-position: 0 0; }
+    100% {
+      background-position: 3em 0; } }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-disabled-mask {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: rgba(255, 255, 255, 0.7); }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled {
+        color: #be0000;
+        font-size: 12px;
+        z-index: 10;
+        width: 85%;
+        padding-left: 20px;
+        left: 50%;
+        border: 1px solid #be0000;
+        border-radius: 3px;
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-50%, 0, 0);
+        background: rgba(255, 255, 255, 0.8); }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span {
+          position: absolute;
+          left: 0;
+          top: 0px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span:before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            border: 1px solid #be0000;
+            border-radius: 50%;
+            left: 2px;
+            top: 5px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span:after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 2px;
+            background: #be0000;
+            left: 2px;
+            top: 13px;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg); }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        z-index: 1000; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action .wm-report-action-icon {
+          width: 20px;
+          height: 20px;
+          background: #fff;
+          border-radius: 2px;
+          position: absolute;
+          right: 10px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action .wm-report-action-icon:before {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #bbb;
+            left: 4px;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            border-left: none;
+            border-top: none; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action:hover ul {
+          display: block; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action:hover ul i {
+            color: #fff; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul {
+          display: none;
+          background: #fff;
+          width: 80px;
+          margin-top: 20px;
+          margin-right: 10px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul .wm-del-ico {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-indent: -.4rem; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul .wm-del-ico i {
+              vertical-align: middle; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li {
+            display: block;
+            height: 30px;
+            cursor: pointer;
+            line-height: 30px;
+            width: 100%;
+            margin: 0;
+            text-indent: .5em;
+            vertical-align: middle; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li .ivu-poptip-rel {
+              width: 100%;
+              height: 100%;
+              left: 0;
+              top: 0;
+              position: absolute; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li:hover {
+              background: #be0000;
+              color: #fff; }
+              .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li:hover div {
+                color: #fff; }
+              .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li:hover .ivu-poptip-body-message {
+                color: #000; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li > div {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-action ul li i {
+              font-size: 20px; }
+    .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list {
+      width: 100%; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item {
+        width: 100%;
+        height: 100px;
+        line-height: 70px;
+        text-align: center;
+        display: block;
+        display: -webkit-box;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+        -webkit-box-orient: horizontal;
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: row;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(1) {
+          width: 60px; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(2) {
+          line-height: 20px; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(3) {
+          width: 60px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(3) i {
+            font-size: 20px; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content {
+          flex: 1;
+          -webkit-flex: 1;
+          -webkit-box-flex: 1;
+          box-flex: 1;
+          display: -webkit-box;
+          -webkit-box-align: center;
+          -webkit-box-pack: center;
+          -webkit-box-orient: horizontal;
+          display: flex;
+          display: -webkit-flex;
+          flex-flow: row; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content > div {
+            margin-right: 20px;
+            text-align: left; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content > div .wm-unit {
+              font-size: 12px;
+              color: #ccc; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content > div:nth-of-type(2) > div:nth-of-type(2) {
+              color: #ccc; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item img {
+          width: 60px; } }
+@media all and (max-width: 750px) {
+  body {
+    overflow-x: hidden; }
+
+  .wm-collection-ui {
+    font-size: 30px;
+    width: 750px;
+    margin: 0 auto 0;
+    background: #fff; }
+    .wm-collection-ui .wm-download-mobile-mask {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      z-index: 1000;
+      display: -webkit-box;
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+      -webkit-box-orient: vertical; }
+      .wm-collection-ui .wm-download-mobile-mask video {
+        width: 100%; }
+      .wm-collection-ui .wm-download-mobile-mask .wm-download-close {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        border-radius: 50%;
+        right: 20px;
+        top: 20px;
+        font-size: 34px;
+        background: #be0000;
+        color: #fff; }
+        .wm-collection-ui .wm-download-mobile-mask .wm-download-close i {
+          margin-top: -10px; }
+    .wm-collection-ui .wm-collection-left-main-ui:before {
+      content: '';
+      width: 100%;
+      height: 10px;
+      background: #fbfbfb;
+      position: absolute;
+      left: 0;
+      top: 0; }
+    .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-header {
+      height: 120px;
+      line-height: 160px;
+      border-bottom: 1px solid #fbfbfb;
+      padding-bottom: 16px;
+      display: -webkit-box;
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+      -webkit-box-orient: horizontal;
+      width: 100%; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content {
+        width: 100%; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content input {
+          height: 60px;
+          font-size: 30px; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content .ivu-input-search {
+          font-size: 30px; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-header .wm-collection-search-content > div {
+          width: 100%; }
+    .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header {
+      height: 100px;
+      line-height: 78px;
+      margin-top: 2px;
+      border: 1px solid #eee;
+      box-sizing: border-box;
+      border-radius: 4px;
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      -webkit-justify-content: space-between;
+      justify-content: space-between; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div {
+        background: #fbfbfb;
+        padding-left: 20px;
+        height: 70px;
+        line-height: 70px;
+        box-sizing: border-box; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(1) span {
+          display: inline-block;
+          margin: 0 10px;
+          padding: 0 10px;
+          height: 50px;
+          line-height: 50px;
+          cursor: pointer;
+          border: 1px solid transparent; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(1) span:hover {
+            border: 1px solid #be0000;
+            box-sizing: border-box; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header > div:nth-of-type(1) span.active {
+            background: #be0000;
+            color: #fff;
+            text-align: center;
+            border-radius: 3px; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header .wm-collection-search-content,
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-left-search-condition-header .wm-collection-check-action {
+        display: none; }
+    .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list {
+      margin-top: 30px; }
+      .wm-collection-pagetion {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        height: 100px;
+        text-align: center;
+        cursor: pointer;
+        float: left;
+        -webkit-user-select: none; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item {
+        display: inline-block;
+        width: 340px;
+        margin-right: 28px;
+        margin-top: 20px;
+        box-sizing: border-box;
+        height: 570px;
+        position: relative;
+        cursor: pointer; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item:nth-of-type(2n) {
+          margin-right: 0; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg {
+          width: 100%;
+          height: 80%;
+          border: 1px solid #eee;
+          background: #f4f4f4;
+          display: flex;
+          display: -webkit-flex;
+          flex-flow: row;
+          box-sizing: border-box;
+          position: relative;
+          -webkit-justify-content: center;
+          justify-content: center;
+          -webkit-align-items: center;
+          align-items: center;
+          overflow: hidden; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg .wm-report-shadow {
+            position: absolute;
+            width: 100px;
+            left: 50%;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: -50px;
+            top: 70%;
+            background: rgba(0, 0, 0, 0.1);
+            filter: blur(3px);
+            -webkit-filter: blur(3px); }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            min-width: 100px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg:hover button {
+            display: block; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg button {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            display: none; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item > div.wm-report-item-bg.active {
+            border-color: #f5a420; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-item-name {
+          margin: 4px 0;
+          font-size: 30px;
+          color: #333; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-item-attr {
+          display: -webkit-box;
+          -webkit-box-align: center;
+          -webkit-box-pack: center;
+          -webkit-box-orient: vertical;
+          justify-content: space-between;
+          -webkit-box-align: start;
+          color: #999999;
+          font-size: 26px; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-collection-check {
+          position: absolute;
+          left: 10px;
+          top: 10px;
+          z-index: 10; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-collection-report-status {
+          position: absolute;
+          width: 50px;
+          top: 0;
+          right: 0; }
+  @-webkit-keyframes warning-animation {
+    0% {
+      background-position: 0 0; }
+    100% {
+      background-position: 3em 0; } }
+  @keyframes warning-animation {
+    0% {
+      background-position: 0 0; }
+    100% {
+      background-position: 3em 0; } }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-report-disabled-mask {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          background: rgba(255, 255, 255, 0.7); }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled {
+          color: #be0000;
+          font-size: 12px;
+          z-index: 10;
+          width: 85%;
+          padding-left: 20px;
+          left: 50%;
+          border: 1px solid #be0000;
+          border-radius: 3px;
+          -webkit-transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-50%, 0, 0);
+          background: rgba(255, 255, 255, 0.8); }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span {
+            position: absolute;
+            left: 0;
+            top: 0px; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span:before {
+              content: '';
+              width: 18px;
+              height: 18px;
+              position: absolute;
+              border: 1px solid #be0000;
+              border-radius: 50%;
+              left: 2px;
+              top: 5px; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list li.wm-collection-report-item .wm-file-disabled span:after {
+              content: "";
+              position: absolute;
+              width: 18px;
+              height: 2px;
+              background: #be0000;
+              left: 2px;
+              top: 13px;
+              -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list {
+        width: 100%; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item {
+          width: 100%;
+          height: 100px;
+          line-height: 70px;
+          text-align: center;
+          display: block;
+          display: -webkit-box;
+          -webkit-box-align: center;
+          -webkit-box-pack: center;
+          -webkit-box-orient: horizontal;
+          display: flex;
+          display: -webkit-flex;
+          flex-flow: row;
+          border-bottom: 1px solid #eee;
+          padding-bottom: 10px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(1) {
+            width: 10px; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(1) .ivu-checkbox-wrapper {
+              display: none; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(2) {
+            line-height: 20px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(3) .wm-downlad-ico {
+            display: none; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item > div:nth-of-type(3) i {
+            font-size: 40px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content {
+            flex: 1;
+            -webkit-flex: 1;
+            -webkit-box-flex: 1;
+            box-flex: 1;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            -webkit-box-orient: horizontal;
+            display: flex;
+            display: -webkit-flex;
+            flex-flow: row;
+            height: 100px;
+            margin: 20px 0; }
+            .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content > div {
+              margin-right: 20px;
+              text-align: left;
+              height: 50px;
+              font-size: 22px; }
+              .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content > div .zmiti-text-overflow {
+                position: relative;
+                z-index: 10;
+                height: 30px;
+                line-height: 30px; }
+              .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content > div .wm-unit {
+                color: #ccc;
+                font-size: 22px; }
+              .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item .wm-collection-report-content > div:nth-of-type(2) > div:nth-of-type(2) {
+                color: #ccc;
+                line-height: 30px; }
+          .wm-collection-ui .wm-collection-left-main-ui .wm-collection-report-list > ul.wm-media-list li.wm-collection-report-item img {
+            width: 70px; }
+    .wm-collection-ui .wm-collection-left-main-ui .wm-collection-pagetion {
+      line-height: 100px; }
+      .wm-collection-ui .wm-collection-left-main-ui .wm-collection-pagetion ul li {
+        width: 60px;
+        height: 60px;
+        line-height: 60px; }
+        .wm-collection-ui .wm-collection-left-main-ui .wm-collection-pagetion ul li.ivu-page-prev i, .wm-collection-ui .wm-collection-left-main-ui .wm-collection-pagetion ul li.ivu-page-next i {
+          font-size: 30px; }
+    .wm-collection-ui .wm-report-C {
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      position: fixed !important;
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center; }
+      .wm-collection-ui .wm-report-C > div {
+        max-width: 80vw;
+        max-height: 60vh;
+        position: relative; }
+        .wm-collection-ui .wm-report-C > div .xlsx,
+        .wm-collection-ui .wm-report-C > div .pdf,
+        .wm-collection-ui .wm-report-C > div .doc,
+        .wm-collection-ui .wm-report-C > div .ppt,
+        .wm-collection-ui .wm-report-C > div .xlsx,
+        .wm-collection-ui .wm-report-C > div .doc,
+        .wm-collection-ui .wm-report-C > div .docx,
+        .wm-collection-ui .wm-report-C > div .pdf,
+        .wm-collection-ui .wm-report-C > div .txt,
+        .wm-collection-ui .wm-report-C > div .ppt,
+        .wm-collection-ui .wm-report-C > div .pptx,
+        .wm-collection-ui .wm-report-C > div .xls,
+        .wm-collection-ui .wm-report-C > div .rar,
+        .wm-collection-ui .wm-report-C > div .html,
+        .wm-collection-ui .wm-report-C > div .css,
+        .wm-collection-ui .wm-report-C > div .scss,
+        .wm-collection-ui .wm-report-C > div .js,
+        .wm-collection-ui .wm-report-C > div .vb,
+        .wm-collection-ui .wm-report-C > div .shtml,
+        .wm-collection-ui .wm-report-C > div .zip {
+          display: block;
+          margin: 0 auto;
+          position: relative !important; }
+        .wm-collection-ui .wm-report-C > div .wm-report-detail {
+          padding: 10px;
+          box-sizing: border-box;
+          position: absolute;
+          width: 103%;
+          min-width: 300px;
+          bottom: 0;
+          left: 49%;
+          -webkit-transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-50%, 0, 0);
+          background: rgba(0, 0, 0, 0.7);
+          color: #fff;
+          -webkit-transition: 0.4s;
+          transition: 0.4s; }
+          .wm-collection-ui .wm-report-C > div .wm-report-detail.hide {
+            height: 40px;
+            overflow: hidden; }
+            .wm-collection-ui .wm-report-C > div .wm-report-detail.hide > span:before, .wm-collection-ui .wm-report-C > div .wm-report-detail.hide > span:after {
+              -webkit-transform: rotate(225deg);
+              transform: rotate(225deg);
+              top: 4px; }
+            .wm-collection-ui .wm-report-C > div .wm-report-detail.hide > span:after {
+              top: 8px; }
+          .wm-collection-ui .wm-report-C > div .wm-report-detail.wm-audio {
+            position: relative; }
+          .wm-collection-ui .wm-report-C > div .wm-report-detail.wm-video-detail.hide {
+            bottom: -40px; }
+          .wm-collection-ui .wm-report-C > div .wm-report-detail > span {
+            position: absolute;
+            right: 30px;
+            top: 10px;
+            cursor: pointer; }
+            .wm-collection-ui .wm-report-C > div .wm-report-detail > span:before, .wm-collection-ui .wm-report-C > div .wm-report-detail > span:after {
+              content: '';
+              right: -12px;
+              top: 0px;
+              position: absolute;
+              width: 8px;
+              height: 8px;
+              border: 1px solid #fff;
+              border-left: none;
+              border-top: none;
+              -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+            .wm-collection-ui .wm-report-C > div .wm-report-detail > span:after {
+              top: 4px; }
+          .wm-collection-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item {
+            background: transparent;
+            display: flex;
+            display: -webkit-flex;
+            flex-flow: row; }
+            .wm-collection-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item > div {
+              text-align: left;
+              line-height: 30px; }
+              .wm-collection-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item > div:nth-of-type(1) {
+                width: 60px;
+                text-align: right;
+                margin-right: 20px; }
+              .wm-collection-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item > div::nth-of-type(2) {
+                flex: 1;
+                -webkit-flex: 1; }
+            .wm-collection-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C {
+              display: flex;
+              display: -webkit-flex;
+              flex-flow: row;
+              -webkit-flex: 1;
+              flex: 1; }
+              .wm-collection-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C > div:nth-of-type(1) {
+                width: 40px; }
+              .wm-collection-ui .wm-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C > div:nth-of-type(2) {
+                margin-left: 20px;
+                max-width: 200px; }
+        .wm-collection-ui .wm-report-C > div img {
+          width: auto;
+          height: auto;
+          max-height: 60vh;
+          max-width: 80vh; }
+        .wm-collection-ui .wm-report-C > div video {
+          width: auto;
+          max-height: 60vh; } }
+.wm-data-loading {
+  width: 100%;
+  text-align: center;
+  color: #b20000;
+  font-size: 12px; }
+
+.wm-help {
+  position: fixed;
+  z-index: 1000;
+  right: 100px;
+  top: 340px;
+  border: 1px solid #f90;
+  background: #f90;
+  border-radius: 4px;
+  padding: 3px 10px;
+  color: #fff;
+  cursor: pointer; }
+
+.wm-download-help {
+  position: absolute;
+  color: #be0000;
+  right: 300px;
+  bottom: 20px; }
+
+/*# sourceMappingURL=index.css.map */

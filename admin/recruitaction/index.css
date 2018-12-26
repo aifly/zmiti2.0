@@ -1,0 +1,214 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem;
+}
+
+.zmiti-play.rotate {
+  -webkit-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+.symbin-left {
+  float: left !important;
+}
+
+.symbin-right {
+  float: right !important;
+}
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  overflow: hidden;
+}
+
+.wm-recruitaction-ui {
+  padding: 20px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+  background: #fff;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-header {
+  width: 100%;
+  height: 80px;
+  line-height: 100px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-header h1 {
+  font-weight: normal;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-header div {
+  font-size: 16px;
+  color: #f90;
+  cursor: pointer;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-header div i {
+  font-size: 20px;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content {
+  flex: 1;
+  -webkit-flex: 1;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form {
+  min-width: 600px;
+  min-height: 400px;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress > div {
+  flex: 1;
+  -webkit-flex: 1;
+  margin: 0 4px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress > div.active span {
+  background: #fcb90a;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress > div.active:before, .wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress > div.active:after {
+  background: #fcb90a;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress > div:before, .wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress > div:after {
+  content: "";
+  width: 50%;
+  height: 2px;
+  background: #dcdcdc;
+  top: 50%;
+  position: absolute;
+  left: 0;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress > div:after {
+  left: auto;
+  right: 0;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-progress > div span {
+  border-radius: 50%;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: #dcdcdc;
+  color: #fff;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  line-height: 24px;
+  font-size: 16px;
+  z-index: 10;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-title {
+  text-align: center;
+  color: #be0000;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-form-item {
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+  background: #eeeeee;
+  margin: 10px 0;
+  border-radius: 4px;
+  padding: 0 20px;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-form-item section {
+  height: 30px;
+  line-height: 30px;
+  padding-top: 4px;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-form-item section.wm-accept-list {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-form-item section.wm-accept-list label {
+  display: block;
+  flex: 1;
+  -webkit-flex: 1;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-form-item label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-form-item input {
+  height: 34px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-form-item textarea {
+  display: none;
+}
+
+.wm-recruitaction-ui .wm-recruitaction-content .wm-recruitaction-form .wm-recruitaction-next-btn button {
+  background: #fcb90a;
+  border-color: #fcb90a;
+}

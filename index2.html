@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=750,user-scalable=no" />
+	<title>中国文明网公益广告上报系统</title>
+	<style>
+	</style>
+</head>
+<body>
+	
+	<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
+	<script>
+		$(function(){
+			$.ajax({
+				url:"https://api.symbin.cn/v1/wmadvuser/downloadfile/",
+				data:{
+					id:'1448959619'
+				},
+				success:function(data){
+					console.log(data);
+				}
+			})
+		})
+	</script>
+</body>
+</html>

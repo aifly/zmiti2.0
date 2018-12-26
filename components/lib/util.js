@@ -1,6 +1,3 @@
-import sysbinVerification from './verification';
-
-import $ from 'jquery';
 var zmitiUtil = {
 	
 	getQueryString: function(name) {
@@ -14,59 +11,102 @@ var zmitiUtil = {
 		var replaceText = arg + '=' + val;
 		return url.match(pattern) ? url.replace(eval('/(' + arg + '=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url + '&' + replaceText : url + '?' + replaceText);
 	},
+
+	getUserInfo(key = 'login'){
+		
+		var loginObj = {};
+		try {
+			loginObj = JSON.parse(localStorage.getItem(key));
+		} catch (error) {
+			this.clearCookie('login');
+			window.location.hash = '/login';
+		}
+
+		return loginObj;
+	},
+
+	getProductList(fn) { //
+		this.ajax({
+			url: window.config.baseUrl + 'product/get_product/',
+			success(data) {
+				if (data.getret === 0) {
+					var arr = [];
+					data.productlist.map((item, i) => {
+
+						arr.push({
+							"productid": item.productid,
+							"linkTo": item.producturl,
+							"key": item.producturl.split('/')[1],
+							"title": item.productname,
+							"iconType": item.icontype,
+							"type": item.producticon
+						})
+					});
+					window.globalMenus = arr;
+					fn && fn(arr);
+				}
+			}
+		});
+	},
+
 	ajax(option){
 		var opt = option.data || {};
-		var validateData = sysbinVerification.validate(this);
-		if (!option.isLogin){
-			if (!option.validate ) {
-				opt.username = validateData.adminusername;
-				opt.userpwd = validateData.admintoken;
-			}
-			else{
-				opt.username = option.validate.adminusername;
-				opt.admintoken = option.validate.admintoken;
-			}
-		}
-		let formData = new FormData();
-		for(var attr in opt){
-			formData.append(attr, opt[attr]);
-		}
-		const instance = axios.create({
-		withCredentials: true
-		})
-		instance.post(option.url, formData, {
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-			}
-		}).then((dt) => {
-			if (dt.getret === 1000) {
-				this.clearCookie('login');
-				window.location.hash = '/login';
-			} else {
+		var userInfo = this.getUserInfo();
 
+		if (userInfo.username && userInfo.getusersigid && !option.isLogin) {
+			opt.userid = userInfo.userid;
+			opt.getusersigid = userInfo.getusersigid;
+		}
+		var formData = new FormData();
+
+		for(var attr in opt){
+			formData.append(attr,opt[attr]);
+		}
+
+		let config = {
+				headers: {
+					'Content-Type': 'multipart/form-data' //之前说的以表单传数据的格式来传递fromdata    
+				}
+			};
+		axios.post(option.url, formData, config).then((dt) => {
+			var dt = dt.data;
+			if(dt.getret === 0){
+
+			}
+			
+			else if(dt.getret === 1300){
+				window.localStorage['login'] = '';
+				window.location.hash = '/login';
 			}
 			option.fn && option.fn(dt);
 			option.success && option.success(dt);
-		}).catch(function (error) {
+		}).catch((err)=>{
+			
 			option.fnError && option.fnError();
+			option.error && option.error();
+			option._this && option._this.$Message.error('服务器开小差了，请稍后重试');
 		});
-		return;/* 
+
+		return;
+		
 		$.ajax({
 			url:option.url,
 			type:option.type || 'post',
 			data:opt,
 			error(){
 				option.fnError && option.fnError();
+				option.error && option.error();
+
+				option._this && option._this.$Message.error('服务器开小差了，请稍后重试');
 			}
 		}).done((dt)=>{
-			if(dt.getret === 1300){
-				this.clearCookie('login');
+			if (dt.getret === 1000) {
+				window.localStorage['login'] = '';
 				window.location.hash = '/login';
-			}else{
-			}
+			} else {}
 			option.fn && option.fn(dt);
 			option.success && option.success(dt);
-		}) */
+		})
 	},
 	setCookie(cname, cvalue, exdays){
        var d = new Date();  

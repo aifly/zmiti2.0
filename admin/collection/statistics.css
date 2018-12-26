@@ -1,0 +1,205 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem;
+}
+
+.zmiti-play.rotate {
+  -webkit-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+.symbin-left {
+  float: left !important;
+}
+
+.symbin-right {
+  float: right !important;
+}
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.wm-collection-statistics-manager {
+  width: 100%;
+  background: #eee;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.wm-collection-statistics-manager > div {
+  background: #fff;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C, .wm-collection-statistics-manager > div.wm-statistics-file-count-C {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C > div:nth-of-type(1), .wm-collection-statistics-manager > div.wm-statistics-file-count-C > div:nth-of-type(1) {
+  flex: 1;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C > div:nth-of-type(2), .wm-collection-statistics-manager > div.wm-statistics-file-count-C > div:nth-of-type(2) {
+  flex: 3;
+  margin-top: 10px;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C .wm-statistics-user-upload-count, .wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-user-upload-count {
+  padding: 0 10px 10px 10px;
+  margin-top: -10px;
+  box-sizing: border-box;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C .wm-statistics-user-upload-count > header, .wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-user-upload-count > header {
+  height: 40px;
+  line-height: 50px;
+  font-size: 14px;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C .wm-statistics-user-upload-count > div, .wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-user-upload-count > div {
+  flex: 1;
+  -webkit-flex: 1;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: center;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  text-align: center;
+  background: #f7f6f6;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C .wm-statistics-user-upload-count > div .wm-statistics-user-count > div, .wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-user-upload-count > div .wm-statistics-user-count > div {
+  color: #fcb90a;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C .wm-statistics-user-upload-count > div .wm-statistics-user-count > div:nth-of-type(1), .wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-user-upload-count > div .wm-statistics-user-count > div:nth-of-type(1) {
+  line-height: 50px;
+  font-size: 30px;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C .wm-statistics-user-upload-list, .wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-user-upload-list {
+  box-sizing: border-box;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C {
+  margin-right: 10px;
+  flex: 3;
+  -webkit-flex: 3;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C span {
+  color: #444;
+  margin: 0 10px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-user-count-C span label {
+  color: #fcb90a;
+  font-size: 22px;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C {
+  flex: 4;
+  -webkit-flex: 4;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-file-checked-status-C {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-file-checked-status-C > div:nth-of-type(1) {
+  flex: 1;
+  -webkit-flex: 1;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-file-checked-status-C > div:nth-of-type(1) .wm-statistics-user-count div {
+  color: #333333;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-file-checked-status-C > div:nth-of-type(1) .wm-statistics-user-count div:nth-of-type(2) {
+  color: #999999;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-file-checked-status-C > div:nth-of-type(2) {
+  height: 100%;
+  flex: 2;
+  -webkit-flex: 2;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-flex-wrap: wrap;
+  align-items: center;
+  -webkit-align-items: center;
+  flex-wrap: wrap;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-file-checked-status-C > div:nth-of-type(2) > div {
+  width: 42%;
+  height: 50px;
+  background: #fff;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  margin: 0 4%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: space-between;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-file-checked-status-C > div:nth-of-type(2) > div:hover {
+  border: 1px solid #be0000;
+}
+
+.wm-collection-statistics-manager > div.wm-statistics-file-count-C .wm-statistics-file-checked-status-C > div:nth-of-type(2) > div > div:nth-of-type(2) {
+  color: #be0000;
+  font-size: 20px;
+  font-weight: bold;
+}

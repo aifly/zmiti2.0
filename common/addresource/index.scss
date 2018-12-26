@@ -1,0 +1,253 @@
+@import '../../components/css/base.scss';
+.wm-addstudent-ui{
+    width: 100%;
+    background: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    .wm-addstudent-header {
+        width: 50px;
+        @include displayFlex(row);
+        width: 100%;
+        padding: 0 20px;
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+        line-height: 50px;
+        font-size: 20px;
+
+        &>div {
+            &:nth-of-type(1) {
+                @include pos(r);
+                text-indent: .5em;
+
+                &:before {
+                    content: '';
+                    width: 4px;
+                    height: 24px;
+                    background: #be0000;
+                    left: -4px;
+                    @include pos(a);
+                    top: 12px;
+
+                }
+            }
+        }
+    }
+ 
+    .wm-addstudent-main {
+        border-top: 1px solid #dcdee2;
+        padding-top: 10px;
+        box-sizing: border-box;
+    }
+
+    .wm-addstudent-step {
+        margin: 0 auto;
+        width: 94%;
+        @include displayFlex(row);
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+
+        li {
+            flex: 1;
+            -webkit-flex: 1;
+            line-height: 24px;
+            height: 56px;
+            @include pos(r);
+
+            &:before,
+            &:after {
+                content: '';
+                @include pos(a);
+                width: 100%;
+                height: 4px;
+                background: #dcdcdc;
+                left: 50px;
+                top: 12px;
+                z-index: 0;
+            }
+
+            &>div {
+                @include pos(a);
+                width: 100px;
+                text-align: center;
+
+            }
+
+            &.active1 {
+                &:after {
+                    background: #f90;
+                }
+            }
+
+            &.active {
+                .wm-step-index {
+                    background: #f90;
+
+                }
+
+                section {
+                    color: #f90;
+                }
+
+                &:before {
+                    content: '';
+                    background: #f90;
+                    width: 50%;
+                    z-index: 10;
+                }
+            }
+
+            .wm-step-index {
+                @include br();
+                $size: 30px;
+                width: $size;
+                height: $size;
+                font-size: 14px;
+                line-height: $size;
+                text-align: center;
+                @include pos(r);
+                background: #dcdcdc;
+                margin: 0 auto;
+                color: #fff;
+
+                span {
+                    @include pos(r);
+                    z-index: 10;
+                }
+
+            }
+
+            &:last-of-type {
+                flex: none;
+                -webkit-flex: none;
+                width: 100px;
+                text-align: right;
+
+                &:after {
+                    display: none;
+                }
+
+                &:before {
+                    background: #dcdcdc;
+                    display: none;
+                    left: -75%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .wm-step-content-wrap {
+
+        width: 400px;
+        min-height: 50vh;
+        overflow: hidden;
+        margin: 10px auto;
+
+        ol {
+            @include displayFlex(row);
+            @include transition(.2s);
+            background: #fff;
+
+            &>li {
+                width: 400px;
+
+                padding: 0 20px;
+                box-sizing: border-box;
+
+                
+                 .wm-recruitaction-title {
+                     text-align: center;
+                     color: #be0000;
+                 }
+
+                 .wm-recruitaction-form-item {
+                     width: 100%;
+                     height: 70px;
+                     line-height: 70px;
+                     background: #eeeeee;
+                     margin: 10px 0;
+
+                     @include br(4px);
+
+                     padding: 0 20px;
+                     @include pos(r);
+
+                     &.displayBox{
+                         padding: 0;
+                         @include displayBox(horizontal);
+                         
+                         &>div{
+                             &:nth-of-type(1){
+                                width: 80px;
+                             }
+                             &:nth-of-type(2){
+                                flex:1;
+                                width: 240px;
+                             }
+                         }
+                     }
+
+                     &.wm-recruitaction-desc{
+                         line-height: 42px;
+                     }
+
+                     section {
+                         height: 30px;
+                         line-height: 30px;
+                         padding-top: 4px;
+                         
+
+                         &.wm-accept-list {
+                             @include displayFlex(row);
+
+                             justify-content: space-between;
+                             -webkit-justify-content: space-between;
+
+                             label {
+                                 display: block;
+                                 flex: 1;
+                                 -webkit-flex: 1;
+                             }
+                         }
+                     }
+
+                     label {
+                         display: inline-block;
+
+                         //width: 80px;
+                         margin-right: 10px;
+                     }
+
+                     input {
+                         height: 34px;
+                         background: transparent;
+                         border: none;
+                         outline: none;
+                     }
+
+                     textarea {
+                         @include pos(a);
+                         height: 60px;
+                         width: 70%;
+                         overflow: hidden;
+                         resize:none;
+                         top: 5px;
+                         background: transparent;
+                         border: none;
+                         outline: none;
+                         line-height: 30px;;
+                         padding-left: 10px;
+
+                     }
+                 }
+
+                 .wm-recruitaction-next-btn {
+                     button {
+                         background: #fcb90a;
+                         border-color: #fcb90a;
+                     }
+                 }
+            }
+        }
+    }
+}

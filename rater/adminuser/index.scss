@@ -1,0 +1,39 @@
+﻿@import "../css/base.scss";
+
+$baseColor: #fcffb4;
+$viewW: 750px;
+$color: #be0000;
+
+.wm-adminuser-main-ui{
+    &>header {
+        background: #fff;
+        height: 50px;
+        width: 100%;
+        line-height: 50px;
+        @include displayFlex(row);
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+        &>section {
+            margin-right: 30px;
+            ;
+        }
+        &>div {
+            font-size: 20px;
+            margin-left: 40px;
+            @include pos(r);
+            &:before {
+                content: "";
+                @include pos(a);
+                width: 2px;
+                height: 20px;
+                background: #cc0000;
+                top: 15px;
+                left: -10px;
+            }
+        }
+    }
+
+    .ivu-poptip-confirm .ivu-poptip-body .ivu-icon {
+        left: 30px;
+    }
+}

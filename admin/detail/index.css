@@ -1,0 +1,175 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem;
+}
+
+.zmiti-play.rotate {
+  -webkit-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+.symbin-left {
+  float: left !important;
+}
+
+.symbin-right {
+  float: right !important;
+}
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.wm-detail-main-ui {
+  position: relative;
+  padding: 20px;
+}
+
+.wm-detail-main-ui:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  left: 0;
+  top: 0;
+  background: #eee;
+}
+
+.wm-detail-main-ui > header {
+  margin-top: 10px;
+  width: 100%;
+  background: #f4f4f4;
+  height: 80px;
+  line-height: 100px;
+  overflow: hidden;
+  position: relative;
+}
+
+.wm-detail-main-ui > header span {
+  position: absolute;
+  font-size: 20px;
+}
+
+.wm-detail-main-ui > header ul {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  width: 400px;
+  margin: 0 auto;
+  justify-content: space-around;
+  text-align: center;
+  font-size: 16px;
+}
+
+.wm-detail-main-ui > header ul li {
+  -webkit-flex: 1;
+  flex: 1;
+  margin: 0 10px;
+  line-height: 110px;
+  position: relative;
+  cursor: pointer;
+}
+
+.wm-detail-main-ui > header ul li.active {
+  color: #be0000;
+}
+
+.wm-detail-main-ui > header ul li.active:before {
+  content: '';
+  width: 100%;
+  left: 0;
+  height: 2px;
+  background: #be0000;
+  color: #be0000;
+  top: 78px;
+  position: absolute;
+}
+
+.wm-detail-main-ui .wm-vote-back {
+  position: absolute;
+  width: 100px;
+  margin-top: 30px;
+}
+
+.wm-detail-main-ui .wm-vote-list {
+  width: 800px;
+  margin: 20px auto;
+}
+
+.wm-detail-main-ui .wm-vote-list ul {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-flow: wrap;
+  -webkit-flex-flow: wrap;
+}
+
+.wm-detail-main-ui .wm-vote-list ul li {
+  margin: 10px 3%;
+  width: 44%;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.wm-detail-main-ui .wm-vote-list ul li header {
+  padding: 10px 20px;
+  background: #eee;
+  position: relative;
+}
+
+.wm-detail-main-ui .wm-vote-list ul li header > div {
+  position: absolute;
+  right: 20px;
+  top: -10px;
+}
+
+.wm-detail-main-ui .wm-vote-list ul li section {
+  padding: 20px 20px;
+}
+
+.wm-detail-main-ui .wm-vote-list ul li section .wm-vote-comments {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.wm-detail-main-ui .wm-vote-list ul li section .wm-vote-comments > div:nth-of-type(1) {
+  width: 40px;
+}
+
+.wm-detail-main-ui .wm-vote-list ul li section .wm-vote-comments > div:nth-of-type(2) {
+  -webkit-flex: 1;
+  flex: 1;
+  max-height: 48px;
+  overflow: hidden;
+  line-height: 24px;
+}

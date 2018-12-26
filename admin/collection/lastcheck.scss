@@ -1,0 +1,22 @@
+@import "../css/base.scss";
+$baseColor: #fcffb4;
+$viewW: 750px;
+$color: #be0000;
+
+.wm-lastcheck-ui{
+    display: block !important;
+    position: relative !important;
+
+    .wm-collection-left-search-condition-header{
+        height: 40px !important;
+    }
+
+    .wm-reset{
+        @include pos(f);
+        z-index:100;
+        right: 0;
+        bottom: 100px;
+        width: 150px;
+        cursor: pointer;
+    }
+}

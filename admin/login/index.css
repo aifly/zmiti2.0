@@ -1,0 +1,232 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem;
+}
+
+.zmiti-play.rotate {
+  -webkit-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+.symbin-left {
+  float: left !important;
+}
+
+.symbin-right {
+  float: right !important;
+}
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.wm-login-ui {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+}
+
+.wm-login-ui > header {
+  height: 64px;
+  line-height: 64px;
+  width: 100%;
+  position: relative;
+}
+
+.wm-login-ui > header > div {
+  width: 1000px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  margin: 0 auto;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.wm-login-ui > header:before {
+  content: '';
+  background: #cc0000;
+  width: 100%;
+  height: 3px;
+  left: 0;
+  position: absolute;
+  bottom: 0;
+  box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+}
+
+.wm-login-ui > header img {
+  width: 100px;
+  margin-left: 30px;
+  vertical-align: middle;
+  font-size: 0;
+}
+
+.wm-login-ui > header a {
+  color: #cc0000;
+}
+
+.wm-login-ui > header a:hover {
+  text-decoration: underline;
+}
+
+.wm-login-ui > section {
+  flex-grow: 1;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.wm-login-ui > section .wm-login-C {
+  position: relative;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-title {
+  margin-bottom: 7vh;
+}
+
+.wm-login-ui > section .wm-login-C > h2 {
+  color: #fff;
+  font-size: 40px;
+  margin: 30px 0;
+}
+
+.wm-login-ui > section .wm-login-C > h2 span {
+  font-size: 20px;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form > div:nth-of-type(1), .wm-login-ui > section .wm-login-C .wm-login-form > div:nth-of-type(2) {
+  background: #fff;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 20px;
+  border-radius: 10px;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form > div:nth-of-type(1) .wm-login-error, .wm-login-ui > section .wm-login-C .wm-login-form > div:nth-of-type(2) .wm-login-error {
+  color: #f00;
+  margin-top: -12px;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form > div:nth-of-type(2) {
+  margin: 0 10px;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form > div:nth-of-type(3) {
+  width: 120px;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form > div:nth-of-type(3) > div {
+  background: #f5a420;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form > div:nth-of-type(3) label {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  color: #fff;
+  margin-top: -3px;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form > div input {
+  border: none;
+  height: 30px;
+  background: transparent;
+  outline: none;
+}
+
+.wm-login-ui > section .wm-login-C .wm-login-form img {
+  width: 20px;
+}
+
+.wm-login-ui > section .wm-login-C .wm-browner-tip {
+  text-align: center;
+  color: #fff;
+  margin-top: 30px;
+  font-size: 14px;
+  position: absolute;
+  top: -100px;
+  -webkit-animation: 1s flash infinite alternate;
+  animation: 1s flash infinite alternate;
+}
+
+@-webkit-keyframes flash {
+  to {
+    opacity: .2;
+  }
+}
+
+@keyframes flash {
+  to {
+    opacity: .2;
+  }
+}
+
+@-moz-keyframes flash {
+  to {
+    opacity: .2;
+  }
+}
+
+.wm-login-ui > section .wm-copyright {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+  left: 0;
+  background: #cc0000;
+}

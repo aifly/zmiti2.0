@@ -1,8 +1,10 @@
 var webpack = require('webpack');
-
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+var port = 8000;
 var config = {
     entry: {
         'index': "./index.js",
+        'admin': "./admin.js",
         ///endor: ['react','react-dom','iscroll','jquery']
     },
     output: {
@@ -13,7 +15,7 @@ var config = {
     },
     devServer: {
         inline: true,
-        port: 8000,
+        port: port,
         hot: true,
         //historyApiFallback: true 
     },
@@ -35,6 +37,12 @@ var config = {
         /* new webpack.optimize.CommonsChunkPlugin({
             name:"vendor",  
          }),*/
+
+        new OpenBrowserPlugin(
+            { 
+                url: 'http://localhost:'+port
+            }
+        )
     ],
     module: {
 
@@ -51,19 +59,18 @@ var config = {
                 ]
             }
         ],
-
         loaders: [{
             test: /\.js|\.es6$/,
             exclude: /node_modules/,
             loaders: ['babel-loader']
         }, {
-            test: /\.less$/,
-            exclude: /node_modules/,
-            loader: 'style-loader!css-loader!less-loader'
-        }, {
             test: /\.vue$/,
             exclude: /node_modules/,
             loaders: ['vue-loader']
+        }, {
+            test: /\.less$/,
+            exclude: /node_modules/,
+            loader: 'style-loader!css-loader!less-loader'
         }, {
             test: /\.(css)$/,
             loader: 'style-loader!css-loader'

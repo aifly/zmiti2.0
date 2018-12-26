@@ -1,0 +1,520 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem;
+}
+
+.zmiti-play.rotate {
+  -webkit-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+.symbin-left {
+  float: left !important;
+}
+
+.symbin-right {
+  float: right !important;
+}
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.wm-report-qrcode {
+  width: 130px;
+  height: 130px;
+  position: absolute;
+  right: 0;
+  bottom: 40px;
+  z-index: 10;
+}
+
+.wm-report-qrcode img {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.wm-report-qrcode > div {
+  width: 100%;
+  left: -100%;
+  top: 50%;
+  position: absolute;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.wm-report-print {
+  display: none;
+  z-index: 1000;
+}
+
+.wm-preview-action {
+  position: absolute !important;
+  right: 20px;
+  top: 60px;
+  width: 160px;
+  z-index: 100;
+}
+
+.wm-preview-action span {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #000;
+  text-align: center;
+  line-height: 36px;
+  font-size: 24px;
+  color: #fff;
+}
+
+.wm-preview-action span a {
+  color: inherit;
+}
+
+.wm-preview-action span:nth-of-type(2) {
+  margin-left: 15px;
+}
+
+.wm-preview-action .wm-report-close {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.wm-preview-action .wm-report-close:before, .wm-preview-action .wm-report-close:after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  background: #fff;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.wm-preview-action .wm-report-close:after {
+  width: 2px;
+  height: 18px;
+}
+
+.wm-collection-report-C {
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  position: fixed !important;
+  left: 0;
+  top: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.wm-collection-report-C > .original {
+  overflow: auto;
+  padding: 30px;
+  width: 800px;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh !important;
+  text-align: center;
+}
+
+.wm-collection-report-C > .original img {
+  width: 100% !important;
+  height: auto;
+  max-height: none !important;
+}
+
+.wm-collection-report-C > .original .wm-myreport-item,
+.wm-collection-report-C > .original .wm-report-detail {
+  display: none;
+}
+
+.wm-collection-report-C > .original img {
+  width: auto;
+  height: auto;
+  max-width: 1000vw;
+  max-height: 1000vh;
+}
+
+.wm-collection-report-C .wm-detail-mask-tip {
+  position: absolute;
+  width: 100%;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.wm-collection-report-C > div {
+  max-width: 80vw;
+  max-height: 60vh;
+  position: relative;
+}
+
+.wm-collection-report-C > div .xlsx,
+.wm-collection-report-C > div .pdf,
+.wm-collection-report-C > div .doc,
+.wm-collection-report-C > div .m4a,
+.wm-collection-report-C > div .ppt,
+.wm-collection-report-C > div .xlsx,
+.wm-collection-report-C > div .doc,
+.wm-collection-report-C > div .docx,
+.wm-collection-report-C > div .pdf,
+.wm-collection-report-C > div .txt,
+.wm-collection-report-C > div .ppt,
+.wm-collection-report-C > div .pptx,
+.wm-collection-report-C > div .xls,
+.wm-collection-report-C > div .rar,
+.wm-collection-report-C > div .html,
+.wm-collection-report-C > div .css,
+.wm-collection-report-C > div .scss,
+.wm-collection-report-C > div .js,
+.wm-collection-report-C > div .vb,
+.wm-collection-report-C > div .dmg,
+.wm-collection-report-C > div .shtml,
+.wm-collection-report-C > div .zip {
+  display: block;
+  margin: 0 auto;
+  position: relative !important;
+}
+
+.wm-collection-report-C > div .wm-report-detail {
+  padding: 10px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 12;
+  width: 100%;
+  min-width: 300px;
+  bottom: 0;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.wm-collection-report-C > div .wm-report-detail.hide {
+  height: 40px;
+  bottom: -40px;
+  overflow: hidden;
+}
+
+.wm-collection-report-C > div .wm-report-detail.hide > span:before, .wm-collection-report-C > div .wm-report-detail.hide > span:after {
+  -webkit-transform: rotate(225deg);
+  transform: rotate(225deg);
+  top: 4px;
+}
+
+.wm-collection-report-C > div .wm-report-detail.hide > span:after {
+  top: 8px;
+}
+
+.wm-collection-report-C > div .wm-report-detail.wm-audio {
+  position: relative;
+}
+
+.wm-collection-report-C > div .wm-report-detail.wm-video-detail.hide {
+  bottom: -40px;
+}
+
+.wm-collection-report-C > div .wm-report-detail > span {
+  position: absolute;
+  right: 30px;
+  top: 13px;
+  cursor: pointer;
+}
+
+.wm-collection-report-C > div .wm-report-detail > span:before, .wm-collection-report-C > div .wm-report-detail > span:after {
+  content: '';
+  right: -12px;
+  top: 0px;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #fff;
+  border-left: none;
+  border-top: none;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.wm-collection-report-C > div .wm-report-detail > span:after {
+  top: 4px;
+}
+
+.wm-collection-report-C > div .wm-report-detail .wm-myreport-field-item {
+  background: transparent;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.wm-collection-report-C > div .wm-report-detail .wm-myreport-field-item > div {
+  text-align: left;
+  line-height: 30px;
+}
+
+.wm-collection-report-C > div .wm-report-detail .wm-myreport-field-item > div:nth-of-type(1) {
+  width: 60px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.wm-collection-report-C > div .wm-report-detail .wm-myreport-field-item > div:nth-of-type(2) {
+  flex: 1;
+  -webkit-flex: 1;
+}
+
+.wm-collection-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.wm-collection-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C > div:nth-of-type(1) {
+  width: 40px;
+}
+
+.wm-collection-report-C > div .wm-report-detail .wm-myreport-field-item .wm-tag-list-C > div:nth-of-type(2) {
+  margin-left: 20px;
+  max-width: 200px;
+}
+
+.wm-collection-report-C > div img {
+  width: auto;
+  height: auto;
+  max-height: 60vh;
+  max-width: 80vh;
+}
+
+.wm-collection-report-C > div .video {
+  min-width: 800px;
+  max-height: 60vh;
+  min-height: 40vh;
+}
+
+.wm-collection-report-C > div video {
+  width: auto;
+  max-height: 60vh;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask {
+  width: 300px;
+  height: 200px;
+  background: #232323;
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  border-radius: 6px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask.hide {
+  -webkit-transform: translate(0, 50px);
+  transform: translate(0, 50px);
+  opacity: 0;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(1) {
+  padding: 10px 10px 0 10px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(1) .wm-collection-placeholder {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  color: #999;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(1) .ivu-input-wrapper {
+  width: 300px !important;
+  height: 120px !important;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(1) textarea {
+  border: none;
+  resize: none;
+  height: 100px;
+  color: #fff;
+  padding: 2px 10px;
+  background: #0f0f0f;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(1) textarea::-webkit-input-placeholder {
+  color: #ddd;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  margin-top: -10px;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) > div {
+  width: 40px;
+  height: 40px;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2):before {
+  display: none;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin: 4px 0;
+  color: #fff;
+  position: relative;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt span,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 70px;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.reject-enter-active, .wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.reject-leave-active, .wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.pass-enter-active, .wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.pass-leave-active,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.reject-enter-active,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.reject-leave-active,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.pass-enter-active,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.pass-leave-active {
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.reject-enter, .wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.reject-leave-to, .wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.pass-enter, .wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.pass-leave-to,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.reject-enter,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.reject-leave-to,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.pass-enter,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.pass-leave-to {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.pass,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.pass {
+  background: transparent;
+  color: #fff;
+  cursor: text;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.pass::before,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.pass::before {
+  border-color: #fff;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.reject,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.reject {
+  cursor: text;
+  background: transparent;
+  color: #b20000;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.reject::before, .wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt.reject:after,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.reject::before,
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject.reject:after {
+  background: #b20000;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt {
+  background: yellowgreen;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-adopt:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 12px;
+  -webkit-transform: rotate(-40deg) skew(10deg);
+  transform: rotate(-40deg) skew(10deg);
+  left: 14px;
+  border: 3px solid #fff;
+  border-right: none;
+  border-top: none;
+  top: 8px;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject {
+  background: #b20000;
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject:before, .wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  left: 50%;
+  background: #fff;
+  border-right: none;
+  border-top: none;
+  top: 50%;
+  margin-top: -8px;
+  -webkit-transform: translate3d(-50%, -50%, 0) rotate(45deg);
+  transform: translate3d(-50%, -50%, 0) rotate(45deg);
+}
+
+.wm-collection-report-C > .wm-report-check-in-mask > div:nth-of-type(2) .wm-report-reject:after {
+  width: 3px;
+  height: 20px;
+}

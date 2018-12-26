@@ -1,0 +1,184 @@
+﻿@import "../css/base.scss";
+
+$baseColor: #fcffb4;
+$viewW: 750px;
+$color: #be0000;
+
+body {
+    overflow: hidden;
+}
+
+.wm-recruitaction-ui {
+    padding: 20px;
+
+    @include displayFlex(column);
+
+    background: #fff;
+
+    .wm-recruitaction-header {
+        width: 100%;
+        height: 80px;
+        line-height: 100px;
+
+        @include displayFlex(row);
+
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+
+        h1 {
+            font-weight: normal;
+        }
+
+        div {
+            font-size: 16px;
+            color: #f90;
+            cursor: pointer;
+
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .wm-recruitaction-content {
+        flex: 1;
+        -webkit-flex: 1;
+
+        @include displayFlex(row);
+
+        justify-content: center;
+        -webkit-justify-content: center;
+
+
+        .wm-recruitaction-form {
+            min-width: 600px;
+            min-height: 400px;
+
+            .wm-recruitaction-progress {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+
+                @include displayFlex(row);
+
+                & > div {
+                    flex: 1;
+                    -webkit-flex: 1;
+                    margin: 0 4px;
+                    text-align: center;
+
+                    @include pos(r);
+
+                    cursor: pointer;
+
+                    &.active {
+                        span {
+                            background: #fcb90a;
+                        }
+
+                        &:before,
+                        &:after {
+                            background: #fcb90a;
+                        }
+                    }
+
+                    &:before,
+                    &:after {
+                        content: "";
+                        width: 50%;
+                        height: 2px;
+                        background: #dcdcdc;
+                        top: 50%;
+
+                        @include pos(a);
+
+                        left: 0;
+                    }
+
+                    &:after {
+                        left: auto;
+                        right: 0;
+                    }
+
+                    span {
+                        @include br;
+                        @include pos(a);
+
+                        width: 24px;
+                        height: 24px;
+                        background: #dcdcdc;
+                        color: #fff;
+                        top: 50%;
+
+                        @include transform(translate(0, -50%));
+
+                        line-height: 24px;
+                        font-size: 16px;
+                        z-index: 10;
+                    }
+                }
+            }
+
+            .wm-recruitaction-title {
+                text-align: center;
+                color: #be0000;
+            }
+
+            .wm-recruitaction-form-item {
+                width: 100%;
+                height: 70px;
+                line-height: 70px;
+                background: #eeeeee;
+                margin: 10px 0;
+
+                @include br(4px);
+
+                padding: 0 20px;
+
+                section {
+                    height: 30px;
+                    line-height: 30px;
+                    padding-top: 4px;
+
+                    &.wm-accept-list {
+                        @include displayFlex(row);
+
+                        justify-content: space-between;
+                        -webkit-justify-content: space-between;
+
+                        label {
+                            display: block;
+                            flex: 1;
+                            -webkit-flex: 1;
+                        }
+                    }
+                }
+
+                label {
+                    display: inline-block;
+
+                    //width: 80px;
+                    margin-right: 10px;
+                }
+
+                input {
+                    height: 34px;
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                }
+
+                textarea {
+                    display: none;
+                }
+            }
+
+            .wm-recruitaction-next-btn {
+                button {
+                    background: #fcb90a;
+                    border-color: #fcb90a;
+                }
+            }
+        }
+    }
+}
