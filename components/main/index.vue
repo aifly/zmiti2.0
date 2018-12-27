@@ -8,10 +8,10 @@
                     </div>
                </div>
                <div>
-                   <div>
+                   <div v-if='!isAdmin'>
                        <a href="#">个人中心</a>
                    </div>
-                   <div>
+                   <div v-if='!isAdmin'>
                        <a href="#">我的定制</a>
                    </div>
                </div>
@@ -29,9 +29,13 @@
                 <div class="zmiti-tab-C" :style='{height:(viewH - 50)+"px"}'>
                    <div>
                       <Menu width='300' size='small'  active-name="1" :open-names="['1']" theme='dark' >
-                            <MenuGroup  name="1" title='我的上报'>
+                            <MenuGroup  name="1" :title='isAdmin?"系统管理":"产品与服务"'>
                                 <MenuItem :title='item.resourcecnname' :to='"/myreport/"+item.productid' class='zmiti-text-overflow' :key='i' v-for="(item,i) in productList" :name="item.productid">
                                     {{item.title}}
+                                </MenuItem>
+
+                                <MenuItem v-if='isAdmin' class='zmiti-text-overflow' to='product' name='product'>
+                                    <Icon type="ios-basket" />产品管理
                                 </MenuItem>
                             </MenuGroup >
                            
@@ -57,7 +61,7 @@
     import sysbinVerification from '../lib/verification';
 
 	export default {
-		props:[],
+		props:['isAdmin'],
 		name:'zmitiindex',
 		data(){
 			return{
@@ -90,11 +94,12 @@
             var userinfo = zmitiUtil.getUserInfo();
 
             this.userinfo = userinfo; 
-            if(this.$route.name !== 'login' && this.$route.name !== 'register'){
+            if(this.$route.name !== 'login' && this.$route.name !== 'register' && !this.isAdmin){
                zmitiUtil.getProductList((arr)=>{
                    this.productList = arr;
                });
             }
+            
         },
         watch:{
             kw(val){

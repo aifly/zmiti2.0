@@ -1,21 +1,11 @@
 import Vue from "vue";
 import Obserable from './components/lib/obserable';
-import Main from './admin/main/index';
-import AdminUser from './admin/adminuser/index';
-import User from './admin/user/index';
-import Vote from './admin/vote/index';
-import Login from './admin/login/index';
-import Detail from './admin/detail/index';
-import Recruit from './admin/recruit/index';
-import Result from './admin/result/result';
-import Recruitaction from './admin/recruitaction/index';
-import Rater from './admin/rater/index';
-import Download from './admin/download/index';
-import Collection from './admin/collection/index';
+import Main from './components/main/index';
+import Product from './admin/product/index';
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import './admin/css/index.css';
-import './components/css/admin.less'
+import './components/css/theme.less'
 ///import 'iview/dist/styles/iview.css';
 
 Vue.use(VueRouter)
@@ -26,68 +16,17 @@ Vue.obserable = obserable;
 const router = new VueRouter({
 	routes: [
 		//{path: '*', name: 'error', component: FError },
+		
 		{
-			path: '/adminuser/',
-			name: 'adminuser',
-			component: AdminUser,
+			path: '/product/',
+			name: 'product',
+			component: Product,
 			props: true
 		},
 		{
-			path: '/login/',
-			name: 'login',
-			component: Login,
-			props: true
-		},{
 			path: '/',
-			name: 'login',
-			component: Login,
-			props: true
-		},
-		 {
-			path: '/vote/',
-			name: 'vote',
-			component: Vote,
-			props: true
-		}, {
-			path: '/collection/:id/:type?',
-			name: 'collection',
-			component: Collection,
-			props: true
-		}, {
-			path: '/recruit/',
-			name: 'recruit',
-			component: Recruit,
-			props: true
-		}, {
-			 path: '/ratedetail/:id',
-			 name: 'ratedetail',
-			component: Detail,
-			props: true
-		},{
-			path: '/recruitaction/:id?',
-			name: 'recruitaction',
-			component: Recruitaction,
-			props:true
-		}, {
-			path: '/user/',
-			name: 'user',
-			component: User,
-			props: true
-		},
-		 {
-			path: '/rater/',
-			name: 'rater',
-			component: Rater,
-			props: true
-		}, {
-			path: '/download/',
-			name: 'download',
-			component: Download,
-			props: true
-		}, {
-			path: '/result/',
-			name: 'result',
-			component: Result,
+			name: 'product',
+			component: Product,
 			props: true
 		}
 		
@@ -103,7 +42,7 @@ new Vue({
 	},
 	el: '#app',
 	template: `<div id="app1">
-      <Main :obserable='obserable'></Main>
+      <Main :isAdmin='true' :obserable='obserable'></Main>
     </div>`,
 	methods: {},
 	components: {

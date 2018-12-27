@@ -1,0 +1,109 @@
+@import '../../components/css/base.scss';
+
+.zmiti-modal-main{
+    @include displayFlex(row);
+    height: 500px;
+    .zmiti-modal-cate{
+        padding-top: 50px;
+        width: 180px;
+        font-size:14px;
+        margin: 0 auto;
+        border-right: 1px solid #ddd;
+        li{
+            padding-left: 30px;
+            height: 40px;
+            line-height: 40px;
+            cursor: pointer;
+            &.zmiti-sub-menu{
+                padding-left: 60px;
+            }
+            &.active{
+                font-weight: bold;
+                color:#00c1de;
+            }
+        }
+    }
+    .zmiti-modal-amin-content{
+        -webkit-flex:1;
+        flex:1;
+        @include displayFlex(column);
+        margin-left: 10px;
+        .zmiti-modal-classis{
+            width:600px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-bottom: 1px solid #ddd;
+            ul{
+                @include displayFlex(row);
+                li{
+                    width: 100px;
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: center;
+                }
+            }
+
+        }
+        .zmiti-modal-src-list{
+            flex:1;
+            -webkit-flex:1;
+            overflow: hidden;
+            ul{
+                width:600px;
+                @include displayFlex(row);
+                flex-wrap:wrap;
+                -webkit-flex-wrap:wrap;
+                -webkit-justify-content: space-around;
+                justify-content: space-around;
+
+            }
+            li{
+
+
+                width: 134px;
+                height: 134px;
+                border:1px solid #ddd;
+                @include pos(r);
+                @include displayFlex(column);
+                justify-content: center;
+                -webkit-justify-content: center;
+                -webkit-box-align: center;
+                box-align: center;
+                margin-top: 16px;
+                overflow: hidden;
+               
+                &:hover{
+                    border:1px solid #00c1de;
+                    .zmiti-modal-img {
+                        @include transform( scale(1.2));
+                    }
+                }
+                &:nth-of-type(1){
+                    cursor: pointer;
+                    text-align: center;
+                    &>div{
+                        
+                        i{
+                            font-size:100px;
+                            color:#ccc;
+                        }
+
+                    }
+                }
+                .zmiti-modal-img{
+                    width: 100%;
+                    @include pos(r);
+                     @include transition_transform(.2s);
+                    img{
+                        @include pos(a);
+                        top: 50%;
+                        left: 50%;
+                        @include transform(translate3d(-50%,-50%,0));
+                    }
+                }
+
+
+            }
+        }
+    }
+}

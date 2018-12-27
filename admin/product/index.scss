@@ -1,0 +1,158 @@
+﻿@import "../css/base.scss";
+
+$baseColor: #fcffb4;
+$viewW: 750px;
+$color: #be0000;
+.zmiti-product-main-ui{
+    .ivu-table-wrapper {
+        border-bottom: none;
+        border-right: none;
+    }
+
+    @include displayFlex(row);
+
+    &>div {
+        &:nth-of-type(1) {
+            width: 200px;
+        }
+    }
+
+    .zmiti-tab-content {
+        box-sizing: border-box;
+        flex: 1;
+        -webkit-flex: 1;
+
+        &>div {
+            width: 98%;
+            margin: 10px auto 10px;
+            //border-top:1px solid #ddd;
+            @include pos(r);
+            flex: 1;
+            -webkit-flex: 1;
+
+            overflow: auto;
+
+
+            .zmiti-meet-form {
+                width: 100%;
+                margin: 0px auto;
+                padding: 20px 40px;
+                ;
+                height: 600px;
+                overflow: auto;
+            }
+
+        }
+        @include displayFlex(column);
+        .zmiti-tab-header {
+            width: 50px;
+            @include displayFlex(row);
+            width: 100%;
+            padding: 0 20px;
+            justify-content: space-between;
+            -webkit-justify-content: space-between;
+            line-height: 50px;
+            font-size: 20px;
+
+            &>div {
+                &:nth-of-type(1) {
+                    @include pos(r);
+                    text-indent: .5em;
+
+                    &:before {
+                        content: '';
+                        width: 4px;
+                        height: 24px;
+                        background: #be0000;
+                        left: -4px;
+                        @include pos(a);
+                        top: 12px;
+
+                    }
+                }
+            }
+
+
+        }
+
+      
+    }
+}
+.zmiti-product-main-ui {
+     .zmiti-product-main {
+         width: 100%;
+         @include displayFlex(row);
+
+
+         &>div {
+             @include transition(.3s);
+         }
+
+         .zmiti-product-table {
+             width: 100%;
+
+             .ivu-table-wrapper {
+                 margin-top: 10px;
+                 ;
+             }
+
+             &.active {
+                 width: 70%;
+             }
+         }
+
+         .zmiti-product-form {
+             //border:1px solid #dcdee2;
+             margin-top: 10px;
+             margin-left: 2%;
+             width: 28%;
+             @include pos(a);
+             right: 0;
+
+             &.detail-enter-active,
+             &.detail-leave-active {
+                 @include transition(.3s);
+             }
+
+             &.detail-enter,
+             &.detail-leave-to {
+                 width: 0;
+                 overflow: hidden;
+             }
+
+             &>header {
+                 line-height: 40px;
+                 height: 40px;
+                 font-weight: bold;
+                 color: #515a6e;
+                 text-indent: 2em;
+                 background: #f8f8f9;
+             }
+
+             .zmiti-product-form-item {
+                 line-height: 50px;
+
+                 height: 50px;
+                 ;
+
+                 &.zmiti-product-btns {
+                     text-align: center;
+
+                     button {
+                         margin: 0 20px;
+                         padding: 2px 20px;
+                     }
+                 }
+
+                 input {
+                     padding-left: 6px;
+                     height: 26px;
+                     width: 70%;
+                     border: 1px solid#d8d8d8;
+                     outline: none;
+                 }
+             }
+         }
+     }
+   
+}

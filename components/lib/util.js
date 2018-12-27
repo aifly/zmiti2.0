@@ -25,8 +25,9 @@ var zmitiUtil = {
 		return loginObj;
 	},
 
-	getProductList(fn) { //
+	getProductList(fn, self) { //
 		this.ajax({
+			self,
 			url: window.config.baseUrl + 'product/get_product/',
 			success(data) {
 				if (data.getret === 0) {
@@ -39,7 +40,8 @@ var zmitiUtil = {
 							"key": item.producturl.split('/')[1],
 							"title": item.productname,
 							"iconType": item.icontype,
-							"type": item.producticon
+							"type": item.producticon,
+							"outline": item.outline,
 						})
 					});
 					window.globalMenus = arr;
@@ -63,6 +65,8 @@ var zmitiUtil = {
 			formData.append(attr,opt[attr]);
 		}
 
+	
+
 		let config = {
 				headers: {
 					'Content-Type': 'multipart/form-data' //之前说的以表单传数据的格式来传递fromdata    
@@ -70,10 +74,10 @@ var zmitiUtil = {
 			};
 		axios.post(option.url, formData, config).then((dt) => {
 			var dt = dt.data;
+			
 			if(dt.getret === 0){
 
 			}
-			
 			else if(dt.getret === 1300){
 				window.localStorage['login'] = '';
 				window.location.hash = '/login';
