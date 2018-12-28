@@ -1,5 +1,6 @@
 ﻿@import "../css/base.scss";
 $color:rgb(55, 61, 65);
+$primary-color: #00c1de;
 .layout{
 
 	.layout-logo{
@@ -85,6 +86,11 @@ $color:rgb(55, 61, 65);
 		}
 	}
 
+	.zmiti-main-page{
+		-webkit-flex:1;
+		flex:1;
+	}
+
 	.zmiti-tab-C{
 		background:$color;
 		width:50px;
@@ -92,13 +98,10 @@ $color:rgb(55, 61, 65);
 		z-index: 1002;
 		overflow: hidden;
 		@include transition(width .2s .1s);
-
+		color:#fff;
 		&:hover{
 			width: 200px;
 		}
-
-
-		
 
 		&>div{
 			width: 200px;
@@ -106,62 +109,67 @@ $color:rgb(55, 61, 65);
 			border:1px solid $color;
 		}
 
-		.ivu-menu-dark{
-			background: $color;
-			&.ivu-menu-vertical .ivu-menu-opened .ivu-menu-submenu-title{
-				background: $color;
-			}
-		}
-
-		.ivu-menu-item-active,
-		.ivu-menu-item-selected{
-			&:not(.ivu-menu-submenu){
-				color:#b30501 !important;
-				background:rgba(179,5,1,.1) !important;
-
-				&:after{
-					background:#b30501 !important;
-				}
-				
-			}
-			a{
-				display: block;
-				width: 100%;
-			}
-		}
-
-		.zmiti-menu-item{
-			background: #fff;
+		ul>li{
 			height: 40px;
 			line-height: 40px;
-			color:#333;
-			text-indent:3em;
-			a{
-				color:inherit;
-				
-			};
-			@include pos(r);
-
-			&:nth-of-type(1){
-				margin-top: 10px;;
-			}
-
-			&.active{
-				color:#f00;
-				font-weight: bold;
-				background:rgba(204,0,0,.1);
-				&:before{
-					content:'';
-					width: 2px;
-					height: 100%;
-					background:#f00;
-					@include pos(a);
-					right: 0;
-					top: 0;
-
+			cursor: pointer;
+			@include displayFlex(row);
+			&>div{
+				&:nth-of-type(1){
+					width: 50px;
+					text-align: center;
+					
+					img{
+						width: 16px;
+					}
+					i{
+						font-size:16px;
+					}
 				}
-
-
+				&:nth-of-type(2){
+					flex:1;
+					-webkit-flex:1;
+				}
+			}
+		}
+		.zmiti-menu-title{
+			font-size:14px;
+			
+			margin: 6px 0;
+			@include pos(r);
+			&:hover{
+				background:$primary-color;
+			}
+			&:before,&:after{
+				content:"";
+				@include pos(a);
+				width: 100%;
+				height: 1px;
+				background:hsla(0, 0%, 100%, .1);
+				left: 0;
+				top: -6px;
+			}
+			&:after{
+				top: auto;
+				bottom: -6px;
+			}
+		}
+		.zmiti-menu-item{
+			font-size:12px;
+			margin-left: -1px;
+			@include pos(r);
+			&:hover{
+				background:#192129;
+				&>div:nth-of-type(2){
+					color:$primary-color;
+				}
+			}
+			a{
+				@include pos(a);
+				width: 100%;
+				height: 100%;
+				left: 0;
+				top: 0;
 			}
 		}
 		a{
@@ -195,6 +203,7 @@ $color:rgb(55, 61, 65);
 
 	.zmiti-main-layout{
 		@include displayFlex(row);
+
 	}
 
 	.symbin-main-menu{

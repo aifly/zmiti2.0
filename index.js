@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Obserable from './components/lib/obserable';
-import Main from './components/main/index';
+import Main from './common/main/index';
 import Login from './components/login/index'
 import Home from './components/home/index'
 

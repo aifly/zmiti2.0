@@ -1,15 +1,18 @@
 <template>
 	<div class="zmiti-product-main-ui">
+		<div>
+			<Tab :menus='menus' title="人员管理" :refresh='refresh'></Tab>
+		</div>
 		<div class="zmiti-tab-content">
 			<header class="zmiti-tab-header">
-				<div>产品管理</div>
+				<div>单位管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增产品</Button>
+					<Button type="primary" @click="addCourse">新增单位</Button>
 				</div>
 			</header>
-			<div class='zmiti-product-main' :style="{height:viewH - 120+'px' }">
+			<div class='zmiti-product-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
 				<div class='zmiti-product-table' :class="{'active':showDetail}">
-					<Table :data='productList' :columns='columns'></Table>
+					<Table :data='companyList' :columns='columns'></Table>
 				</div>
 				<transition name='detail'>
 					<div class='zmiti-product-form' v-if='showDetail'>
@@ -17,10 +20,10 @@
 							{{formproduct.productid?'编辑评分项':'新增评分项'}}
 						</header>
 						<div class='zmiti-product-form-item'>
-							<label for="">产品名称：</label><input placeholder="请输入产品名称" v-model="formproduct.productname" />
+							<label for="">单位名称：</label><input placeholder="请输入单位名称" v-model="formproduct.productname" />
 						</div>
 						<div class='zmiti-product-form-item'>
-							<label for="">产品简称：</label><input placeholder="请输入产品简称" v-model="formproduct.outline" />
+							<label for="">单位简称：</label><input placeholder="请输入单位简称" v-model="formproduct.outline" />
 						</div>
 						
 						<div class='zmiti-product-form-item zmiti-product-btns'>
@@ -29,9 +32,14 @@
 						</div>
 					</div>
 				</transition>
+
+
 			</div>
 		</div>
-		<ZmitiModal></ZmitiModal>
+
+		<Modal title='权限设置' v-model="visible">
+			<Table :data='roleList' :columns='roleCol'></Table>
+		</Modal>
 	</div>
 </template>
 
@@ -40,7 +48,7 @@
 	
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import ZmitiModal  from '../../common/modal/index';
+	import Tab from '../../common/tab/index';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -48,6 +56,7 @@
 			return{
 
 				visible:false,
+				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
@@ -58,16 +67,75 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				productList:[],
-				columns:[
+				roleCol:[
 					{
 						title:"产品名称",
-						key:'title',
+						key:'productname',
+						align:'center',
+					},
+					{
+						title:"访问权限",
+						key:'role',
+						align:'center',
+						render:(h,params)=>{
+							console.log(params.row.status)
+							return h('Checkbox',{
+								props:{
+									checked:true,
+									value:params.row.status === 1
+								},
+								on:{
+									'on-change':(e)=>{
+										zmitiUtil.ajax({
+											url:window.config.baseUrl+'admin/setuserauth',
+											data:{
+												setuserid:params.row.userid,
+												productids:params.row.productid,
+												isdel:1
+											}
+										})
+									}
+								}
+							},'访问权限')
+						}
+					}
+				],
+				menus:[
+					{
+						name:"单位账号管理",
+						to:"company"
+					},
+					{
+						name:"个人账号管理",
+						to:"user"
+					}
+				],
+				columns:[
+					{
+						title:"单位名称",
+						key:'companyName',
+						align:'center',
+						width:240
+					},
+					{
+						title:"负责人账号",
+						key:'username',
+						align:'center'
+						
+					},{
+						title:"用戶总数",
+						key:'totalUserNum',
+						align:'center'
+						
+					},{
+						title:"到期时间",
+						key:'expirDate',
 						align:'center'
 						
 					},
 					{
-						title:"产品简称",
-						key:'outline',
+						title:"空间使用量",
+						key:'userSpace',
 						align:'center'
 						
 					},
@@ -75,11 +143,40 @@
 						title:'操作',
 						key:'action',
 						align:'center',
+						width:200,
 						render:(h,params)=>{
 
 							return h('div', [
                                
                                 h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+										margin: '2px 5px',
+										border:'none',
+										padding: '3px 7px 2px',
+										fontSize: '12px',
+										borderRadius: '3px'
+                                    },
+                                    on: {
+                                        click: () => {
+											this.visible = true;
+											var s = this;
+											zmitiUtil.ajax({
+												url:window.config.baseUrl+'admin/getuserauth',
+												data:{
+													setuserid:params.row.userid
+												},
+												success(data){
+													s.roleList = data.list;											
+												}
+											})
+                                        }
+                                    }
+								}, '权限设置'),
+								 h('Button', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
@@ -137,7 +234,7 @@
 					longitude :'116.585856',
 					latitude :'40.364989'
 				},
-				courseList:[],
+				companyList:[],
 				 
 				directoryList:{
 
@@ -147,7 +244,7 @@
 			}
 		},
 		components:{
-			ZmitiModal
+			Tab
 		},
 
 		beforeCreate(){
@@ -159,10 +256,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			
-			this.getProductList();
-			
-
+			this.getCompanyList();
 			
 		},
 
@@ -171,6 +265,10 @@
 		},
 		
 		methods:{
+
+			refresh(){
+
+			},
 
 			addCourse(){
 				this.showDetail = true;
@@ -185,12 +283,20 @@
 				this.currentClassId = -1;
 			},
 
-			getProductList(){
+			getCompanyList(){
 				var s = this;
-
-				zmitiUtil.getProductList((arr)=>{
-					this.productList = arr;
+				zmitiUtil.ajax({
+					url:window.config.baseUrl+'user/get_userlist/',
+					data:{
+						setusertypesign:2//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
+					},
+					success(data){
+						if(data.getret === 0){
+							s.companyList = data.userlist;
+						}
+					}
 				})
+				 
 				
 			},
 		
@@ -206,7 +312,7 @@
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
 						if(data.getret === 0){
-							s.getProductList();
+							s.getCompanyList();
 						}
 					}
 				})
@@ -231,7 +337,7 @@
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
 						//s.showDetail = false;
-						s.getProductList();
+						s.getCompanyList();
 					}
 				})
 			},

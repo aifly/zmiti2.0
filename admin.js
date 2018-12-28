@@ -1,7 +1,9 @@
 import Vue from "vue";
-import Obserable from './components/lib/obserable';
-import Main from './components/main/index';
+import Obserable from './common/lib/obserable';
+import Main from './common/main/index';
 import Product from './admin/product/index';
+import User from './admin/user/index';
+import Company from './admin/company/index';
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import './admin/css/index.css';
@@ -16,7 +18,17 @@ Vue.obserable = obserable;
 const router = new VueRouter({
 	routes: [
 		//{path: '*', name: 'error', component: FError },
-		
+		{
+			path: '/user/',
+			name: 'user',
+			component: User,
+		},
+		{
+			path: '/company/',
+			name: 'company',
+			component: Company,
+			props: true
+		},
 		{
 			path: '/product/',
 			name: 'product',

@@ -1,290 +1,288 @@
 <template>
-	<div class="wm-user-ui">
-		<header>
-			<div>个人中心</div>
-		</header>
-		<div class="wm-user-center">
-			<div>
-				<div class="wm-user-form-item">
-					<label for="">用户名：</label><input type="text"  v-model='userinfo.adminusername'>
-					<div class="wm-user-error" v-if='userError'>{{userError}}</div>
+	<div class="zmiti-product-main-ui">
+		<div>
+			<Tab :menus='menus' title="人员管理" :refresh='refresh'></Tab>
+		</div>
+		<div class="zmiti-tab-content">
+			<header class="zmiti-tab-header">
+				<div>用户管理</div>
+				<div>
+					<Button type="primary" @click="addCourse">新增用户</Button>
 				</div>
-				<div class="wm-user-form-item">
-					<label for="">密码：</label><input type="password" :disabled='!showPassWord' v-model="userinfo.password">
-					<Button type='primary'  @click='modifyPwd'>{{showPassWord?'确定':'修改密码'}}</Button>
-					<div class="wm-user-error" v-if='passError'>{{passError}}</div>
+			</header>
+			<div class='zmiti-product-main zmiti-scroll' :style="{height:viewH - 120+'px' }">
+				<div class='zmiti-product-table' :class="{'active':showDetail}">
+					<Table :data='userList' :columns='columns'></Table>
 				</div>
-				<div class="wm-user-form-item" v-if='showPassWord'>
-					<label for="">确认密码：</label><input type="password" v-model="userinfo.repassword">
-					<div class="wm-user-error" v-if='repassError'>{{repassError}}</div>
-				</div>
-				<div class="wm-user-form-item">
-					<label for="">姓名：</label><input type="text" v-model="userinfo.nickname">
-					<div class="wm-user-error" v-if='usernameError'>{{usernameError}}</div>
-				</div>
-				<div class="wm-user-form-item">
-					<label for="">手机：</label><input type="text" v-model="userinfo.adminmobile">
-					<div class="wm-user-error" v-if='mobileError'>{{mobileError}}</div>
-				</div>
-				<div class="wm-user-form-item ">
-					<label for="">单位：</label><input type="text" v-model="userinfo.company">
-					<div class="wm-user-error" v-if='companyError'>{{companyError}}</div>
-				</div>
-
-				<div class="wm-user-form-item "  v-if='false'>
-					<label for="">地址：</label>
-					<Cascader v-model="userinfo.cityids"  :load-data="getCityById"  change-on-select :data='provinceList'></Cascader>
-				</div>
-
-				<div class="wm-user-form-item ">
-					<label for="">详细地址：</label><input type="text" v-model="userinfo.detailaddress">
-				</div>
-				<div class="wm-user-form-item ">
-					<label for="">邮箱：</label><input type="text"  v-model="userinfo.email">
-				</div>
-				<div class="wm-user-form-item wx-reg-btn" @click="modifyUser">
-					确 定
-				</div>
+				<transition name='detail'>
+					<div class='zmiti-product-form' v-if='showDetail'>
+						<header>
+							{{formproduct.productid?'编辑评分项':'新增评分项'}}
+						</header>
+						<div class='zmiti-product-form-item'>
+							<label for="">单位名称：</label><input placeholder="请输入单位名称" v-model="formproduct.productname" />
+						</div>
+						<div class='zmiti-product-form-item'>
+							<label for="">单位简称：</label><input placeholder="请输入单位简称" v-model="formproduct.outline" />
+						</div>
+						
+						<div class='zmiti-product-form-item zmiti-product-btns'>
+							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
+							<Button size ='small' type='primary' @click='productAction'>{{formproduct.productid?'保存':'确定'}}</Button>
+						</div>
+					</div>
+				</transition>
 			</div>
 		</div>
-
-		
+		<ZmitiModal></ZmitiModal>
 	</div>
 </template>
 
 <script>
 	import './index.css';
-	import sysbinVerification from '../lib/verification';
-	import symbinUtil from '../lib/util';
+	
+	import Vue from 'vue';
+	import zmitiUtil from '../../common/lib/util';
+	import ZmitiModal  from '../../common/modal/index';
+	import Tab from '../../common/tab/index';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
+
 				visible:false,
 				imgs:window.imgs,
-				showPassWord:false,
 				isLoading:false,
-				userError:"",
-				companyError:"",
-				usernameError:"",
-				passError:"",
-				repassError:"",
-				mobileError:"",
+				showDetail:false,
+				currentClassId:-1, 
+				address:'',
+				showPass:false,
+				showMap:false,
+				viewH:window.innerHeight,
+				viewW:window.innerWidth,
+				productList:[],
+				menus:[
+					{
+						name:"单位账号管理",
+						to:"company"
+					},
+					{
+						name:"个人账号管理",
+						to:"user"
+					}
+				],
+				columns:[
+					{
+						title:"用户名称",
+						key:'username',
+						align:'center'
+						
+					},
+					{
+						title:"手机号",
+						key:'mobile',
+						align:'center'
+						
+					},
+					{
+						title:"邮箱",
+						key:'email',
+						align:'center'
+						
+					},
+					{
+						title:"注册日期",
+						key:'regDate',
+						align:'center'
+						
+					},
+					{
+						title:"剩余天数",
+						key:'surplusDays',
+						align:'center'
+					},
 
-				provinceList:[],
+					{
+						title:"空间使用量",
+						key:'userSpace',
+						align:'center'
+						
+					},
+					{
+						title:'操作',
+						key:'action',
+						align:'center',
+						render:(h,params)=>{
 
-				formUser:{
-					oldpassword:'',
-					newpassword:'',
-					surepassword:''
+							return h('div', [
+                               
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+										margin: '2px 5px',
+										border:'none',
+										background:'#fab82e',
+										color:'#fff',
+										padding: '3px 7px 2px',
+										fontSize: '12px',
+										borderRadius: '3px'
+
+                                    },
+                                    on: {
+                                        click: () => {
+											var s = this;
+											s.showDetail = true;
+											s.formproduct = params.row;
+                                        }
+                                    }
+                                }, '详情'),
+                                h('Poptip',{
+									props:{
+										confirm:true,
+										title:"确定要删除吗"
+									},
+									on:{
+										'on-ok':()=>{
+											this.delproduct(params.row.productid);
+										},
+										
+									}
+								},[
+									h('Button', {
+										props: {
+											type: 'error',
+											size: 'small'
+										},
+										on: {
+											click: () => {
+											}
+										}
+									}, '删除')
+								])
+                            ]);
+							
+							 
+						}
+					}
+				],
+				
+				formproduct:{
+					pdfurl:'',
+					longitude :'116.585856',
+					latitude :'40.364989'
 				},
+				userList:[],
+				 
+				directoryList:{
+
+				},
+				
 				userinfo:{}
 			}
 		},
 		components:{
+			ZmitiModal,
+			Tab
 		},
 
 		beforeCreate(){
-			var validate = sysbinVerification.validate(this);
-			//symbinUtil.clearCookie('login');
+			//var validate = sysbinVerification.validate(this);
+			//zmitiUtil.clearCookie('login');
 
-			this.validate = validate;
+			///this.validate = validate;
 		},
 		mounted(){
-			this.userinfo = symbinUtil.getUserInfo();
-			console.log(this.userinfo)
-			this.getCityData();
-			if(this.userinfo.isadmin){
-				//window.location.hash = '/periods';
-			}
+			window.s = this;
+			this.userinfo = zmitiUtil.getUserInfo();
+			this.getUserList();
+			
+		},
+
+		watch:{
+			
 		},
 		
 		methods:{
 
+			refresh(){
 
-			modifyPwd(){
-					if(!this.showPassWord){
-					this.showPassWord = true;
-				}else{
-					var s = this;
-					if(!this.userinfo.password){
-						this.passError ='密码不能为空';
-						setTimeout(() => {
-							this.passError ='';
-						}, 2000);
-						return;
-					}
+			},
 
-					if(this.userinfo.repassword !== this.userinfo.password){
-						this.repassError ='两次密码不一致';
-						setTimeout(() => {
-							this.repassError ='';
-						}, 2000);
-						return;
-					};
-
-					symbinUtil.ajax({
-						_this:s,
-						url:window.config.baseUrl+'/wmadadmin/updateadminpwd/',
-						data:{
-							adminusername:s.userinfo.adminusername,
-							admintoken:s.userinfo.admintoken,
-							adminpwd:s.userinfo.password
-						},
-						success(data){
-							console.log(data);
-							if(data.getret === 0){
-								s.$Message.success('修改密码成功,请重新登录');
-								setTimeout(() => {
-									window.location.hash = '#/login';
-								}, 400);
-							}
-							else{
-								s.$Message.error(data.getmsg);
-							}
-						}
-					})
+			addCourse(){
+				this.showDetail = true;
+				this.currentClassId = -1;
+				this.formproduct = {
 				}
 			},
 
-			getCityById(e,callback){
-				
-				var provinceId = e.__value.split(',')[0];
-				var cityid = e.__value.split(',')[1];
-				var s = this;
 
-				
-				symbinUtil.ajax({
-					_this:s,
-					url:window.config.baseUrl+'/share/getarealist',
+			refresh(){
+				this.showDetail = false;
+				this.currentClassId = -1;
+			},
+
+			getUserList(){
+				var s = this;
+				zmitiUtil.ajax({
+					url:window.config.baseUrl+'user/get_userlist/',
 					data:{
-						cityid
+						setusertypesign:1//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
 					},
 					success(data){
 						if(data.getret === 0){
-							console.log(data);
-							s.provinceList.forEach((item,i)=>{
-								if(item.value === provinceId*1){
-									item.children.forEach((child,k)=>{
-										if(child.value === cityid*1){
-											child.children = child.children || [];
-											data.list.map((d,l)=>{
-												child.children.push({
-													value:d.cityid,
-													label:d.name,
-													//loading: false
-												})
-											})
-											
-										}
-									})
-									callback();
-									
-								}
-								
-							});
-							
-
-						}
-					}
-
-				})
-			},
-			getCityData(){
-				var s = this;
-				symbinUtil.ajax({
-					_this:s,
-					url:window.config.baseUrl+'/share/getcitylist/',
-					data:{},
-					success(data){
-						//console.log(data);
-						if(data.getret === 0){
-							data.list.map((item,i)=>{
-								var children = [];
-								item.children && item.children.map((child,l)=>{
-									children.push({
-										value:child.cityid,
-										label:child.name,
-										loading: false,
-										children:[]
-										
-									})
-								})
-								s.provinceList.push({
-									value:item.cityid,
-									label:item.name,
-									children,
-									loading: false
-								})
-							})
+							s.userList = data.userlist;
 						}
 					}
 				})
-			},
-			modifyUser(){
-				var s = this;
-				symbinUtil.ajax({
-					_this:s,
-					url:window.config.baseUrl+'/wmadadmin/updateadmininfo',
-					validate:s.validate,
-					data:{
-						adminusername:s.userinfo.adminusername,
-						admintoken:s.userinfo.admintoken,
-						nickname:s.userinfo.nickname,
-						adminmobile:s.userinfo.adminmobile,
-						detailaddress:s.userinfo.detailaddress,
-						email:s.userinfo.email,
-					/* 	provinceid:s.userinfo.cityids[0],
-						cityid:s.userinfo.cityids[1],
-						areaid:s.userinfo.cityids[2], */
-						companyname:s.userinfo.companyname
-					},success(data){
-						console.log(data);
-						 if(data.getret === 0){
-							s.$Message.success(data.getmsg);
-							data.list.admintoken = s.userinfo.admintoken;
-							data.list.accesstoken = s.userinfo.accesstoken;
-							window.localStorage.setItem('login',JSON.stringify(data.list));
-							///window.location.hash =  '/login';
-						}else{
-							s.$Message.error('修改密码失败');
-						} 
-					}
-
-				})
-			},
-			ok(){
-				if(this.formUser.newpassword  !== this.formUser.surepassword){
-					this.$Message.error('新密码和确认密码不一致');
-					return false;
-				}
-				var s = this;
-
-				symbinUtil.ajax({
-					_this:s,
-					url:window.config.baseUrl+'/wmuser/modify_password',
-					validate:s.validate,
-					data:{
-						oldpassword:s.formUser.oldpassword,
-						password:s.formUser.newpassword,
-						repassword:s.formUser.surepassword
-					},success(data){
-
-						if(data.getret === 0){
-							s.$Message.warning('请重新登录');
-							window.location.hash =  '/login';
-						}else{
-							s.$Message.error(data.getmsg);
-						}
-					}
-
-				})
+				 
 				
 			},
-			cancel(){
-				this.formUser = {};
-			}
+		
+			delproduct(id){
+				var s = this;
+				zmitiUtil.ajax({
+					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
+					data:{
+						admintoken:s.userinfo.accesstoken,
+						adminuserid:s.userinfo.userid,
+						id
+					},
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
+						if(data.getret === 0){
+							s.getUserList();
+						}
+					}
+				})
+			},
+			productAction(){
+				var s = this;
+				var p = JSON.parse(JSON.stringify(this.formproduct));
+				p.admintoken = s.userinfo.accesstoken;
+				p.adminuserid = s.userinfo.userid;
+				var url = window.config.baseUrl+'/zmitiadmin/addrateditems';
+				if(p.productid>-1){
+					url = window.config.baseUrl+'/zmitiadmin/updaterateditems';
+					p.id = p.productid;
+				}else{
+					this.formproduct = {
+					}
+				}
+
+				zmitiUtil.ajax({
+					url,
+					data:p,
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
+						//s.showDetail = false;
+						s.getUserList();
+					}
+				})
+			},
 		}
 	}
 </script>

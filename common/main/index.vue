@@ -14,6 +14,9 @@
                    <div v-if='!isAdmin'>
                        <a href="#">我的定制</a>
                    </div>
+                   <div v-if='userinfo.usertypesign === 4'>
+                       <a href="./admin.html">系统管理</a>
+                   </div>
                </div>
                <div class="zmiti-user-info">
                    <span>
@@ -28,22 +31,30 @@
             <Layout class="zmiti-main-layout">
                 <div class="zmiti-tab-C" :style='{height:(viewH - 50)+"px"}'>
                    <div>
-                      <Menu width='300' size='small'  active-name="1" :open-names="['1']" theme='dark' >
-                            <MenuGroup  name="1" :title='isAdmin?"系统管理":"产品与服务"'>
-                                <MenuItem :title='item.resourcecnname' :to='"/myreport/"+item.productid' class='zmiti-text-overflow' :key='i' v-for="(item,i) in productList" :name="item.productid">
-                                    {{item.title}}
-                                </MenuItem>
-
-                                <MenuItem v-if='isAdmin' class='zmiti-text-overflow' to='product' name='product'>
-                                    <Icon type="ios-basket" />产品管理
-                                </MenuItem>
-                            </MenuGroup >
-                           
-                        </Menu>
+                       <ul>
+                           <li class='zmiti-menu-title'>
+                               <div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
+                            </li>
+                           <li  :title='item.resourcecnname' :to='"/myreport/"+item.productid' class='zmiti-text-overflow zmiti-menu-item' :key='i' v-for="(item,i) in productList" :name="item.productid">
+                                <div><img :src="imgs.zmiti" alt=""></div><div>{{item.title}}</div>
+                           </li>
+                           <template v-if='isAdmin'>
+                                <li  class='zmiti-menu-item'>
+                                    <router-link to="product"> </router-link>
+                                    <div><Icon type="ios-basket" /></div><div>产品管理</div>
+                                </li>
+                                <li  class='zmiti-menu-item'>
+                                    <router-link to="company"> </router-link>
+                                    <div><Icon type="ios-person" /></div><div>人员管理</div>
+                                </li>
+                           </template>
+                       </ul>
                    </div>
                 </div>
-                <div style='width:50px;'></div>
-                <Layout>
+
+                <div style="width:50px;height:100%;"></div>
+                
+                <Layout class='zmiti-main-page'>
                    <router-view></router-view>
                 </Layout>
             </Layout>
@@ -90,14 +101,13 @@
 		mounted(){
            ///this.menus = this.defaultMenu.concat([]);
             var obserable = Vue.obserable;
-            
             var userinfo = zmitiUtil.getUserInfo();
 
             this.userinfo = userinfo; 
             if(this.$route.name !== 'login' && this.$route.name !== 'register' && !this.isAdmin){
                zmitiUtil.getProductList((arr)=>{
                    this.productList = arr;
-               });
+               },this);
             }
             
         },

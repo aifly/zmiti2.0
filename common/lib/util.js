@@ -46,6 +46,13 @@ var zmitiUtil = {
 					});
 					window.globalMenus = arr;
 					fn && fn(arr);
+				}else if(data.getret === 1300){
+
+					
+					
+					if (self && self.isAdmin) {
+						window.location.href = './#/login';
+					}
 				}
 			}
 		});
@@ -75,12 +82,21 @@ var zmitiUtil = {
 		axios.post(option.url, formData, config).then((dt) => {
 			var dt = dt.data;
 			
+			console.log(option,dt);
 			if(dt.getret === 0){
 
 			}
 			else if(dt.getret === 1300){
 				window.localStorage['login'] = '';
-				window.location.hash = '/login';
+				if (option.self && option.self.isAdmin) {
+					window.location.href = './#/login';
+				}else{
+					window.location.hash = '/login';
+				}
+
+				window.location.reload();
+				
+
 			}
 			option.fn && option.fn(dt);
 			option.success && option.success(dt);
@@ -93,24 +109,7 @@ var zmitiUtil = {
 
 		return;
 		
-		$.ajax({
-			url:option.url,
-			type:option.type || 'post',
-			data:opt,
-			error(){
-				option.fnError && option.fnError();
-				option.error && option.error();
-
-				option._this && option._this.$Message.error('服务器开小差了，请稍后重试');
-			}
-		}).done((dt)=>{
-			if (dt.getret === 1000) {
-				window.localStorage['login'] = '';
-				window.location.hash = '/login';
-			} else {}
-			option.fn && option.fn(dt);
-			option.success && option.success(dt);
-		})
+		
 	},
 	setCookie(cname, cvalue, exdays){
        var d = new Date();  

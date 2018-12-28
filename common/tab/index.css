@@ -49,20 +49,37 @@
   }
 }
 
-.wm-lastcheck-ui {
-  display: block !important;
-  position: relative !important;
+.wm-tab-ui {
+  background: #eaedf1;
+  width: 200px;
+  height: 100%;
 }
 
-.wm-lastcheck-ui .wm-collection-left-search-condition-header {
-  height: 40px !important;
-}
-
-.wm-lastcheck-ui .wm-reset {
-  position: fixed;
-  z-index: 100;
-  right: 0;
-  bottom: 100px;
-  width: 150px;
+.wm-tab-ui .wm-tab-list li {
+  height: 36px;
+  line-height: 36px;
+  text-indent: 2em;
   cursor: pointer;
+}
+
+.wm-tab-ui .wm-tab-list li:nth-of-type(1) {
+  height: 100px;
+  line-height: 20px;
+  text-align: center;
+  font-weight: bold;
+  text-indent: 0;
+  padding: 40px 10px;
+}
+
+.wm-tab-ui .wm-tab-list li a {
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.wm-tab-ui .wm-tab-list li.active {
+  background: #f5f7f9;
+  font-weight: bold;
+  color: #be0000;
 }

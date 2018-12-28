@@ -56,7 +56,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
-				show:true,
+				show:false,
 				viewH:window.innerHeight,
 				cateList:[],
 				defaultIds: ['1465782065', '1465782285', '1465782327', '1465782386', '1465285201', '1465285261'],
