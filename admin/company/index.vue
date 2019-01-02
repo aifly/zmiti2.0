@@ -78,11 +78,11 @@
 						key:'role',
 						align:'center',
 						render:(h,params)=>{
-							console.log(params.row.status)
+							console.log(params.row)
 							return h('Checkbox',{
 								props:{
 									checked:true,
-									value:params.row.status === 1
+									value:params.row.authstatus === 1
 								},
 								on:{
 									'on-change':(e)=>{
@@ -91,7 +91,7 @@
 											data:{
 												setuserid:params.row.userid,
 												productids:params.row.productid,
-												isdel:1
+												isdel:params.row.authstatus === 1 ? 1:2
 											}
 										})
 									}

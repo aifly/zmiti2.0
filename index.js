@@ -1,8 +1,9 @@
 import Vue from "vue";
-import Obserable from './components/lib/obserable';
+import Obserable from './common/lib/obserable';
 import Main from './common/main/index';
 import Login from './components/login/index'
 import Home from './components/home/index'
+import Manager from './components/manager/index'
 
 import iView from 'iview';
 import VueRouter from 'vue-router'
@@ -33,6 +34,12 @@ const router = new VueRouter({
 			path: '/home',
 			name: 'home',
 			component: Home,
+			props: true
+		},
+		{
+			path: '/manager',
+			name: 'manager',
+			component: Manager,
 			props: true
 		}
 	]

@@ -45,7 +45,7 @@
 
 <script>
 	import './index.css';
-	import zmitiUtil from '../lib/util';
+	import zmitiUtil from '../../common/lib/util';
 
 	import Vue from "vue";
 
@@ -65,7 +65,6 @@
 				isNotChrome:false,
 				showError:false,
 				errorMsg:'',
-				loginType:"员工登录",
 				viewH:document.documentElement.clientHeight
 			}
 		},

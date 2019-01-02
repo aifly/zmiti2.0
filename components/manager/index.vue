@@ -1,16 +1,6 @@
 <template>
-	<div class="wm-myreport-main-ui">
-
-
-		首页
-
-		
-
-
-	
-	
-
-
+	<div class="wm-manager-main-ui">
+		manager
 	</div>
 </template>
 
@@ -20,15 +10,12 @@
 	import zmitiUtil from '../../common/lib/util';
 	import Vue from 'vue';
 
-	var json = {};
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
-				
 				imgs:window.imgs,
-				
 			}
 		},
 		components:{

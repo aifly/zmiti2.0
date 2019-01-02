@@ -10,9 +10,6 @@ $primary-color: #00c1de;
 			width: auto;
 		}
 	}
-	.ivu-layout{
-		
-	}
 
 	.ivu-layout-header{
 		 @include displayFlex(row);
@@ -107,6 +104,8 @@ $primary-color: #00c1de;
 			width: 200px;
 			background: $color;
 			border:1px solid $color;
+			
+			
 		}
 
 		ul>li{
@@ -165,7 +164,7 @@ $primary-color: #00c1de;
 				}
 			}
 			a{
-				@include pos(a);
+				@include pos(r);
 				width: 100%;
 				height: 100%;
 				left: 0;

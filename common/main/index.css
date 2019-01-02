@@ -221,7 +221,7 @@
 }
 
 .layout .zmiti-tab-C .zmiti-menu-item a {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   left: 0;

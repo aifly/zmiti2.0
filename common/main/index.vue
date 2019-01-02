@@ -36,7 +36,12 @@
                                <div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
                             </li>
                            <li  :title='item.resourcecnname' :to='"/myreport/"+item.productid' class='zmiti-text-overflow zmiti-menu-item' :key='i' v-for="(item,i) in productList" :name="item.productid">
-                                <div><img :src="imgs.zmiti" alt=""></div><div>{{item.title}}</div>
+                                <div>
+                                    <router-link :to="item.linkTo"> <img :src="imgs.zmiti" alt=""></router-link>
+                                </div>
+                                <div>
+                                    <router-link :to="item.linkTo">{{item.title}}</router-link>
+                                </div>
                            </li>
                            <template v-if='isAdmin'>
                                 <li  class='zmiti-menu-item'>

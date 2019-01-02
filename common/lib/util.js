@@ -82,7 +82,6 @@ var zmitiUtil = {
 		axios.post(option.url, formData, config).then((dt) => {
 			var dt = dt.data;
 			
-			console.log(option,dt);
 			if(dt.getret === 0){
 
 			}

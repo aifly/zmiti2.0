@@ -7,7 +7,8 @@ var imgs = {
 	search :"./assets/images/search.png",
 	zmiti :"./assets/images/zmiti.jpg",
 	loginBg:"./assets/images/login-bg.jpg",
-	logout:'./assets/images/logout.png'
+	logout:'./assets/images/logout.png',
+	checked:'./assets/images/checked.png',
 
 	
 

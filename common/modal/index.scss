@@ -1,109 +1,281 @@
-@import '../../components/css/base.scss';
+@import "../../components/css/base.scss";
 
-.zmiti-modal-main{
+.zmiti-modal-main {
     @include displayFlex(row);
+
     height: 500px;
-    .zmiti-modal-cate{
+
+    .zmiti-modal-cate {
         padding-top: 50px;
         width: 180px;
-        font-size:14px;
+        font-size: 14px;
         margin: 0 auto;
         border-right: 1px solid #ddd;
-        li{
+
+        li {
             padding-left: 30px;
             height: 40px;
             line-height: 40px;
             cursor: pointer;
-            &.zmiti-sub-menu{
+
+            &.zmiti-sub-menu {
                 padding-left: 60px;
             }
-            &.active{
+
+            &.active {
                 font-weight: bold;
-                color:#00c1de;
+                color: #00c1de;
             }
         }
     }
-    .zmiti-modal-amin-content{
-        -webkit-flex:1;
-        flex:1;
+
+    .zmiti-modal-amin-content {
+        -webkit-flex: 1;
+        flex: 1;
+
         @include displayFlex(column);
+
         margin-left: 10px;
-        .zmiti-modal-classis{
-            width:600px;
-            margin: 0 auto;
+
+        @include pos(r);
+
+        &:before{
+            content:'';
+            @include pos(a);
+            width: 100%;
+            left: 0;
+            top: 30px;
+            background:#ccc;
+            height: 1px;
+        }
+        .zmiti-modal-cate-edit{
+            @include pos(a);
+            right: 0;
+            cursor: pointer;
+            i{
+                font-size:24px;
+            }
+        }
+        .zmiti-modal-arrow {
+            @include pos(a);
+            cursor: pointer;
+            z-index: 100;
+
+            i {
+                font-size: 26px;
+            }
+
+            &.zmiti-modal-arrow-right {
+                right: 30px;;
+            }
+        }
+       
+
+        .zmiti-modal-cate-top{
+            @include pos(r);
+            width: 550px;
+            @include displayFlex(row);
+            &>div{
+            }
+            .zmiti-modal-add-cate{
+                width: 80px;
+                text-align: center;
+                line-height: 24px;;
+            }
+        }
+
+        .zmiti-modal-classis {
+            flex:1;
+            -webkit-flex:1;
             overflow: hidden;
-            border-bottom: 1px solid #ddd;
-            ul{
+            margin-left: 24px;
+
+            ul {
                 @include displayFlex(row);
-                li{
+
+                li {
+                    
+                    cursor: pointer;
                     width: 100px;
                     height: 30px;
                     line-height: 30px;
                     text-align: center;
-                }
-            }
-
-        }
-        .zmiti-modal-src-list{
-            flex:1;
-            -webkit-flex:1;
-            overflow: hidden;
-            ul{
-                width:600px;
-                @include displayFlex(row);
-                flex-wrap:wrap;
-                -webkit-flex-wrap:wrap;
-                -webkit-justify-content: space-around;
-                justify-content: space-around;
-
-            }
-            li{
-
-
-                width: 134px;
-                height: 134px;
-                border:1px solid #ddd;
-                @include pos(r);
-                @include displayFlex(column);
-                justify-content: center;
-                -webkit-justify-content: center;
-                -webkit-box-align: center;
-                box-align: center;
-                margin-top: 16px;
-                overflow: hidden;
-               
-                &:hover{
-                    border:1px solid #00c1de;
-                    .zmiti-modal-img {
-                        @include transform( scale(1.2));
-                    }
-                }
-                &:nth-of-type(1){
-                    cursor: pointer;
-                    text-align: center;
-                    &>div{
-                        
-                        i{
-                            font-size:100px;
-                            color:#ccc;
-                        }
-
-                    }
-                }
-                .zmiti-modal-img{
-                    width: 100%;
                     @include pos(r);
-                     @include transition_transform(.2s);
-                    img{
-                        @include pos(a);
-                        top: 50%;
-                        left: 50%;
-                        @include transform(translate3d(-50%,-50%,0));
+                    i {
+                        font-size: 16px;
+                    }
+                    &.active{
+                        color:#00c1de;
+                        font-weight: bold;
+                        &::before{
+                            content:'';
+                            @include pos(a);
+                            width: 50px;
+                            height: 2px;
+                            background: #00c1de;
+                            left: 25px;
+                            bottom: 0;
+                        }
                     }
                 }
-
-
             }
+        }
+
+        .zmiti-modal-src-list {
+            flex: 1;
+            -webkit-flex: 1;
+            overflow: hidden;
+            @include pos(r);
+            top: 4px;
+            ul {
+                width: 600px;
+                @include pos(r);
+                left: 10px;
+
+                @include displayFlex(row);
+
+                flex-wrap: wrap;
+                -webkit-flex-wrap: wrap;
+                
+                -webkit-justify-content: flex-start;
+                justify-content: flex-start;
+                
+                &>li {
+                    margin-right: 16px;
+                    width: 134px;
+                    height: 134px;
+                    border: 1px solid #ddd;
+    
+                   
+                    margin-top: 16px;
+                    @include pos(r);
+                    &>section{
+                        overflow: hidden;
+                         @include displayFlex(column);
+                         justify-content: center;
+                         -webkit-justify-content: center;
+                         -webkit-box-align: center;
+                         box-align: center;
+                    }
+                   
+    
+                    &:hover {
+                        border: 1px solid #00c1de;
+    
+                        .zmiti-modal-img {
+                            @include transform(scale(1.2));
+                        }
+                        .zmiti-modal-img-attr{
+                            @include transform(translate3d(0, 0, 0));
+                        }
+                        ol{
+                            //display: block;
+                        }
+                    }
+    
+                    &:nth-of-type(1) {
+                        cursor: pointer;
+                        text-align: center;
+    
+                        & > div {
+                            i {
+                                font-size: 100px;
+                                color: #ccc;
+                            }
+                        }
+                    }
+
+                    .zmiti-modal-checked{
+                        background:rgba(0,0,0,.5);
+                        
+                        img{
+                            @include pos(a);
+                            left: 50%;
+                            margin-left: -25px;
+                            top: 50%;
+                            margin-top: -25px;
+                            width: 50px;
+                        }
+                    }
+    
+                    .zmiti-modal-img-attr{
+                        @include pos(a);
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 30px;
+                        background:#fff;
+                        line-height: 30px;
+                        @include transition(.2s);
+                        @include transform(translate3d(0,30px,0));
+                        span{
+                            margin-left: 4px;
+                        }
+                        .zmiti-modal-setting{
+                            @include pos(a);
+                            right: 4px;
+                            font-size:14px;
+                            top: 0;
+                        }
+                        i{
+                            
+                        }
+                    }
+                    
+                    .zmiti-modal-img {
+                        width: 100%;
+                        
+                        @include pos(r);
+                        @include transition_transform(0.2s);
+    
+                        img {
+                            width: auto;
+                            max-width: 134px;
+                            height: auto;
+                            max-height: 134px;
+    
+                            @include pos(a);
+    
+                            top: 50%;
+                            left: 50%;
+    
+                            @include transform(translate3d(-50%, -50%, 0));
+                        }
+                    }
+    
+                    ol{
+                        @include transition(.2s);
+                        
+                        @include pos(a);
+                        width: 100%;
+                        height: 30px;
+                        z-index: 100;
+                        background: #fff;
+                        bottom: 0;
+                        z-index: 100;
+                        line-height: 30px;
+                        text-align: center;
+                        li{
+                            vertical-align: middle;
+                            cursor: pointer;
+                            label{
+                                color:#ce0000;
+                            }
+                            i.ivu-icon-ios-trash {
+                                font-size:20px;
+                                color:#ce0000;
+                            }
+                        }
+                    }
+                }
+                
+            }
+
         }
     }
+
+    .ivu-poptip-confirm .ivu-poptip-body .ivu-icon{
+        left: 20px;;
+    }
+    
 }

@@ -47,7 +47,6 @@
 		data(){
 			return{
 
-				visible:false,
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
