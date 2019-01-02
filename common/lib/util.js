@@ -62,7 +62,8 @@ var zmitiUtil = {
 		var opt = option.data || {};
 		var userInfo = this.getUserInfo();
 
-		if (userInfo.username && userInfo.getusersigid && !option.isLogin) {
+
+		if (userInfo && userInfo.username && userInfo.getusersigid && !option.isLogin) {
 			opt.userid = userInfo.userid;
 			opt.getusersigid = userInfo.getusersigid;
 		}

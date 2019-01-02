@@ -99,7 +99,7 @@
 				var s = this;
 				zmitiUtil.ajax({
 					_this:s,
-					url:window.config.baseUrl+'/user/login_user/',
+					url:window.config.baseUrl+'user/login_user/',
 					isLogin:true,
 					data:{
 						username:_this.username,

@@ -45,12 +45,13 @@
                            </li>
                            <template v-if='isAdmin'>
                                 <li  class='zmiti-menu-item'>
-                                    <router-link to="product"> </router-link>
-                                    <div><Icon type="ios-basket" /></div><div>产品管理</div>
+                                    <div><router-link to="product"><Icon type="ios-basket" /></router-link> </div>
+                                    <div><router-link to="product">产品管理</router-link></div>
                                 </li>
                                 <li  class='zmiti-menu-item'>
-                                    <router-link to="company"> </router-link>
-                                    <div><Icon type="ios-person" /></div><div>人员管理</div>
+                                    
+                                    <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
+                                    <div><router-link to="company">人员管理</router-link></div>
                                 </li>
                            </template>
                        </ul>
