@@ -2,21 +2,21 @@
 	<div class="zmiti-manager-main-ui">
 		<div class="zmiti-tab-content">
 			<header class="zmiti-tab-header">
-				<div>需求单管理</div>
+				<div>需求单类型管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增需求单</Button>
+					<Button type="primary" @click="addCourse">新增需求单类型</Button>
 				</div>
 			</header>
 			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
 				<div class='zmiti-manager-table' :class="{'active':showDetail}">
-					<Table :data='managerTypeList' :columns='columns'></Table>
+					<Table :data='companyList' :columns='columns'></Table>
 				</div>
 				<transition name='detail'>
 					<div class='zmiti-manager-form' v-if='showDetail'>
 						<header>
-							{{formmanager.managerid?'编辑评分项':'新增评分项'}}
+							{{formmanager.managerid?'编辑需求单类型':'新增需求单类型'}}
 						</header>
-						<Form :model="formManagertype" label-position="left" :label-width="100">
+						<Form :model="formManagertype" label-position="left" :label-width="80">
 							<FormItem label="所属分类：">
 								<Input v-model="formManagertype.input1"></Input>
 							</FormItem>
@@ -41,6 +41,7 @@
 
 			</div>
 		</div>
+
 	</div>
 </template>
 
@@ -69,49 +70,7 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				managerList:[],
-				roleCol:[
-					{
-						title:"产品名称",
-						key:'managername',
-						align:'center',
-					},
-					{
-						title:"访问权限",
-						key:'role',
-						align:'center',
-						render:(h,params)=>{
-							console.log(params.row)
-							return h('Checkbox',{
-								props:{
-									checked:true,
-									value:params.row.authstatus === 1
-								},
-								on:{
-									'on-change':(e)=>{
-										zmitiUtil.ajax({
-											url:window.config.baseUrl+'admin/setuserauth',
-											data:{
-												setuserid:params.row.userid,
-												managerids:params.row.managerid,
-												isdel:params.row.authstatus === 1 ? 1:2
-											}
-										})
-									}
-								}
-							},'访问权限')
-						}
-					}
-				],
-				menus:[
-					{
-						name:"需求单管理",
-						to:"manager"
-					},
-					{
-						name:"需求单类型管理",
-						to:"managertype"
-					}
-				],
+				
 				columns:[
 					{
 						title:"单位名称",
@@ -236,7 +195,7 @@
 					longitude :'116.585856',
 					latitude :'40.364989'
 				},
-				managerTypeList:[],
+				companyList:[],
 				 
 				directoryList:{
 
@@ -258,7 +217,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			this.getManagertypeList();
+			this.getCompanyList();
 			
 		},
 
@@ -285,7 +244,7 @@
 				this.currentClassId = -1;
 			},
 
-			getManagertypeList(){
+			getCompanyList(){
 				var s = this;
 				zmitiUtil.ajax({
 					url:window.config.baseUrl+'user/get_userlist/',
@@ -294,7 +253,7 @@
 					},
 					success(data){
 						if(data.getret === 0){
-							s.managerTypeList = data.userlist;
+							s.companyList = data.userlist;
 						}
 					}
 				})
@@ -314,7 +273,7 @@
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
 						if(data.getret === 0){
-							s.getManagertypeList();
+							s.getCompanyList();
 						}
 					}
 				})
@@ -339,7 +298,7 @@
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
 						//s.showDetail = false;
-						s.getManagertypeList();
+						s.getCompanyList();
 					}
 				})
 			},

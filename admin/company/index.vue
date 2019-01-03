@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-product-main-ui">
+	<div class="zmiti-company-main-ui">
 		<div>
 			<Tab :menus='menus' title="人员管理" :refresh='refresh'></Tab>
 		</div>
@@ -10,25 +10,25 @@
 					<Button type="primary" @click="addCourse">新增单位</Button>
 				</div>
 			</header>
-			<div class='zmiti-product-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-product-table' :class="{'active':showDetail}">
+			<div class='zmiti-company-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
+				<div class='zmiti-company-table' :class="{'active':showDetail}">
 					<Table :data='companyList' :columns='columns'></Table>
 				</div>
 				<transition name='detail'>
-					<div class='zmiti-product-form' v-if='showDetail'>
+					<div class='zmiti-company-form' v-if='showDetail'>
 						<header>
-							{{formproduct.productid?'编辑评分项':'新增评分项'}}
+							{{formcompany.companyid?'编辑评分项':'新增评分项'}}
 						</header>
-						<div class='zmiti-product-form-item'>
-							<label for="">单位名称：</label><input placeholder="请输入单位名称" v-model="formproduct.productname" />
+						<div class='zmiti-company-form-item'>
+							<label for="">单位名称：</label><input placeholder="请输入单位名称" v-model="formcompany.companyname" />
 						</div>
-						<div class='zmiti-product-form-item'>
-							<label for="">单位简称：</label><input placeholder="请输入单位简称" v-model="formproduct.outline" />
+						<div class='zmiti-company-form-item'>
+							<label for="">单位简称：</label><input placeholder="请输入单位简称" v-model="formcompany.outline" />
 						</div>
 						
-						<div class='zmiti-product-form-item zmiti-product-btns'>
+						<div class='zmiti-company-form-item zmiti-company-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
-							<Button size ='small' type='primary' @click='productAction'>{{formproduct.productid?'保存':'确定'}}</Button>
+							<Button size ='small' type='primary' @click='companyAction'>{{formcompany.companyid?'保存':'确定'}}</Button>
 						</div>
 					</div>
 				</transition>
@@ -66,11 +66,11 @@
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
-				productList:[],
+				companyList:[],
 				roleCol:[
 					{
 						title:"产品名称",
-						key:'productname',
+						key:'companyname',
 						align:'center',
 					},
 					{
@@ -90,7 +90,7 @@
 											url:window.config.baseUrl+'admin/setuserauth',
 											data:{
 												setuserid:params.row.userid,
-												productids:params.row.productid,
+												companyids:params.row.companyid,
 												isdel:params.row.authstatus === 1 ? 1:2
 											}
 										})
@@ -195,7 +195,7 @@
                                         click: () => {
 											var s = this;
 											s.showDetail = true;
-											s.formproduct = params.row;
+											s.formcompany = params.row;
                                         }
                                     }
                                 }, '详情'),
@@ -206,7 +206,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delproduct(params.row.productid);
+											this.delcompany(params.row.companyid);
 										},
 										
 									}
@@ -229,7 +229,7 @@
 					}
 				],
 				
-				formproduct:{
+				formcompany:{
 					pdfurl:'',
 					longitude :'116.585856',
 					latitude :'40.364989'
@@ -273,7 +273,7 @@
 			addCourse(){
 				this.showDetail = true;
 				this.currentClassId = -1;
-				this.formproduct = {
+				this.formcompany = {
 				}
 			},
 
@@ -300,7 +300,7 @@
 				
 			},
 		
-			delproduct(id){
+			delcompany(id){
 				var s = this;
 				zmitiUtil.ajax({
 					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
@@ -317,17 +317,17 @@
 					}
 				})
 			},
-			productAction(){
+			companyAction(){
 				var s = this;
-				var p = JSON.parse(JSON.stringify(this.formproduct));
+				var p = JSON.parse(JSON.stringify(this.formcompany));
 				p.admintoken = s.userinfo.accesstoken;
 				p.adminuserid = s.userinfo.userid;
 				var url = window.config.baseUrl+'/zmitiadmin/addrateditems';
-				if(p.productid>-1){
+				if(p.companyid>-1){
 					url = window.config.baseUrl+'/zmitiadmin/updaterateditems';
-					p.id = p.productid;
+					p.id = p.companyid;
 				}else{
-					this.formproduct = {
+					this.formcompany = {
 					}
 				}
 

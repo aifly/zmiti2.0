@@ -16,33 +16,33 @@ var obserable = new Obserable();
 
 Vue.obserable = obserable;
 const router = new VueRouter({
-	routes: [
-		//{path: '*', name: 'error', component: FError },
-		{
-			path: '/login/',
-			name: 'login',
-			component: Login,
-			props: true
-		},
-		{
-			path: '/',
-			name: 'login',
-			component: Login,
-			props: true
-		},
-		{
-			path: '/home',
-			name: 'home',
-			component: Home,
-			props: true
-		},
-		{
-			path: '/manager',
-			name: 'manager',
-			component: Manager,
-			props: true
-		}
-	]
+  routes: [
+    //{path: '*', name: 'error', component: FError },
+    {
+      path: "/login/",
+      name: "login",
+      component: Login,
+      props: true
+    },
+    {
+      path: "/",
+      name: "login",
+      component: Login,
+      props: true
+    },
+    {
+      path: "/home",
+      name: "home",
+      component: Home,
+      props: true
+    },
+    {
+      path: "/manager",
+      name: "manager",
+      component: Manager,
+      props: true
+    }
+  ]
 });
 
 new Vue({

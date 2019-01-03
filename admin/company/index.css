@@ -49,22 +49,22 @@
   }
 }
 
-.zmiti-product-main-ui {
+.zmiti-company-main-ui {
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
 }
 
-.zmiti-product-main-ui .ivu-table-wrapper {
+.zmiti-company-main-ui .ivu-table-wrapper {
   border-bottom: none;
   border-right: none;
 }
 
-.zmiti-product-main-ui > div:nth-of-type(1) {
+.zmiti-company-main-ui > div:nth-of-type(1) {
   width: 200px;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content {
+.zmiti-company-main-ui .zmiti-tab-content {
   box-sizing: border-box;
   flex: 1;
   -webkit-flex: 1;
@@ -73,7 +73,7 @@
   flex-flow: column;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content > div {
+.zmiti-company-main-ui .zmiti-tab-content > div {
   width: 98%;
   margin: 10px auto 10px;
   position: relative;
@@ -82,7 +82,7 @@
   overflow: auto;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content > div .zmiti-meet-form {
+.zmiti-company-main-ui .zmiti-tab-content > div .zmiti-meet-form {
   width: 100%;
   margin: 0px auto;
   padding: 20px 40px;
@@ -90,7 +90,7 @@
   overflow: auto;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content .zmiti-tab-header {
+.zmiti-company-main-ui .zmiti-tab-content .zmiti-tab-header {
   width: 50px;
   display: flex;
   display: -webkit-flex;
@@ -103,12 +103,12 @@
   font-size: 20px;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
+.zmiti-company-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
   position: relative;
   text-indent: .5em;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
+.zmiti-company-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
   content: '';
   width: 4px;
   height: 24px;
@@ -118,31 +118,31 @@
   top: 12px;
 }
 
-.zmiti-product-main-ui .zmiti-product-main {
+.zmiti-company-main-ui .zmiti-company-main {
   width: 100%;
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
 }
 
-.zmiti-product-main-ui .zmiti-product-main > div {
+.zmiti-company-main-ui .zmiti-company-main > div {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-table {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-table {
   width: 100%;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-table .ivu-table-wrapper {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-table .ivu-table-wrapper {
   margin-top: 10px;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-table.active {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-table.active {
   width: 70%;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form {
   margin-top: 10px;
   margin-left: 2%;
   width: 28%;
@@ -150,17 +150,17 @@
   right: 0;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form.detail-enter-active, .zmiti-product-main-ui .zmiti-product-main .zmiti-product-form.detail-leave-active {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form.detail-enter-active, .zmiti-company-main-ui .zmiti-company-main .zmiti-company-form.detail-leave-active {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form.detail-enter, .zmiti-product-main-ui .zmiti-product-main .zmiti-product-form.detail-leave-to {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form.detail-enter, .zmiti-company-main-ui .zmiti-company-main .zmiti-company-form.detail-leave-to {
   width: 0;
   overflow: hidden;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form > header {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form > header {
   line-height: 40px;
   height: 40px;
   font-weight: bold;
@@ -169,21 +169,21 @@
   background: #f8f8f9;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form .zmiti-product-form-item {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form .zmiti-company-form-item {
   line-height: 50px;
   height: 50px;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form .zmiti-product-form-item.zmiti-product-btns {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form .zmiti-company-form-item.zmiti-company-btns {
   text-align: center;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form .zmiti-product-form-item.zmiti-product-btns button {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form .zmiti-company-form-item.zmiti-company-btns button {
   margin: 0 20px;
   padding: 2px 20px;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form .zmiti-product-form-item input {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form .zmiti-company-form-item input {
   padding-left: 6px;
   height: 26px;
   width: 70%;

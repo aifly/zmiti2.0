@@ -3,7 +3,7 @@
 $baseColor: #fcffb4;
 $viewW: 750px;
 $color: #be0000;
-.zmiti-product-main-ui{
+.zmiti-company-main-ui{
     .ivu-table-wrapper {
         border-bottom: none;
         border-right: none;
@@ -78,8 +78,8 @@ $color: #be0000;
       
     }
 }
-.zmiti-product-main-ui {
-     .zmiti-product-main {
+.zmiti-company-main-ui {
+     .zmiti-company-main {
          width: 100%;
          @include displayFlex(row);
 
@@ -88,7 +88,7 @@ $color: #be0000;
              @include transition(.3s);
          }
 
-         .zmiti-product-table {
+         .zmiti-company-table {
              width: 100%;
 
              .ivu-table-wrapper {
@@ -101,7 +101,7 @@ $color: #be0000;
              }
          }
 
-         .zmiti-product-form {
+         .zmiti-company-form {
              //border:1px solid #dcdee2;
              margin-top: 10px;
              margin-left: 2%;
@@ -129,13 +129,13 @@ $color: #be0000;
                  background: #f8f8f9;
              }
 
-             .zmiti-product-form-item {
+             .zmiti-company-form-item {
                  line-height: 50px;
 
                  height: 50px;
                  ;
 
-                 &.zmiti-product-btns {
+                 &.zmiti-company-btns {
                      text-align: center;
 
                      button {

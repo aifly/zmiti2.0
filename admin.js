@@ -4,6 +4,7 @@ import Main from './common/main/index';
 import Product from './admin/product/index';
 import User from './admin/user/index';
 import Company from './admin/company/index';
+import Managertype from './admin/managertype/index'
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import './admin/css/index.css';
@@ -39,6 +40,11 @@ const router = new VueRouter({
 			path: '/',
 			name: 'product',
 			component: Product,
+			props: true
+		}, {
+			path: "/managertype",
+			name: "managertype",
+			component: Managertype,
 			props: true
 		}
 		
