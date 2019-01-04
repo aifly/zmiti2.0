@@ -105,7 +105,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
-				show:false,
+				show:true,
 				viewH:window.innerHeight,
 				cateList:[],
 				imgs,

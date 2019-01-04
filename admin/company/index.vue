@@ -61,6 +61,7 @@
 				isLoading:false,
 				showDetail:false,
 				currentClassId:-1, 
+				currentUserid:'',
 				address:'',
 				showPass:false,
 				showMap:false,
@@ -70,7 +71,7 @@
 				roleCol:[
 					{
 						title:"产品名称",
-						key:'companyname',
+						key:'productname',
 						align:'center',
 					},
 					{
@@ -86,11 +87,12 @@
 								},
 								on:{
 									'on-change':(e)=>{
+										var s = this;
 										zmitiUtil.ajax({
 											url:window.config.baseUrl+'admin/setuserauth',
 											data:{
-												setuserid:params.row.userid,
-												companyids:params.row.companyid,
+												setuserid:s.currentUserid,
+												productids:params.row.productid,
 												isdel:params.row.authstatus === 1 ? 1:2
 											}
 										})
@@ -162,15 +164,18 @@
                                     },
                                     on: {
                                         click: () => {
+											
 											this.visible = true;
 											var s = this;
+											this.currentUserid = params.row.userid;
 											zmitiUtil.ajax({
 												url:window.config.baseUrl+'admin/getuserauth',
 												data:{
 													setuserid:params.row.userid
 												},
 												success(data){
-													s.roleList = data.list;											
+													s.roleList = data.list;									
+													console.log(data);
 												}
 											})
                                         }

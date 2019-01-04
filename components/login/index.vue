@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<div class="wm-copyright">
-				中国文明网 &copy;版权所有
+				智媒体&copy;版权所有
 			</div>
 		</section>
 	</div>
