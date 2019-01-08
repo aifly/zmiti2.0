@@ -3,7 +3,13 @@ import Obserable from './common/lib/obserable';
 import Main from './common/main/index';
 import Login from './components/login/index'
 import Home from './components/home/index'
-import Manager from './components/manager/index'
+
+import TaskManager from './task/taskmgr/index';
+import TaskManagerEdit from './task/taskmgr/edit';
+
+import TaskLogin from './task/login/index';
+import TaskHome from './task/home/index';
+import TaskProject from './task/project/index';
 
 import iView from 'iview';
 import VueRouter from 'vue-router'
@@ -36,10 +42,35 @@ const router = new VueRouter({
       component: Home,
       props: true
     },
+   
     {
-      path: "/manager",
-      name: "manager",
-      component: Manager,
+      path: "/tasklogin",
+      name: "tasklogin",
+      component: TaskLogin,
+      props: true
+    },
+    {
+      path: "/taskhome",
+      name: "taskhome",
+      component: TaskHome,
+      props: true
+    },
+    {
+      path: "/taskproject",
+      name: "taskproject",
+      component: TaskProject,
+      props: true
+    },
+    {
+      path: "/taskmgrlist",
+      name: "taskmgrlist",
+      component: TaskManager,
+      props: true
+     },
+    {
+      path: "/taskmgredit/:id?",
+      name: "taskmgredit",
+      component: TaskManagerEdit,
       props: true
     }
   ]

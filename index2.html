@@ -5,23 +5,26 @@
 	<meta name="viewport" content="width=750,user-scalable=no" />
 	<title>中国文明网公益广告上报系统</title>
 	<style>
+		svg{
+			width:400px;
+			height:300px;
+			border:1px solid red;
+		}
 	</style>
 </head>
 <body>
 	
-	<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
+	<svg xmlns='http://www.w3.org/2000/svg'>
+		
+		<text id='text' x='0' y='100' text-anchor='center' dx='20 40 60 80' dy='20 20 20 20'>ABCD</text>
+	</svg>
+
 	<script>
-		$(function(){
-			$.ajax({
-				url:"https://api.symbin.cn/v1/wmadvuser/downloadfile/",
-				data:{
-					id:'1448959619'
-				},
-				success:function(data){
-					console.log(data);
-				}
-			})
-		})
+		window.onload = function(){
+
+
+
+		}
 	</script>
 </body>
 </html>

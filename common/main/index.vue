@@ -28,7 +28,7 @@
                    </div>
                </div>
             </Header>
-            <Layout class="zmiti-main-layout">
+            <Layout class="zmiti-main-layout" :style='{height:(viewH - 50)+"px"}'>
                 <div class="zmiti-tab-C" :style='{height:(viewH - 50)+"px"}'>
                    <div>
                        <ul>
