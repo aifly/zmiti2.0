@@ -125,7 +125,7 @@
 							}
 							
 							_this.$Message.success('登录成功~');
-							window.location.hash = '#/manager';
+							window.location.hash = '#/taskhome';
 							
 							
 							window.location.reload();

@@ -1,13 +1,13 @@
 <template>
 	<div class="zmiti-manager-main-ui">
 		<div>
-			<Tab :menus='menus' title="任务管理" :refresh='refresh'></Tab>
+			<Tab :menus='menus' title="项目管理" :refresh='refresh'></Tab>
 		</div>
 		<div class="zmiti-tab-content">
 			<header class="zmiti-tab-header">
-				<div>需求单管理</div>
+				<div>项目管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增需求单</Button>
+					<Button type="primary" @click="addCourse">新增项目</Button>
 				</div>
 			</header>
 			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
@@ -17,26 +17,20 @@
 				<transition name='detail'>
 					<div class='zmiti-manager-form' v-if='showDetail'>
 						<header>
-							{{formmanager.managerid?'编辑项目':'新增项目'}}
+							{{formProject.projectid?'编辑项目':'新增项目'}}
 						</header>
-						<Form :model="formManagertype" label-position="left" :label-width="100">
-							<FormItem label="所属分类：">
-								<Input v-model="formManagertype.input1"></Input>
-							</FormItem>
-							<FormItem label="分类名称：">
-								<Input v-model="formManagertype.input2"></Input>
+						<Form :model="formProject" :rules="ruleValidate" label-position="left" :label-width="100">
+							<FormItem label="项目名称：" prop='projectname'>
+								<Input v-model="formProject.projectname"></Input>
 							</FormItem>
 							<FormItem label="说明：">
-								<Input v-model="formManagertype.input3"></Input>
-							</FormItem>
-							<FormItem label="预计工时：">
-								<Input v-model="formManagertype.input3"></Input>
+								<Input type='textarea' v-model="formProject.explain"></Input>
 							</FormItem>
 						</Form>
 						
 						<div class='zmiti-manager-form-item zmiti-manager-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
-							<Button size ='small' type='primary' @click='managerAction'>{{formmanager.managerid?'保存':'确定'}}</Button>
+							<Button size ='small' type='primary' @click='projectAction'>{{formProject.projectid?'保存':'确定'}}</Button>
 						</div>
 					</div>
 				</transition>
@@ -66,13 +60,19 @@
 				isLoading:false,
 				showDetail:false,
 				currentClassId:-1, 
-				formManagertype:{},
+				formProject:{},
 				address:'',
 				showPass:false,
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				managerList:[],
+				ruleValidate: {
+                 
+                    projectname: [
+                        { required: true, message: '项目名称不能为空', trigger: 'blur' }
+                    ]
+				},
 				roleCol:[
 					{
 						title:"产品名称",
@@ -96,7 +96,7 @@
 											url:window.config.baseUrl+'admin/setuserauth',
 											data:{
 												setuserid:params.row.userid,
-												managerids:params.row.managerid,
+												projectids:params.row.projectid,
 												isdel:params.row.authstatus === 1 ? 1:2
 											}
 										})
@@ -192,7 +192,7 @@
                                         click: () => {
 											var s = this;
 											s.showDetail = true;
-											s.formmanager = params.row;
+											s.formProject = params.row;
                                         }
                                     }
                                 }, '详情'),
@@ -203,7 +203,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delmanager(params.row.managerid);
+											this.delmanager(params.row.projectid);
 										},
 										
 									}
@@ -226,7 +226,7 @@
 					}
 				],
 				
-				formmanager:{
+				formProject:{
 					pdfurl:'',
 					longitude :'116.585856',
 					latitude :'40.364989'
@@ -270,7 +270,7 @@
 			addCourse(){
 				this.showDetail = true;
 				this.currentClassId = -1;
-				this.formmanager = {
+				this.formProject = {
 				}
 			},
 
@@ -314,29 +314,8 @@
 					}
 				})
 			},
-			managerAction(){
-				var s = this;
-				var p = JSON.parse(JSON.stringify(this.formmanager));
-				p.admintoken = s.userinfo.accesstoken;
-				p.adminuserid = s.userinfo.userid;
-				var url = window.config.baseUrl+'/zmitiadmin/addrateditems';
-				if(p.managerid>-1){
-					url = window.config.baseUrl+'/zmitiadmin/updaterateditems';
-					p.id = p.managerid;
-				}else{
-					this.formmanager = {
-					}
-				}
-
-				zmitiUtil.ajax({
-					url,
-					data:p,
-					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
-						//s.showDetail = false;
-						s.getManagertypeList();
-					}
-				})
+			projectAction(){
+				
 			},
 		}
 	}

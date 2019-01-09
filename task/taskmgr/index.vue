@@ -7,7 +7,7 @@
 			<header class="zmiti-tab-header">
 				<div>需求单管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增需求单</Button>
+					<Button type="primary" to='taskmgredit'>新增需求单</Button>
 				</div>
 			</header>
 			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">

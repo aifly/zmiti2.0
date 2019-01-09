@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
     background-color: #fff;
     border-color: #bf1616;
@@ -68,9 +69,7 @@
   box-sizing: border-box;
   flex: 1;
   -webkit-flex: 1;
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: column;
+  overflow: auto;
 }
 
 .zmiti-taskmgredit-main-ui .zmiti-tab-content > div {
@@ -91,31 +90,46 @@
 }
 
 .zmiti-taskmgredit-main-ui .zmiti-tab-content .zmiti-tab-header {
-  width: 50px;
+  height: 50px;
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
-  width: 100%;
-  padding: 0 20px;
+  width: 96%;
+  margin: 0 auto;
   justify-content: space-between;
   -webkit-justify-content: space-between;
   line-height: 50px;
-  font-size: 20px;
+  font-size: 14px;
+  position: relative;
+}
+
+.zmiti-taskmgredit-main-ui .zmiti-tab-content .zmiti-tab-header:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background: #ccc;
+  height: 1px;
 }
 
 .zmiti-taskmgredit-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
   position: relative;
-  text-indent: .5em;
+  text-indent: 1em;
 }
 
 .zmiti-taskmgredit-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
   content: '';
-  width: 4px;
-  height: 24px;
-  background: #2d8cf0;
-  left: -4px;
+  width: 2px;
+  height: 20px;
+  background: #88B7E0;
+  left: 0px;
   position: absolute;
-  top: 12px;
+  top: 14px;
+}
+
+.ivu-input {
+  border-radius: 0 !important;
 }
 
 .zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main {
@@ -131,62 +145,61 @@
 }
 
 .zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-table {
-  width: 100%;
+  width: 98%;
+  margin: 0 auto;
+  border: 1px solid #e1e6eb;
+  border-top: none;
 }
 
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-table .ivu-table-wrapper {
-  margin-top: 10px;
-}
-
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-table.active {
-  width: 70%;
-}
-
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form {
-  margin-top: 10px;
-  margin-left: 2%;
-  width: 28%;
-  position: absolute;
-  right: 0;
-}
-
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form.detail-enter-active, .zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form.detail-leave-active {
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form.detail-enter, .zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form.detail-leave-to {
-  width: 0;
-  overflow: hidden;
-}
-
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form > header {
-  line-height: 40px;
+.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-table > h2 {
+  font-size: 14px;
   height: 40px;
-  font-weight: bold;
-  color: #515a6e;
-  text-indent: 2em;
-  background: #f8f8f9;
+  background: #F5f6FA;
+  font-weight: normal;
+  line-height: 40px;
+  position: relative;
+  text-indent: 1em;
+  border: 1px solid #e1e6eb;
+  border-left: 4px solid #6d7781;
+  border-right: none;
+  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form .zmiti-taskmgredit-form-item {
-  line-height: 50px;
-  height: 50px;
+.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-table > form {
+  width: 96%;
+  margin: 0 auto;
 }
 
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form .zmiti-taskmgredit-form-item.zmiti-taskmgredit-btns {
+.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-table > form .zmiti-and-btn {
   text-align: center;
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  background: #ddd;
+  border: 1px solid #ddd;
 }
 
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form .zmiti-taskmgredit-form-item.zmiti-taskmgredit-btns button {
-  margin: 0 20px;
-  padding: 2px 20px;
+.zmiti-scroll::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 8px;
+  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 8px;
 }
 
-.zmiti-taskmgredit-main-ui .zmiti-taskmgredit-main .zmiti-taskmgredit-form .zmiti-taskmgredit-form-item input {
-  padding-left: 6px;
-  height: 26px;
-  width: 70%;
-  border: 1px solid #d8d8d8;
-  outline: none;
+.ivu-table-body::-webkit-scrollbar-thumb,
+.zmiti-scroll::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.ivu-table-body::-webkit-scrollbar-track,
+.zmiti-scroll::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.1);
 }
