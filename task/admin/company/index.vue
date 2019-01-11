@@ -1,13 +1,13 @@
 <template>
 	<div class="zmiti-manager-main-ui">
 		<div>
-			<Tab :menus='menus' title="项目管理" :refresh='refresh'></Tab>
+			<Tab :menus='menus' title="单位管理" :refresh='refresh'></Tab>
 		</div>
 		<div class="zmiti-tab-content">
 			<header class="zmiti-tab-header">
-				<div>项目管理</div>
+				<div>单位管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增项目</Button>
+					<Button type="primary" @click="addCourse">新增单位</Button>
 				</div>
 			</header>
 			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
@@ -17,10 +17,10 @@
 				<transition name='detail'>
 					<div class='zmiti-manager-form' v-if='showDetail'>
 						<header>
-							{{formProject.projectid?'编辑项目':'新增项目'}}
+							{{formProject.projectid?'编辑单位':'新增单位'}}
 						</header>
 						<Form :model="formProject" :rules="ruleValidate" label-position="left" :label-width="100">
-							<FormItem label="项目名称：" prop='projectname'>
+							<FormItem label="单位名称：" prop='projectname'>
 								<Input v-model="formProject.projectname"></Input>
 							</FormItem>
 							<FormItem label="说明：">
@@ -45,9 +45,9 @@
 	import './index.css';
 	
 	import Vue from 'vue';
-	import zmitiUtil from '../../common/lib/util';
-	import Tab from '../../common/tab/index';
-	import {companyAdminMenus} from '../data/tab';
+	import zmitiUtil from '../../../common/lib/util';
+	import Tab from '../../../common/tab/index';
+	import {zmitiUserMenus} from '../../data/tab';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -70,7 +70,7 @@
 				ruleValidate: {
                  
                     projectname: [
-                        { required: true, message: '项目名称不能为空', trigger: 'blur' }
+                        { required: true, message: '单位名称不能为空', trigger: 'blur' }
                     ]
 				},
 				roleCol:[
@@ -106,7 +106,7 @@
 						}
 					}
 				],
-				menus:companyAdminMenus,
+				menus:zmitiUserMenus,
 				columns:[
 					{
 						title:"单位名称",
@@ -118,23 +118,6 @@
 						title:"负责人账号",
 						key:'username',
 						align:'center'
-						
-					},{
-						title:"用戶总数",
-						key:'totalUserNum',
-						align:'center'
-						
-					},{
-						title:"到期时间",
-						key:'expirDate',
-						align:'center'
-						
-					},
-					{
-						title:"空间使用量",
-						key:'userSpace',
-						align:'center'
-						
 					},
 					{
 						title:'操作',
@@ -228,8 +211,6 @@
 				
 				formProject:{
 					pdfurl:'',
-					longitude :'116.585856',
-					latitude :'40.364989'
 				},
 				managerTypeList:[],
 				 
@@ -253,7 +234,6 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			this.getManagertypeList();
 			
 		},
 
@@ -295,24 +275,6 @@
 				})
 				 
 				
-			},
-		
-			delmanager(id){
-				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
-					data:{
-						admintoken:s.userinfo.accesstoken,
-						adminuserid:s.userinfo.userid,
-						id
-					},
-					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
-						if(data.getret === 0){
-							s.getManagertypeList();
-						}
-					}
-				})
 			},
 			projectAction(){
 				

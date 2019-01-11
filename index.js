@@ -11,6 +11,10 @@ import TaskLogin from './task/login/index';
 import TaskHome from './task/home/index';
 import TaskProject from './task/project/index';
 
+import TaskAdminProject from './task/admin/project/index';
+import TaskAdminCompany from './task/admin/company/index';
+import TaskAdminTaskType from './task/admin/tasktype/index';
+
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import './components/css/index.css';
@@ -71,6 +75,23 @@ const router = new VueRouter({
       path: "/taskmgredit/:id?",
       name: "taskmgredit",
       component: TaskManagerEdit,
+      props: true
+    },
+    {
+      path: "/taskadminproject",
+      name: "taskadminproject",
+      component: TaskAdminProject,
+      props: true
+    },
+    {
+      path: "/taskadmincompany",
+      name: "taskadmincompany",
+      component: TaskAdminCompany,
+      props: true
+    }, {
+      path: "/taskadmintasktype",
+      name: "taskadmintasktype",
+      component: TaskAdminTaskType,
       props: true
     }
   ]

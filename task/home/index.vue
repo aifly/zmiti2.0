@@ -53,7 +53,7 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import Tab from '../../common/tab/index';
-	import menus from '../data/tab';
+	import {companyAdminMenus} from '../data/tab';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -106,7 +106,7 @@
 						}
 					}
 				],
-				menus,
+				menus:companyAdminMenus,
 				columns:[
 					{
 						title:"单位名称",

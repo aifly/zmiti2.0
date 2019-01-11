@@ -45,9 +45,9 @@
 	import './index.css';
 	
 	import Vue from 'vue';
-	import zmitiUtil from '../../common/lib/util';
-	import Tab from '../../common/tab/index';
-	import {companyAdminMenus} from '../data/tab';
+	import zmitiUtil from '../../../common/lib/util';
+	import Tab from '../../../common/tab/index';
+	import {zmitiUserMenus} from '../../data/tab';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -106,7 +106,7 @@
 						}
 					}
 				],
-				menus:companyAdminMenus,
+				menus:zmitiUserMenus,
 				columns:[
 					{
 						title:"单位名称",
@@ -228,8 +228,6 @@
 				
 				formProject:{
 					pdfurl:'',
-					longitude :'116.585856',
-					latitude :'40.364989'
 				},
 				managerTypeList:[],
 				 
@@ -253,7 +251,6 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			this.getManagertypeList();
 			
 		},
 
@@ -295,24 +292,6 @@
 				})
 				 
 				
-			},
-		
-			delmanager(id){
-				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
-					data:{
-						admintoken:s.userinfo.accesstoken,
-						adminuserid:s.userinfo.userid,
-						id
-					},
-					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
-						if(data.getret === 0){
-							s.getManagertypeList();
-						}
-					}
-				})
 			},
 			projectAction(){
 				
