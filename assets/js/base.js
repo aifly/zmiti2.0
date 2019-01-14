@@ -22,7 +22,7 @@ var imgs = {
 	window.config = {
 		swf: './assets/ckplayer/ckplayer.swf',
 		baseUrl: 'https://api.zmiti.com/v2/',
-		taskSystemUrl:'http://192.168.1.106',
+		taskSystemUrl:'http://webapi.zmiti.com/v1/',
 		uploadUrl: 'http://h5.wenming.cn/wmreport/index.html#/',
 	}
 	if (window.location.href.indexOf('localhost') > -1 || window.location.href.indexOf('zmiti.com') > -1) {

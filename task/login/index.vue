@@ -99,13 +99,15 @@
 				var s = this;
 				zmitiUtil.ajax({
 					_this:s,
-					url:window.config.baseUrl+'user/login_user/',
+					url:window.config.taskSystemUrl+'admin/adminlogin',
 					isLogin:true,
 					data:{
 						username:_this.username,
 						userpwd:_this.password
 					},
 					success(data){
+
+						console.log(data);
 						
 						if(data.getret === 0){
 							var param = data;

@@ -17,20 +17,20 @@
 				<transition name='detail'>
 					<div class='zmiti-manager-form' v-if='showDetail'>
 						<header>
-							{{formProject.projectid?'编辑单位':'新增单位'}}
+							{{formCompany.projectid?'编辑单位':'新增单位'}}
 						</header>
-						<Form :model="formProject" :rules="ruleValidate" label-position="left" :label-width="100">
-							<FormItem label="单位名称：" prop='projectname'>
-								<Input v-model="formProject.projectname"></Input>
+						<Form :model="formCompany" :rules="ruleValidate" label-position="left" :label-width="100">
+							<FormItem label="单位名称：" prop='companyname'>
+								<Input v-model="formCompany.companyname"></Input>
 							</FormItem>
 							<FormItem label="说明：">
-								<Input type='textarea' v-model="formProject.explain"></Input>
+								<Input type='textarea' v-model="formCompany.explain"></Input>
 							</FormItem>
 						</Form>
 						
 						<div class='zmiti-manager-form-item zmiti-manager-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
-							<Button size ='small' type='primary' @click='projectAction'>{{formProject.projectid?'保存':'确定'}}</Button>
+							<Button size ='small' type='primary' @click='projectAction'>{{formCompany.projectid?'保存':'确定'}}</Button>
 						</div>
 					</div>
 				</transition>
@@ -60,7 +60,7 @@
 				isLoading:false,
 				showDetail:false,
 				currentClassId:-1, 
-				formProject:{},
+				formCompany:{},
 				address:'',
 				showPass:false,
 				showMap:false,
@@ -175,7 +175,7 @@
                                         click: () => {
 											var s = this;
 											s.showDetail = true;
-											s.formProject = params.row;
+											s.formCompany = params.row;
                                         }
                                     }
                                 }, '详情'),
@@ -209,8 +209,7 @@
 					}
 				],
 				
-				formProject:{
-					pdfurl:'',
+				formCompany:{
 				},
 				managerTypeList:[],
 				 
@@ -250,7 +249,7 @@
 			addCourse(){
 				this.showDetail = true;
 				this.currentClassId = -1;
-				this.formProject = {
+				this.formCompany = {
 				}
 			},
 
