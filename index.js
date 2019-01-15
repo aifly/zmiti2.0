@@ -14,11 +14,13 @@ import TaskProject from './task/project/index';
 import TaskAdminProject from './task/admin/project/index';
 import TaskAdminCompany from './task/admin/company/index';
 import TaskAdminTaskType from './task/admin/tasktype/index';
+import Practice from './task/practice/index'
 
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import './components/css/index.css';
 import 'iview/dist/styles/iview.css';
+
 
 Vue.use(VueRouter)
 Vue.use(iView)
@@ -46,7 +48,6 @@ const router = new VueRouter({
       component: Home,
       props: true
     },
-   
     {
       path: "/tasklogin",
       name: "tasklogin",
@@ -92,6 +93,12 @@ const router = new VueRouter({
       path: "/taskadmintasktype",
       name: "taskadmintasktype",
       component: TaskAdminTaskType,
+      props: true
+    },
+    {
+    	path: "/practice",
+      name: "practice",
+      component: Practice,
       props: true
     }
   ]
