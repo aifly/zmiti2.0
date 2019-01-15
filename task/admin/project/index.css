@@ -49,48 +49,80 @@
   }
 }
 
-.zmiti-manager-main-ui {
+.zmiti-project-main-ui {
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
 }
 
-.zmiti-manager-main-ui .ivu-table-wrapper {
+.zmiti-project-main-ui .ivu-table-wrapper {
   border-bottom: none;
   border-right: none;
 }
 
-.zmiti-manager-main-ui > div:nth-of-type(1) {
+.zmiti-project-main-ui > div:nth-of-type(1) {
   width: 200px;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content {
-  box-sizing: border-box;
-  flex: 1;
-  -webkit-flex: 1;
+.zmiti-project-main-ui .zmiti-company-list {
   display: flex;
   display: -webkit-flex;
-  flex-flow: column;
+  flex-flow: row;
+  background: #fff;
+  padding: 20px 0;
+  position: relative;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content > div {
+.zmiti-project-main-ui .zmiti-company-list:before {
+  content: '';
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+.zmiti-project-main-ui .zmiti-company-list div {
+  position: relative;
+  padding: 0 20px;
+  line-height: 24px;
+  margin-right: 20px;
+  background: #ccc;
+  cursor: pointer;
+}
+
+.zmiti-project-main-ui .zmiti-company-list div.active {
+  background: #00c1de;
+  color: #fff;
+}
+
+.zmiti-project-main-ui .zmiti-company-list div.zmiti-company-name {
+  background: none;
+  padding: 0 10px;
+}
+
+.zmiti-project-main-ui .zmiti-tab-content {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: auto;
+}
+
+.zmiti-project-main-ui .zmiti-tab-content > div {
   width: 98%;
   margin: 10px auto 10px;
   position: relative;
   flex: 1;
   -webkit-flex: 1;
-  overflow: auto;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content > div .zmiti-meet-form {
+.zmiti-project-main-ui .zmiti-tab-content > div .zmiti-meet-form {
   width: 100%;
   margin: 0px auto;
   padding: 20px 40px;
   height: 600px;
-  overflow: auto;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content .zmiti-tab-header {
+.zmiti-project-main-ui .zmiti-tab-content .zmiti-tab-header {
   width: 50px;
   display: flex;
   display: -webkit-flex;
@@ -103,12 +135,12 @@
   font-size: 20px;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
+.zmiti-project-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
   position: relative;
   text-indent: .5em;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
+.zmiti-project-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
   content: '';
   width: 4px;
   height: 24px;
@@ -118,31 +150,35 @@
   top: 12px;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main {
+.zmiti-project-main-ui .zmiti-project-main {
   width: 100%;
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main > div {
+.zmiti-project-main-ui .zmiti-project-main > div {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-table {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-table {
   width: 100%;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-table .ivu-table-wrapper {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-table .ivu-icon {
+  left: 30px;
+}
+
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-table .ivu-table-wrapper {
   margin-top: 10px;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-table.active {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-table.active {
   width: 70%;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-form {
   margin-top: 10px;
   margin-left: 2%;
   width: 28%;
@@ -150,17 +186,17 @@
   right: 0;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form.detail-enter-active, .zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form.detail-leave-active {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-form.detail-enter-active, .zmiti-project-main-ui .zmiti-project-main .zmiti-project-form.detail-leave-active {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form.detail-enter, .zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form.detail-leave-to {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-form.detail-enter, .zmiti-project-main-ui .zmiti-project-main .zmiti-project-form.detail-leave-to {
   width: 0;
   overflow: hidden;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form > header {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-form > header {
   line-height: 40px;
   height: 40px;
   font-weight: bold;
@@ -169,21 +205,21 @@
   background: #f8f8f9;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form .zmiti-manager-form-item {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-form .zmiti-project-form-item {
   line-height: 50px;
   height: 50px;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form .zmiti-manager-form-item.zmiti-manager-btns {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-form .zmiti-project-form-item.zmiti-project-btns {
   text-align: center;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form .zmiti-manager-form-item.zmiti-manager-btns button {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-form .zmiti-project-form-item.zmiti-project-btns button {
   margin: 0 20px;
   padding: 2px 20px;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form .zmiti-manager-form-item input {
+.zmiti-project-main-ui .zmiti-project-main .zmiti-project-form .zmiti-project-form-item input {
   padding-left: 6px;
   height: 26px;
   width: 70%;

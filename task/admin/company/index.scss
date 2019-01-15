@@ -1,9 +1,7 @@
 ﻿@import "../../../common/css/base.scss";
 
 $viewW: 750px;
-.ivu-icon{
-    left: 30px;
-}
+
 .zmiti-company-main-ui{
     .ivu-table-wrapper {
         border-bottom: none;
@@ -86,6 +84,9 @@ $viewW: 750px;
 
          .zmiti-company-table {
              width: 100%;
+             .ivu-icon {
+                 left: 30px;
+             }
 
              .ivu-table-wrapper {
                  margin-top: 10px;

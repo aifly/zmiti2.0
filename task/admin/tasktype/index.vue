@@ -1,36 +1,49 @@
 <template>
-	<div class="zmiti-manager-main-ui">
+	<div class="zmiti-tasktype-main-ui">
 		<div>
-			<Tab :menus='menus' title="项目类型管理" :refresh='refresh'></Tab>
+			<Tab :menus='menus' title="任务类型管理" :refresh='refresh'></Tab>
 		</div>
-		<div class="zmiti-tab-content">
+		<div class="zmiti-tab-content zmiti-scroll">
 			<header class="zmiti-tab-header">
-				<div>项目类型管理</div>
+				<div>任务类型管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增项目类型</Button>
+					<Button type="primary" @click="addCourse">新增任务类型</Button>
 				</div>
 			</header>
-			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-manager-table' :class="{'active':showDetail}">
-					<Table :data='managerTypeList' :columns='columns'></Table>
+			<div class='zmiti-tasktype-main  ' :style="{minHeight:viewH - 120+'px' }">
+				<div class='zmiti-tasktype-table' :class="{'active':showDetail}">
+					<Table :data='taskTypeList' :columns='columns'></Table>
 				</div>
 				<transition name='detail'>
-					<div class='zmiti-manager-form' v-if='showDetail'>
+					<div class='zmiti-tasktype-form' v-if='showDetail'>
 						<header>
-							{{formProject.projectid?'编辑项目类型':'新增项目类型'}}
+							{{formTasktype.typeid?'编辑任务类型':'新增任务类型'}}
 						</header>
-						<Form :model="formProject" :rules="ruleValidate" label-position="left" :label-width="100">
-							<FormItem label="项目类型名称：" prop='projectname'>
-								<Input v-model="formProject.projectname"></Input>
+						<Form :model="formTasktype" :rules="ruleValidate" label-position="left" :label-width="100">
+							<FormItem label="所属分类：" prop='fid'>
+								<Select v-model='formTasktype.fid'>
+									<Option v-for='(type,i) in taskTypeList' :key="i" :value='type.typeid'>
+										{{type.name}}
+									</Option>
+								</Select>
+							</FormItem>
+							<FormItem label="任务类型名称：" prop='name'>
+								<Input v-model="formTasktype.name"></Input>
+							</FormItem>
+							<FormItem label="任务类型说明：" prop='explain'>
+								<Input v-model="formTasktype.explain"></Input>
+							</FormItem>
+							<FormItem label="工时：" prop='workhours'>
+								<Input v-model="formTasktype.workhours"></Input>
 							</FormItem>
 							<FormItem label="说明：">
-								<Input type='textarea' v-model="formProject.explain"></Input>
+								<Input type='textarea' v-model="formTasktype.remarks"></Input>
 							</FormItem>
 						</Form>
 						
-						<div class='zmiti-manager-form-item zmiti-manager-btns'>
+						<div class='zmiti-tasktype-form-item zmiti-tasktype-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
-							<Button size ='small' type='primary' @click='projectAction'>{{formProject.projectid?'保存':'确定'}}</Button>
+							<Button size ='small' type='primary' @click='companyAction'>{{formTasktype.typeid?'保存':'确定'}}</Button>
 						</div>
 					</div>
 				</transition>
@@ -45,7 +58,7 @@
 	import './index.css';
 	
 	import Vue from 'vue';
-	import zmitiUtil from '../../../common/lib/util';
+	import zmitiUtil from '../../lib/util';
 	import Tab from '../../../common/tab/index';
 	import {zmitiUserMenus} from '../../data/tab';
 	export default {
@@ -60,7 +73,7 @@
 				isLoading:false,
 				showDetail:false,
 				currentClassId:-1, 
-				formProject:{},
+				formTasktype:{},
 				address:'',
 				showPass:false,
 				showMap:false,
@@ -70,71 +83,25 @@
 				ruleValidate: {
                  
                     projectname: [
-                        { required: true, message: '项目类型名称不能为空', trigger: 'blur' }
+                        { required: true, message: '任务类型名称不能为空', trigger: 'blur' }
                     ]
 				},
-				roleCol:[
-					{
-						title:"产品名称",
-						key:'managername',
-						align:'center',
-					},
-					{
-						title:"访问权限",
-						key:'role',
-						align:'center',
-						render:(h,params)=>{
-							console.log(params.row)
-							return h('Checkbox',{
-								props:{
-									checked:true,
-									value:params.row.authstatus === 1
-								},
-								on:{
-									'on-change':(e)=>{
-										zmitiUtil.ajax({
-											url:window.config.baseUrl+'admin/setuserauth',
-											data:{
-												setuserid:params.row.userid,
-												projectids:params.row.projectid,
-												isdel:params.row.authstatus === 1 ? 1:2
-											}
-										})
-									}
-								}
-							},'访问权限')
-						}
-					}
-				],
+				
 				menus:zmitiUserMenus,
 				columns:[
 					{
-						title:"单位名称",
-						key:'companyName',
+						title:"任务类型名称",
+						key:'name',
 						align:'center',
 						width:240
 					},
 					{
-						title:"负责人账号",
-						key:'username',
-						align:'center'
-						
-					},{
-						title:"用戶总数",
-						key:'totalUserNum',
-						align:'center'
-						
-					},{
-						title:"到期时间",
-						key:'expirDate',
-						align:'center'
-						
-					},
-					{
-						title:"空间使用量",
-						key:'userSpace',
-						align:'center'
-						
+						title:"说明",
+						key:'explain',
+						align:'center',
+						render:(h,params)=>{
+							return params.row.remarks || '无'
+						}
 					},
 					{
 						title:'操作',
@@ -144,35 +111,6 @@
 						render:(h,params)=>{
 
 							return h('div', [
-                               
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-										margin: '2px 5px',
-										border:'none',
-										padding: '3px 7px 2px',
-										fontSize: '12px',
-										borderRadius: '3px'
-                                    },
-                                    on: {
-                                        click: () => {
-											this.visible = true;
-											var s = this;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;											
-												}
-											})
-                                        }
-                                    }
-								}, '权限设置'),
 								 h('Button', {
                                     props: {
                                         type: 'primary',
@@ -192,7 +130,7 @@
                                         click: () => {
 											var s = this;
 											s.showDetail = true;
-											s.formProject = params.row;
+											s.formTasktype = params.row;
                                         }
                                     }
                                 }, '详情'),
@@ -203,7 +141,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delmanager(params.row.projectid);
+											this.delcompany(params.row.typeid);
 										},
 										
 									}
@@ -226,10 +164,9 @@
 					}
 				],
 				
-				formProject:{
-					pdfurl:'',
+				formTasktype:{
 				},
-				managerTypeList:[],
+				taskTypeList:[],
 				 
 				directoryList:{
 
@@ -251,7 +188,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			
+			this.getTasktype();
 		},
 
 		watch:{
@@ -267,7 +204,7 @@
 			addCourse(){
 				this.showDetail = true;
 				this.currentClassId = -1;
-				this.formProject = {
+				this.formTasktype = {
 				}
 			},
 
@@ -277,24 +214,68 @@
 				this.currentClassId = -1;
 			},
 
-			getManagertypeList(){
+			delcompany(typeid){
 				var s = this;
 				zmitiUtil.ajax({
-					url:window.config.baseUrl+'user/get_userlist/',
+					url:window.config.taskSystemUrl+'admin/delcompany/',
 					data:{
-						setusertypesign:2//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
+						typeid,
 					},
 					success(data){
 						if(data.getret === 0){
-							s.managerTypeList = data.userlist;
+							s.getTasktype();
+						}
+					}
+				})
+			},
+
+			getTasktype(){
+				var s = this;
+				zmitiUtil.ajax({
+					url:window.config.taskSystemUrl+'admin/gettasktypelist/',
+					data:{
+						
+					},
+					success(data){
+						if(data.getret === 0){
+							s.taskTypeList = data.list;
 						}
 					}
 				})
 				 
 				
 			},
-			projectAction(){
-				
+			companyAction(){
+				var s = this;
+				var url = window.config.taskSystemUrl+'admin/addtasktype';
+				var msg = '添加成功';
+				var params = {
+					name:s.formTasktype.name,
+					fid:s.formTasktype.fid,
+					explain:s.formTasktype.explain,
+					workhours:s.formTasktype.workhours,
+					remarks:s.formTasktype.remarks,
+				};
+				if(s.formTasktype.typeid){
+					url = window.config.taskSystemUrl+'admin/updatetasktype';
+					params.typeid = s.formTasktype.typeid;
+					msg = '修改成功';
+				}
+				zmitiUtil.ajax({
+					url,
+					data:params,
+					success(data){
+						if(data.getret === 0){
+							s.getTasktype();
+							if(!s.formTasktype.typeid){
+								s.formTasktype = {};
+							}
+							s.$Message.success(msg);
+						}else{
+							s.$Message.success(s.formTasktype.typeid? '修改失败':'添加失败');
+						}
+					}
+				});	
 			},
 		}
 	}

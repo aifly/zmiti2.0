@@ -49,10 +49,6 @@
   }
 }
 
-.ivu-icon {
-  left: 30px;
-}
-
 .zmiti-company-main-ui {
   display: flex;
   display: -webkit-flex;
@@ -131,6 +127,10 @@
 
 .zmiti-company-main-ui .zmiti-company-main .zmiti-company-table {
   width: 100%;
+}
+
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-table .ivu-icon {
+  left: 30px;
 }
 
 .zmiti-company-main-ui .zmiti-company-main .zmiti-company-table .ivu-table-wrapper {

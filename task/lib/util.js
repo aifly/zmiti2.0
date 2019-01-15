@@ -36,7 +36,7 @@ let zmitiUtil = {
          
             if (dt.getret === 0) {
 
-            } else if (dt.getret === 1300) {
+            } else if (dt.getret === 1000) {
                 window.localStorage['login'] = '';
                 if (option.self && option.self.isAdmin) {
                     window.location.href = './#/login';

@@ -76,39 +76,7 @@
                         { required: true, message: '单位名称不能为空', trigger: 'blur' }
                     ]
 				},
-				roleCol:[
-					{
-						title:"产品名称",
-						key:'managername',
-						align:'center',
-					},
-					{
-						title:"访问权限",
-						key:'role',
-						align:'center',
-						render:(h,params)=>{
-							console.log(params.row)
-							return h('Checkbox',{
-								props:{
-									checked:true,
-									value:params.row.authstatus === 1
-								},
-								on:{
-									'on-change':(e)=>{
-										zmitiUtil.ajax({
-											url:window.config.baseUrl+'admin/setuserauth',
-											data:{
-												setuserid:params.row.userid,
-												projectids:params.row.projectid,
-												isdel:params.row.authstatus === 1 ? 1:2
-											}
-										})
-									}
-								}
-							},'访问权限')
-						}
-					}
-				],
+				
 				menus:zmitiUserMenus,
 				columns:[
 					{
@@ -125,7 +93,10 @@
 					{
 						title:"说明",
 						key:'remarks',
-						align:'center'
+						align:'center',
+						render:(h,params)=>{
+							return params.row.remarks || '无'
+						}
 					},
 					{
 						title:'操作',
@@ -135,35 +106,6 @@
 						render:(h,params)=>{
 
 							return h('div', [
-                               
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-										margin: '2px 5px',
-										border:'none',
-										padding: '3px 7px 2px',
-										fontSize: '12px',
-										borderRadius: '3px'
-                                    },
-                                    on: {
-                                        click: () => {
-											this.visible = true;
-											var s = this;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;											
-												}
-											})
-                                        }
-                                    }
-								}, '权限设置'),
 								 h('Button', {
                                     props: {
                                         type: 'primary',
@@ -194,7 +136,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delmanager(params.row.projectid);
+											this.delcompany(params.row.companyid);
 										},
 										
 									}
@@ -267,6 +209,21 @@
 				this.currentClassId = -1;
 			},
 
+			delcompany(companyid){
+				var s = this;
+				zmitiUtil.ajax({
+					url:window.config.taskSystemUrl+'admin/delcompany/',
+					data:{
+						companyid,
+					},
+					success(data){
+						if(data.getret === 0){
+							s.getCompanyList();
+						}
+					}
+				})
+			},
+
 			getCompanyList(){
 				var s = this;
 				zmitiUtil.ajax({
@@ -285,17 +242,30 @@
 			},
 			companyAction(){
 				var s = this;
+				var url = window.config.taskSystemUrl+'admin/addcompany';
+				var msg = '添加成功';
+				var params = {
+					companyname:s.formCompany.companyname,
+					workhours:s.formCompany.workhours,
+					remarks:s.formCompany.remarks,
+				};
+				if(s.formCompany.companyid){
+					url = window.config.taskSystemUrl+'admin/updatecompany';
+					params.companyid = s.formCompany.companyid;
+					msg = '修改成功';
+				}
 				zmitiUtil.ajax({
-					url:window.config.taskSystemUrl+'admin/addcompany',
-					data:{
-						companyname:s.formCompany.companyname,
-						workhours:s.formCompany.workhours,
-						remarks:s.formCompany.remarks,
-					},
+					url,
+					data:params,
 					success(data){
 						if(data.getret === 0){
 							s.getCompanyList();
-							s.formCompany = {};
+							if(!s.formCompany.companyid){
+								s.formCompany = {};
+							}
+							s.$Message.success(msg);
+						}else{
+							s.$Message.success(s.formCompany.companyid? '修改失败':'添加失败');
 						}
 					}
 				});	
