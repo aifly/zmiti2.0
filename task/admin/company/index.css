@@ -49,48 +49,47 @@
   }
 }
 
-.zmiti-manager-main-ui {
+.ivu-icon {
+  left: 30px;
+}
+
+.zmiti-company-main-ui {
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
 }
 
-.zmiti-manager-main-ui .ivu-table-wrapper {
+.zmiti-company-main-ui .ivu-table-wrapper {
   border-bottom: none;
   border-right: none;
 }
 
-.zmiti-manager-main-ui > div:nth-of-type(1) {
+.zmiti-company-main-ui > div:nth-of-type(1) {
   width: 200px;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content {
+.zmiti-company-main-ui .zmiti-tab-content {
   box-sizing: border-box;
-  flex: 1;
-  -webkit-flex: 1;
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: column;
+  width: 100%;
+  overflow: auto;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content > div {
+.zmiti-company-main-ui .zmiti-tab-content > div {
   width: 98%;
   margin: 10px auto 10px;
   position: relative;
   flex: 1;
   -webkit-flex: 1;
-  overflow: auto;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content > div .zmiti-meet-form {
+.zmiti-company-main-ui .zmiti-tab-content > div .zmiti-meet-form {
   width: 100%;
   margin: 0px auto;
   padding: 20px 40px;
   height: 600px;
-  overflow: auto;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content .zmiti-tab-header {
+.zmiti-company-main-ui .zmiti-tab-content .zmiti-tab-header {
   width: 50px;
   display: flex;
   display: -webkit-flex;
@@ -103,12 +102,12 @@
   font-size: 20px;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
+.zmiti-company-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
   position: relative;
   text-indent: .5em;
 }
 
-.zmiti-manager-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
+.zmiti-company-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
   content: '';
   width: 4px;
   height: 24px;
@@ -118,31 +117,31 @@
   top: 12px;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main {
+.zmiti-company-main-ui .zmiti-company-main {
   width: 100%;
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main > div {
+.zmiti-company-main-ui .zmiti-company-main > div {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-table {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-table {
   width: 100%;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-table .ivu-table-wrapper {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-table .ivu-table-wrapper {
   margin-top: 10px;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-table.active {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-table.active {
   width: 70%;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form {
   margin-top: 10px;
   margin-left: 2%;
   width: 28%;
@@ -150,17 +149,17 @@
   right: 0;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form.detail-enter-active, .zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form.detail-leave-active {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form.detail-enter-active, .zmiti-company-main-ui .zmiti-company-main .zmiti-company-form.detail-leave-active {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form.detail-enter, .zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form.detail-leave-to {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form.detail-enter, .zmiti-company-main-ui .zmiti-company-main .zmiti-company-form.detail-leave-to {
   width: 0;
   overflow: hidden;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form > header {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form > header {
   line-height: 40px;
   height: 40px;
   font-weight: bold;
@@ -169,21 +168,21 @@
   background: #f8f8f9;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form .zmiti-manager-form-item {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form .zmiti-company-form-item {
   line-height: 50px;
   height: 50px;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form .zmiti-manager-form-item.zmiti-manager-btns {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form .zmiti-company-form-item.zmiti-company-btns {
   text-align: center;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form .zmiti-manager-form-item.zmiti-manager-btns button {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form .zmiti-company-form-item.zmiti-company-btns button {
   margin: 0 20px;
   padding: 2px 20px;
 }
 
-.zmiti-manager-main-ui .zmiti-manager-main .zmiti-manager-form .zmiti-manager-form-item input {
+.zmiti-company-main-ui .zmiti-company-main .zmiti-company-form .zmiti-company-form-item input {
   padding-left: 6px;
   height: 26px;
   width: 70%;

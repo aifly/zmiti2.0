@@ -1,42 +1,39 @@
 <template>
-	<div class="zmiti-manager-main-ui">
+	<div class="zmiti-company-main-ui">
 		<div>
-			<Tab :menus='menus' title="任务管理" :refresh='refresh'></Tab>
+			<Tab :menus='menus' title="单位管理" :refresh='refresh'></Tab>
 		</div>
-		<div class="zmiti-tab-content">
+		<div class="zmiti-tab-content zmiti-scroll">
 			<header class="zmiti-tab-header">
-				<div>需求单管理</div>
+				<div>单位管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增需求单</Button>
+					<Button type="primary" @click="addCourse">新增单位</Button>
 				</div>
 			</header>
-			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-manager-table' :class="{'active':showDetail}">
-					<Table :data='managerTypeList' :columns='columns'></Table>
+			<div class='zmiti-company-main  ' :style="{minHeight:viewH - 120+'px' }">
+				<div class='zmiti-company-table' :class="{'active':showDetail}">
+					<Table :data='companyList' :columns='columns'></Table>
 				</div>
 				<transition name='detail'>
-					<div class='zmiti-manager-form' v-if='showDetail'>
+					<div class='zmiti-company-form' v-if='showDetail'>
 						<header>
-							{{formmanager.managerid?'编辑评分项':'新增评分项'}}
+							{{formCompany.projectid?'编辑单位':'新增单位'}}
 						</header>
-						<Form :model="formManagertype" label-position="left" :label-width="100">
-							<FormItem label="所属分类：">
-								<Input v-model="formManagertype.input1"></Input>
+						<Form :model="formCompany" :rules="ruleValidate" label-position="left" :label-width="100">
+							<FormItem label="单位名称：" prop='companyname'>
+								<Input v-model="formCompany.companyname"></Input>
 							</FormItem>
-							<FormItem label="分类名称：">
-								<Input v-model="formManagertype.input2"></Input>
+							<FormItem label="工时：" prop='workhours'>
+								<Input v-model="formCompany.workhours"></Input>
 							</FormItem>
 							<FormItem label="说明：">
-								<Input v-model="formManagertype.input3"></Input>
-							</FormItem>
-							<FormItem label="预计工时：">
-								<Input v-model="formManagertype.input3"></Input>
+								<Input type='textarea' v-model="formCompany.remarks"></Input>
 							</FormItem>
 						</Form>
 						
-						<div class='zmiti-manager-form-item zmiti-manager-btns'>
+						<div class='zmiti-company-form-item zmiti-company-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
-							<Button size ='small' type='primary' @click='managerAction'>{{formmanager.managerid?'保存':'确定'}}</Button>
+							<Button size ='small' type='primary' @click='companyAction'>{{formCompany.projectid?'保存':'确定'}}</Button>
 						</div>
 					</div>
 				</transition>
@@ -51,9 +48,9 @@
 	import './index.css';
 	
 	import Vue from 'vue';
-	import zmitiUtil from '../../common/lib/util';
-	import Tab from '../../common/tab/index';
-	import menus from '../data/tab';
+	import zmitiUtil from '../../lib/util';
+	import Tab from '../../../common/tab/index';
+	import {zmitiUserMenus} from '../../data/tab';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -66,13 +63,19 @@
 				isLoading:false,
 				showDetail:false,
 				currentClassId:-1, 
-				formManagertype:{},
+				formCompany:{},
 				address:'',
 				showPass:false,
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				managerList:[],
+				ruleValidate: {
+                 
+                    projectname: [
+                        { required: true, message: '单位名称不能为空', trigger: 'blur' }
+                    ]
+				},
 				roleCol:[
 					{
 						title:"产品名称",
@@ -96,7 +99,7 @@
 											url:window.config.baseUrl+'admin/setuserauth',
 											data:{
 												setuserid:params.row.userid,
-												managerids:params.row.managerid,
+												projectids:params.row.projectid,
 												isdel:params.row.authstatus === 1 ? 1:2
 											}
 										})
@@ -106,35 +109,23 @@
 						}
 					}
 				],
-				menus,
+				menus:zmitiUserMenus,
 				columns:[
 					{
 						title:"单位名称",
-						key:'companyName',
+						key:'companyname',
 						align:'center',
 						width:240
 					},
 					{
-						title:"负责人账号",
-						key:'username',
+						title:"剩余工时",
+						key:'workhours',
 						align:'center'
-						
-					},{
-						title:"用戶总数",
-						key:'totalUserNum',
-						align:'center'
-						
-					},{
-						title:"到期时间",
-						key:'expirDate',
-						align:'center'
-						
 					},
 					{
-						title:"空间使用量",
-						key:'userSpace',
+						title:"说明",
+						key:'remarks',
 						align:'center'
-						
 					},
 					{
 						title:'操作',
@@ -192,7 +183,7 @@
                                         click: () => {
 											var s = this;
 											s.showDetail = true;
-											s.formmanager = params.row;
+											s.formCompany = params.row;
                                         }
                                     }
                                 }, '详情'),
@@ -203,7 +194,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delmanager(params.row.managerid);
+											this.delmanager(params.row.projectid);
 										},
 										
 									}
@@ -226,12 +217,9 @@
 					}
 				],
 				
-				formmanager:{
-					pdfurl:'',
-					longitude :'116.585856',
-					latitude :'40.364989'
+				formCompany:{
 				},
-				managerTypeList:[],
+				companyList:[],
 				 
 				directoryList:{
 
@@ -253,8 +241,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			this.getManagertypeList();
-			
+			this.getCompanyList();
 		},
 
 		watch:{
@@ -270,7 +257,7 @@
 			addCourse(){
 				this.showDetail = true;
 				this.currentClassId = -1;
-				this.formmanager = {
+				this.formCompany = {
 				}
 			},
 
@@ -280,63 +267,38 @@
 				this.currentClassId = -1;
 			},
 
-			getManagertypeList(){
+			getCompanyList(){
 				var s = this;
 				zmitiUtil.ajax({
-					url:window.config.baseUrl+'user/get_userlist/',
+					url:window.config.taskSystemUrl+'admin/getcompanylist/',
 					data:{
-						setusertypesign:2//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
+						
 					},
 					success(data){
 						if(data.getret === 0){
-							s.managerTypeList = data.userlist;
+							s.companyList = data.list;
 						}
 					}
 				})
 				 
 				
 			},
-		
-			delmanager(id){
+			companyAction(){
 				var s = this;
 				zmitiUtil.ajax({
-					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
+					url:window.config.taskSystemUrl+'admin/addcompany',
 					data:{
-						admintoken:s.userinfo.accesstoken,
-						adminuserid:s.userinfo.userid,
-						id
+						companyname:s.formCompany.companyname,
+						workhours:s.formCompany.workhours,
+						remarks:s.formCompany.remarks,
 					},
 					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
 						if(data.getret === 0){
-							s.getManagertypeList();
+							s.getCompanyList();
+							s.formCompany = {};
 						}
 					}
-				})
-			},
-			managerAction(){
-				var s = this;
-				var p = JSON.parse(JSON.stringify(this.formmanager));
-				p.admintoken = s.userinfo.accesstoken;
-				p.adminuserid = s.userinfo.userid;
-				var url = window.config.baseUrl+'/zmitiadmin/addrateditems';
-				if(p.managerid>-1){
-					url = window.config.baseUrl+'/zmitiadmin/updaterateditems';
-					p.id = p.managerid;
-				}else{
-					this.formmanager = {
-					}
-				}
-
-				zmitiUtil.ajax({
-					url,
-					data:p,
-					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
-						//s.showDetail = false;
-						s.getManagertypeList();
-					}
-				})
+				});	
 			},
 		}
 	}

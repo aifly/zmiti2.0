@@ -1,21 +1,21 @@
 <template>
-	<div class="zmiti-manager-main-ui">
+	<div class="zmiti-company-main-ui">
 		<div>
 			<Tab :menus='menus' title="单位管理" :refresh='refresh'></Tab>
 		</div>
-		<div class="zmiti-tab-content">
+		<div class="zmiti-tab-content zmiti-scroll">
 			<header class="zmiti-tab-header">
 				<div>单位管理</div>
 				<div>
 					<Button type="primary" @click="addCourse">新增单位</Button>
 				</div>
 			</header>
-			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-manager-table' :class="{'active':showDetail}">
+			<div class='zmiti-company-main  ' :style="{minHeight:viewH - 120+'px' }">
+				<div class='zmiti-company-table' :class="{'active':showDetail}">
 					<Table :data='companyList' :columns='columns'></Table>
 				</div>
 				<transition name='detail'>
-					<div class='zmiti-manager-form' v-if='showDetail'>
+					<div class='zmiti-company-form' v-if='showDetail'>
 						<header>
 							{{formCompany.projectid?'编辑单位':'新增单位'}}
 						</header>
@@ -31,7 +31,7 @@
 							</FormItem>
 						</Form>
 						
-						<div class='zmiti-manager-form-item zmiti-manager-btns'>
+						<div class='zmiti-company-form-item zmiti-company-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
 							<Button size ='small' type='primary' @click='companyAction'>{{formCompany.projectid?'保存':'确定'}}</Button>
 						</div>
@@ -276,9 +276,6 @@
 					},
 					success(data){
 						if(data.getret === 0){
-							for(var i = 0;i<5;i++){
-								data.list = data.list.concat(data.list);
-							}
 							s.companyList = data.list;
 						}
 					}

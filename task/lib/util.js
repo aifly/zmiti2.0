@@ -8,7 +8,7 @@ let zmitiUtil = {
             window.location.hash = '/tasklogin';
         }
 
-        return loginObj.data;
+        return loginObj ? loginObj.data :  {};
     },
     ajax(option) {
         var opt = option.data || {};

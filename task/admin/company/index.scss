@@ -1,7 +1,10 @@
-﻿@import "../../common/css/base.scss";
+﻿@import "../../../common/css/base.scss";
 
 $viewW: 750px;
-.zmiti-manager-main-ui{
+.ivu-icon{
+    left: 30px;
+}
+.zmiti-company-main-ui{
     .ivu-table-wrapper {
         border-bottom: none;
         border-right: none;
@@ -17,9 +20,8 @@ $viewW: 750px;
 
     .zmiti-tab-content {
         box-sizing: border-box;
-        flex: 1;
-        -webkit-flex: 1;
-
+        width: 100%;
+        overflow:auto;
         &>div {
             width: 98%;
             margin: 10px auto 10px;
@@ -28,8 +30,6 @@ $viewW: 750px;
             flex: 1;
             -webkit-flex: 1;
 
-            overflow: auto;
-
 
             .zmiti-meet-form {
                 width: 100%;
@@ -37,11 +37,10 @@ $viewW: 750px;
                 padding: 20px 40px;
                 ;
                 height: 600px;
-                overflow: auto;
             }
 
         }
-        @include displayFlex(column);
+      
         .zmiti-tab-header {
             width: 50px;
             @include displayFlex(row);
@@ -75,8 +74,8 @@ $viewW: 750px;
       
     }
 }
-.zmiti-manager-main-ui {
-     .zmiti-manager-main {
+.zmiti-company-main-ui {
+     .zmiti-company-main {
          width: 100%;
          @include displayFlex(row);
 
@@ -85,7 +84,7 @@ $viewW: 750px;
              @include transition(.3s);
          }
 
-         .zmiti-manager-table {
+         .zmiti-company-table {
              width: 100%;
 
              .ivu-table-wrapper {
@@ -98,7 +97,7 @@ $viewW: 750px;
              }
          }
 
-         .zmiti-manager-form {
+         .zmiti-company-form {
              //border:1px solid #dcdee2;
              margin-top: 10px;
              margin-left: 2%;
@@ -126,13 +125,13 @@ $viewW: 750px;
                  background: #f8f8f9;
              }
 
-             .zmiti-manager-form-item {
+             .zmiti-company-form-item {
                  line-height: 50px;
 
                  height: 50px;
                  ;
 
-                 &.zmiti-manager-btns {
+                 &.zmiti-company-btns {
                      text-align: center;
 
                      button {

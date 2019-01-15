@@ -1,9 +1,10 @@
-﻿@import "../css/base.scss";
+﻿@import "../../../common/css/base.scss";
 
-$baseColor: #fcffb4;
 $viewW: 750px;
-$color: #be0000;
-.zmiti-manager-main-ui{
+.ivu-icon{
+    left: 30px;
+}
+.zmiti-company-main-ui{
     .ivu-table-wrapper {
         border-bottom: none;
         border-right: none;
@@ -19,9 +20,8 @@ $color: #be0000;
 
     .zmiti-tab-content {
         box-sizing: border-box;
-        flex: 1;
-        -webkit-flex: 1;
-
+        width: 100%;
+        overflow:auto;
         &>div {
             width: 98%;
             margin: 10px auto 10px;
@@ -30,8 +30,6 @@ $color: #be0000;
             flex: 1;
             -webkit-flex: 1;
 
-            overflow: auto;
-
 
             .zmiti-meet-form {
                 width: 100%;
@@ -39,11 +37,10 @@ $color: #be0000;
                 padding: 20px 40px;
                 ;
                 height: 600px;
-                overflow: auto;
             }
 
         }
-        @include displayFlex(column);
+      
         .zmiti-tab-header {
             width: 50px;
             @include displayFlex(row);
@@ -63,11 +60,10 @@ $color: #be0000;
                         content: '';
                         width: 4px;
                         height: 24px;
-                        background: #be0000;
+                        background: $color;
                         left: -4px;
                         @include pos(a);
                         top: 12px;
-
                     }
                 }
             }
@@ -78,8 +74,8 @@ $color: #be0000;
       
     }
 }
-.zmiti-manager-main-ui {
-     .zmiti-manager-main {
+.zmiti-company-main-ui {
+     .zmiti-company-main {
          width: 100%;
          @include displayFlex(row);
 
@@ -88,7 +84,7 @@ $color: #be0000;
              @include transition(.3s);
          }
 
-         .zmiti-manager-table {
+         .zmiti-company-table {
              width: 100%;
 
              .ivu-table-wrapper {
@@ -101,7 +97,7 @@ $color: #be0000;
              }
          }
 
-         .zmiti-manager-form {
+         .zmiti-company-form {
              //border:1px solid #dcdee2;
              margin-top: 10px;
              margin-left: 2%;
@@ -129,13 +125,13 @@ $color: #be0000;
                  background: #f8f8f9;
              }
 
-             .zmiti-manager-form-item {
+             .zmiti-company-form-item {
                  line-height: 50px;
 
                  height: 50px;
                  ;
 
-                 &.zmiti-manager-btns {
+                 &.zmiti-company-btns {
                      text-align: center;
 
                      button {
