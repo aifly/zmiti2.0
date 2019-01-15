@@ -12,7 +12,7 @@
 			</header>
 			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
 				<div class='zmiti-manager-table' :class="{'active':showDetail}">
-					<Table :data='managerTypeList' :columns='columns'></Table>
+					<Table :data='companyList' :columns='columns'></Table>
 				</div>
 				<transition name='detail'>
 					<div class='zmiti-manager-form' v-if='showDetail'>
@@ -23,14 +23,17 @@
 							<FormItem label="单位名称：" prop='companyname'>
 								<Input v-model="formCompany.companyname"></Input>
 							</FormItem>
+							<FormItem label="工时：" prop='workhours'>
+								<Input v-model="formCompany.workhours"></Input>
+							</FormItem>
 							<FormItem label="说明：">
-								<Input type='textarea' v-model="formCompany.explain"></Input>
+								<Input type='textarea' v-model="formCompany.remarks"></Input>
 							</FormItem>
 						</Form>
 						
 						<div class='zmiti-manager-form-item zmiti-manager-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
-							<Button size ='small' type='primary' @click='projectAction'>{{formCompany.projectid?'保存':'确定'}}</Button>
+							<Button size ='small' type='primary' @click='companyAction'>{{formCompany.projectid?'保存':'确定'}}</Button>
 						</div>
 					</div>
 				</transition>
@@ -45,7 +48,7 @@
 	import './index.css';
 	
 	import Vue from 'vue';
-	import zmitiUtil from '../../../common/lib/util';
+	import zmitiUtil from '../../lib/util';
 	import Tab from '../../../common/tab/index';
 	import {zmitiUserMenus} from '../../data/tab';
 	export default {
@@ -110,13 +113,18 @@
 				columns:[
 					{
 						title:"单位名称",
-						key:'companyName',
+						key:'companyname',
 						align:'center',
 						width:240
 					},
 					{
-						title:"负责人账号",
-						key:'username',
+						title:"剩余工时",
+						key:'workhours',
+						align:'center'
+					},
+					{
+						title:"说明",
+						key:'remarks',
 						align:'center'
 					},
 					{
@@ -211,7 +219,7 @@
 				
 				formCompany:{
 				},
-				managerTypeList:[],
+				companyList:[],
 				 
 				directoryList:{
 
@@ -233,7 +241,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			
+			this.getCompanyList();
 		},
 
 		watch:{
@@ -259,24 +267,41 @@
 				this.currentClassId = -1;
 			},
 
-			getManagertypeList(){
+			getCompanyList(){
 				var s = this;
 				zmitiUtil.ajax({
-					url:window.config.baseUrl+'user/get_userlist/',
+					url:window.config.taskSystemUrl+'admin/getcompanylist/',
 					data:{
-						setusertypesign:2//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
+						
 					},
 					success(data){
 						if(data.getret === 0){
-							s.managerTypeList = data.userlist;
+							for(var i = 0;i<5;i++){
+								data.list = data.list.concat(data.list);
+							}
+							s.companyList = data.list;
 						}
 					}
 				})
 				 
 				
 			},
-			projectAction(){
-				
+			companyAction(){
+				var s = this;
+				zmitiUtil.ajax({
+					url:window.config.taskSystemUrl+'admin/addcompany',
+					data:{
+						companyname:s.formCompany.companyname,
+						workhours:s.formCompany.workhours,
+						remarks:s.formCompany.remarks,
+					},
+					success(data){
+						if(data.getret === 0){
+							s.getCompanyList();
+							s.formCompany = {};
+						}
+					}
+				});	
 			},
 		}
 	}

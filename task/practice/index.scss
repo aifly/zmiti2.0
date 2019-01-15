@@ -1,26 +1,32 @@
+@import "../../components/css/base.scss";
+
 .zmiti-practice-box{
     padding: 10px;
     .zmiti-practice-header{
     position: relative;
     height: 50px;
     div:nth-of-type(1){
-        position: absolute;
+        
+        @include pos(a);
         left: 0;
         top: 0;
         font-size: 26px;
         color: #000; 
         padding-left: 10px;        
         line-height: 50px;
+
+        &:before{
+            content: '';
+            width: 4px;
+            height: 24px;
+            border-left: 3px solid #2d8cf0;
+            position: absolute;
+            left: 0;
+            top: 13px;
+        }
+
     }
-    div:nth-of-type(1):before{
-        content: '';
-        width: 4px;
-        height: 24px;
-        border-left: 3px solid #2d8cf0;      
-        position: absolute;
-        left: 0;
-        top: 13px;
-    }
+  
     div:nth-of-type(2){
         position: absolute;
         right: 0;

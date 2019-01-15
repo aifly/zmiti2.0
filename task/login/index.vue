@@ -45,7 +45,7 @@
 
 <script>
 	import './index.css';
-	import zmitiUtil from '../../common/lib/util';
+	import zmitiUtil from '../lib/util';
 
 	import Vue from "vue";
 
@@ -95,6 +95,8 @@
  					return;
 				}
 
+			
+
 				this.showLoading = true;
 				var s = this;
 				zmitiUtil.ajax({
@@ -107,23 +109,22 @@
 					},
 					success(data){
 
-						console.log(data);
-						
+					
 						if(data.getret === 0){
 							var param = data;
 							delete param.getret;
 							delete param.getmsg;
 
-							var p = data;
+							var p = data.data;
 							p.username =  _this.username;
-							window.localStorage.setItem('login',JSON.stringify(data));
+							window.localStorage.setItem('tasklogin',JSON.stringify(data));
 
 							if(_this.checked){
-								window.localStorage.setItem('wm_username',_this.username);
-								window.localStorage.setItem('wm_password',_this.password);
+								window.localStorage.setItem('task_username',_this.username);
+								window.localStorage.setItem('task_password',_this.password);
 							}else{
-								window.localStorage.setItem('wm_username','');
-								window.localStorage.setItem('wm_password','');
+								window.localStorage.setItem('task_username','');
+								window.localStorage.setItem('task_password','');
 							}
 							
 							_this.$Message.success('登录成功~');

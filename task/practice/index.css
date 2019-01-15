@@ -1,80 +1,172 @@
-.zmiti-practice-box {
-  padding: 10px; }
-  .zmiti-practice-box .zmiti-practice-header {
-    position: relative;
-    height: 50px; }
-    .zmiti-practice-box .zmiti-practice-header div:nth-of-type(1) {
-      position: absolute;
-      left: 0;
-      top: 0;
-      font-size: 26px;
-      color: #000;
-      padding-left: 10px;
-      line-height: 50px; }
-    .zmiti-practice-box .zmiti-practice-header div:nth-of-type(1):before {
-      content: '';
-      width: 4px;
-      height: 24px;
-      border-left: 3px solid #2d8cf0;
-      position: absolute;
-      left: 0;
-      top: 13px; }
-    .zmiti-practice-box .zmiti-practice-header div:nth-of-type(2) {
-      position: absolute;
-      right: 0;
-      top: 10px; }
-  .zmiti-practice-box .zmiti-practice-cont {
-    position: relative; }
-    .zmiti-practice-box .zmiti-practice-cont .zmiti-table {
-      border: 1px solid #333;
-      border-bottom: none;
-      transition: 0.3s;
-      position: absolute;
-      left: 0;
-      top: 0; }
-      .zmiti-practice-box .zmiti-practice-cont .zmiti-table button {
-        height: 28px;
-        padding: 0 10px; }
-    .zmiti-practice-box .zmiti-practice-cont .zmiti-add {
-      position: absolute;
-      right: 0;
-      top: 0;
-      transition: 0.3s;
-      overflow: hidden; }
-      .zmiti-practice-box .zmiti-practice-cont .zmiti-add header {
-        padding-left: 30px; }
-      .zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form {
-        margin-bottom: 30px; }
-        .zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form label {
-          width: 100px;
-          text-align: left;
-          padding: 10px 12px 0 10px;
-          float: left; }
-        .zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form .zmiti-add-name:before {
-          content: '*';
-          color: #ed4014; }
-        .zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form .zmiti-practice-input {
-          margin-left: 100px; }
-          .zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form .zmiti-practice-input input {
-            width: 100%;
-            line-height: 30px; }
-          .zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form .zmiti-practice-input textarea {
-            width: 100%;
-            height: 80px; }
-      .zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-btn {
-        padding-left: 100px; }
-        .zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-btn Button {
-          margin: 10px 20px; }
-    .zmiti-practice-box .zmiti-practice-cont table {
-      width: 100%;
-      font-size: 14px;
-      table-layout: fixed;
-      text-align: center; }
-      .zmiti-practice-box .zmiti-practice-cont table tr {
-        line-height: 40px; }
-        .zmiti-practice-box .zmiti-practice-cont table tr th {
-          border-bottom: 1px solid; }
-        .zmiti-practice-box .zmiti-practice-cont table tr td {
-          border-bottom: 1px solid; }
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 
-/*# sourceMappingURL=index.css.map */
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem;
+}
+
+.zmiti-play.rotate {
+  -webkit-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+.symbin-left {
+  float: left !important;
+}
+
+.symbin-right {
+  float: right !important;
+}
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.zmiti-practice-box {
+  padding: 10px;
+}
+
+.zmiti-practice-box .zmiti-practice-header {
+  position: relative;
+  height: 50px;
+}
+
+.zmiti-practice-box .zmiti-practice-header div:nth-of-type(1) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 26px;
+  color: #000;
+  padding-left: 10px;
+  line-height: 50px;
+}
+
+.zmiti-practice-box .zmiti-practice-header div:nth-of-type(1):before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  border-left: 3px solid #2d8cf0;
+  position: absolute;
+  left: 0;
+  top: 13px;
+}
+
+.zmiti-practice-box .zmiti-practice-header div:nth-of-type(2) {
+  position: absolute;
+  right: 0;
+  top: 10px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont {
+  position: relative;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-table {
+  border: 1px solid #333;
+  border-bottom: none;
+  transition: 0.3s;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-table button {
+  height: 28px;
+  padding: 0 10px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add header {
+  padding-left: 30px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form {
+  margin-bottom: 30px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form label {
+  width: 100px;
+  text-align: left;
+  padding: 10px 12px 0 10px;
+  float: left;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form .zmiti-add-name:before {
+  content: '*';
+  color: #ed4014;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form .zmiti-practice-input {
+  margin-left: 100px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form .zmiti-practice-input input {
+  width: 100%;
+  line-height: 30px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-add-form .zmiti-practice-input textarea {
+  width: 100%;
+  height: 80px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-btn {
+  padding-left: 100px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont .zmiti-add .zmiti-btn Button {
+  margin: 10px 20px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont table {
+  width: 100%;
+  font-size: 14px;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.zmiti-practice-box .zmiti-practice-cont table tr {
+  line-height: 40px;
+}
+
+.zmiti-practice-box .zmiti-practice-cont table tr th {
+  border-bottom: 1px solid;
+}
+
+.zmiti-practice-box .zmiti-practice-cont table tr td {
+  border-bottom: 1px solid;
+}
