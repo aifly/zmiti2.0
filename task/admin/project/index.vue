@@ -262,6 +262,7 @@
 				var s = this;
 				zmitiUtil.ajax({
 					url:window.config.taskSystemUrl+'admin/getprojectList/',
+					//url:'http://www.reedexport.cn/reedadmin/back/abctest01?id=1'
 					data:{
 						companyid:s.companyid
 					},
