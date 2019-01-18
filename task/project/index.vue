@@ -109,30 +109,24 @@
 				menus:companyAdminMenus,
 				columns:[
 					{
-						title:"单位名称",
-						key:'companyName',
+						title:"项目名称",
+						key:'projectname',
 						align:'center',
 						width:240
 					},
 					{
-						title:"负责人账号",
-						key:'username',
+						title:"状态",
+						key:'status',
 						align:'center'
 						
 					},{
-						title:"用戶总数",
-						key:'totalUserNum',
+						title:"说明",
+						key:'explain',
 						align:'center'
 						
 					},{
-						title:"到期时间",
-						key:'expirDate',
-						align:'center'
-						
-					},
-					{
-						title:"空间使用量",
-						key:'userSpace',
+						title:"创建时间",
+						key:'create_time',
 						align:'center'
 						
 					},
@@ -143,36 +137,7 @@
 						width:200,
 						render:(h,params)=>{
 
-							return h('div', [
-                               
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-										margin: '2px 5px',
-										border:'none',
-										padding: '3px 7px 2px',
-										fontSize: '12px',
-										borderRadius: '3px'
-                                    },
-                                    on: {
-                                        click: () => {
-											this.visible = true;
-											var s = this;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;											
-												}
-											})
-                                        }
-                                    }
-								}, '权限设置'),
+							return h('div', [                               
 								 h('Button', {
                                     props: {
                                         type: 'primary',
@@ -284,13 +249,13 @@
 			getManagertypeList(){
 				var s = this;
 				zmitiUtil.ajax({
-					url:window.config.baseUrl+'user/get_userlist/',
+					url:window.config.taskSystemUrl+'company/getprojectlist/',
 					data:{
-						setusertypesign:2//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
+						
 					},
 					success(data){
 						if(data.getret === 0){
-							s.managerTypeList = data.userlist;
+							s.managerTypeList = data.list;
 						}
 					}
 				})
