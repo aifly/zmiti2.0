@@ -263,10 +263,10 @@
 				
 			},
 		
-			delproject(id){
+			delproject(projectid){
 				var s = this;
 				zmitiCompanyUtil.ajax({
-					url:window.config.taskSystemUrl+'admin/delproject/',
+					url:window.config.taskSystemUrl+'company/delproject',
 					data:{
 						projectid,
 					},
@@ -279,7 +279,7 @@
 			},
 			projectAction(){
 				var s = this;
-				var url = window.config.taskSystemUrl+'admin/addproject';
+				var url = window.config.taskSystemUrl+'company/addproject';
 				var msg = '添加成功';
 				var params = {
 					projectname:s.formProject.projectname,
@@ -287,7 +287,7 @@
 					companyid:s.formProject.projectid
 				};
 				if(s.formProject.projectid){
-					url = window.config.taskSystemUrl+'admin/updateproject';
+					url = window.config.taskSystemUrl+'company/updateproject';
 					params.projectid = s.formProject.projectid;
 					msg = '修改成功';
 				}
