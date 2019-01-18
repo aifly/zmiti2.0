@@ -61,6 +61,23 @@
 	import zmitiUtil from '../../lib/util';
 	import Tab from '../../../common/tab/index';
 	import {zmitiUserMenus} from '../../data/tab';
+	import expandRow from './expandRow'
+
+	let cols = [{
+				title:"任务类型名称",
+				key:'name',
+				align:'center',
+				width:240
+			},
+			{
+				title:"说明",
+				key:'explain',
+				align:'center',
+				render:(h,params)=>{
+					return params.row.remarks || '无'
+				}
+			},
+			];
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -90,33 +107,25 @@
 				menus:zmitiUserMenus,
 				columns:[
 					{
-						title:"任务类型名称",
-						key:'name',
-						align:'center',
-						width:240
-					},
-					{
-						title:"说明",
-						key:'explain',
-						align:'center',
-						render:(h,params)=>{
-							return params.row.remarks || '无'
-						}
-					},
-					{
-						title:'操作',
-						key:'action',
-						align:'center',
-						width:200,
-						render:(h,params)=>{
+                        type: 'expand',
+                        width: 50,
+                        render: (h, params) => {
+                            return h(expandRow, {
+                                props: {
+									row: params.row.children,
+									col:cols.concat([{title:'操作',
+					key:'action',
+					align:'center',
+					width:200,
+					render:(h,params)=>{
 
-							return h('div', [
-								 h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
+						return h('div', [
+								h('Button', {
+									props: {
+										type: 'primary',
+										size: 'small'
+									},
+									style: {
 										margin: '2px 5px',
 										border:'none',
 										background:'#fab82e',
@@ -124,17 +133,16 @@
 										padding: '3px 7px 2px',
 										fontSize: '12px',
 										borderRadius: '3px'
-
-                                    },
-                                    on: {
-                                        click: () => {
+									},
+									on: {
+										click: () => {
 											var s = this;
 											s.showDetail = true;
 											s.formTasktype = params.row;
-                                        }
-                                    }
-                                }, '详情'),
-                                h('Poptip',{
+										}
+									}
+								}, '详情'),
+								h('Poptip',{
 									props:{
 										confirm:true,
 										title:"确定要删除吗"
@@ -143,7 +151,6 @@
 										'on-ok':()=>{
 											this.deltasktype(params.row.typeid);
 										},
-										
 									}
 								},[
 									h('Button', {
@@ -157,9 +164,78 @@
 										}
 									}, '删除')
 								])
-                            ]);
-							
-							 
+							]);
+						}}])
+                                }
+                            })
+                        }
+                    },
+					{
+						title:"任务类型名称",
+						key:'name',
+						align:'center',
+						width:240
+					},
+					{
+						title:"说明",
+						key:'explain',
+						align:'center',
+						render:(h,params)=>{
+							return params.row.remarks || '无'
+						}
+					},{
+					title:'操作',
+					key:'action',
+					align:'center',
+					width:200,
+					render:(h,params)=>{
+
+						return h('div', [
+								h('Button', {
+									props: {
+										type: 'primary',
+										size: 'small'
+									},
+									style: {
+										margin: '2px 5px',
+										border:'none',
+										background:'#fab82e',
+										color:'#fff',
+										padding: '3px 7px 2px',
+										fontSize: '12px',
+										borderRadius: '3px'
+									},
+									on: {
+										click: () => {
+											var s = this;
+											s.showDetail = true;
+											s.formTasktype = params.row;
+										}
+									}
+								}, '详情'),
+								h('Poptip',{
+									props:{
+										confirm:true,
+										title:"确定要删除吗"
+									},
+									on:{
+										'on-ok':()=>{
+											this.deltasktype(params.row.typeid);
+										},
+									}
+								},[
+									h('Button', {
+										props: {
+											type: 'error',
+											size: 'small'
+										},
+										on: {
+											click: () => {
+											}
+										}
+									}, '删除')
+								])
+							]);
 						}
 					}
 				],

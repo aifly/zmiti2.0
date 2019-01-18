@@ -45,7 +45,7 @@
 	import './index.css';
 	
 	import Vue from 'vue';
-	import zmitiUtil from '../lib/util';
+	import zmitiCompanyUtil from '../lib/companyutil';
 	import Tab from '../../common/tab/index';
 	import {companyAdminMenus} from '../data/tab';
 	export default {
@@ -92,7 +92,7 @@
 								},
 								on:{
 									'on-change':(e)=>{
-										zmitiUtil.ajax({
+										zmitiCompanyUtil.ajax({
 											url:window.config.baseUrl+'admin/setuserauth',
 											data:{
 												setuserid:params.row.userid,
@@ -212,13 +212,13 @@
 
 		beforeCreate(){
 			//var validate = sysbinVerification.validate(this);
-			//zmitiUtil.clearCookie('login');
+			//zmitiCompanyUtil.clearCookie('login');
 
 			///this.validate = validate;
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getUserInfo();
+			this.userinfo = zmitiCompanyUtil.getUserInfo();
 			this.getManagertypeList();
 			
 		},
@@ -248,7 +248,7 @@
 
 			getManagertypeList(){
 				var s = this;
-				zmitiUtil.ajax({
+				zmitiCompanyUtil.ajax({
 					url:window.config.taskSystemUrl+'company/getprojectlist/',
 					data:{
 						
@@ -265,7 +265,7 @@
 		
 			delmanager(id){
 				var s = this;
-				zmitiUtil.ajax({
+				zmitiCompanyUtil.ajax({
 					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
 					data:{
 						admintoken:s.userinfo.accesstoken,

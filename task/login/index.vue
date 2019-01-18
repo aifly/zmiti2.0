@@ -95,13 +95,21 @@
  					return;
 				}
 
+
+				var url = window.config.taskSystemUrl+'admin/adminlogin';
+				var isAdmin = false;
+				if(!isAdmin){
+					url = window.config.taskSystemUrl+'company/login';
+				}
+				
+
 			
 
 				this.showLoading = true;
 				var s = this;
 				zmitiUtil.ajax({
 					_this:s,
-					url:window.config.taskSystemUrl+'admin/adminlogin',
+					url,
 					isLogin:true,
 					data:{
 						username:_this.username,
@@ -117,14 +125,14 @@
 
 							var p = data.data;
 							p.username =  _this.username;
-							window.localStorage.setItem('tasklogin',JSON.stringify(data));
+							window.localStorage.setItem(isAdmin?'tasklogin':'companylogin',JSON.stringify(data));
 
 							if(_this.checked){
-								window.localStorage.setItem('task_username',_this.username);
-								window.localStorage.setItem('task_password',_this.password);
+								window.localStorage.setItem(isAdmin?'task_username':'company_username',_this.username);
+								window.localStorage.setItem(isAdmin?'task_password':'company_username',_this.password);
 							}else{
-								window.localStorage.setItem('task_username','');
-								window.localStorage.setItem('task_password','');
+								window.localStorage.setItem(isAdmin?'task_username':'company_username','');
+								window.localStorage.setItem(isAdmin?'task_password':'company_username','');
 							}
 							
 							_this.$Message.success('登录成功~');
