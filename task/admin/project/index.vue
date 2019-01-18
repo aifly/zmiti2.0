@@ -32,7 +32,7 @@
 								<Input v-model="formProject.projectname"></Input>
 							</FormItem>
 							<FormItem label="说明：">
-								<Input type='textarea' v-model="formProject.remarks"></Input>
+								<Input type='textarea' v-model="formProject.explain"></Input>
 							</FormItem>
 						</Form>
 						
@@ -92,16 +92,11 @@
 						width:240
 					},
 					{
-						title:"剩余工时",
-						key:'workhours',
-						align:'center'
-					},
-					{
 						title:"说明",
 						key:'remarks',
 						align:'center',
 						render:(h,params)=>{
-							return params.row.remarks || '无'
+							return params.row.explain || '无'
 						}
 					},
 					{
@@ -142,7 +137,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delcompany(params.row.projectid);
+											this.delproject(params.row.projectid);
 										},
 										
 									}
@@ -243,10 +238,10 @@
 				this.currentClassId = -1;
 			},
 
-			delcompany(projectid){
+			delproject(projectid){
 				var s = this;
 				zmitiUtil.ajax({
-					url:window.config.taskSystemUrl+'admin/delcompany/',
+					url:window.config.taskSystemUrl+'admin/delproject/',
 					data:{
 						projectid,
 					},
@@ -283,7 +278,7 @@
 				var params = {
 					projectname:s.formProject.projectname,
 					workhours:s.formProject.workhours,
-					remarks:s.formProject.remarks,
+					explain:s.formProject.explain,
 					companyid:s.companyid
 				};
 				if(s.formProject.projectid){

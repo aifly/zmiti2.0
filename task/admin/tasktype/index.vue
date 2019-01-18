@@ -141,7 +141,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delcompany(params.row.typeid);
+											this.deltasktype(params.row.typeid);
 										},
 										
 									}
@@ -214,10 +214,10 @@
 				this.currentClassId = -1;
 			},
 
-			delcompany(typeid){
+			deltasktype(typeid){
 				var s = this;
 				zmitiUtil.ajax({
-					url:window.config.taskSystemUrl+'admin/delcompany/',
+					url:window.config.taskSystemUrl+'admin/deltasktype/',
 					data:{
 						typeid,
 					},

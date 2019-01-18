@@ -45,7 +45,7 @@
 	import './index.css';
 	
 	import Vue from 'vue';
-	import zmitiUtil from '../../common/lib/util';
+	import zmitiUtil from '../lib/util';
 	import Tab from '../../common/tab/index';
 	import {companyAdminMenus} from '../data/tab';
 	export default {
@@ -97,7 +97,7 @@
 											data:{
 												setuserid:params.row.userid,
 												projectids:params.row.projectid,
-												isdel:params.row.authstatus === 1 ? 1:2
+												isdel:params.row.authstatus === 1 ? 1 : 2
 											}
 										})
 									}
