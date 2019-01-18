@@ -169,7 +169,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delmanager(params.row.projectid);
+											this.delproject(params.row.projectid);
 										}
 										
 									}
@@ -219,7 +219,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiCompanyUtil.getUserInfo();
-			this.getManagertypeList();
+			this.getprojectList();
 			
 		},
 
@@ -246,7 +246,7 @@
 				this.currentClassId = -1;
 			},
 
-			getManagertypeList(){
+			getprojectList(){
 				var s = this;
 				zmitiCompanyUtil.ajax({
 					url:window.config.taskSystemUrl+'company/getprojectlist/',
@@ -263,25 +263,49 @@
 				
 			},
 		
-			delmanager(id){
+			delproject(id){
 				var s = this;
 				zmitiCompanyUtil.ajax({
-					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
+					url:window.config.taskSystemUrl+'admin/delproject/',
 					data:{
-						admintoken:s.userinfo.accesstoken,
-						adminuserid:s.userinfo.userid,
-						id
+						projectid,
 					},
 					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
 						if(data.getret === 0){
-							s.getManagertypeList();
+							s.getprojectList();
 						}
 					}
 				})
 			},
 			projectAction(){
-				
+				var s = this;
+				var url = window.config.taskSystemUrl+'admin/addproject';
+				var msg = '添加成功';
+				var params = {
+					projectname:s.formProject.projectname,
+					explain:s.formProject.explain,
+					companyid:s.formProject.projectid
+				};
+				if(s.formProject.projectid){
+					url = window.config.taskSystemUrl+'admin/updateproject';
+					params.projectid = s.formProject.projectid;
+					msg = '修改成功';
+				}
+				zmitiCompanyUtil.ajax({
+					url,
+					data:params,
+					success(data){
+						if(data.getret === 0){
+							s.getprojectList();
+							if(!s.formProject.projectid){
+								s.formProject = {};
+							}
+							s.$Message.success(msg);
+						}else{
+							s.$Message.success(s.formProject.projectid? '修改失败':'添加失败');
+						}
+					}
+				});	
 			},
 		}
 	}
