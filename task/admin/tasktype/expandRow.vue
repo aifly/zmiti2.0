@@ -11,7 +11,12 @@ export default {
     },
     mounted(){
         console.log(this.row)
-    }
+    },
+    methods: {
+        showDetai(){
+            
+        }
+    },
 
 }
 </script>
