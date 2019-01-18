@@ -198,13 +198,14 @@
                                 }, '详情'),
                                 h('Poptip',{
 									props:{
-										confirm:true,
-										title:"确定要删除吗"
+										title:"确定要删除吗",
+										confirm:true
+										
 									},
 									on:{
 										'on-ok':()=>{
 											this.delmanager(params.row.projectid);
-										},
+										}
 										
 									}
 								},[

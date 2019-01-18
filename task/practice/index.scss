@@ -14,7 +14,6 @@
         color: #000; 
         padding-left: 10px;        
         line-height: 50px;
-
         &:before{
             content: '';
             width: 4px;
@@ -35,17 +34,20 @@
 }
     .zmiti-practice-cont{
         position: relative;
+        flex: 1;
         .zmiti-table{
-            border: 1px solid #333;
-            border-bottom: none;
-            transition: 0.3s;  
-            position: absolute;
-            left: 0;
-            top: 0;   
-            button{
-                height: 28px;
-                padding: 0 10px;
-            }     
+           width: 100%;
+           position: absolute;
+           left: 0;
+           top: 0;
+           transition: 0.3s;
+           .ivu-table-wrapper{
+               border-bottom: none;
+               border-right: none;
+           }
+        }
+        .active{
+            width: 70%;
         }
         .zmiti-add{
             position: absolute;
@@ -53,6 +55,7 @@
             top: 0;
             transition: 0.3s;  
             overflow: hidden;
+            width: 28%;
             header{
                 padding-left: 30px;
             }
@@ -92,15 +95,7 @@
             font-size: 14px;
             table-layout: fixed;
             text-align: center;
-            tr{
-                line-height: 40px;
-                th{
-                    border-bottom: 1px solid;
-                }
-                td{
-                    border-bottom: 1px solid;
-                }
-            }
+           
         }
     }
 }

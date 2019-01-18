@@ -35,7 +35,6 @@ $viewW: 750px;
                 width: 100%;
                 margin: 0px auto;
                 padding: 20px 40px;
-                ;
                 height: 600px;
                 overflow: auto;
             }
@@ -87,12 +86,9 @@ $viewW: 750px;
 
          .zmiti-manager-table {
              width: 100%;
-
              .ivu-table-wrapper {
                  margin-top: 10px;
-                 ;
              }
-
              &.active {
                  width: 70%;
              }
