@@ -85,14 +85,15 @@
 						title:"用户名",
 						key:'username',
 						align:'center',
-						width:200
+						width:180
 					},
 					{
 						title:"姓名",
 						key:'realname',
-						align:'center'
+						align:'center',
+						width:180
 					},
-					{
+/*					{
 						title:"性别",
 						key:'sex',
 						align:'center',
@@ -106,11 +107,12 @@
 								},params.row.sex==1?"男":"女")
 							])							
 						}
-					},
+					},*/
 					{
 						title:"电话",
 						key:'usermobile',
 						align:'center',
+						width:200,
 						render:(h,params)=>{
 							return h('div',[
 								h('span',{
@@ -155,7 +157,6 @@
 						title:'操作',
 						key:'action',
 						align:'center',
-						width:200,
 						render:(h,params)=>{
 							return h('div', [                               
 								 h('Button', {
@@ -277,7 +278,7 @@
 					realname:s.formProject.realname,
 					sex:s.formProject.sex,
 					usermobile:s.formProject.usermobile,
-					isover:s.formProject.isover,
+					isover:0,//s.formProject.isover,
 					usersign:s.formProject.usersign
 				};
 				if(s.formProject.companyuserid){
