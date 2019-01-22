@@ -16,21 +16,24 @@
 				</div>
 				<transition name='detail'>
 					<div class='zmiti-taskmgruserlist-form' v-if='showDetail'>
-						<header>新增人员
+						<header>{{formProject.userid?'修改人员':'新增人员'}}
 						</header>
 						<Form :model="formProject" label-position="left" :label-width="100">
 							<FormItem label="用户名：" prop='username'>
 								<Input v-model="formProject.username"></Input>
 							</FormItem>
-							<FormItem label="密码：" prop='userpwd'>
+							<FormItem label="密码：" prop='userpwd' v-if="currentClassId===-1">
 								<Input v-model="formProject.userpwd"></Input>
 							</FormItem>
 							<FormItem label="姓名：" prop='realname'>
 								<Input v-model="formProject.realname"></Input>
 							</FormItem>
 							<FormItem label="性别：" prop='sex'>
-								<Input v-model="formProject.sex"></Input>
-							</FormItem>
+					            <RadioGroup v-model="formProject.sex">
+					                <Radio :label="1">男</Radio>
+					                <Radio :label="0">女</Radio>
+					            </RadioGroup>
+					        </FormItem>
 							<FormItem label="手机号：" prop='usermobile'>
 								<Input v-model="formProject.usermobile"></Input>
 							</FormItem>
@@ -38,12 +41,15 @@
 								<Input v-model="formProject.isover"></Input>
 							</FormItem>
 							<FormItem label="账号类型：" prop='usersign'>
-								<Input v-model="formProject.usersign"></Input>
-							</FormItem>
+					            <RadioGroup v-model="formProject.usersign">
+					                <Radio :label="1">单位管理员</Radio>
+					                <Radio :label="2">普通用户</Radio>
+					            </RadioGroup>
+					        </FormItem>
 						</Form>
 						<div class='zmiti-taskmgruserlist-form-item zmiti-taskmgruserlist-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
-							<Button size ='small' type='primary' @click='projectAction'>确定</Button>
+							<Button size ='small' type='primary' @click='projectAction'>{{formProject.userid?'保存':'确定'}}</Button>
 						</div>
 					</div>
 				</transition>
@@ -70,7 +76,9 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				menus:companyAdminMenus,
-				formProject:{},
+				formProject:{					
+					usersign:2
+				},
 				managerUserList:[],
 				columns:[
 					{
@@ -102,7 +110,16 @@
 					{
 						title:"电话",
 						key:'usermobile',
-						align:'center'
+						align:'center',
+						render:(h,params)=>{
+							return h('div',[
+								h('span',{
+									props:{
+										type:'text'
+									}
+								},params.row.usermobile!='undefined'?params.row.usermobile:"无")
+							])
+						}
 					},
 					{
 						title:"账号类型",
@@ -161,6 +178,9 @@
 											var s = this;
 											s.showDetail = true;
 											s.formProject = params.row;
+											s.formProject.userid = params.row.companyuserid;
+											s.currentClassId = params.row._index;
+											console.log(s.formProject,'s.formProject',s.currentClassId)
                                         }
                                     }
                                 }, '详情'),
@@ -213,7 +233,11 @@
 				this.showDetail = true;
 				this.currentClassId = -1;
 				this.formProject = {
+					sex:1					
 				}
+
+				
+				console.log(this.formProject,'formProject.sex')
 			},
 			getuserList(){
 				var s = this;
@@ -249,31 +273,32 @@
 				var url = window.config.taskSystemUrl+'company/adduser';
 				var msg = '添加成功';
 				var params = {
-					username:s.formProject.username,
-					userpwd:s.formProject.userpwd,
+					username:s.formProject.username,					
 					realname:s.formProject.realname,
 					sex:s.formProject.sex,
 					usermobile:s.formProject.usermobile,
 					isover:s.formProject.isover,
 					usersign:s.formProject.usersign
 				};
-				if(s.formProject.userid){
+				if(s.formProject.companyuserid){
 					url = window.config.taskSystemUrl+'company/updateuserinfo';
-					params.userid = s.formProject.userid;
+					params.userid = s.formProject.companyuserid;
 					msg = '修改成功';
+				}else{
+					params.userpwd=s.formProject.userpwd
 				}
 				zmitiCompanyUtil.ajax({
 					url,
 					data:params,
 					success(data){
 						if(data.getret === 0){
-							s.getprojectList();
-							if(!s.formProject.userid){
+							s.getuserList();
+							if(!s.formProject.companyuserid){
 								s.formProject = {};
 							}
 							s.$Message.success(msg);
 						}else{
-							s.$Message.success(s.formProject.userid? '修改失败':'添加失败');
+							s.$Message.success(s.formProject.companyuserid? '修改失败':'添加失败');
 						}
 					}
 				});	
