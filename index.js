@@ -6,6 +6,7 @@ import Home from './components/home/index'
 
 import TaskManager from './task/taskmgr/index';
 import TaskManagerEdit from './task/taskmgr/edit';
+import TaskManagerUserlist from './task/taskmgr/userlist';
 
 import TaskLogin from './task/login/index';
 import TaskHome from './task/home/index';
@@ -78,6 +79,12 @@ const router = new VueRouter({
       component: TaskManagerEdit,
       props: true
     },
+    {
+      path: "/taskmgruserlist",
+      name: "taskmgruserlist",
+      component: TaskManagerUserlist,
+      props: true
+     },
     {
       path: "/taskadminproject",
       name: "taskadminproject",

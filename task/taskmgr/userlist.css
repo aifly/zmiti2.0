@@ -1,0 +1,177 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0; }
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-play {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1000;
+  right: .5rem;
+  top: .5rem; }
+  .zmiti-play.rotate {
+    -webkit-animation: rotate 5s linear infinite;
+    animation: rotate 5s linear infinite; }
+
+.symbin-left {
+  float: left !important; }
+
+.symbin-right {
+  float: right !important; }
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+.zmiti-taskmgruserlist-main-ui {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row; }
+  .zmiti-taskmgruserlist-main-ui .ivu-table-wrapper {
+    border-bottom: none;
+    border-right: none; }
+  .zmiti-taskmgruserlist-main-ui > div:nth-of-type(1) {
+    width: 200px; }
+  .zmiti-taskmgruserlist-main-ui .zmiti-tab-content {
+    box-sizing: border-box;
+    flex: 1;
+    -webkit-flex: 1;
+    overflow: auto;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-tab-content > div {
+      width: 98%;
+      margin: 10px auto 10px;
+      position: relative;
+      flex: 1;
+      -webkit-flex: 1;
+      overflow: auto; }
+      .zmiti-taskmgruserlist-main-ui .zmiti-tab-content > div .zmiti-meet-form {
+        width: 100%;
+        margin: 0px auto;
+        padding: 20px 40px;
+        height: 600px;
+        overflow: auto; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-tab-content .zmiti-tab-header {
+      width: 50px;
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      width: 100%;
+      padding: 0 20px;
+      justify-content: space-between;
+      -webkit-justify-content: space-between;
+      line-height: 50px;
+      font-size: 20px; }
+      .zmiti-taskmgruserlist-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
+        position: relative;
+        text-indent: .5em; }
+        .zmiti-taskmgruserlist-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
+          content: '';
+          width: 4px;
+          height: 24px;
+          background: #2d8cf0;
+          left: -4px;
+          position: absolute;
+          top: 12px; }
+
+.ivu-input {
+  border-radius: 0 !important; }
+
+.zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main {
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row; }
+  .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main > div {
+    -webkit-transition: 0.3s;
+    transition: 0.3s; }
+  .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-table {
+    width: 98%;
+    margin: 0 auto;
+    /*border:1px solid #e1e6eb;*/
+    border-top: none; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-table .ivu-table-wrapper {
+      margin-top: 10px; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-table > h2 {
+      font-size: 14px;
+      height: 40px;
+      background: #F5f6FA;
+      font-weight: normal;
+      line-height: 40px;
+      position: relative;
+      text-indent: 1em;
+      border: 1px solid #e1e6eb;
+      border-left: 4px solid #6d7781;
+      border-right: none;
+      box-sizing: border-box;
+      margin-bottom: 20px; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-table > form {
+      width: 96%;
+      margin: 0 auto; }
+      .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-table > form .zmiti-and-btn {
+        text-align: center;
+        font-size: 16px;
+        width: 32px;
+        height: 32px;
+        background: #ddd;
+        border: 1px solid #ddd; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-table.active {
+      width: 70%;
+      margin: 0; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-table .ivu-poptip-confirm .ivu-poptip-body .ivu-icon {
+      left: 25px; }
+  .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form {
+    margin-top: 10px;
+    margin-left: 2%;
+    width: 28%;
+    position: absolute;
+    right: 0; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form.detail-enter-active, .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form.detail-leave-active {
+      -webkit-transition: 0.3s;
+      transition: 0.3s; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form.detail-enter, .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form.detail-leave-to {
+      width: 0;
+      overflow: hidden; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form > header {
+      line-height: 40px;
+      height: 40px;
+      font-weight: bold;
+      color: #515a6e;
+      text-indent: 2em;
+      background: #f8f8f9; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form .ivu-form-label-left .ivu-form-item-label {
+      text-align: right; }
+    .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form .zmiti-taskmgruserlist-form-item {
+      line-height: 50px;
+      height: 50px; }
+      .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form .zmiti-taskmgruserlist-form-item.zmiti-taskmgruserlist-btns {
+        text-align: center; }
+        .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form .zmiti-taskmgruserlist-form-item.zmiti-taskmgruserlist-btns button {
+          margin: 0 20px;
+          padding: 2px 20px; }
+      .zmiti-taskmgruserlist-main-ui .zmiti-taskmgruserlist-main .zmiti-taskmgruserlist-form .zmiti-taskmgruserlist-form-item input {
+        padding-left: 6px;
+        height: 26px;
+        width: 70%;
+        border: 1px solid #d8d8d8;
+        outline: none; }
+
+/*# sourceMappingURL=userlist.css.map */

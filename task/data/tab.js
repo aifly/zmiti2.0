@@ -27,7 +27,13 @@ var companyAdminMenus = [
     },
     {
         name:'人员管理',
-        to:""
+        to:"",
+        children:[
+            {
+                name:'人员列表',
+                to: 'taskmgruserlist'
+            }
+        ]
     }
 ];
 
