@@ -266,7 +266,7 @@
 			delproject(projectid){
 				var s = this;
 				zmitiCompanyUtil.ajax({
-					url:window.config.taskSystemUrl+'company/delproject',
+					url:window.config.taskSystemUrl+'company/delproject/',
 					data:{
 						projectid,
 					},
