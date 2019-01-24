@@ -158,7 +158,30 @@
 						key:'action',
 						align:'center',
 						render:(h,params)=>{
-							return h('div', [                               
+							return h('div', [
+								h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+										margin: '2px 5px',
+										border:'none',
+										background:'#cccccc',
+										color:'#fff',
+										padding: '3px 7px 2px',
+										fontSize: '12px',
+										borderRadius: '3px'
+
+                                    },
+                                    on: {
+                                        click: () => {
+											var s = this;
+											s.openpassword();
+											s.formProject.userid = params.row.companyuserid;
+                                        }
+                                    }
+                                }, '修改密码'),                            
 								 h('Button', {
                                     props: {
                                         type: 'primary',
@@ -181,7 +204,6 @@
 											s.formProject = params.row;
 											s.formProject.userid = params.row.companyuserid;
 											s.currentClassId = params.row._index;
-											console.log(s.formProject,'s.formProject',s.currentClassId)
                                         }
                                     }
                                 }, '详情'),
@@ -304,6 +326,53 @@
 					}
 				});	
 			},
+			openpassword () {
+				var s = this;
+                this.$Modal.confirm({
+                	title:'修改密码',
+                    render: (h) => {
+                        return h('Input', {
+                            props: {
+                                value: s.formProject.userpwd,
+                                autofocus: true,
+                                placeholder: 'Please enter your name...'
+                            },
+                            on: {
+                                input: (val) => {
+                                    s.formProject.userpwd = val;
+                                }
+                            }
+                        })
+                    },
+                    onOk:()=>{
+                    	if(s.formProject.userpwd==undefined){                		
+                    		this.$Message.error('密码不能为空');                    		
+                    	}else{
+                    		s.updatepassword(); 
+                    	}                    	
+                    }
+                })
+            },
+            updatepassword(){
+            	var s = this;
+            	zmitiCompanyUtil.ajax({
+					url:window.config.taskSystemUrl+'company/updateuserpwd',
+					data:{
+						userid:s.formProject.userid,
+						userpwd:s.formProject.userpwd
+					},
+					success(data){
+						
+						if(data.getret === 0){
+							//console.log(data,'密码修改成功');
+							s.$Message.success('密码修改成功!');
+							s.formProject={
+
+							}
+						}
+					}
+				})
+            },
 			refresh(){
 				this.showDetail = false;
 				this.currentClassId = -1;
