@@ -13,35 +13,46 @@
 				<div class='zmiti-taskmgredit-table ' :class="{'active':showDetail}">
 					<h2>新建任务单</h2>
 					<Form :model="formTaskMgr"   :rules="ruleValidate" label-position="right" :label-width="100">
-						<FormItem label="所属分类：" prop='tasktypeid'>
-							<Input v-model="formTaskMgr.tasktypeid" />
+						<FormItem label="所属项目：" >
+							<Select v-model="formTaskMgr.projectid" style="width:200px">
+						        <Option v-for="item in projectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+						    </Select>
 						</FormItem>
-						<FormItem label="任务名称："  prop='taskname'>
+						<!-- <FormItem label="所属分类：" prop='typeid'>
+							<Input v-model="formTaskMgr.typeid" />
+						</FormItem> -->
+						<!-- <FormItem label="任务名称："  prop='taskname'>
 							<Input v-model="formTaskMgr.taskname" />
-						</FormItem>
-						<FormItem label="任务时间：" prop='enddate'>
+						</FormItem> -->
+						<!-- <FormItem label="任务时间：" >
 							<Row type='flex'>
 								<Col>
-									<DatePicker type="datetime" v-model="formTaskMgr.startdate" placeholder="选择开始时间" style="width: 100%"></DatePicker>
+									<DatePicker type="datetime" v-model="formTaskMgr.starttime" placeholder="选择开始时间" style="width: 100%"></DatePicker>
 								</Col>
 								<Col>
 									<div class='zmiti-and-btn'>~</div>
 								</Col>
 								<Col>
-									<DatePicker type="datetime" v-model="formTaskMgr.enddate" placeholder="选择结束时间" style="width: 100%"></DatePicker>	
+									<DatePicker type="datetime" v-model="formTaskMgr.endtime" placeholder="选择结束时间" style="width: 100%"></DatePicker>	
 								</Col>
 							</Row>
-						</FormItem>
+						</FormItem> -->
 						<FormItem label="下单人：" prop='username'>
 							<Input v-model="formTaskMgr.username" />
 						</FormItem>
 						<FormItem label="下单人电话：" prop='mobile'>
 							<Input v-model="formTaskMgr.mobile" />
 						</FormItem>
-						<FormItem label="任务说明：">
-							<Input v-model="formTaskMgr.explain" />
+						<FormItem label="任务说明：" prop='directions'>
+							<Input v-model="formTaskMgr.directions" />
 						</FormItem>
-						<FormItem label="备注：">
+						<FormItem label="处理状态：" prop='status'>
+							<Input v-model="formTaskMgr.status" />
+						</FormItem>
+						<FormItem label="加急状态：" prop='expedited'>
+							<Input v-model="formTaskMgr.expedited" />
+						</FormItem>
+						<FormItem label="备注：" prop='remarks'>
 							<Input type='textarea' v-model="formTaskMgr.remarks" />
 						</FormItem>
 
@@ -62,6 +73,7 @@
 	
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
+	import zmitiCompanyUtil from '../lib/companyutil';
 	import Tab from '../../common/tab/index';
 	import {companyAdminMenus} from '../data/tab';
 	export default {
@@ -77,6 +89,7 @@
 				showDetail:false,
 				currentClassId:-1, 
 				formTaskMgr:{
+					projectid:'',
 					date:[]
 				},
 				address:'',
@@ -113,7 +126,10 @@
 				formmanager:{
 					
 				},
-				managerTypeList:[],
+				projectList:[{
+					value:123,
+					label:'请选择'
+				}],
 				 
 				directoryList:{
 
@@ -135,6 +151,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
+			this.getprojectList();//获取项目列表
 		},
 
 		watch:{
@@ -159,9 +176,47 @@
 				this.showDetail = false;
 				this.currentClassId = -1;
 			},
+			getprojectList(){
+				var s = this;
+				zmitiCompanyUtil.ajax({
+					url:window.config.taskSystemUrl+'company/getprojectlist/',
+					data:{
+						
+					},
+					success(data){
+						
+						if(data.getret === 0){							
+							data.list.map(function(item,index){
+								s.projectList[index]={
+									'value':item.projectid,
+									'label':item.projectname									
+								}
+							})
+							console.log(s.projectList,'s.projectList'); 
+							s.forceUpdate();
+						}
+
+					}
+				})
+				 
+				
+			},
 
 			taskMgrAction(){
-				console.log(this.formTaskMgr);
+				//console.log(this.formTaskMgr);
+				var s = this;
+				zmitiCompanyUtil.ajax({
+					url:window.config.taskSystemUrl+'company/addtask/',
+					data:{
+						projectid:1302195676
+					},
+					success(data){
+						if(data.getret === 0){
+							console.log(data,'data');
+							
+						}
+					}
+				})
 			}
 		}
 	}

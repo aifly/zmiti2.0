@@ -52,6 +52,7 @@
 	
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
+	import zmitiCompanyUtil from '../lib/companyutil';
 	import Tab from '../../common/tab/index';
 	import {companyAdminMenus} from '../data/tab';
 	export default {
@@ -282,14 +283,15 @@
 
 			getManagertypeList(){
 				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'user/get_userlist/',
+				zmitiCompanyUtil.ajax({
+					url:window.config.taskSystemUrl+'company/gettasklist/',
 					data:{
-						setusertypesign:2//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
+						projectid:1302195676
 					},
 					success(data){
 						if(data.getret === 0){
-							s.managerTypeList = data.userlist;
+							console.log("任务列表")
+							//s.managerTypeList = data.userlist;
 						}
 					}
 				})
