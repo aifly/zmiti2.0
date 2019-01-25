@@ -1,7 +1,7 @@
 <template>
 	<div class="zmiti-taskmgredit-main-ui">
 		<div>
-			<Tab :menus='menus' title="任务管理" :refresh='refresh'></Tab>
+			<Tab :menus='menus' title="项目列表" :refresh='refresh'></Tab>
 		</div>
 		<div class="zmiti-tab-content zmiti-scroll" :style="{height:viewH - 50+'px' }">
 			<header class="zmiti-tab-header">

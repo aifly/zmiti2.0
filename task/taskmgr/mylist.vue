@@ -1,7 +1,7 @@
 <template>
 	<div class="zmiti-taskmgruserlist-main-ui">
 		<div>
-			<Tab :menus='menus' title="人员管理" :refresh='refresh'></Tab>
+			<Tab :menus='menus' title="项目列表" :refresh='refresh'></Tab>
 		</div>
 		<div class="zmiti-tab-content">
 			<header class="zmiti-tab-header">
