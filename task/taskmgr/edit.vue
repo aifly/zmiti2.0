@@ -14,17 +14,19 @@
 					<h2>新建任务单</h2>
 					<Form :model="formTaskMgr"   :rules="ruleValidate" label-position="right" :label-width="100">
 						<FormItem label="所属项目：" >
-							<Select v-model="formTaskMgr.projectid" style="width:200px">
-						        <Option v-for="item in projectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-						    </Select>
+							<Select style="width:400px;" :label-in-value="true" v-on:change="getprojectList" v-model="formTaskMgr.projectid">
+							    <Option :value="item.value" v-for="item in projectList" :key="item.value">{{item.label}}</Option>
+							</Select>
 						</FormItem>
-						<!-- <FormItem label="所属分类：" prop='typeid'>
-							<Input v-model="formTaskMgr.typeid" />
-						</FormItem> -->
-						<!-- <FormItem label="任务名称："  prop='taskname'>
+						<FormItem label="所属分类：" prop='typeid'>
+							<Select style="width:400px;" :label-in-value="true" v-on:change="gettasktypelist" v-model="formTaskMgr.typeid">
+							    <Option :value="item.value" v-for="item in tasktypeList" :key="item.value">{{item.label}}</Option>
+							</Select>
+						</FormItem>
+						<FormItem label="任务名称："  prop='taskname'>
 							<Input v-model="formTaskMgr.taskname" />
-						</FormItem> -->
-						<!-- <FormItem label="任务时间：" >
+						</FormItem>
+						<FormItem label="任务时间：" >
 							<Row type='flex'>
 								<Col>
 									<DatePicker type="datetime" v-model="formTaskMgr.starttime" placeholder="选择开始时间" style="width: 100%"></DatePicker>
@@ -36,7 +38,7 @@
 									<DatePicker type="datetime" v-model="formTaskMgr.endtime" placeholder="选择结束时间" style="width: 100%"></DatePicker>	
 								</Col>
 							</Row>
-						</FormItem> -->
+						</FormItem>
 						<FormItem label="下单人：" prop='username'>
 							<Input v-model="formTaskMgr.username" />
 						</FormItem>
@@ -126,11 +128,18 @@
 				formmanager:{
 					
 				},
-				projectList:[{
-					value:123,
-					label:'请选择'
-				}],
-				 
+				projectList:[
+					{
+						value:1,
+						label:'请选择'
+					}
+				],
+				tasktypeList:[
+					{
+						value:1,
+						label:'请选择'
+					}
+				],				 
 				directoryList:{
 
 				},
@@ -148,10 +157,14 @@
 
 			///this.validate = validate;
 		},
+		created(){
+			//this.getprojectList();//获取项目列表
+		},
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
 			this.getprojectList();//获取项目列表
+			this.gettasktypelist();
 		},
 
 		watch:{
@@ -176,7 +189,7 @@
 				this.showDetail = false;
 				this.currentClassId = -1;
 			},
-			getprojectList(){
+			getprojectList(){//获取项目列表
 				var s = this;
 				zmitiCompanyUtil.ajax({
 					url:window.config.taskSystemUrl+'company/getprojectlist/',
@@ -193,7 +206,6 @@
 								}
 							})
 							console.log(s.projectList,'s.projectList'); 
-							s.forceUpdate();
 						}
 
 					}
@@ -201,7 +213,28 @@
 				 
 				
 			},
+			gettasktypelist(){//获取任务类型
+				var s = this;
+				zmitiCompanyUtil.ajax({
+					url:window.config.taskSystemUrl+'company/gettasktypelist/',
+					data:{
+						
+					},
+					success(data){
+						
+						if(data.getret === 0){							
+							data.list.map(function(item,index){
+								s.tasktypeList[index]={
+									'value':item.typeid,
+									'label':item.name									
+								}
+							})
+							console.log(data,'获取任务类型'); 
+						}
 
+					}
+				})
+			},
 			taskMgrAction(){
 				//console.log(this.formTaskMgr);
 				var s = this;
