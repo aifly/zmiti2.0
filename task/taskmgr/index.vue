@@ -5,9 +5,9 @@
 		</div>
 		<div class="zmiti-tab-content">
 			<header class="zmiti-tab-header">
-				<div>需求单管理</div>
+				<div>任务列表</div>
 				<div>
-					<Button type="primary" to='taskmgredit'>新增需求单</Button>
+					<Button type="primary" to='taskmgredit'>新增任务</Button>
 				</div>
 			</header>
 			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
@@ -17,7 +17,7 @@
 				<transition name='detail'>
 					<div class='zmiti-manager-form' v-if='showDetail'>
 						<header>
-							{{formmanager.managerid?'编辑项目':'新增项目'}}
+							{{formmanager.managerid?'编辑任务':'新增任务'}}
 						</header>
 						<Form :model="formManagertype" label-position="left" :label-width="100">
 							<FormItem label="所属分类：">
@@ -110,30 +110,36 @@
 				menus:companyAdminMenus,
 				columns:[
 					{
-						title:"单位名称",
-						key:'companyName',
+						title:"项目名称",
+						key:'projectid',
 						align:'center',
 						width:240
 					},
 					{
-						title:"负责人账号",
-						key:'username',
+						title:"项目类型",
+						key:'typeid',
 						align:'center'
 						
 					},{
-						title:"用戶总数",
-						key:'totalUserNum',
+						title:"开始时间",
+						key:'starttime',
 						align:'center'
 						
 					},{
-						title:"到期时间",
-						key:'expirDate',
+						title:"结束时间",
+						key:'endtime',
 						align:'center'
 						
 					},
 					{
-						title:"空间使用量",
-						key:'userSpace',
+						title:"联系人",
+						key:'username',
+						align:'center'
+						
+					},
+					{
+						title:"电话",
+						key:'mobile',
 						align:'center'
 						
 					},
@@ -291,7 +297,7 @@
 					success(data){
 						if(data.getret === 0){
 							console.log("任务列表")
-							//s.managerTypeList = data.userlist;
+							s.managerTypeList = data.list;
 						}
 					}
 				})

@@ -256,7 +256,7 @@
 					success(data){
 						if(data.getret === 0){
 							console.log(data,'data');
-							
+							s.$Message.success('添加成功');
 						}
 					}
 				})
