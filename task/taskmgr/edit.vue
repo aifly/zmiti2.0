@@ -23,26 +23,26 @@
 							    <Option :value="item.value" v-for="item in tasktypeList" :key="item.value">{{item.label}}</Option>
 							</Select>
 						</FormItem>
-						<FormItem label="任务名称："  prop='taskname'>
+						<!-- <FormItem label="任务名称："  prop='taskname'>
 							<Input v-model="formTaskMgr.taskname" />
-						</FormItem>
+						</FormItem> -->
 						<FormItem label="任务时间：" >
 							<Row type='flex'>
 								<Col>
-									<DatePicker type="datetime" v-model="formTaskMgr.starttime" placeholder="选择开始时间" style="width: 100%"></DatePicker>
+									<DatePicker type="datetime" @on-change="starttimeformat" v-model="formTaskMgr.starttime" format="yyyy-MM-dd" placeholder="选择开始时间" style="width: 100%"></DatePicker>
 								</Col>
 								<Col>
 									<div class='zmiti-and-btn'>~</div>
 								</Col>
 								<Col>
-									<DatePicker type="datetime" v-model="formTaskMgr.endtime" placeholder="选择结束时间" style="width: 100%"></DatePicker>	
+									<DatePicker type="datetime" @on-change="endtimeformat" v-model="formTaskMgr.endtime" format="yyyy-MM-dd" placeholder="选择结束时间" style="width: 100%"></DatePicker>	
 								</Col>
 							</Row>
 						</FormItem>
-						<FormItem label="下单人：" prop='username'>
+						<FormItem label="联系人姓名：" prop='username'>
 							<Input v-model="formTaskMgr.username" />
 						</FormItem>
-						<FormItem label="下单人电话：" prop='mobile'>
+						<FormItem label="电话：" prop='mobile'>
 							<Input v-model="formTaskMgr.mobile" />
 						</FormItem>
 						<FormItem label="任务说明：" prop='directions'>
@@ -59,7 +59,7 @@
 						</FormItem>
 
 						<FormItem>
-							<Button type="primary" @click='taskMgrAction'>{{$route.params.id ? '更新':'保存'}}</Button>
+							<Button type="primary" @click='taskMgrAction'>保存</Button>
 							<Button style="margin-left: 8px" to='taskmgrlist'>返回</Button>
 						</FormItem>
 						
@@ -235,14 +235,24 @@
 					}
 				})
 			},
-			taskMgrAction(){
+			taskMgrAction(){//添加任务
 				//console.log(this.formTaskMgr);
 				var s = this;
+				var params = {
+					projectid:s.formTaskMgr.projectid,					
+					typeid:s.formTaskMgr.typeid,
+					starttime:s.formTaskMgr.starttime,
+					endtime:s.formTaskMgr.endtime,
+					mobile:s.formTaskMgr.mobile,
+					username:s.formTaskMgr.username,
+					directions:s.formTaskMgr.directions,
+					status:s.formTaskMgr.status,
+					expedited:s.formTaskMgr.expedited,
+					remarks:s.formTaskMgr.remarks
+				};
 				zmitiCompanyUtil.ajax({
 					url:window.config.taskSystemUrl+'company/addtask/',
-					data:{
-						projectid:1302195676
-					},
+					data:params,
 					success(data){
 						if(data.getret === 0){
 							console.log(data,'data');
@@ -250,6 +260,12 @@
 						}
 					}
 				})
+			},
+			starttimeformat(e){
+				this.formTaskMgr.starttime = e;
+			},
+			endtimeformat(e){
+				this.formTaskMgr.endtime = e;
 			}
 		}
 	}
