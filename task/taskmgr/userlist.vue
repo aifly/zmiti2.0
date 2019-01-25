@@ -38,12 +38,15 @@
 								<Input v-model="formProject.usermobile"></Input>
 							</FormItem>
 							<FormItem label="账号使用标识：" prop='isover'>
-								<Input v-model="formProject.isover"></Input>
+								<RadioGroup v-model="formProject.isover">
+									<Radio :label="0">使用</Radio>
+									<Radio :label="1">禁止</Radio>
+					            </RadioGroup>
 							</FormItem>
 							<FormItem label="账号类型：" prop='usersign'>
 					            <RadioGroup v-model="formProject.usersign">
-					                <Radio :label="1">单位管理员</Radio>
-					                <Radio :label="2">普通用户</Radio>
+					            	<Radio :label="2">普通用户</Radio>
+					                <Radio :label="1">单位管理员</Radio>					                
 					            </RadioGroup>
 					        </FormItem>
 						</Form>
@@ -76,8 +79,7 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				menus:companyAdminMenus,
-				formProject:{					
-					usersign:2
+				formProject:{
 				},
 				managerUserList:[],
 				columns:[
@@ -256,7 +258,9 @@
 				this.showDetail = true;
 				this.currentClassId = -1;
 				this.formProject = {
-					sex:1					
+					sex:1,
+					isover:0,
+					usersign:2
 				}
 
 				
@@ -300,7 +304,7 @@
 					realname:s.formProject.realname,
 					sex:s.formProject.sex,
 					usermobile:s.formProject.usermobile,
-					isover:0,//s.formProject.isover,
+					isover:s.formProject.isover,
 					usersign:s.formProject.usersign
 				};
 				if(s.formProject.companyuserid){
