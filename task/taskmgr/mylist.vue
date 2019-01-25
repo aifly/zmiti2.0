@@ -5,7 +5,7 @@
 		</div>
 		<div class="zmiti-tab-content">
 			<header class="zmiti-tab-header">
-				<div>我的任务</div>
+				<div>项目列表</div>
 			</header>
 			<div class='zmiti-taskmgruserlist-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
 				<div class='zmiti-taskmgruserlist-table' :class="{'active':showDetail}">
@@ -46,12 +46,6 @@
 						width:240
 					},
 					{
-						title:"未完任务数量",
-						key:'incomplete',
-						align:'center',
-						width:200
-					},
-					{
 						title:"说明",
 						key:'explain',
 						align:'center'
@@ -85,7 +79,8 @@
 											/*s.showDetail = true;
 											s.formProject = params.row;
 											s.formProject.userid = params.row.companyuserid;
-											s.currentClassId = params.row._index;*/
+											s.currentClassId = params.row._index;*/											
+											window.location.href='.#/taskmgrlist?projectid='+params.row.projectid;
                                         }
                                     }
                                 }, '查看任务')

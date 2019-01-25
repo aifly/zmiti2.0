@@ -8,10 +8,20 @@ var home = {
 var companyAdminMenus = [
     home,
     {
-        name: "项目列表",
-        to: "taskproject",
+        name: "项目",
+        to: "",
+        children:[
+            {
+                name:'项目管理',
+                to: 'taskproject'
+            },
+            {
+                name:'项目列表',
+                to: 'taskmgrmylist'
+            }
+        ]
     },
-    {
+/*    {
         name:"任务",
         to:"",
         children:[
@@ -24,7 +34,7 @@ var companyAdminMenus = [
                 to: 'taskmgrlist'
             }
         ]
-    },
+    },*/
     {
         name:'人员管理',
         to:"",

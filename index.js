@@ -69,7 +69,7 @@ const router = new VueRouter({
       props: true
     },
     {
-      path: "/taskmgrlist",
+      path: "/taskmgrlist/:id?",
       name: "taskmgrlist",
       component: TaskManager,
       props: true

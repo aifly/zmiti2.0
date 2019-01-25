@@ -13,11 +13,11 @@
 				<div class='zmiti-taskmgredit-table ' :class="{'active':showDetail}">
 					<h2>新建任务单</h2>
 					<Form :model="formTaskMgr"   :rules="ruleValidate" label-position="right" :label-width="100">
-						<FormItem label="所属项目：" >
+						<!-- <FormItem label="所属项目：" >
 							<Select style="width:400px;" :label-in-value="true" v-on:change="getprojectList" v-model="formTaskMgr.projectid">
 							    <Option :value="item.value" v-for="item in projectList" :key="item.value">{{item.label}}</Option>
 							</Select>
-						</FormItem>
+						</FormItem> -->
 						<FormItem label="所属分类：" prop='typeid'>
 							<Select style="width:400px;" :label-in-value="true" v-on:change="gettasktypelist" v-model="formTaskMgr.typeid">
 							    <Option :value="item.value" v-for="item in tasktypeList" :key="item.value">{{item.label}}</Option>
@@ -163,6 +163,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
+			this.formTaskMgr.projectid=this.$route.query.projectid;
 			this.getprojectList();//获取项目列表
 			this.gettasktypelist();
 		},

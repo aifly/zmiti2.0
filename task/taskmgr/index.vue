@@ -7,7 +7,7 @@
 			<header class="zmiti-tab-header">
 				<div>任务列表</div>
 				<div>
-					<Button type="primary" to='taskmgredit'>新增任务</Button>
+					<Button type="primary" @click="routerTo">新增任务</Button>
 				</div>
 			</header>
 			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
@@ -74,6 +74,7 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				managerList:[],
+				projectid:'',
 				roleCol:[
 					{
 						title:"产品名称",
@@ -166,20 +167,10 @@
                                     },
                                     on: {
                                         click: () => {
-											this.visible = true;
-											var s = this;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;											
-												}
-											})
+											/**/
                                         }
                                     }
-								}, '权限设置'),
+								}, '编辑'),
 								 h('Button', {
                                     props: {
                                         type: 'primary',
@@ -210,7 +201,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delmanager(params.row.managerid);
+											this.delmanager(params.row.taskid);
 										},
 										
 									}
@@ -260,8 +251,10 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			this.getManagertypeList();
 			
+			this.projectid=this.$route.query.projectid;
+			console.log('项目id',this.projectid);
+			this.getManagertypeList();
 		},
 
 		watch:{
@@ -292,11 +285,11 @@
 				zmitiCompanyUtil.ajax({
 					url:window.config.taskSystemUrl+'company/gettasklist/',
 					data:{
-						projectid:1302195676
+						projectid:s.projectid
 					},
 					success(data){
 						if(data.getret === 0){
-							console.log("任务列表")
+							//console.log("任务列表")
 							s.managerTypeList = data.list;
 						}
 					}
@@ -307,12 +300,10 @@
 		
 			delmanager(id){
 				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
+				zmitiCompanyUtil.ajax({
+					url:window.config.taskSystemUrl+'/company/deltask',
 					data:{
-						admintoken:s.userinfo.accesstoken,
-						adminuserid:s.userinfo.userid,
-						id
+						taskid:id
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -346,6 +337,9 @@
 					}
 				})
 			},
+			routerTo(){
+				this.$router.push({ path: '/taskmgredit', query: { projectid: this.projectid }});
+			}
 		}
 	}
 </script>
