@@ -111,26 +111,31 @@
 				menus:companyAdminMenus,
 				columns:[
 					{
-						title:"项目名称",
+						title:"项目ID",
 						key:'projectid',
 						align:'center',
 						width:240
 					},
 					{
-						title:"项目类型",
+						title:"类型ID",
 						key:'typeid',
 						align:'center'
 						
 					},{
 						title:"开始时间",
 						key:'starttime',
-						align:'center'
+						align:'center',
+						render:(h,params)=>{
+							return h('span',params.row.starttime.substring(0,10))
+						}
 						
 					},{
 						title:"结束时间",
 						key:'endtime',
-						align:'center'
-						
+						align:'center',
+						render:(h,params)=>{
+							return h('span',params.row.endtime.substring(0,10))
+						}						
 					},
 					{
 						title:"联系人",
