@@ -49,10 +49,17 @@
 							<Input v-model="formTaskMgr.directions" />
 						</FormItem>
 						<FormItem label="处理状态：" prop='status'>
-							<Input v-model="formTaskMgr.status" />
+							<RadioGroup v-model="formTaskMgr.status">
+						        <Radio :label="0">未处理</Radio>
+						        <Radio :label="1">处理中</Radio>
+						        <Radio :label="2">已处理</Radio>
+						    </RadioGroup>
 						</FormItem>
 						<FormItem label="加急状态：" prop='expedited'>
-							<Input v-model="formTaskMgr.expedited" />
+							<RadioGroup v-model="formTaskMgr.expedited">
+						        <Radio :label="0">正常</Radio>
+						        <Radio :label="1">加急</Radio>
+						    </RadioGroup>
 						</FormItem>
 						<FormItem label="备注：" prop='remarks'>
 							<Input type='textarea' v-model="formTaskMgr.remarks" />
@@ -60,7 +67,7 @@
 
 						<FormItem>
 							<Button type="primary" @click='taskMgrAction'>保存</Button>
-							<Button style="margin-left: 8px" to='taskmgrlist'>返回</Button>
+							<Button style="margin-left: 8px" @click="routerTo">返回</Button>
 						</FormItem>
 						
 					</Form>
@@ -257,7 +264,12 @@
 					success(data){
 						if(data.getret === 0){
 							console.log(data,'data');
-							s.$Message.success('添加成功');
+							s.$Message.success({
+								content:'添加成功',
+								onClose:function(){
+									window.location.href='.#/taskmgrlist?projectid='+s.formTaskMgr.projectid;
+								}
+							});							
 						}
 					}
 				})
@@ -267,6 +279,9 @@
 			},
 			endtimeformat(e){
 				this.formTaskMgr.endtime = e;
+			},
+			routerTo(){
+				this.$router.push({ path: '/taskmgrlist', query: { projectid: this.formTaskMgr.projectid }});
 			}
 		}
 	}

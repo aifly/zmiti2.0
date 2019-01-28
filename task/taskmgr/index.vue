@@ -144,10 +144,28 @@
 						
 					},
 					{
-						title:"电话",
-						key:'mobile',
-						align:'center'
-						
+						title:"任务状态",
+						key:'status',
+						align:'center',
+						render:(h,params)=>{
+							var statusval='';
+							if(params.row.status==1){
+								statusval='处理中'
+							}else if(params.row.status==2){
+								statusval='已处理'
+							}else{
+								statusval='未处理'
+							}
+							return h('span',statusval)
+						}
+					},
+					{
+						title:"加急状态",
+						key:'expedited',
+						align:'center',
+						render:(h,params)=>{
+							return h('span',params.row.expedited==0?'正常':'加急')
+						}
 					},
 					{
 						title:'操作',
