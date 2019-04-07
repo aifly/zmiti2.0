@@ -19,7 +19,7 @@ import Practice from './task/practice/index'
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import './components/css/index.css';
-import 'iview/dist/styles/iview.css';
+import './components/css/theme.less';
 
 
 Vue.use(VueRouter)

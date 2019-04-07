@@ -63,4 +63,4 @@ let zmitiUserMenus = [
     }
 ]
 
-export default { companyAdminMenus, companyUserMenus, zmitiUserMenus};
+export  { companyAdminMenus, companyUserMenus, zmitiUserMenus}; 
