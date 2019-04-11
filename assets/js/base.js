@@ -5,7 +5,7 @@ var imgs = {
 	loginLock :"./assets/images/login-lock.png",
 	open :"./assets/images/open.png",
 	search :"./assets/images/search.png",
-	zmiti :"./assets/images/zmiti.jpg",
+	zmiti :"./assets/images/zmiti1.png",
 	loginBg:"./assets/images/login-bg.jpg",
 	logout:'./assets/images/logout.png',
 	checked:'./assets/images/checked.png',

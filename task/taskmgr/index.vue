@@ -1,13 +1,13 @@
 <template>
 	<div class="zmiti-manager-main-ui">
 		<div>
-			<Tab :menus='menus' title="任务管理" :refresh='refresh'></Tab>
+			<Tab :menus='menus' title="项目列表" :refresh='refresh'></Tab>
 		</div>
 		<div class="zmiti-tab-content">
 			<header class="zmiti-tab-header">
-				<div>需求单管理</div>
+				<div>任务列表</div>
 				<div>
-					<Button type="primary" to='taskmgredit'>新增需求单</Button>
+					<Button type="primary" @click="routerTo">新增任务</Button>
 				</div>
 			</header>
 			<div class='zmiti-manager-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
@@ -17,7 +17,7 @@
 				<transition name='detail'>
 					<div class='zmiti-manager-form' v-if='showDetail'>
 						<header>
-							{{formmanager.managerid?'编辑项目':'新增项目'}}
+							{{formmanager.managerid?'编辑任务':'新增任务'}}
 						</header>
 						<Form :model="formManagertype" label-position="left" :label-width="100">
 							<FormItem label="所属分类：">
@@ -52,6 +52,7 @@
 	
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
+	import zmitiCompanyUtil from '../lib/companyutil';
 	import Tab from '../../common/tab/index';
 	import {companyAdminMenus} from '../data/tab';
 	export default {
@@ -73,6 +74,7 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				managerList:[],
+				projectid:'',
 				roleCol:[
 					{
 						title:"产品名称",
@@ -109,32 +111,61 @@
 				menus:companyAdminMenus,
 				columns:[
 					{
-						title:"单位名称",
-						key:'companyName',
+						title:"项目ID",
+						key:'projectid',
 						align:'center',
 						width:240
 					},
 					{
-						title:"负责人账号",
+						title:"类型ID",
+						key:'typeid',
+						align:'center'
+						
+					},{
+						title:"开始时间",
+						key:'starttime',
+						align:'center',
+						render:(h,params)=>{
+							return h('span',params.row.starttime.substring(0,10))
+						}
+						
+					},{
+						title:"结束时间",
+						key:'endtime',
+						align:'center',
+						render:(h,params)=>{
+							return h('span',params.row.endtime.substring(0,10))
+						}						
+					},
+					{
+						title:"联系人",
 						key:'username',
-						align:'center'
-						
-					},{
-						title:"用戶总数",
-						key:'totalUserNum',
-						align:'center'
-						
-					},{
-						title:"到期时间",
-						key:'expirDate',
 						align:'center'
 						
 					},
 					{
-						title:"空间使用量",
-						key:'userSpace',
-						align:'center'
-						
+						title:"任务状态",
+						key:'status',
+						align:'center',
+						render:(h,params)=>{
+							var statusval='';
+							if(params.row.status==1){
+								statusval='处理中'
+							}else if(params.row.status==2){
+								statusval='已处理'
+							}else{
+								statusval='未处理'
+							}
+							return h('span',statusval)
+						}
+					},
+					{
+						title:"加急状态",
+						key:'expedited',
+						align:'center',
+						render:(h,params)=>{
+							return h('span',params.row.expedited==0?'正常':'加急')
+						}
 					},
 					{
 						title:'操作',
@@ -159,20 +190,10 @@
                                     },
                                     on: {
                                         click: () => {
-											this.visible = true;
-											var s = this;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;											
-												}
-											})
+											/**/
                                         }
                                     }
-								}, '权限设置'),
+								}, '编辑'),
 								 h('Button', {
                                     props: {
                                         type: 'primary',
@@ -203,7 +224,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delmanager(params.row.managerid);
+											this.delmanager(params.row.taskid);
 										},
 										
 									}
@@ -253,8 +274,10 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			this.getManagertypeList();
 			
+			this.projectid=this.$route.query.projectid;
+			console.log('项目id',this.projectid);
+			this.getManagertypeList();
 		},
 
 		watch:{
@@ -282,14 +305,15 @@
 
 			getManagertypeList(){
 				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'user/get_userlist/',
+				zmitiCompanyUtil.ajax({
+					url:window.config.taskSystemUrl+'company/gettasklist/',
 					data:{
-						setusertypesign:2//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
+						projectid:s.projectid
 					},
 					success(data){
 						if(data.getret === 0){
-							s.managerTypeList = data.userlist;
+							//console.log("任务列表")
+							s.managerTypeList = data.list;
 						}
 					}
 				})
@@ -299,12 +323,10 @@
 		
 			delmanager(id){
 				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
+				zmitiCompanyUtil.ajax({
+					url:window.config.taskSystemUrl+'/company/deltask',
 					data:{
-						admintoken:s.userinfo.accesstoken,
-						adminuserid:s.userinfo.userid,
-						id
+						taskid:id
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -338,6 +360,9 @@
 					}
 				})
 			},
+			routerTo(){
+				this.$router.push({ path: '/taskmgredit', query: { projectid: this.projectid }});
+			}
 		}
 	}
 </script>
