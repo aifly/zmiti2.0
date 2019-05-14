@@ -1,21 +1,20 @@
 <template>
-	<div  class="zmiti-login-ui lt-full"  :style="{background:'url('+imgs.loginBg+') no-repeat center center',backgroundSize:'cover'}" >
-		<section></section>
-		<section> 
+	<div  class="zmiti-login-ui lt-full">
+		<section :style="{background:'url('+imgs.adminLoginBg+') no-repeat center bottom',backgroundSize:'cover'}" > 
 			<div class="zmiti-login-C">
-				<h2>智媒体用户管理系统登陆</h2>
+				<h2>智媒体管理系统登陆</h2>
 				<div class="zmiti-login-form">
-					<div :class="{'active':userFocus}">
+					<div>
 						<label>
-							<img :src="imgs.loginPerson" alt="">
-							<input @focus='userFocus = true' @blur='userFocus = false' type="text" v-model="username" placeholder="请输入账号">
+							<img :src="imgs.adminUser" alt="">
+							<input type="text" v-model="username" placeholder="请输入账号">
 						</label>
 						<div class='zmiti-login-error' v-if='loginError'>{{loginError}}</div>
 					</div>
-					<div :class="{'active':passFocus}">
+					<div>
 						<label>
-							<img :src="imgs.loginLock" alt="">
-							<input  @focus='passFocus = true' @blur='passFocus = false'  @keydown.13='login' type="password" v-model="password" placeholder="请输入密码">
+							<img :src="imgs.adminLock" alt="">
+							<input @keydown.13='login' type="password" v-model="password" placeholder="请输入密码">
 						</label>
 					</div>
 					<div class='zmiti-remember-pass'>
@@ -48,8 +47,6 @@
 			return{
 				imgs:window.imgs,
 				username:'',
-				userFocus:false,
-				passFocus:false,
 				password:'',
 				loginError:'',
 				checked:false,

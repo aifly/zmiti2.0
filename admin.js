@@ -1,9 +1,11 @@
 import Vue from "vue";
+import './common/directive';
 import Obserable from './common/lib/obserable';
 import Main from './common/main/index';
 import Product from './admin/product/index';
 import User from './admin/user/index';
 import Company from './admin/company/index';
+import Login from './admin/login/index';
 import Managertype from './admin/managertype/index'
 import iView from 'iview';
 import VueRouter from 'vue-router'
@@ -40,6 +42,12 @@ const router = new VueRouter({
 			path: '/',
 			name: 'product',
 			component: Product,
+			props: true
+		},
+		{
+			path: '/login',
+			name: 'login',
+			component: Login,
 			props: true
 		}, {
 			path: "/managertype",
