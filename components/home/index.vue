@@ -16,10 +16,8 @@
 
 <script>
 	import './index.css';
-	import sysbinVerification from '../../common/lib/verification';
 	import zmitiUtil from '../../common/lib/util';
 	import Vue from 'vue';
-
 	var json = {};
 	export default {
 		props:['obserable'],

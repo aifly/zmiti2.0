@@ -1,5 +1,5 @@
 <template>
-	<div  class="zmiti-login-ui lt-full"  :style="{background:'url('+imgs.loginBg+') no-repeat center center',backgroundSize:'cover'}" >
+	<div  class="zmiti-login-ui lt-full" :class='{"active":showJigsaw}'  :style="{background:'url('+imgs.loginBg+') no-repeat center center',backgroundSize:'cover'}" >
 		<section></section>
 		<section> 
 			<div class="zmiti-login-C">
@@ -29,6 +29,11 @@
 					<img draggable="false" :src="imgs.brower" alt="">
 				</div>
 			</div>
+
+
+			<div class='zmiti-jigsaw' ref='jigsaw' v-show='showJigsaw'>
+
+			</div>
 			
 		</section>
 	</div>
@@ -37,7 +42,7 @@
 <script>
 	import './index.css';
 	import zmitiUtil from '../../common/lib/util';
-
+	import '../../common/jigsaw';
 	import Vue from "vue";
 	import '../../common/directive'
 
@@ -46,6 +51,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				showJigsaw:false,
 				imgs:window.imgs,
 				username:'',
 				userFocus:false,
@@ -78,6 +84,9 @@
 			},
 			login(){
 				var _this = this;
+
+				/* this.showJigsaw=true;
+				return; */
 
 
 				if(!this.username){
@@ -150,7 +159,13 @@
 			this.checkCache();
 			
 			var ua = navigator.userAgent.toLowerCase();
-			this.isNotChrome = !ua.match(/chrome\/([\d.]+)/)
+			this.isNotChrome = !ua.match(/chrome\/([\d.]+)/);
+
+			this.$nextTick(()=>{
+				window.jigsaw.init(this.$refs['jigsaw'],function(){
+					this.showJigsaw = false;
+				}.bind(this));
+			});
 
 		}
 	}

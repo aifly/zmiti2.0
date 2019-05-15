@@ -22,13 +22,21 @@ $primary-color: #00c1de;
 
 
 			 &:nth-of-type(1){
-				 width: 200px;
+				 width: 120px;
 				 @include displayFlex(row);
 				 color:#fff;
-				 text-align: center;
 				 .zmiti-title{
-					 margin: 0 auto;
-					 width: 200px;
+					 height: 40px;
+					 @include pos(r);
+					 img{
+						 width: 80px;
+					 }
+					 span{
+						 @include pos(a);
+						 left: 110%;
+						 bottom: 0;
+						 height: 30px;
+					 }
 				 }
 				 
 			 }
@@ -56,6 +64,13 @@ $primary-color: #00c1de;
 				 @include pos(r);
 				 -webkit-justify-content:space-between;
 				 justify-content:space-between;
+
+				 &>span{
+					 &:last-of-type{
+						 margin-right: 4px;
+						 cursor: pointer;
+					 }
+				 }
 				 
 				 div{
 					 min-width: 50px;
@@ -63,12 +78,12 @@ $primary-color: #00c1de;
 					 height: 100%;
 					 cursor: pointer;
 					 text-align: center;
-
-					 img{
-						 width: 26px;
-					 }
+					 
 				 }
-				
+				img{
+					@include br();
+					width: 30px;
+				}
 				  
 			 }
 		 }

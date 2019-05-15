@@ -5,25 +5,32 @@
                <div>
                     <div class="zmiti-title">
                         <img :src="imgs.userLoginTitle" alt="">
+						<span>v2.0</span>
                     </div>
                </div>
                <div>
-                   <div v-if='!isAdmin'>
-                       <a href="#">个人中心</a>
-                   </div>
-                   <div v-if='!isAdmin'>
-                       <a href="#">我的定制</a>
-                   </div>
-                   <div v-if='userinfo.usertypesign === 4'>
-                       <a href="./admin.html">系统管理</a>
-                   </div>
+                  <div v-if='isAdmin'>管理端控制平台</div>
+                  <div v-else>单位端控制平台</div>
                </div>
                <div class="zmiti-user-info">
+				    <span>
+                       消息
+                   </span>
                    <span>
                        工单
                    </span>
-                   <span class="zmiti-text-overflow">{{userinfo.username}}</span>
-                   <div title='退出' @click="logout">
+                   <span class="zmiti-text-overflow">
+					   {{userinfo.username}}
+					</span>
+					<span>
+						<img :src="imgs.zmiti1" alt="">
+						<ul>
+							<li>
+								
+							</li>
+						</ul>
+					</span>
+                   <div v-if='false' title='退出' @click="logout">
                        <img :src="imgs.logout" alt="">
                    </div>
                </div>

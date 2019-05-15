@@ -6,6 +6,8 @@ var imgs = {
 	open :"./assets/images/open.png",
 	search :"./assets/images/search.png",
 	zmiti :"./assets/images/zmiti1.png",
+	zmiti1 :"./assets/images/zmiti.jpg",
+	
 	loginBg:"./assets/images/login-bg.jpg",
 	logout:'./assets/images/logout.png',
 	checked:'./assets/images/checked.png',
@@ -29,5 +31,3 @@ var imgs = {
 	}
 
 })();
-
-
