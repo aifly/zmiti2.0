@@ -30,4 +30,19 @@ var imgs = {
 		//window.config.baseUrl = "https://api.symbin.cn/v1";
 	}
 
+
+/* 	axios.post('http://newapi.zmiti.com:9508',{
+		action:1000000,
+		username:'admin',
+		password:'888888'
+	}).then((data)=>{
+		console.log(data.data)
+	});
+ */
 })();
+
+`
+	
+
+
+`

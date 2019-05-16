@@ -21,6 +21,7 @@
                    </span>
                    <span class="zmiti-text-overflow">
 					   {{userinfo.username}}
+					   <span class='icon-alarm'></span>
 					</span>
 					<span>
 						<img :src="imgs.zmiti1" alt="">

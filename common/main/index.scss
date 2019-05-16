@@ -1,4 +1,41 @@
 ﻿@import "../css/base.scss";
+
+[class^="icon-"], [class*=" icon-"] {
+   font-family: 'icomoon' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-alarm:before {
+  content: "\e950";
+}
+.icon-bell:before {
+  content: "\e951";
+}
+.icon-user-minus:before {
+  content: "\e974";
+}
+.icon-quotes-left:before {
+  content: "\e977";
+}
+.icon-tongue:before {
+  content: "\e9e3";
+}
+.icon-point-up:before {
+  content: "\ea03";
+}
+.icon-enter:before {
+  content: "\ea13";
+}
+.icon-exit:before {
+  content: "\ea14";
+}
+.icon-volume-high:before {
+  content: "\ea26";
+}
 $color:rgb(55, 61, 65);
 $primary-color: #00c1de;
 .layout{
