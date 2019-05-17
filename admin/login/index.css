@@ -178,6 +178,10 @@
   padding-left: 10px;
 }
 
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form > div input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset !important;
+}
+
 .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form img {
   width: 30px;
 }

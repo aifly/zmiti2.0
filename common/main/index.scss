@@ -9,6 +9,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .icon-alarm:before {
   content: "\e950";
 }
@@ -36,6 +37,8 @@
 .icon-volume-high:before {
   content: "\ea26";
 }
+
+
 $color:rgb(55, 61, 65);
 $primary-color: #00c1de;
 .layout{

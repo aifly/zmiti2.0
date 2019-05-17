@@ -1,3 +1,5 @@
+import { stringify } from "querystring";
+
 var zmitiUtil = {
 	
 	getQueryString: function(name) {
@@ -60,33 +62,18 @@ var zmitiUtil = {
 
 	ajax(option){
 		var opt = option.data || {};
-		var userInfo = this.getUserInfo();
+		var userInfo = this.getUserInfo(option.isAdmin? 'adminlogin':'login');
 
-
-		if (userInfo && userInfo.username && userInfo.getusersigid && !option.isLogin) {
-			opt.userid = userInfo.userid;
-			opt.getusersigid = userInfo.getusersigid;
+		if (userInfo && userInfo.ui) {
+			opt.ui = userInfo.ui;
 		}
-		var formData = new FormData();
-
-		for(var attr in opt){
-			formData.append(attr,opt[attr]);
-		}
-
 	
-
-		let config = {
-				headers: {
-					'Content-Type': 'multipart/form-data' //之前说的以表单传数据的格式来传递fromdata    
-				}
-			};
-		axios.post(option.url, formData, config).then((dt) => {
+		axios.post(window.config.baseUrl, JSON.stringify(opt)).then((dt) => {
 			var dt = dt.data;
-			
-			if(dt.getret === 0){
-
+			if (dt.action === 0){
+				
 			}
-			else if(dt.getret === 1300){
+			else if(dt.action === 1300){
 				window.localStorage['login'] = '';
 				if (option.self && option.self.isAdmin) {
 					window.location.href = './#/login';

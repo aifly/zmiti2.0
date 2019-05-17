@@ -4,6 +4,7 @@ import Obserable from './common/lib/obserable';
 import Main from './common/main/index';
 import Product from './admin/product/index';
 import User from './admin/user/index';
+import Home from './admin/home/index';
 import Company from './admin/company/index';
 import Login from './admin/login/index';
 import Managertype from './admin/managertype/index'
@@ -25,6 +26,10 @@ const router = new VueRouter({
 			path: '/user/',
 			name: 'user',
 			component: User,
+		}, {
+			path: '/home/',
+			name: 'home',
+			component: Home,
 		},
 		{
 			path: '/company/',

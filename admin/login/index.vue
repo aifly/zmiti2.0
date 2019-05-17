@@ -36,6 +36,7 @@
 <script>
 	import './index.css';
 	import zmitiUtil from '../../common/lib/util';
+	import zmitiActions from '../../common/action';
 
 	import Vue from "vue";
 	import '../../common/directive'
@@ -78,6 +79,7 @@
 
 
 				if(!this.username){
+					
 					this.toastError();
  					return;
 				}
@@ -89,23 +91,22 @@
 				this.showLoading = true;
 				var s = this;
 				zmitiUtil.ajax({
-					_this:s,
-					url:window.config.baseUrl+'user/login_user/',
 					isLogin:true,
 					data:{
+						action:zmitiActions.adminlogin,
 						username:_this.username,
-						userpwd:_this.password
+						password:_this.password
 					},
 					success(data){
+						
 						s.showLoading = false;
-						if(data.getret === 0){
+						if(data.flag ===1){
 							var param = data;
-							delete param.getret;
-							delete param.getmsg;
+						
 
 							var p = data;
 							p.username =  _this.username;
-							window.localStorage.setItem('login',JSON.stringify(data));
+							window.localStorage.setItem('adminlogin',JSON.stringify(data));
 
 							if(_this.checked){
 								window.localStorage.setItem('wm_username',_this.username);
