@@ -22,7 +22,7 @@ var imgs = {
 (function () {
 	window.config = {
 		swf: './assets/ckplayer/ckplayer.swf',
-		baseUrl: 'http://newapi.zmiti.com:9508',
+		baseUrl: 'http://newapi.zmiti.com/',
 		taskSystemUrl:'http://webapi.zmiti.com/v1/',
 		uploadUrl: 'http://h5.wenming.cn/wmreport/index.html#/',
 	}

@@ -2,7 +2,7 @@
 	<div  class="wm-reg-ui lt-full">
 		<header>
 			<div>
-				<div><img :src="imgs.logo"  /></div>
+				<div><img :src="imgs.userLoginTitle"  /></div>
 				<div>
 					已有账号：<a href='#/login'>去登录></a>
 				</div>
@@ -11,7 +11,11 @@
 		<section>
 			<div class="wm-reg-C">
 				<div class="wm-reg-form">
-					<h2>公益广告上报系统,欢迎注册～</h2>
+					<h2>欢迎注册智媒体2.0～</h2>
+					<div class="wm-reg-form-item wm-require">
+						<label for="">单位：</label><input type="text" v-model="formUser.company">
+						<div class="wm-reg-error" v-if='companyError'>{{companyError}}</div>
+					</div>
 					<div class="wm-reg-form-item wm-require">
 						<label for="">用户名：</label><input type="text" @blur="checkUserName" v-model='formUser.username'>
 						<div class="wm-reg-error" v-if='userError'>{{userError}}</div>
@@ -29,31 +33,21 @@
 						<div class="wm-reg-error" v-if='usernameError'>{{usernameError}}</div>
 					</div>
 					<div class="wm-reg-form-item wm-require">
-						<label for="">手机：</label><input type="text" v-model="formUser.mobile">
-						<div class="wm-reg-error" v-if='mobileError'>{{mobileError}}</div>
-					</div>
-					<div class="wm-reg-form-item wm-require">
-						<label for="">单位：</label><input type="text" v-model="formUser.company">
-						<div class="wm-reg-error" v-if='companyError'>{{companyError}}</div>
-					</div>
-
-					<div class="wm-reg-form-item " >
-						<label for="">地址：</label>
-						<Cascader v-model="formUser.cityids"  :load-data="getCityById"  change-on-select :data='provinceList'></Cascader>
-					</div>
-
-					<div class="wm-reg-form-item ">
-						<label for="">详细地址：</label><input type="text" v-model="formUser.detailaddress">
-					</div>
-					<div class="wm-reg-form-item ">
 						<label for="">邮箱：</label><input type="text"  v-model="formUser.email">
+						<div class="wm-reg-error" v-if='emailError'>{{emailError}}</div>
 					</div>
+					<div class="wm-reg-form-item">
+						<label for="">手机：</label><input type="text" v-model="formUser.mobile">
+						
+					</div>
+				
+					
 					<div class="wm-reg-form-item wx-reg-btn" @click="reg">
 						注 册
 					</div>
 				</div>
 				<div class="wm-copyright">
-					中国文明网 &copy;版权所有
+					智媒体 &copy;版权所有
 				</div>
 			</div>
 		</section>
@@ -62,7 +56,7 @@
 
 <script>
 	import './index.css';
-	import symbinUtil from '../lib/util';
+	import zmitiUtil from '../../common/lib/util';
 
 	import Vue from "vue";
 
@@ -88,7 +82,7 @@
 				usernameError:"",
 				passError:"",
 				repassError:"",
-				mobileError:"",
+				emailError:"",
 				formUser:{
 					cityids:[]
 				},
@@ -106,7 +100,7 @@
 					return;
 				}
 				var s = this;
-				symbinUtil.ajax({
+				zmitiUtil.ajax({
 					_this:s,
 					url:window.config.baseUrl+"/wmadvuser/isexist/",
 					data:{
@@ -151,8 +145,8 @@
 					this.toastError('姓名不能为空','usernameError');
  					return;
 				}
-				if(!this.formUser.mobile){
-					this.toastError('手机不能为空','mobileError');
+				if(!this.formUser.email){
+					this.toastError('手机不能为空','emailError');
  					return;
 				}
 				if(!this.formUser.company){
@@ -168,13 +162,13 @@
 				params.cityid = params.cityids[1];
 				params.areaid = params.cityids[2];
 				this.showLoading = true;
-				symbinUtil.ajax({
+				zmitiUtil.ajax({
 					_this:s,
 					url:window.config.baseUrl+'/wmadvuser/regist/',
 					data:params,
 					success(data){
 						if(data.getret === 0){
-							_this.$Message.success({
+							_this.$Message.success({ 
 								content: '注册成功,等待管理员审核……',
                     			duration: 4,
 							});
@@ -194,7 +188,7 @@
 				var s = this;
 
 				
-				symbinUtil.ajax({
+				zmitiUtil.ajax({
 					_this:s,
 					url:window.config.baseUrl+'/share/getarealist',
 					data:{
@@ -232,7 +226,7 @@
 			},
 			getCityData(){
 				var s = this;
-				symbinUtil.ajax({
+				zmitiUtil.ajax({
 					_this:s,
 					url:window.config.baseUrl+'/share/getcitylist/',
 					data:{},

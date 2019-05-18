@@ -18,6 +18,8 @@ import TaskAdminCompany from './task/admin/company/index';
 import TaskAdminTaskType from './task/admin/tasktype/index';
 import Practice from './task/practice/index'
 
+import Register from './components/register';
+
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import './components/css/index.css';
@@ -43,7 +45,13 @@ const router = new VueRouter({
       name: "login",
       component: Login,
       props: true
-    },
+	},
+	{
+		path: "/register",
+		name: "register",
+		component: Register,
+		props: true
+	},
     {
       path: "/home",
       name: "home",

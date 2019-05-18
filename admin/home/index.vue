@@ -50,7 +50,7 @@
 				data:{
 					action:zmitiActions.addAdminUser,
 					info:{
-						adminusername:"xuchang",
+						adminusername:"xuchang123",
 						adminpwd:'xuchang',
 						realname:'徐畅',
 						adminmobile:'15718879215',
