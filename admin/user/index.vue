@@ -1,9 +1,9 @@
 <template>
 	<div class="zmiti-product-main-ui">
 		<div>
-			<Tab :menus='menus' title="人员管理" :refresh='refresh'></Tab>
+			<Tab  title="人员管理" @refresh='refresh'></Tab>
 		</div>
-		<div class="zmiti-tab-content">
+		<div class="zmiti-tab-content" :style="{width:viewW - (hideMenu?50:250)+'px'}">
 			<header class="zmiti-tab-header">
 				<div>用户管理</div>
 				<div>
@@ -34,7 +34,7 @@
 				</transition>
 			</div>
 		</div>
-		<ZmitiModal></ZmitiModal>
+		<!-- <ZmitiModal></ZmitiModal> -->
 	</div>
 </template>
 
@@ -62,16 +62,7 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				productList:[],
-				menus:[
-					{
-						name:"单位账号管理",
-						to:"company"
-					},
-					{
-						name:"个人账号管理",
-						to:"user"
-					}
-				],
+				hideMenu:false,
 				columns:[
 					{
 						title:"用户名称",
@@ -220,9 +211,8 @@
 			},
 
 
-			refresh(){
-				this.showDetail = false;
-				this.currentClassId = -1;
+			refresh(val){
+			 this.hideMenu = val;
 			},
 
 			getUserList(){

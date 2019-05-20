@@ -13,12 +13,22 @@
                   <div v-else>单位端控制平台</div>
                </div>
                <div class="zmiti-user-info">
-				    <span>
-                       消息
-                   </span>
-                   <span>
-                       工单
-                   </span>
+				    <template v-if='!isAdmin'>
+						<span>
+							消息
+						</span>
+						<span>
+							工单
+						</span>
+					</template>
+					<template v-else>
+						<span>
+							信息发布
+						</span>
+						<span>
+							工单处理
+						</span>
+					</template>
                    <span class="zmiti-text-overflow">
 					   {{userinfo.username}}
 					   <span class='icon-alarm'></span>
@@ -54,12 +64,23 @@
                            <template v-if='isAdmin'>
                                 <li  class='zmiti-menu-item'>
                                     <div><router-link to="product"><Icon type="ios-basket" /></router-link> </div>
-                                    <div><router-link to="product">产品管理</router-link></div>
+                                    <div><router-link to="product">用户单位</router-link></div>
                                 </li>
                                 <li  class='zmiti-menu-item'>
-                                    
                                     <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
-                                    <div><router-link to="company">人员管理</router-link></div>
+                                    <div><router-link to="company">产品管理</router-link></div>
+                                </li>
+								<li  class='zmiti-menu-item'>
+                                    <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
+                                    <div><router-link to="company">财务管理</router-link></div>
+                                </li>
+								<li  class='zmiti-menu-item'>
+                                    <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
+                                    <div><router-link to="company">订单管理</router-link></div>
+                                </li>
+								<li  class='zmiti-menu-item'>
+                                    <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
+                                    <div><router-link to="company">系统管理</router-link></div>
                                 </li>
                            </template>
                        </ul>

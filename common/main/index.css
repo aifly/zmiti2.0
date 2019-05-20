@@ -161,7 +161,7 @@
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
-  min-width: 200px;
+  min-width: 240px;
   color: #fff;
   position: relative;
   -webkit-justify-content: space-between;

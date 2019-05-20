@@ -22,7 +22,9 @@ $color: #be0000;
     .zmiti-tab-content {
         box-sizing: border-box;
         flex: 1;
-        -webkit-flex: 1;
+		-webkit-flex: 1;
+		@include pos(a);
+		right: 0;
 
         &>div {
             width: 98%;

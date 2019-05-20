@@ -1,9 +1,9 @@
 <template>
 	<div class="zmiti-company-main-ui">
 		<div>
-			<Tab :menus='menus' title="人员管理" :refresh='refresh'></Tab>
+			<Tab :tabIndex='tabIndex' title="人员管理" @refresh='refresh'></Tab>
 		</div>
-		<div class="zmiti-tab-content">
+		<div class="zmiti-tab-content" :style="{width:viewW - (hideMenu?50:250)+'px'}">
 			<header class="zmiti-tab-header">
 				<div>单位管理</div>
 				<div>
@@ -49,11 +49,14 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import Tab from '../../common/tab/index';
+	
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
+
+				tabIndex:[0,-1],
 
 				visible:false,
 				roleList:[],
@@ -68,6 +71,7 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				companyList:[],
+				hideMenu:false,
 				roleCol:[
 					{
 						title:"产品名称",
@@ -102,16 +106,7 @@
 						}
 					}
 				],
-				menus:[
-					{
-						name:"单位账号管理",
-						to:"company"
-					},
-					{
-						name:"个人账号管理",
-						to:"user"
-					}
-				],
+				
 				columns:[
 					{
 						title:"单位名称",
@@ -271,9 +266,6 @@
 		
 		methods:{
 
-			refresh(){
-
-			},
 
 			addCourse(){
 				this.showDetail = true;
@@ -283,9 +275,8 @@
 			},
 
 
-			refresh(){
-				this.showDetail = false;
-				this.currentClassId = -1;
+			refresh(val){
+				this.hideMenu = val;
 			},
 
 			getCompanyList(){
