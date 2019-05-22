@@ -90,8 +90,8 @@
 
 				this.showLoading = true;
 				var s = this;
-				zmitiUtil.ajax({
-					isLogin:true,
+				zmitiUtil.adminAjax({
+					isLogin:true, 
 					data:{
 						action:zmitiActions.adminlogin,
 						username:_this.username,
@@ -100,7 +100,8 @@
 					success(data){
 						
 						s.showLoading = false;
-						if(data.flag ===1){
+						console.log(data)
+						if(data.getret ===1){
 							var param = data;
 						
 
@@ -117,7 +118,7 @@
 							}
 							
 							_this.$Message.success('登录成功~');
-							window.location.hash = '#/home';
+							window.location.hash = '#/user';
 							
 							
 							window.location.reload();

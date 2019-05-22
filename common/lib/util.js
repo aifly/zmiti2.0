@@ -60,6 +60,11 @@ var zmitiUtil = {
 		});
 	},
 
+	adminAjax(option){
+		option.isAdmin = true;
+		this.ajax(option);
+	},
+
 	ajax(option){
 		var opt = option.data || {};
 		var userInfo = this.getUserInfo(option.isAdmin? 'adminlogin':'login');

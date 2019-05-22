@@ -10,6 +10,7 @@ import Login from './admin/login/index';
 import Managertype from './admin/managertype/index'
 import iView from 'iview';
 import VueRouter from 'vue-router'
+import Group from './common/group/index';
 import './admin/css/index.css';
 import './components/css/theme.less'
 ///import 'iview/dist/styles/iview.css';
@@ -22,21 +23,12 @@ Vue.obserable = obserable;
 const router = new VueRouter({
 	routes: [
 		//{path: '*', name: 'error', component: FError },
-		{
-			path: '/user/',
-			name: 'user',
-			component: User,
-		}, {
+		 {
 			path: '/home/',
 			name: 'home',
 			component: Home,
 		},
-		{
-			path: '/company/',
-			name: 'company',
-			component: Company,
-			props: true
-		},
+	
 		{
 			path: '/product/',
 			name: 'product',
@@ -45,8 +37,8 @@ const router = new VueRouter({
 		},
 		{
 			path: '/',
-			name: 'product',
-			component: Product,
+			name: 'login',
+			component: Login,
 			props: true
 		},
 		{
@@ -59,6 +51,12 @@ const router = new VueRouter({
 			name: "managertype",
 			component: Managertype,
 			props: true
+		},
+		{
+			path: '/group/', name: 'group', component: Group, props: true, children: [
+				{ path: '/user/', name: 'user', component: User },
+				{ path: '/company/', name: 'company', component: Company },
+			]
 		}
 		
 	]

@@ -31,7 +31,7 @@
 					</template>
                    <span class="zmiti-text-overflow">
 					   {{userinfo.username}}
-					   <span class='icon-alarm'></span>
+					   <span class="zmt_iconfont">&#xe64c;</span>
 					</span>
 					<span>
 						<img :src="imgs.zmiti1" alt="">
@@ -50,7 +50,7 @@
                 <div class="zmiti-tab-C" :style='{height:(viewH - 50)+"px"}'>
                    <div>
                        <ul>
-                           <li class='zmiti-menu-title'>
+                           <li class='zmiti-menu-title' v-if='!isAdmin'>
                                <div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
                             </li>
                            <li  :title='item.resourcecnname' :to='"/myreport/"+item.productid' class='zmiti-text-overflow zmiti-menu-item' :key='i' v-for="(item,i) in productList" :name="item.productid">
@@ -63,23 +63,23 @@
                            </li>
                            <template v-if='isAdmin'>
                                 <li  class='zmiti-menu-item'>
-                                    <div><router-link to="product"><Icon type="ios-basket" /></router-link> </div>
-                                    <div><router-link to="product">用户单位</router-link></div>
+                                    <div><router-link to="user"><span class='zmt_iconfont'>&#xe605;</span></router-link> </div>
+                                    <div><router-link to="user">用户单位</router-link></div>
                                 </li>
                                 <li  class='zmiti-menu-item'>
-                                    <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
+                                    <div><router-link to="company"> <span class="zmt_iconfont">&#xe64c;</span></router-link></div>
                                     <div><router-link to="company">产品管理</router-link></div>
                                 </li>
 								<li  class='zmiti-menu-item'>
-                                    <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
+                                    <div><router-link to="company"><span class="zmt_iconfont">&#xe600;</span></router-link></div>
                                     <div><router-link to="company">财务管理</router-link></div>
                                 </li>
 								<li  class='zmiti-menu-item'>
-                                    <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
+                                    <div><router-link to="company"><span class='zmt_iconfont'>&#xe60b;</span></router-link></div>
                                     <div><router-link to="company">订单管理</router-link></div>
                                 </li>
 								<li  class='zmiti-menu-item'>
-                                    <div><router-link to="company"><Icon type="ios-person" /></router-link></div>
+                                    <div><router-link to="company"><span class="zmt_iconfont">&#xe60f;</span></router-link></div>
                                     <div><router-link to="company">系统管理</router-link></div>
                                 </li>
                            </template>

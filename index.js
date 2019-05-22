@@ -13,6 +13,8 @@ import TaskLogin from './task/login/index';
 import TaskHome from './task/home/index';
 import TaskProject from './task/project/index';
 
+import Group from './common/group/index'
+
 import TaskAdminProject from './task/admin/project/index';
 import TaskAdminCompany from './task/admin/company/index';
 import TaskAdminTaskType from './task/admin/tasktype/index';

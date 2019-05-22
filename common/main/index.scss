@@ -153,11 +153,11 @@ $primary-color: #00c1de;
 		@include transition(width .2s .1s);
 		color:#fff;
 		&:hover{
-			width: 200px;
+			width: 230px;
 		}
 
 		&>div{
-			width: 200px;
+			width: 230px;
 			background: $color;
 			border:1px solid $color;
 			

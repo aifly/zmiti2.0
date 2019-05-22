@@ -1,32 +1,29 @@
 <template>
-	<div class="zmiti-product-main-ui">
-		<div>
-			<Tab  title="人员管理" @refresh='refresh'></Tab>
-		</div>
-		<div class="zmiti-tab-content" :style="{width:viewW - (hideMenu?50:250)+'px'}">
+	<div class="zmiti-user-main-ui">
+		<div class="zmiti-tab-content" >
 			<header class="zmiti-tab-header">
 				<div>用户管理</div>
 				<div>
 					<Button type="primary" @click="addCourse">新增用户</Button>
 				</div>
 			</header>
-			<div class='zmiti-product-main zmiti-scroll' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-product-table' :class="{'active':showDetail}">
+			<div class='zmiti-user-main zmiti-scroll' :style="{height:viewH - 120+'px' }">
+				<div class='zmiti-user-table' :class="{'active':showDetail}">
 					<Table :data='userList' :columns='columns'></Table>
 				</div>
 				<transition name='detail'>
-					<div class='zmiti-product-form' v-if='showDetail'>
+					<div class='zmiti-user-form' v-if='showDetail'>
 						<header>
 							{{formproduct.productid?'编辑评分项':'新增评分项'}}
 						</header>
-						<div class='zmiti-product-form-item'>
+						<div class='zmiti-user-form-item'>
 							<label for="">单位名称：</label><input placeholder="请输入单位名称" v-model="formproduct.productname" />
 						</div>
-						<div class='zmiti-product-form-item'>
+						<div class='zmiti-user-form-item'>
 							<label for="">单位简称：</label><input placeholder="请输入单位简称" v-model="formproduct.outline" />
 						</div>
 						
-						<div class='zmiti-product-form-item zmiti-product-btns'>
+						<div class='zmiti-user-form-item zmiti-user-btns'>
 							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
 							<Button size ='small' type='primary' @click='productAction'>{{formproduct.productid?'保存':'确定'}}</Button>
 						</div>
