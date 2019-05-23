@@ -61,7 +61,7 @@
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
-				showDetail:true,
+				showDetail:false,
 				currentClassId:-1, 
 				currentUserid:'',
 				address:'',

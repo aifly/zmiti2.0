@@ -274,6 +274,10 @@
   position: relative;
 }
 
+.layout .zmiti-tab-C .zmiti-menu-item.active {
+  background: #00c1de;
+}
+
 .layout .zmiti-tab-C .zmiti-menu-item:hover {
   background: #192129;
 }

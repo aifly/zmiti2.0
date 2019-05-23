@@ -6,6 +6,9 @@ import Product from './admin/product/index';
 import User from './admin/user/index';
 import Home from './admin/home/index';
 import Company from './admin/company/index';
+import Admin from './admin/admin/index';
+import RoleGroup from './admin/rolegroup/index';
+import SetRole from './admin/setrole/index';
 import Login from './admin/login/index';
 import Managertype from './admin/managertype/index'
 import iView from 'iview';
@@ -18,6 +21,7 @@ import './components/css/theme.less'
 Vue.use(VueRouter)
 Vue.use(iView)
 var obserable = new Obserable();
+
 
 Vue.obserable = obserable;
 const router = new VueRouter({
@@ -56,6 +60,9 @@ const router = new VueRouter({
 			path: '/group/', name: 'group', component: Group, props: true, children: [
 				{ path: '/user/', name: 'user', component: User },
 				{ path: '/company/', name: 'company', component: Company },
+				{ path: '/admin/', name: 'admin', component: Admin},
+				{ path: '/rolegroup/', name: 'rolegroup', component: RoleGroup},
+				{ path: '/setrole/', name: 'setrole', component: SetRole},
 			]
 		}
 		

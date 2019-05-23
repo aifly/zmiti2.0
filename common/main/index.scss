@@ -213,6 +213,9 @@ $primary-color: #00c1de;
 			font-size:12px;
 			margin-left: -1px;
 			@include pos(r);
+			&.active{
+				background:#00c1de;
+			}
 			&:hover{
 				background:#192129;
 				&>div:nth-of-type(2){

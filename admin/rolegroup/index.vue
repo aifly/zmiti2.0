@@ -2,13 +2,13 @@
 	<div class="zmiti-admin-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div>管理员管理</div>
+				<div>权限组管理</div>
 				<div>
-					<Button type="primary" @click="addAdmin">新增管理员</Button>
+					<Button type="primary" @click="addAdmin">新增权限组</Button>
 				</div>
 			</header>
 			<section class='zmiti-list-where'>
-				管理员编号 <input type="text">
+				权限组编号 <input type="text">
 			</section>
 			<div class='zmiti-admin-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
 				<div class='zmiti-admin-table' :class="{'active':showDetail}">
@@ -21,7 +21,7 @@
 			<section class='zmiti-add-form' v-if='showDetail'>
 				<header class='zmiti-add-header'>
 					<img :src="imgs.back" alt=""  @click='showDetail = false' >
-					<span>添加管理员</span>
+					<span>添加权限组</span>
 				</header>
 				 <Form class='zmiti-add-form-C' :model="formAdmin" :label-width="80">
 					<FormItem label="用户名：">
@@ -141,7 +141,7 @@
 				
 				columns:[
 					{
-						title:"管理员名称",
+						title:"权限组名称",
 						key:'adminusername',
 						align:'center',
 					},

@@ -62,25 +62,10 @@
                                 </div>
                            </li>
                            <template v-if='isAdmin'>
-                                <li  class='zmiti-menu-item'>
-                                    <div><router-link to="user"><span class='zmt_iconfont'>&#xe605;</span></router-link> </div>
-                                    <div><router-link to="user">用户单位</router-link></div>
-                                </li>
-                                <li  class='zmiti-menu-item'>
-                                    <div><router-link to="company"> <span class="zmt_iconfont">&#xe64c;</span></router-link></div>
-                                    <div><router-link to="company">产品管理</router-link></div>
-                                </li>
-								<li  class='zmiti-menu-item'>
-                                    <div><router-link to="company"><span class="zmt_iconfont">&#xe600;</span></router-link></div>
-                                    <div><router-link to="company">财务管理</router-link></div>
-                                </li>
-								<li  class='zmiti-menu-item'>
-                                    <div><router-link to="company"><span class='zmt_iconfont'>&#xe60b;</span></router-link></div>
-                                    <div><router-link to="company">订单管理</router-link></div>
-                                </li>
-								<li  class='zmiti-menu-item'>
-                                    <div><router-link to="company"><span class="zmt_iconfont">&#xe60f;</span></router-link></div>
-                                    <div><router-link to="company">系统管理</router-link></div>
+                                <li  class='zmiti-menu-item' :class="{'active':menu.active.some(ar=>ar === $route.name)}" v-for="(menu,i) in menus" :key='i'>
+									
+                                    <div><router-link :to="menu.link"><span class='zmt_iconfont' v-html='menu.icon'></span></router-link> </div>
+                                    <div><router-link :to="menu.link">{{menu.name}}</router-link></div>
                                 </li>
                            </template>
                        </ul>
@@ -122,7 +107,34 @@
                 defaultMenu:[
                   
                 ],
-                menus:[]
+                menus:[
+					{
+						name:"用户单位",
+						link:'user',
+						icon:'&#xe605;',
+						active:['user','company'] //高亮的路由
+					},{
+						name:"产品管理",
+						link:'product',
+						icon:'&#xe64c;',
+						active:['product'] 
+					},{
+						name:"财务管理",
+						link:'finance',
+						icon:'&#xe600;',
+						active:['finance'] 
+					},{
+						name:"订单管理",
+						link:'order',
+						icon:'&#xe60b;',
+						active:['order']
+					},{
+						name:"系统管理",
+						link:'admin',
+						icon:'&#xe60f;',
+						active:['admin'] 
+					}
+				]
 			}
 		},
 		components:{
@@ -144,7 +156,6 @@
                    this.productList = arr;
                },this);
             }
-            
         },
         watch:{
             kw(val){

@@ -49,8 +49,6 @@ var zmitiUtil = {
 					window.globalMenus = arr;
 					fn && fn(arr);
 				}else if(data.getret === 1300){
-
-					
 					
 					if (self && self.isAdmin) {
 						window.location.href = './#/login';
@@ -60,25 +58,26 @@ var zmitiUtil = {
 		});
 	},
 
-	adminAjax(option){
+	adminAjax(option = {}){
 		option.isAdmin = true;
+		console.log(option,'111');
 		this.ajax(option);
 	},
 
 	ajax(option){
 		var opt = option.data || {};
 		var userInfo = this.getUserInfo(option.isAdmin? 'adminlogin':'login');
-
+		
 		if (userInfo && userInfo.ui) {
 			opt.ui = userInfo.ui;
 		}
-	
-		axios.post(window.config.baseUrl, JSON.stringify(opt)).then((dt) => {
+		
+		axios.post(window.config.baseUrl + '?name=' + (option.remark || '').toLowerCase(), JSON.stringify(opt)).then((dt) => {
 			var dt = dt.data;
 			if (dt.action === 0){
 				
 			}
-			else if(dt.action === 1300){
+			else if(dt.action === 9997){
 				window.localStorage['login'] = '';
 				if (option.self && option.self.isAdmin) {
 					window.location.href = './#/login';

@@ -1,6 +1,6 @@
 <template>
 	<div class="sysbin-group-ui">
-		<Tab :title='tabs[0] ? tabs[0].name : ""' :tabs='tabs' :tabIndex='tabIndex'>
+		<Tab :title='menuObj.title' :tabs='tabs' :tabIndex='tabIndex'>
 			<div slot='zmiti-tab-menu'>
 				<ul class="symbin-tab-menu">
 					<li :key="i" @click.stop.prevent='tab1(i,tab.children)' v-for='(tab,i) in tabs' :class='{"active":(tabIndex[0] ===i && !tab.children)||(tab.link === $route.name && !tab.children),"level1":tab.children && !tab.status,"open":tab.status }'>
@@ -30,11 +30,12 @@
 	
 
 	export default {
-		props:['obserable'],
+		props:['obserable','menus'],
 		data(){
 			return{
 				tabIndex:[0,-1],
 				theme2:"light",
+				menuObj:{},
 				tabs:[
 					 
 				]
@@ -43,19 +44,20 @@
 		components:{
 			Tab
 		},
+		watch:{
+			$route:{
+				deep:true,
+				handler(){
+					this.changeGroup();
+				}
+			}
+		},
 
 		mounted(){
 			var obserable = Vue.obserable;
+			
+			this.changeGroup();
 
-			Object.keys(menuObj).forEach((key,i)=>{
-				key.split('_').forEach((item,j)=>{
-					if(item === this.$route.name){
-						this.tabs = menuObj[key];
-					}
-				})
-			})
-
-			console.log(this.tabs);
 			
 			
 			obserable.on('fillTabs',(data)=>{
@@ -80,6 +82,18 @@
 
 		},
 		methods:{
+
+			changeGroup(){
+				Object.keys(menuObj).forEach((key,i)=>{
+					key.split('_').forEach((item,j)=>{
+						if(item === this.$route.name){
+							this.menuObj = menuObj[key];
+							this.tabs = menuObj[key].tabs;
+						}
+					})
+				})
+			},
+
 			tab1(index,level){
 
 				if(level && level.length){
