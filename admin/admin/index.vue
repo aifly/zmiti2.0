@@ -18,11 +18,15 @@
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
 		<transition name='company'>
-			<section class='zmiti-add-form' v-if='showDetail'>
+			<section class='zmiti-add-form zmiti-scroll' v-if='showDetail'>
 				<header class='zmiti-add-header'>
 					<img :src="imgs.back" alt=""  @click='showDetail = false' >
 					<span>添加管理员</span>
 				</header>
+				<div class='zmiti-admin-avatar' @click="showAvatarModal = true">
+					<span class='zmt_iconfont' v-html='formAdmin.avatar'></span>
+					<label>更换头像</label>
+				</div>
 				 <Form class='zmiti-add-form-C' :model="formAdmin" :label-width="80">
 					<FormItem label="用户名：">
 						<Input v-model="formAdmin.adminusername" placeholder="用户名：" />
@@ -33,6 +37,8 @@
 					<FormItem label="密码：" v-if='!adminuserId'>
 						<Input type='password' v-model="formAdmin.adminpwd" placeholder="密码：" />
 					</FormItem>
+
+					 
 					<FormItem label="邮箱：">
 						<Input v-model="formAdmin.adminemail" placeholder="邮箱：" />
 					</FormItem>
@@ -48,7 +54,6 @@
 						<RadioGroup v-model="formAdmin.isover">
 							<Radio :value='0' :label="0">正常</Radio>
 							<Radio :value='1' :label="1">禁用</Radio>
-							<Radio :value='2' :label="2">删除</Radio>
 						</RadioGroup>
 					</FormItem>
 					
@@ -66,6 +71,19 @@
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
 		</Modal>
+
+		<Modal title='更换头像' v-model="showAvatarModal" :transfer='false'
+			 
+		>
+			<div slot='footer'>
+				<Button @click="showAvatarModal=false" type='primary'>确定</Button>
+			</div>
+			<div class='zmiti-avatar-list'>
+				<span @click='formAdmin.avatar = font' :class="{'active':formAdmin.avatar === font}" class='zmt_iconfont' v-for='(font,i) in avatarList' :key="i" v-html='font'>
+				
+				</span>
+			</div>
+		</Modal>
 	</div>
 </template>
 
@@ -74,8 +92,7 @@
 	
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import zmitiActions from '../../common/action';
-	
+	var zmitiActions = zmitiUtil.zmitiActions;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -83,8 +100,15 @@
 			return{
 
 				tabIndex:[0,-1],
-
+				showAvatarModal:false,
 				visible:false,
+				avatarList:[
+					'&#xe6a5;',
+					'&#xe6a4;',
+					'&#xe6a3;',
+					'&#xe6a2;',
+					'&#xe6a0;'
+				],
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
@@ -93,7 +117,8 @@
 				adminuserId:'',
 				currentUserid:'',
 				formAdmin:{
-					isover:0
+					isover:0,
+					avatar:'&#xe6a4;'
 				},
 				address:'',
 				showPass:false,
@@ -287,7 +312,7 @@
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getUserInfo();
+			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getAdminList();
 			
 		},
@@ -302,7 +327,8 @@
 				this.showDetail = true;
 				this.adminuserId = '';
 				this.formAdmin = {
-					isover:0
+					isover:0,
+					avatar:'&#xe6a4;'
 				};
 			},
 

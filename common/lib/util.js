@@ -1,7 +1,7 @@
-import { stringify } from "querystring";
+import zmitiActions from '../action';
 
 var zmitiUtil = {
-	
+	zmitiActions,
 	getQueryString: function(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 		var r = window.location.search.substr(1).match(reg);
@@ -13,18 +13,24 @@ var zmitiUtil = {
 		var replaceText = arg + '=' + val;
 		return url.match(pattern) ? url.replace(eval('/(' + arg + '=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url + '&' + replaceText : url + '?' + replaceText);
 	},
-
 	getUserInfo(key = 'login'){
 		
 		var loginObj = {};
 		try {
 			loginObj = JSON.parse(localStorage.getItem(key));
 		} catch (error) {
-			this.clearCookie('login');
-			window.location.hash = '/login';
+			//window.location.reload();
+			window.location.hash = 'login';
+			if (window.location.hash!='#/login'){
+				//window.location.reload();
+			}
 		}
 
 		return loginObj;
+	},
+
+	getAdminUserInfo(){
+		return this.getUserInfo('adminlogin');
 	},
 
 	getProductList(fn, self) { //
@@ -61,10 +67,20 @@ var zmitiUtil = {
 	adminAjax(option = {}){
 		option.isAdmin = true;
 		console.log(option,'111');
-		this.ajax(option);
+		this.ajax(option,()=>{
+			if(window.location.hash === '#/login'){
+				setTimeout(() => {
+					window.location.reload();
+				}, 10);
+			}
+			window.location.hash = 'login';
+			
+		});
 	},
 
-	ajax(option){
+	ajax(option,adminErrorFn){
+
+		
 		var opt = option.data || {};
 		var userInfo = this.getUserInfo(option.isAdmin? 'adminlogin':'login');
 		
@@ -74,19 +90,19 @@ var zmitiUtil = {
 		
 		axios.post(window.config.baseUrl + '?name=' + (option.remark || '').toLowerCase(), JSON.stringify(opt)).then((dt) => {
 			var dt = dt.data;
-			if (dt.action === 0){
+			if (dt.getret === 0){
 				
 			}
-			else if(dt.action === 9997){
-				window.localStorage['login'] = '';
-				if (option.self && option.self.isAdmin) {
-					window.location.href = './#/login';
+			else if(dt.getret === 9997){
+				window.localStorage[option.isAdmin ? 'adminlogin' : 'login'] = '';
+				if (option.isAdmin) {
+					adminErrorFn && adminErrorFn();
 				}else{
 					window.location.hash = '/login';
+					setTimeout(() => {
+						window.location.reload();
+					}, 10);
 				}
-
-				window.location.reload();
-				
 
 			}
 			option.fn && option.fn(dt);
@@ -101,25 +117,6 @@ var zmitiUtil = {
 		return;
 		
 		
-	},
-	setCookie(cname, cvalue, exdays){
-       var d = new Date();  
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));  
-        var expires = "expires="+d.toUTCString();  
-        document.cookie = cname + "=" + cvalue + "; " + expires;  
-    },
-    clearCookie(name){
-        this.setCookie(name, "", -1); 
-    },
-    getCookie(cname) {
-		var name = cname + "=";
-		var ca = document.cookie.split(';');
-		for (var i = 0; i < ca.length; i++) {
-			var c = ca[i];
-			while (c.charAt(0) == ' ') c = c.substring(1);
-			if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
-		}
-		return "";
 	}
 
 

@@ -37,7 +37,6 @@
 	import './index.css';
 	import zmitiUtil from '../../common/lib/util';
 	import zmitiActions from '../../common/action';
-
 	import Vue from "vue";
 	import '../../common/directive'
 
@@ -79,7 +78,6 @@
 
 
 				if(!this.username){
-					
 					this.toastError();
  					return;
 				}
@@ -100,11 +98,8 @@
 					success(data){
 						
 						s.showLoading = false;
-						console.log(data)
-						if(data.getret ===1){
+						if(data.getret === 1){
 							var param = data;
-						
-
 							var p = data;
 							p.username =  _this.username;
 							window.localStorage.setItem('adminlogin',JSON.stringify(data));
@@ -118,14 +113,14 @@
 							}
 							
 							_this.$Message.success('登录成功~');
-							window.location.hash = '#/user';
+							window.location.hash = '#/admin';
 							
 							
 							window.location.reload();
 							_this.isLogined = true;
 							
 						}else{
-							_this.toastError(data.getmsg);
+							_this.toastError(data.msg);
 						}
 					}
 				})

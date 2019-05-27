@@ -86,6 +86,7 @@
 				var _this = this;
 
 				/* this.showJigsaw=true;
+				/* this.showJigsaw=true;
 				return; */
 
 
@@ -156,6 +157,8 @@
 
 		},
 		mounted(){
+
+		
 			this.checkCache();
 			
 			var ua = navigator.userAgent.toLowerCase();

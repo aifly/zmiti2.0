@@ -256,7 +256,7 @@
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getUserInfo();
+			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getCompanyList();
 			
 		},

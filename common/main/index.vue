@@ -89,7 +89,7 @@
 	import './index.css';
     import Vue from 'vue';
     import zmitiUtil from '../lib/util';
-    import sysbinVerification from '../lib/verification';
+    
 
 	export default {
 		props:['isAdmin'],
@@ -132,7 +132,7 @@
 						name:"系统管理",
 						link:'admin',
 						icon:'&#xe60f;',
-						active:['admin'] 
+						active:'admin_rolegroup_setrole'.split('_') 
 					}
 				]
 			}
@@ -140,15 +140,18 @@
 		components:{
 		},
         beforeCreate(){
-            this.validateData = sysbinVerification.validate(this);
+            
             if(this.$route.name !== 'login' && this.$route.name !== 'register'){
             }
 
         },
 		mounted(){
            ///this.menus = this.defaultMenu.concat([]);
-            var obserable = Vue.obserable;
-            var userinfo = zmitiUtil.getUserInfo();
+			var obserable = Vue.obserable;
+			
+			
+			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();
+			
 
             this.userinfo = userinfo; 
             if(this.$route.name !== 'login' && this.$route.name !== 'register' && !this.isAdmin){

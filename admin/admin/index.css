@@ -14,6 +14,22 @@
   flex-flow: row;
 }
 
+.zmiti-admin-main-ui .zmiti-avatar-list {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.zmiti-admin-main-ui .zmiti-avatar-list span {
+  font-size: 40px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.zmiti-admin-main-ui .zmiti-avatar-list span.active {
+  color: #3390ff;
+}
+
 .zmiti-admin-main-ui .ivu-table-wrapper {
   border-bottom: none;
   border-right: none;
@@ -105,6 +121,8 @@
   height: 40px;
   line-height: 40px;
   font-size: 14px;
+  position: relative;
+  z-index: 10;
 }
 
 .zmiti-admin-main-ui .zmiti-list-main .zmiti-list-where input {
@@ -127,18 +145,45 @@
   margin: 0 auto;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form {
+.zmiti-add-form {
   margin-top: 10px;
   flex: 1;
   -webkit-flex: 1;
   margin: 10px 0 10px 10px;
+  overflow: auto;
   position: relative;
   box-shadow: 0 0 0 1px #ccc;
   box-sizing: border-box;
   background: #f9f9f9;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form > header.zmiti-add-header {
+.zmiti-add-form .zmiti-admin-avatar {
+  background: rgba(51, 144, 255, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto 30px;
+  cursor: pointer;
+  position: relative;
+}
+
+.zmiti-add-form .zmiti-admin-avatar label {
+  position: absolute;
+  bottom: -50px;
+  font-size: 12px;
+  width: 100%;
+  text-align: center;
+  left: 0;
+}
+
+.zmiti-add-form .zmiti-admin-avatar span {
+  font-size: 40px;
+  color: rgba(51, 144, 255, 0.8);
+}
+
+.zmiti-add-form > header.zmiti-add-header {
   line-height: 40px;
   height: 40px;
   font-weight: bold;
@@ -147,40 +192,40 @@
   background: #f8f8f9;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form > header.zmiti-add-header span {
+.zmiti-add-form > header.zmiti-add-header span {
   color: #3390ff;
   font-size: 14px;
   font-weight: bold;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form > header.zmiti-add-header img {
+.zmiti-add-form > header.zmiti-add-header img {
   width: 40px;
   margin: 10px;
   cursor: pointer;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-C {
+.zmiti-add-form .zmiti-add-form-C {
   margin: 10px auto 2px;
   width: 90%;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-item {
+.zmiti-add-form .zmiti-add-form-item {
   line-height: 50px;
   height: 50px;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
+.zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
   text-align: center;
   position: relative;
   z-index: 10;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
+.zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
   margin: 0 20px;
   padding: 2px 20px;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-item input {
+.zmiti-add-form .zmiti-add-form-item input {
   padding-left: 6px;
   height: 32px;
   width: 70%;

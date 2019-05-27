@@ -10,6 +10,18 @@ $color: #be0000;
   width: 99%;
   margin: 0 auto;
 
+  .zmiti-avatar-list{
+	  @include displayFlex(row);
+	  span{
+		  font-size:40px;
+		  margin-right: 20px;
+		  cursor: pointer;
+		  &.active{
+			  color:#3390ff;
+		  }
+	  }
+  }
+
   .ivu-table-wrapper {
     border-bottom: none;
     border-right: none;
@@ -101,6 +113,8 @@ $color: #be0000;
       height: 40px;
 	  line-height: 40px;
 	  font-size:14px;
+	  @include pos(r);
+	  z-index: 10;
 	  input{
 		  height: 30px;
 	  }
@@ -131,12 +145,41 @@ $color: #be0000;
     }
   }
 
-  .zmiti-add-form {
+  
+
+  @at-root.zmiti-add-form {
     //border:1px solid #dcdee2;
     margin-top: 10px;
     flex: 1;
     -webkit-flex: 1;
 	margin: 10px 0 10px 10px;
+	overflow: auto;
+
+	.zmiti-admin-avatar{
+		background: rgba(51,144,255,.1);
+		@include br();
+		text-align: center;
+		$size:80px;
+		width: $size;
+		height: $size;
+		line-height: $size;
+		margin: 0 auto 30px;
+		cursor: pointer;
+		@include pos(r);
+		label{
+			@include pos(a);
+			bottom: -50px;
+			font-size:12px;
+			width: 100%;
+			text-align: center;
+			left: 0;;
+		}
+		span{
+			font-size:40px;
+			color:rgba(51,144,255,.8);
+			
+		}
+	}
 	
 	
 

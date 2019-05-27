@@ -12,13 +12,13 @@
 			</section>
 			<div class='zmiti-admin-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
 				<div class='zmiti-admin-table' :class="{'active':showDetail}">
-					<Table  :data='adminList' :columns='columns'></Table>
+					<Table  :data='adminGroupList' :columns='columns'></Table>
 				</div>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
 		<transition name='company'>
-			<section class='zmiti-add-form' v-if='showDetail'>
+			<section class='zmiti-add-form zmiti-scroll' v-if='showDetail'>
 				<header class='zmiti-add-header'>
 					<img :src="imgs.back" alt=""  @click='showDetail = false' >
 					<span>添加权限组</span>
@@ -66,6 +66,8 @@
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
 		</Modal>
+
+		
 	</div>
 </template>
 
@@ -95,13 +97,14 @@
 				formAdmin:{
 					isover:0
 				},
+				showAvatarModal:true,
 				address:'',
 				showPass:false,
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				companyList:[],
-				adminList:[],
+				adminGroupList:[],
 				groupList:[],
 				hideMenu:false,
 				roleCol:[
@@ -142,27 +145,28 @@
 				columns:[
 					{
 						title:"权限组名称",
-						key:'adminusername',
+						key:'groupname',
 						align:'center',
 					},
 					{
-						title:"真实姓名",
-						key:'realname',
-						align:'center'
+						title:"组类型",
+						key:'grouptype',
+						align:'center',
+						render:(h,params)=>{
+							return h('div',{},params.row.grouptype === 1 ?'超级管理员':'普通管理员');
+						}
 						
 					},{
-						title:"邮箱",
-						key:'adminemail',
-						align:'center'
-						
-					},{
-						title:"电话",
-						key:'adminmobile',
+						title:"描述",
+						key:'describes',
 						align:'center'
 					},{
-						title:"所在组",
-						key:'groupname',
-						align:'center'
+						title:"是否为系统管理组",
+						key:'issys',
+						align:'center',
+						render:(h,params)=>{
+							return h('div',{},params.row.issys === 1 ? '是':'否');
+						}
 					},
 					{
 						title:'操作',
@@ -287,8 +291,8 @@
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getUserInfo();
-			this.getAdminList();
+			this.userinfo = zmitiUtil.getAdminUserInfo();
+			this.getGroupList();
 			
 		},
 
@@ -318,7 +322,7 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							
-							s.getAdminList();
+							s.getGroupList();
 							///s.adminList = data.list;	 
 						}
 					}
@@ -326,81 +330,26 @@
 			},
 
 
-			help(){
+	 
+ 
+			getGroupList(){
+				var s = this;
+				var {condition} = this;
+				 
 				zmitiUtil.adminAjax({
-					remark:'getAdminList',
+					remark:'getGroupList',
 					data:{
-						action:zmitiActions.getAdminList,
-						condition:this.condition
+						action:zmitiActions.getGroupList,
+						condition
+					
 					},
 					success(data){
 						if(data.getret === 0){
-							s.adminList = data.list;	 
-							zmitiUtil.adminAjax({
-								remark:'getGroupList',
-								data:{
-									action:zmitiActions.getGroupList,
-									condition:this.condition
-								},
-								success(data){
-									if(data.getret === 0){
-										s.groupList = data.list;	 
-									}
-								}
-							})
+							s.adminGroupList = data.list;	 
 						}
 					}
 				})
-			},
- 
-			getAdminList(){
-				var s = this;
-				if(typeof window.Promise !== 'function'){
-					this.help();
-					console.log('当前浏览器不支持Promise');
-					return;
-				}
-				var p = new Promise((resolve,reject)=>{
-					zmitiUtil.adminAjax({
-						remark:'getAdminList',
-						data:{
-							action:zmitiActions.getAdminList,
-							condition:this.condition
-						},
-						success(data){
-							if(data.getret === 0){
-								s.adminList = data.list;	 
-								resolve();
-							}
-						}
-					})
-				});
-				var p1 = new Promise((resolve,reject)=>{
-					zmitiUtil.adminAjax({
-						remark:'getGroupList',
-						data:{
-							action:zmitiActions.getGroupList,
-							condition:this.condition
-						},
-						success(data){
-							if(data.getret === 0){
-								s.groupList = data.list;	 
-								console.log(s.groupList,'groupList')
-								resolve();
-							}
-						}
-					})
-				});
-				Promise.all([p,p1]).then(()=>{
-					s.adminList.map((admin,i)=>{
-						s.groupList.map((group,j)=>{
-							if(admin.groupid == group.id){
-								admin.groupname = group.groupname;
-							}
-						})
-					});
-					s.adminList = s.adminList.concat([]);
-				})
+				
 				 
 				
 			},
@@ -419,7 +368,7 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							s.showDetail = false;
-							s.getAdminList();
+							s.getGroupList();
 						}
 					}
 				})
