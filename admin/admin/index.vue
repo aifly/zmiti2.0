@@ -21,7 +21,7 @@
 			<section class='zmiti-add-form zmiti-scroll' v-if='showDetail'>
 				<header class='zmiti-add-header'>
 					<img :src="imgs.back" alt=""  @click='showDetail = false' >
-					<span>添加管理员</span>
+					<span>基础信息</span>
 				</header>
 				<div class='zmiti-admin-avatar' @click="showAvatarModal = true">
 					<span class='zmt_iconfont' v-html='formAdmin.avatar'></span>
@@ -434,7 +434,8 @@
 			 
 			adminAction(){
 				var s = this;
-				var action = this.adminuserId ? zmitiActions.editAdminUser:zmitiActions.addAdminUser
+				var action = this.adminuserId ? zmitiActions.editAdminUser:zmitiActions.addAdminUser;
+				
 				zmitiUtil.adminAjax({
 					remark:this.adminuserId ?　'editAdminUser':'addAdminUser',
 					data:{

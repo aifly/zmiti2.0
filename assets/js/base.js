@@ -40,10 +40,7 @@ var imgs = {
 		console.log(data.data)
 	});
  */
+ 
+
 })();
 
-`
-	
-
-
-`

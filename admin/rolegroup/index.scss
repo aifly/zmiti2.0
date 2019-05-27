@@ -3,13 +3,12 @@
 $baseColor: #f2f2f2;
 $viewW: 750px;
 $color: #be0000;
-.zmiti-admin-main-ui {
+.zmiti-rolegroup-main-ui {
   background: $baseColor;
   box-sizing: border-box;
   height: 100%;
   width: 99%;
   margin: 0 auto;
-
   .ivu-table-wrapper {
     border-bottom: none;
     border-right: none;
@@ -107,7 +106,7 @@ $color: #be0000;
 	  
     }
 
-    .zmiti-admin-main {
+    .zmiti-rolegroup-main {
       flex: 5;
 	  -webkit-flex: 5;
 	  width: 100%;
@@ -116,7 +115,7 @@ $color: #be0000;
         @include transition(0.3s);
       }
 
-      .zmiti-admin-table {
+      .zmiti-rolegroup-table {
         width: 98%;
         margin: 0 auto;
 

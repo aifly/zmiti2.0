@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-admin-main-ui">
+	<div class="zmiti-rolegroup-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
 				<div>权限组管理</div>
@@ -10,8 +10,8 @@
 			<section class='zmiti-list-where'>
 				权限组编号 <input type="text">
 			</section>
-			<div class='zmiti-admin-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-admin-table' :class="{'active':showDetail}">
+			<div class='zmiti-rolegroup-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
+				<div class='zmiti-rolegroup-table' :class="{'active':showDetail}">
 					<Table  :data='adminGroupList' :columns='columns'></Table>
 				</div>
 			</div>
@@ -357,7 +357,8 @@
 			 
 			adminAction(){
 				var s = this;
-				var action = this.adminuserId ? zmitiActions.editAdminUser:zmitiActions.addAdminUser
+				var action = this.adminuserId ? zmitiActions.editAdminUser:zmitiActions.addAdminUser;
+				 
 				zmitiUtil.adminAjax({
 					remark:this.adminuserId ?　'editAdminUser':'addAdminUser',
 					data:{

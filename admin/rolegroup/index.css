@@ -3,7 +3,7 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
-.zmiti-admin-main-ui {
+.zmiti-rolegroup-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
@@ -14,12 +14,12 @@
   flex-flow: row;
 }
 
-.zmiti-admin-main-ui .ivu-table-wrapper {
+.zmiti-rolegroup-main-ui .ivu-table-wrapper {
   border-bottom: none;
   border-right: none;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main {
+.zmiti-rolegroup-main-ui .zmiti-list-main {
   box-sizing: border-box;
   background: #fff;
   margin: 10px auto;
@@ -31,7 +31,7 @@
   flex-flow: column;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main:before {
+.zmiti-rolegroup-main-ui .zmiti-list-main:before {
   content: "";
   position: absolute;
   width: 100%;
@@ -41,18 +41,18 @@
   box-shadow: 0 0 0 1px #ccc;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-add-form-close {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-add-form-close {
   z-index: 100;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main > div {
+.zmiti-rolegroup-main-ui .zmiti-list-main > div {
   margin: 10px auto 10px;
   position: relative;
   flex: 1;
   -webkit-flex: 1;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main > div .zmiti-meet-form {
+.zmiti-rolegroup-main-ui .zmiti-list-main > div .zmiti-meet-form {
   width: 100%;
   margin: 0px auto;
   padding: 20px 40px;
@@ -60,7 +60,7 @@
   overflow: auto;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-tab-header {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-tab-header {
   width: 50px;
   display: flex;
   display: -webkit-flex;
@@ -74,7 +74,7 @@
   z-index: 10;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-tab-header:before {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-tab-header:before {
   content: "";
   position: absolute;
   width: 98%;
@@ -84,12 +84,12 @@
   top: 54px;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-tab-header > div:nth-of-type(1) {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-tab-header > div:nth-of-type(1) {
   position: relative;
   text-indent: 0.5em;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-tab-header > div:nth-of-type(1):before {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-tab-header > div:nth-of-type(1):before {
   content: "";
   width: 4px;
   height: 24px;
@@ -99,7 +99,7 @@
   top: 12px;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-list-where {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-list-where {
   width: 98%;
   margin: 10px auto 0;
   height: 40px;
@@ -107,27 +107,27 @@
   font-size: 14px;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-list-where input {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-list-where input {
   height: 30px;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-admin-main {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-rolegroup-main {
   flex: 5;
   -webkit-flex: 5;
   width: 100%;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-admin-main > div {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-rolegroup-main > div {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-admin-main-ui .zmiti-list-main .zmiti-admin-main .zmiti-admin-table {
+.zmiti-rolegroup-main-ui .zmiti-list-main .zmiti-rolegroup-main .zmiti-rolegroup-table {
   width: 98%;
   margin: 0 auto;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form {
+.zmiti-rolegroup-main-ui .zmiti-add-form {
   margin-top: 10px;
   flex: 1;
   -webkit-flex: 1;
@@ -138,7 +138,7 @@
   background: #f9f9f9;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form > header.zmiti-add-header {
+.zmiti-rolegroup-main-ui .zmiti-add-form > header.zmiti-add-header {
   line-height: 40px;
   height: 40px;
   font-weight: bold;
@@ -147,40 +147,40 @@
   background: #f8f8f9;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form > header.zmiti-add-header span {
+.zmiti-rolegroup-main-ui .zmiti-add-form > header.zmiti-add-header span {
   color: #3390ff;
   font-size: 14px;
   font-weight: bold;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form > header.zmiti-add-header img {
+.zmiti-rolegroup-main-ui .zmiti-add-form > header.zmiti-add-header img {
   width: 40px;
   margin: 10px;
   cursor: pointer;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-C {
+.zmiti-rolegroup-main-ui .zmiti-add-form .zmiti-add-form-C {
   margin: 10px auto 2px;
   width: 90%;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-item {
+.zmiti-rolegroup-main-ui .zmiti-add-form .zmiti-add-form-item {
   line-height: 50px;
   height: 50px;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
+.zmiti-rolegroup-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
   text-align: center;
   position: relative;
   z-index: 10;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
+.zmiti-rolegroup-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
   margin: 0 20px;
   padding: 2px 20px;
 }
 
-.zmiti-admin-main-ui .zmiti-add-form .zmiti-add-form-item input {
+.zmiti-rolegroup-main-ui .zmiti-add-form .zmiti-add-form-item input {
   padding-left: 6px;
   height: 32px;
   width: 70%;
