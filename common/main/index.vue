@@ -31,7 +31,6 @@
 					</template>
                    <span class="zmiti-text-overflow">
 					   {{userinfo.username}}
-					   <span class="zmt_iconfont">&#xe64c;</span>
 					</span>
 					<span>
 						<img :src="imgs.zmiti1" alt="">

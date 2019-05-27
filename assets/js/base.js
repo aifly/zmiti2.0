@@ -26,6 +26,7 @@ var imgs = {
 		baseUrl: 'http://newapi.zmiti.com/',
 		taskSystemUrl:'http://webapi.zmiti.com/v1/',
 		uploadUrl: 'http://h5.wenming.cn/wmreport/index.html#/',
+		defaultPass:'123456'
 	}
 	if (window.location.href.indexOf('localhost') > -1 || window.location.href.indexOf('zmiti.com') > -1) {
 		//window.config.baseUrl = "https://api.symbin.cn/v1";

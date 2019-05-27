@@ -1,23 +1,84 @@
-let zmitiActions = {
-	adminlogin:'1000000',//管理员登录
-	getAdminList: '1000100',//管理员列表
-	addAdminUser:'1000101',//管理员添加管理员	
-	editAdminUser: '1000102',//管理员编辑 	
-	delAdmin:'1000103',//管理员删除,
-	modifyAdminPassword:'1000104',//修改管理员密码
-	modifyAdminSelfPassword: '1000105',//管理员自助修改密码
-	checkAdminUserName:'1000106',//管理员检测用户名是否存在
-	getGroupList: '1000200',//管理员组列表
-	addGroup: '1000201',//添加管理员组
-	editGroup: '1000202',//编辑管理员组
-	delGroup: '1000203',//删除管理员组
-	getAdminGroupSipleList: '1000204',//管理员组列表1000204（简要信息，不参与权限验证）
 
 
 
+let adminActions = {
+	adminlogin: {
+		desc: '管理员登录',
+		action: '1000000'
+	},
+	getAdminList: {
+		desc: '获取管理员列表',
+		action: '1000100'
+	},
+	addAdminUser: {
+		desc: '管理员添加管理员',
+		action: '1000101'
+	}, 
+	editAdminUser: {
+		desc: '管理员编辑',
+		action: '1000102'
+	},
+	delAdmin: {
+		desc: '管理员删除',
+		action: '1000103'
+	},
+	modifyAdminPassword: {
+		desc: '修改管理员密码',
+		action: '1000104'
+	},
+	modifyAdminSelfPassword: {
+		desc: '管理员自助修改密码',
+		action: '1000105'
+	},
+	
+	checkAdminUserName:{
+		desc:"管理员检测用户名是否存在",
+		action:'1000106'
+	},
+	getGroupList:{
+		desc:"管理员组列表",
+		action:'1000200'
+	},
+	addGroup:{
+		desc:"添加管理员组",
+		action:'1000201'
+	},
+	editGroup: {
+		desc: "编辑管理员组",
+		action: '1000202'
+	},
+	delGroup: {
+		desc: "删除管理员组",
+		action: '1000203'
+	},
+	getAdminGroupSipleList:{
+		desc:'管理员组列表1000204（简要信息，不参与权限验证）',
+		action:'1000204'
+	}
 
+	
 
+}
 
+let userActions = {
+
+	userLogin:{
+		desc:'用户端登录',
+		action: '2000000'
+	},//
+	userModifyPassword:{
+		desc:'用户端修改密码',
+		action: '2000010'
+	},//
+	userRegister: {
+		desc:'用户注册',
+		action: '2000004'
+	},//用户注册
+};
+
+let zmitiActions =  {
+	userActions,
+	adminActions
 }
 
 export default zmitiActions;

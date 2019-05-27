@@ -148,7 +148,7 @@ $primary-color: #00c1de;
 		background:$color;
 		width:50px;
 		@include pos(a);
-		z-index: 1002;
+		z-index: 12;
 		overflow: hidden;
 		@include transition(width .2s .1s);
 		color:#fff;

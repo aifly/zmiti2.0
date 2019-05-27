@@ -1,10 +1,8 @@
 ﻿@import "../css/base.scss";
 
-$baseColor: #f2f2f2;
-$viewW: 750px;
-$color: #be0000;
+
 .zmiti-admin-main-ui {
-  background: $baseColor;
+  background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
   width: 99%;
@@ -27,16 +25,16 @@ $color: #be0000;
     border-right: none;
   }
 
-  @include displayFlex(row);
 
   .zmiti-list-main {
     box-sizing: border-box;
 
     background: #fff;
-    margin: 10px auto;
+    margin: 0 auto;
     flex: 2;
     -webkit-flex: 2;
-    @include pos(r);
+	@include pos(r);
+	top: 5px;
     &:before {
       content: "";
       @include pos(a);
@@ -69,43 +67,7 @@ $color: #be0000;
       }
     }
     @include displayFlex(column);
-    .zmiti-tab-header {
-      width: 50px;
-      @include displayFlex(row);
-      width: 100%;
-      padding: 0 20px;
-      justify-content: space-between;
-      -webkit-justify-content: space-between;
-      line-height: 50px;
-      font-size: 20px;
-      z-index: 10;
-
-      &:before {
-        content: "";
-        @include pos(a);
-        width: 98%;
-        left: 1%;
-        height: 1px;
-        background: #ddd;
-        top: 54px;
-      }
-      & > div {
-        &:nth-of-type(1) {
-          @include pos(r);
-          text-indent: 0.5em;
-
-          &:before {
-            content: "";
-            width: 4px;
-            height: 24px;
-            background: #be0000;
-            left: -4px;
-            @include pos(a);
-            top: 12px;
-          }
-        }
-      }
-    }
+   
 
     .zmiti-list-where {
       width: 98%;
@@ -145,15 +107,74 @@ $color: #be0000;
     }
   }
 
-  
+  .lt-full{
+	  position: fixed !important;
+	  background: rgba(0,0,0,.5);
+	  z-index: 1001;
+	  overflow: hidden;
+	  .zmiti-left-pannel{
+		  @include pos(a);
+		  width: 100%;
+		  height: 100px;
+		  left: 0;;
+		  top: 0;
+		  z-index: 10;
+	  }
+  }
 
-  @at-root.zmiti-add-form {
-    //border:1px solid #dcdee2;
-    margin-top: 10px;
+.zmiti-add-form {
     flex: 1;
     -webkit-flex: 1;
-	margin: 10px 0 10px 10px;
+	width:500px;
 	overflow: auto;
+	position: absolute !important;
+	top: 0;
+	right: 0;
+	z-index: 100;
+	
+	height: 100%;
+
+	.zmiti-safe-content{
+		@include displayFlex(row);
+		-webkit-align-items: center;
+		align-items: center;
+		margin-top: 30px;;
+		justify-content: space-around;;
+		-webkit-justify-content: space-around;;
+		border:1px dashed #ccc;
+		padding: 10px 0;
+		&>div{
+			
+			&:nth-of-type(1){
+				text-align: center;
+				width: 120px;
+				font-weight: bold;
+			}
+			&:nth-of-type(2){
+				flex:1;
+				-webkit-flex:1;
+			}
+			&:nth-of-type(3){
+				width: 80px;
+				cursor: pointer;
+				text-align: center;
+				color:rgb(0, 102, 204);
+			}
+		}
+	}
+
+
+	&.detail-enter-active,
+	&.detail-leave-active {
+		@include transition(.2s);
+	}
+
+	&.detail-enter,
+	&.detail-leave-to {
+		@include transform(translateX(100%));
+		
+	}
+	
 
 	.zmiti-admin-avatar{
 		background: rgba(51,144,255,.1);
@@ -184,40 +205,7 @@ $color: #be0000;
     box-shadow: 0 0 0 1px #ccc;
     box-sizing: border-box;
     background: #f9f9f9;
-    & > header.zmiti-add-header {
-      line-height: 40px;
-      height: 40px;
-	  font-weight: bold;
-	  margin-bottom: 20px;
-      color: #515a6e;
-	  background: #f8f8f9;
-	  padding: 10px;
-	  @include pos(r);
-	  &:before{
-		  content:'';
-		  @include pos(a);
-		  width: 100%;
-		  height: 1px;
-		  left: 0;
-		  bottom: -15px;
-		  background: #ccc;
 
-	  }
-	  
-      span {
-        //color: #3390ff;
-        font-size: 20px;
-		font-weight: normal;
-		@include pos(r);
-		left: .5em;
-      }
-      img {
-        width: 40px;
-		cursor: pointer;
-		vertical-align: top;
-      }
-	}
-	
 	.zmiti-add-form-C{
 		margin: 10px auto 2px;
 		width: 90%;
@@ -256,4 +244,4 @@ $color: #be0000;
 
 .ivu-radio-inner:after{
 	border-radius: 10px !important;
-}
+} 

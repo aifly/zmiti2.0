@@ -32,11 +32,13 @@
 		</section>
 	</div>
 </template>
-
+<style lang="scss" scoped>
+	@import './index.scss';
+</style>
 <script>
-	import './index.css';
-	import zmitiUtil from '../../common/lib/util';
-	import zmitiActions from '../../common/action';
+	
+	import zmitiUtil from '../../common/lib/util'; 
+	var zmitiActions = zmitiUtil.adminActions;
 	import Vue from "vue";
 	import '../../common/directive'
 
@@ -91,14 +93,14 @@
 				zmitiUtil.adminAjax({
 					isLogin:true, 
 					data:{
-						action:zmitiActions.adminlogin,
+						action:zmitiActions.adminlogin.action,
 						username:_this.username,
 						password:_this.password
 					},
 					success(data){
 						
 						s.showLoading = false;
-						if(data.getret === 1){
+						if(data.getret === 0){
 							var param = data;
 							var p = data;
 							p.username =  _this.username;

@@ -102,12 +102,10 @@
 				this.showLoading = true;
 				var s = this;
 				zmitiUtil.ajax({
-					_this:s,
-					url:window.config.baseUrl+'user/login_user/',
-					isLogin:true,
 					data:{
+						action:zmitiUtil.zmitiActions.userLogin,
 						username:_this.username,
-						userpwd:_this.password
+						password:_this.password
 					},
 					success(data){
 						s.showLoading = false;
@@ -121,11 +119,11 @@
 							window.localStorage.setItem('login',JSON.stringify(data));
 
 							if(_this.checked){
-								window.localStorage.setItem('wm_username',_this.username);
-								window.localStorage.setItem('wm_password',_this.password);
+								window.localStorage.setItem('zmiti_user_username',_this.username);
+								window.localStorage.setItem('zmiti_user_password',_this.password);
 							}else{
-								window.localStorage.setItem('wm_username','');
-								window.localStorage.setItem('wm_password','');
+								window.localStorage.setItem('zmiti_user_username','');
+								window.localStorage.setItem('zmiti_user_password','');
 							}
 							
 							_this.$Message.success('登录成功~');
@@ -143,8 +141,8 @@
 				
 			},
 			checkCache(){
-				var username = window.localStorage.getItem('wm_username'),
-					password = window.localStorage.getItem('wm_password');
+				var username = window.localStorage.getItem('zmiti_user_username'),
+					password = window.localStorage.getItem('zmiti_user_password');
 				
 				if(username && password){
 					this.username = username;

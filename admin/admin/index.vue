@@ -10,63 +10,86 @@
 			<section class='zmiti-list-where'>
 				管理员编号 <input type="text">
 			</section>
-			<div class='zmiti-admin-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
+			
+			<div class='zmiti-admin-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
 				<div class='zmiti-admin-table' :class="{'active':showDetail}">
 					<Table  :data='adminList' :columns='columns'></Table>
 				</div>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
-		<transition name='company'>
-			<section class='zmiti-add-form zmiti-scroll' v-if='showDetail'>
-				<header class='zmiti-add-header'>
-					<img :src="imgs.back" alt=""  @click='showDetail = false' >
-					<span>基础信息</span>
-				</header>
-				<div class='zmiti-admin-avatar' @click="showAvatarModal = true">
-					<span class='zmt_iconfont' v-html='formAdmin.avatar'></span>
-					<label>更换头像</label>
-				</div>
-				 <Form class='zmiti-add-form-C' :model="formAdmin" :label-width="80">
-					<FormItem label="用户名：">
-						<Input v-model="formAdmin.adminusername" placeholder="用户名：" />
-					</FormItem>
-					<FormItem label="真实姓名：">
-						<Input v-model="formAdmin.realname" placeholder="真实姓名：" />
-					</FormItem>
-					<FormItem label="密码：" v-if='!adminuserId'>
-						<Input type='password' v-model="formAdmin.adminpwd" placeholder="密码：" />
-					</FormItem>
+			<div class='lt-full' v-show='showDetailPage'>
+				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
+				<transition name='detail'>
+					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
+						<header class='zmiti-add-header'>
+							<img :src="imgs.back" alt=""  @click='showDetail = false' >
+							<span>基础信息</span>
+						</header>
+						<div class='zmiti-admin-avatar' @click="showAvatarModal = true">
+							<span class='zmt_iconfont' v-html='formAdmin.avatar'></span>
+							<label>更换头像</label>
+						</div>
+						<Form class='zmiti-add-form-C' :model="formAdmin" :label-width="80">
+							<FormItem label="用户名：">
+								<Input v-model="formAdmin.adminusername" placeholder="用户名：" />
+							</FormItem>
+							<FormItem label="真实姓名：">
+								<Input v-model="formAdmin.realname" placeholder="真实姓名：" />
+							</FormItem>
+							<FormItem label="密码：" v-if='!adminuserId'>
+								<Input type='password' v-model="formAdmin.adminpwd" placeholder="密码：" />
+							</FormItem>
 
-					 
-					<FormItem label="邮箱：">
-						<Input v-model="formAdmin.adminemail" placeholder="邮箱：" />
-					</FormItem>
-					<FormItem label="电话：">
-						<Input v-model="formAdmin.adminmobile" placeholder="电话：" />
-					</FormItem>
-					<FormItem label="所在组：">
-						<Select v-model="formAdmin.groupid">
-							<Option v-for="item in groupList" :value="item.id" :key="item.id">{{ item.groupname }}</Option>
-						</Select>
-					</FormItem>
-					<FormItem label="状态：">
-						<RadioGroup v-model="formAdmin.isover">
-							<Radio :value='0' :label="0">正常</Radio>
-							<Radio :value='1' :label="1">禁用</Radio>
-						</RadioGroup>
-					</FormItem>
-					
-					<FormItem label="备注：">
-						<Input v-model="formAdmin.admincomment" placeholder="备注：" />
-					</FormItem>
-				</Form>
+							
+							<FormItem label="邮箱：">
+								<Input v-model="formAdmin.adminemail" placeholder="邮箱：" />
+							</FormItem>
+							<FormItem label="电话：">
+								<Input v-model="formAdmin.adminmobile" placeholder="电话：" />
+							</FormItem>
+							<FormItem label="所在组：">
+								<Select v-model="formAdmin.groupid">
+									<Option v-for="item in groupList" :value="item.id" :key="item.id">{{ item.groupname }}</Option>
+								</Select>
+							</FormItem>
+							<FormItem label="状态：">
+								<RadioGroup v-model="formAdmin.isover">
+									<Radio :value='0' :label="0">正常</Radio>
+									<Radio :value='1' :label="1">禁用</Radio>
 				
-				<div class='zmiti-add-form-item zmiti-add-btns'>
-					<Button size='large' type='primary' @click='adminAction'>{{adminuserId?'保存':'确定'}}</Button>
-				</div>
-			</section>
-		</transition>
+								</RadioGroup>
+							</FormItem>
+							
+							<FormItem label="备注：">
+								<Input v-model="formAdmin.admincomment" placeholder="备注：" />
+							</FormItem>
+						</Form>
+						
+						<div class='zmiti-add-form-item zmiti-add-btns'>
+							<Button size='large' type='primary' @click='adminAction'>{{adminuserId?'保存':'确定'}}</Button>
+						</div>
+						<template v-if='formAdmin.adminuserid'>
+							<header class='zmiti-add-header zmiti-safe-bar'>
+								<span>安全信息</span>
+							</header>
+							<div class='zmiti-safe-content'>
+								<div>密码初始化</div>
+								<div>点击右侧初始化按钮，系统将会把密码初始化为：123456。首次登录需更新密码</div>
+								<div>
+									<Poptip
+										confirm
+										title="确定要初始化吗?"
+										@on-ok="initPassword"
+										>
+										<span>初始化</span>
+									</Poptip>
+								</div>
+							</div>
+						</template>
+					</section>
+				</transition>
+			</div>
 
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
@@ -87,12 +110,13 @@
 	</div>
 </template>
 
+<style lang="scss" scoped>
+	@import './index.scss';
+</style>
 <script>
-	import './index.css';
-	
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	var zmitiActions = zmitiUtil.zmitiActions;
+	var zmitiActions = zmitiUtil.adminActions;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -112,7 +136,8 @@
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
-				showDetail:true,
+				showDetail:false,
+				showDetailPage:false,
 				currentClassId:-1, 
 				adminuserId:'',
 				currentUserid:'',
@@ -314,15 +339,39 @@
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getAdminList();
-			
 		},
 
 		watch:{
+
+			showDetail(val){
+				if(val){
+					this.showDetailPage = true;
+				}else{
+					setTimeout(() => {
+						this.showDetailPage = false;
+					}, 310);
+				}
+			}
 			
 		},
 		
 		methods:{
-
+			initPassword(){//初始化密码
+				var {$Message} = this;
+				zmitiUtil.adminAjax({
+					data:{
+						action:zmitiActions.modifyAdminPassword.action,
+						adminuserid:this.formAdmin.adminuserid,
+						adminpwd:window.config.defaultPass
+					},
+					success(data){
+						$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+						}
+					}
+				});
+			},
 			addAdmin(){
 				this.showDetail = true;
 				this.adminuserId = '';
@@ -337,7 +386,7 @@
 				zmitiUtil.adminAjax({
 					remark:'delAdmin',
 					data:{
-						action:zmitiActions.delAdmin,
+						action:zmitiActions.delAdmin.action,
 						adminuserid
 					},
 					success(data){
@@ -356,7 +405,7 @@
 				zmitiUtil.adminAjax({
 					remark:'getAdminList',
 					data:{
-						action:zmitiActions.getAdminList,
+						action:zmitiActions.getAdminList.action,
 						condition:this.condition
 					},
 					success(data){
@@ -365,7 +414,7 @@
 							zmitiUtil.adminAjax({
 								remark:'getGroupList',
 								data:{
-									action:zmitiActions.getGroupList,
+									action:zmitiActions.getGroupList.action,
 									condition:this.condition
 								},
 								success(data){
@@ -390,7 +439,7 @@
 					zmitiUtil.adminAjax({
 						remark:'getAdminList',
 						data:{
-							action:zmitiActions.getAdminList,
+							action:zmitiActions.getAdminList.action,
 							condition:this.condition
 						},
 						success(data){
@@ -405,7 +454,7 @@
 					zmitiUtil.adminAjax({
 						remark:'getGroupList',
 						data:{
-							action:zmitiActions.getGroupList,
+							action:zmitiActions.getGroupList.action,
 							condition:this.condition
 						},
 						success(data){
@@ -434,7 +483,7 @@
 			 
 			adminAction(){
 				var s = this;
-				var action = this.adminuserId ? zmitiActions.editAdminUser:zmitiActions.addAdminUser;
+				var action = this.adminuserId ? zmitiActions.editAdminUser.action:zmitiActions.addAdminUser.action;
 				
 				zmitiUtil.adminAjax({
 					remark:this.adminuserId ?　'editAdminUser':'addAdminUser',

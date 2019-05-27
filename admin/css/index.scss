@@ -1,38 +1,97 @@
 @charset "utf-8";
 @import "./base.scss";
-
-html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
-	padding: 0;
-	margin: 0;
-}
-
-a {
-	text-decoration: none;
-}
-
-li {
-	list-style: none;
-}
-
-html, body {
-	height: 100%;
-	-webkit-tap-highlight-color: transparent;
-}
-
-body {
-	font-family: "Helvetica Neue", 'Helvetica', "Microsoft YaHei", arial, sans-serif;
-	font-size: 14px;
-	background: #fff;
-	color: #333;
-
-	&>div {
-	}
-
-}
-
-img {
-	border: none;
-	vertical-align: middle;
+.zmiti-tab-header {
+	width: 50px;
+	@include displayFlex(row);
 	width: 100%;
-	height: auto;
+	padding: 0 20px;
+	justify-content: space-between;
+	-webkit-justify-content: space-between;
+	line-height: 50px;
+	font-size: 20px;
+	z-index: 10;
+
+	&:before {
+	content: "";
+	@include pos(a);
+	width: 98%;
+	left: 1%;
+	height: 1px;
+	background: #ddd;
+	top: 54px;
+	}
+	& > div {
+	&:nth-of-type(1) {
+		@include pos(r);
+		text-indent: 0.5em;
+
+		&:before {
+		content: "";
+		width: 4px;
+		height: 24px;
+		background: #be0000;
+		left: -4px;
+		@include pos(a);
+		top: 12px;
+		}
+	}
+	}
+}
+
+   header.zmiti-add-header {
+      line-height: 40px;
+      height: 40px;
+	  font-weight: bold;
+	  margin-bottom: 20px;
+      color: #515a6e;
+	  background: #f8f8f9;
+	  padding: 10px;
+	  @include pos(r);
+
+	  &.zmiti-safe-bar{
+		  
+		  text-indent: .5em;
+		  &:after{
+			  content:'';
+			  width: 4px;
+			  height: 24px;
+			  top: 40%;
+			  
+			  background: #be0000;
+			  @include pos(a);
+			  left: 10px;
+		  }
+	  }
+	  &:before{
+		  content:'';
+		  @include pos(a);
+		  width: 100%;
+		  height: 1px;
+		  left: 0;
+		  bottom: -15px;
+		  background: #ccc;
+
+	  }
+	  
+      span {
+        //color: #3390ff;
+        font-size: 20px;
+		font-weight: normal;
+		@include pos(r);
+		left: .5em;
+      }
+      img {
+        width: 40px;
+		cursor: pointer;
+		vertical-align: top;
+      }
+	}
+	
+
+.ivu-radio-inner:after{
+	border-radius: 4px !important;
+}
+
+.ivu-icon-ios-help-circle{
+	left:24px;
 }

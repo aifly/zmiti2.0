@@ -52,6 +52,13 @@ module.exports = {
                     }
                 ]
             }, {
+				test: /\.scss$/,
+				use: [
+					"style-loader", // creates style nodes from JS strings
+					"css-loader", // translates CSS into CommonJS
+					"scss-loader" // compiles Sass to CSS, using Node Sass by default
+				]
+			},{
                 // 文件匹配正则
                 test: /\.css$/,
                 // 加载器，从后向前倒序使用
