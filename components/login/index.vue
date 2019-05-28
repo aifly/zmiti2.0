@@ -44,7 +44,9 @@
 	import zmitiUtil from '../../common/lib/util';
 	import '../../common/jigsaw';
 	import Vue from "vue";
-	import '../../common/directive'
+	import '../../common/directive';
+
+	var userActions = zmitiUtil.userActions;
 
 	export default {
 		props:['obserable'],
@@ -102,8 +104,9 @@
 				this.showLoading = true;
 				var s = this;
 				zmitiUtil.ajax({
+					remark:'userLogin',
 					data:{
-						action:zmitiUtil.zmitiActions.userLogin,
+						action:userActions.userLogin.action,
 						username:_this.username,
 						password:_this.password
 					},

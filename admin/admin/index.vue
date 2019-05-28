@@ -114,6 +114,7 @@
 	@import './index.scss';
 </style>
 <script>
+
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	var zmitiActions = zmitiUtil.adminActions;

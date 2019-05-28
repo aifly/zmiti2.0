@@ -68,7 +68,6 @@ var zmitiUtil = {
 
 	adminAjax(option = {}){
 		option.isAdmin = true;
-		console.log(option,'111');
 		this.ajax(option,()=>{
 			if(window.location.hash === '#/login'){
 				setTimeout(() => {
@@ -117,7 +116,6 @@ var zmitiUtil = {
 		});
 
 		return;
-		
 		
 	}
 

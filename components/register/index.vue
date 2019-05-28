@@ -13,10 +13,6 @@
 				<div class="wm-reg-form">
 					<h2>欢迎注册智媒体2.0～</h2>
 					<div class="wm-reg-form-item wm-require">
-						<label for="">单位：</label><input type="text" v-model="formUser.company">
-						<div class="wm-reg-error" v-if='companyError'>{{companyError}}</div>
-					</div>
-					<div class="wm-reg-form-item wm-require">
 						<label for="">用户名：</label><input type="text" @blur="checkUserName" v-model='formUser.username'>
 						<div class="wm-reg-error" v-if='userError'>{{userError}}</div>
 					</div>
@@ -29,15 +25,15 @@
 						<div class="wm-reg-error" v-if='repassError'>{{repassError}}</div>
 					</div>
 					<div class="wm-reg-form-item wm-require">
-						<label for="">姓名：</label><input type="text" v-model="formUser.nickname">
+						<label for="">姓名：</label><input type="text" v-model="formUser.realname">
 						<div class="wm-reg-error" v-if='usernameError'>{{usernameError}}</div>
 					</div>
 					<div class="wm-reg-form-item wm-require">
-						<label for="">邮箱：</label><input type="text"  v-model="formUser.email">
+						<label for="">邮箱：</label><input type="text"  v-model="formUser.useremail">
 						<div class="wm-reg-error" v-if='emailError'>{{emailError}}</div>
 					</div>
 					<div class="wm-reg-form-item">
-						<label for="">手机：</label><input type="text" v-model="formUser.mobile">
+						<label for="">手机：</label><input type="text" v-model="formUser.usermobile">
 						
 					</div>
 				
@@ -57,7 +53,7 @@
 <script>
 	import './index.css';
 	import zmitiUtil from '../../common/lib/util';
-
+	var userActions = zmitiUtil.userActions;
 	import Vue from "vue";
 
 	export default {
@@ -99,22 +95,7 @@
 					this.toastError('请输入用户名');
 					return;
 				}
-				var s = this;
-				zmitiUtil.ajax({
-					_this:s,
-					url:window.config.baseUrl+"/wmadvuser/isexist/",
-					data:{
-						username:s.formUser.username
-					},
-					success(data){
-						
-						if(data.getret === 0){
-
-						}else{
-							s.toastError(data.getmsg);
-						}
-					}
-				})
+			 
 			},
 			toastError(msg =  '用户名不能为空',type='userError'){
 				this[type] = msg;
@@ -141,31 +122,30 @@
 					this.toastError('两次密码输入不一致','repassError');
  					return;
 				}
-				if(!this.formUser.nickname){
+				if(!this.formUser.realname){
 					this.toastError('姓名不能为空','usernameError');
  					return;
 				}
-				if(!this.formUser.email){
+				if(!this.formUser.useremail){
 					this.toastError('手机不能为空','emailError');
  					return;
 				}
-				if(!this.formUser.company){
-					this.toastError('单位不能为空','companyError');
- 					return;
-				}
+				 
 
 				var params = this.formUser;
-				console.log(params);
 				params.userpwd = params.password;
-				params.companyname = params.company;
-				params.provinceid = params.cityids[0];
-				params.cityid = params.cityids[1];
-				params.areaid = params.cityids[2];
+				params.useremail = params.useremail || '';
+				params.username = params.username || '';
+				params.realname = params.realname;
+				params.usermobile = params.usermobile || '';
+
 				this.showLoading = true;
 				zmitiUtil.ajax({
-					_this:s,
-					url:window.config.baseUrl+'/wmadvuser/regist/',
-					data:params,
+					data:{
+						action:userActions.userRegister.action,
+						info:params
+					},
+					remark:'userRegister',
 					success(data){
 						if(data.getret === 0){
 							_this.$Message.success({ 
