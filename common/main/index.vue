@@ -32,7 +32,7 @@
                    <span class="zmiti-text-overflow">
 					   {{userinfo.username}}
 					</span>
-					<span>
+					<span class='zmiti-user-avatar'>
 						<img :src="imgs.zmiti1" alt="">
 						<ul>
 							<li>
@@ -83,9 +83,12 @@
         </div>
     </div>
 </template>
+<style lang='scss' scoped>
+	@import './index.scss';
+</style>
+
 
 <script>
-	import './index.css';
     import Vue from 'vue';
     import zmitiUtil from '../lib/util';
     

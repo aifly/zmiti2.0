@@ -169,8 +169,13 @@
 }
 
 .layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type {
-  margin-right: 4px;
   cursor: pointer;
+  text-align: center;
+  width: 50px;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type:hover {
+  background: #00c1de;
 }
 
 .layout .ivu-layout-header > div.zmiti-user-info div {

@@ -107,10 +107,16 @@ $primary-color: #00c1de;
 
 				 &>span{
 					 &:last-of-type{
-						 margin-right: 4px;
 						 cursor: pointer;
+						 text-align: center;
+						 width: 50px;
+						 &:hover{
+							 background: #00c1de;
+						 }
 					 }
 				 }
+
+				 
 				 
 				 div{
 					 min-width: 50px;
@@ -261,7 +267,6 @@ $primary-color: #00c1de;
 
 	.zmiti-main-layout{
 		@include displayFlex(row);
-
 	}
 
 	.symbin-main-menu{
