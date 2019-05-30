@@ -94,19 +94,8 @@
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
 		</Modal>
-
-		<Modal title='更换头像' v-model="showAvatarModal" :transfer='false'
-			 
-		>
-			<div slot='footer'>
-				<Button @click="showAvatarModal=false" type='primary'>确定</Button>
-			</div>
-			<div class='zmiti-avatar-list'>
-				<span @click='formAdmin.avatar = font' :class="{'active':formAdmin.avatar === font}" class='zmt_iconfont' v-for='(font,i) in avatarList' :key="i" v-html='font'>
-				
-				</span>
-			</div>
-		</Modal>
+ 
+		<Avatar v-model="showAvatarModal" :avatar='formAdmin.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
@@ -117,6 +106,7 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
+	import Avatar from '../../common/avatar';
 	var zmitiActions = zmitiUtil.adminActions;
 	export default {
 		props:['obserable'],
@@ -327,7 +317,7 @@
 			}
 		},
 		components:{
-			
+			Avatar
 		},
 
 		beforeCreate(){
@@ -343,6 +333,7 @@
 		},
 
 		watch:{
+			
 
 			showDetail(val){
 				if(val){
@@ -357,6 +348,9 @@
 		},
 		
 		methods:{
+			getAvatar(avatar){
+				this.formAdmin.avatar = avatar;
+			},
 			initPassword(){//初始化密码
 				var {$Message} = this;
 				zmitiUtil.adminAjax({

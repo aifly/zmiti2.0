@@ -35,8 +35,18 @@
 					<span class='zmiti-user-avatar'>
 						<img :src="imgs.zmiti1" alt="">
 						<ul>
-							<li>
-								
+							<li class='zmiti-hover-username'>
+								{{userinfo.username}}
+							</li>
+							<li class='zmiti-hover-tab'>
+								<div>基本信息</div>
+								<div>安全管理</div>
+							</li>
+							<li class='zmiti-hover-company'>
+								<span class='zmt_iconfont'>&#xe6a1;</span> 单位信息
+							</li>
+							<li class='zmiti-hover-exit'>
+								退出平台
 							</li>
 						</ul>
 					</span>

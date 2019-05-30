@@ -62,8 +62,6 @@
 						comment:"",//备注
 						isover:0,
 						config:''
-
-
 					}
 				],
 				date:""

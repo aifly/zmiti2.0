@@ -55,6 +55,70 @@
   flex-flow: column;
 }
 
+.wm-reg-ui .wm-reg-C {
+  width: 500px;
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form .zmiti-admin-avatar {
+  background: rgba(51, 144, 255, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto 30px;
+  cursor: pointer;
+  position: relative;
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form .zmiti-admin-avatar label {
+  position: absolute;
+  bottom: -50px;
+  font-size: 12px;
+  width: 100%;
+  text-align: center;
+  left: 0;
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form .zmiti-admin-avatar span {
+  font-size: 40px;
+  color: rgba(51, 144, 255, 0.8);
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form .zmiti-add-form-C {
+  margin: 10px auto 2px;
+  width: 90%;
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form .zmiti-add-form-item {
+  line-height: 50px;
+  height: 50px;
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
+  margin: 0 20px;
+  padding: 2px 20px;
+}
+
+.wm-reg-ui .wm-reg-C .zmiti-add-form .zmiti-add-form-item input {
+  padding-left: 6px;
+  height: 32px;
+  width: 70%;
+  border: 1px solid #d8d8d8;
+  outline: none;
+}
+
 .wm-reg-ui > header {
   height: 64px;
   line-height: 64px;
@@ -78,7 +142,7 @@
 }
 
 .wm-reg-ui > header:before {
-  content: '';
+  content: "";
   background: #373d41;
   width: 100%;
   height: 3px;
@@ -123,7 +187,6 @@
 }
 
 .wm-reg-ui > section .wm-reg-form-item {
-  background: #eeeeee;
   width: 400px;
   border-radius: 4px;
   padding: 0 20px;
@@ -133,12 +196,17 @@
   position: relative;
 }
 
+.wm-reg-ui > section .wm-reg-form-item .zmt_iconfont {
+  font-size: 30px;
+  cursor: pointer;
+}
+
 .wm-reg-ui > section .wm-reg-form-item.wm-require label {
   position: relative;
 }
 
 .wm-reg-ui > section .wm-reg-form-item.wm-require label:before {
-  content: '*';
+  content: "*";
   position: absolute;
   color: #be0000;
   font-size: 20px;
@@ -167,12 +235,10 @@
 
 .wm-reg-ui > section .wm-reg-form-item input {
   outline: none;
-  background: transparent;
   border: 1px solid #ccc;
   padding: 0;
   height: 30px;
   width: 300px;
-  border: none;
 }
 
 .wm-reg-ui > section .wx-reg-btn {

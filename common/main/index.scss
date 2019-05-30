@@ -38,6 +38,23 @@
   content: "\ea26";
 }
 
+.lt-full {
+	width: 100%;
+	height: 100%;
+	@include pos(a);
+	left: 0;
+	top: 0;
+}
+
+.zmiti-text-overflow {
+	overflow: hidden;
+	white-space: nowrap;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+}
+
+
 
 $color:rgb(55, 61, 65);
 $primary-color: #00c1de;
@@ -66,7 +83,7 @@ $primary-color: #00c1de;
 				 @include displayFlex(row);
 				 color:#fff;
 				 .zmiti-title{
-					 height: 40px;
+					 height: 50px;
 					 @include pos(r);
 					 img{
 						 width: 80px;
@@ -74,7 +91,7 @@ $primary-color: #00c1de;
 					 span{
 						 @include pos(a);
 						 left: 110%;
-						 bottom: 0;
+						 bottom: 14px;
 						 height: 30px;
 					 }
 				 }
@@ -112,6 +129,57 @@ $primary-color: #00c1de;
 						 width: 50px;
 						 &:hover{
 							 background: #00c1de;
+							 ul{
+								 display: block;
+							 }
+						 }
+						 @include pos(r);
+						 ul{
+							display:none;
+							text-align: left;
+							@include pos(a);
+							width: 200px;
+							height:200px;
+							right: 0;
+							top: 50px;
+							background: #252b30;
+							z-index: 1;
+							li{
+								width: 90%;
+								margin: 0 auto;
+								&.zmiti-hover-username{
+									font-weight: bold;
+									font-size:14px;
+								}
+								&.zmiti-hover-tab{
+									@include displayFlex(row);
+									justify-content: space-between;
+									-webkit-justify-content: space-between;
+									border-bottom: 1px solid #444;
+									padding-bottom: 20px;
+									&>div{
+										border:1px solid #777;
+										line-height: 20px;;
+										padding: 0 4px;
+										color:#777;
+										&:hover{
+											border:1px solid #fff;
+											color:#fff;
+										}
+									}
+								}
+								&.zmiti-hover-company{
+									border-bottom: 1px solid #444;
+								}
+								&.zmiti-hover-exit{
+									border:1px solid #777;
+									line-height: 20px;
+									margin-top: 20px;;
+									cursor: pointer;
+									text-align: center;
+									color:#777;
+								}
+							}
 						 }
 					 }
 				 }

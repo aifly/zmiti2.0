@@ -3,52 +3,6 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
-.lt-full {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.zmiti-text-overflow {
-  overflow: hidden;
-  white-space: nowrap;
-  word-break: break-all;
-  text-overflow: ellipsis;
-  -webkit-text-overflow: ellipsis;
-}
-
-.zmiti-play {
-  width: .8rem;
-  height: .8rem;
-  border-radius: 50%;
-  position: fixed;
-  z-index: 1000;
-  right: .5rem;
-  top: .5rem;
-}
-
-.zmiti-play.rotate {
-  -webkit-animation: rotate 5s linear infinite;
-  animation: rotate 5s linear infinite;
-}
-
-.symbin-left {
-  float: left !important;
-}
-
-.symbin-right {
-  float: right !important;
-}
-
-@-webkit-keyframes rotate {
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
 [class^="icon-"], [class*=" icon-"] {
   font-family: 'icomoon' !important;
   font-style: normal;
@@ -95,6 +49,22 @@
   content: "\ea26";
 }
 
+.lt-full {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
 .layout .layout-logo {
   color: #FFF;
 }
@@ -124,7 +94,7 @@
 }
 
 .layout .ivu-layout-header > div:nth-of-type(1) .zmiti-title {
-  height: 40px;
+  height: 50px;
   position: relative;
 }
 
@@ -135,7 +105,7 @@
 .layout .ivu-layout-header > div:nth-of-type(1) .zmiti-title span {
   position: absolute;
   left: 110%;
-  bottom: 0;
+  bottom: 14px;
   height: 30px;
 }
 
@@ -172,10 +142,72 @@
   cursor: pointer;
   text-align: center;
   width: 50px;
+  position: relative;
 }
 
 .layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type:hover {
   background: #00c1de;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type:hover ul {
+  display: block;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul {
+  display: none;
+  text-align: left;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  right: 0;
+  top: 50px;
+  background: #252b30;
+  z-index: 1;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li.zmiti-hover-username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li.zmiti-hover-tab {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  border-bottom: 1px solid #444;
+  padding-bottom: 20px;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li.zmiti-hover-tab > div {
+  border: 1px solid #777;
+  line-height: 20px;
+  padding: 0 4px;
+  color: #777;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li.zmiti-hover-tab > div:hover {
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li.zmiti-hover-company {
+  border-bottom: 1px solid #444;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li.zmiti-hover-exit {
+  border: 1px solid #777;
+  line-height: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  text-align: center;
+  color: #777;
 }
 
 .layout .ivu-layout-header > div.zmiti-user-info div {

@@ -12,49 +12,58 @@
 			<div class="wm-reg-C">
 				<div class="wm-reg-form">
 					<h2>欢迎注册智媒体2.0～</h2>
-					<div class="wm-reg-form-item wm-require">
-						<label for="">用户名：</label><input type="text" @blur="checkUserName" v-model='formUser.username'>
-						<div class="wm-reg-error" v-if='userError'>{{userError}}</div>
-					</div>
-					<div class="wm-reg-form-item wm-require">
-						<label for="">密码：</label><input type="password" v-model="formUser.password">
-						<div class="wm-reg-error" v-if='passError'>{{passError}}</div>
-					</div>
-					<div class="wm-reg-form-item wm-require">
-						<label for="">确认密码：</label><input type="password" v-model="formUser.repassword">
-						<div class="wm-reg-error" v-if='repassError'>{{repassError}}</div>
-					</div>
-					<div class="wm-reg-form-item wm-require">
-						<label for="">姓名：</label><input type="text" v-model="formUser.realname">
-						<div class="wm-reg-error" v-if='usernameError'>{{usernameError}}</div>
-					</div>
-					<div class="wm-reg-form-item wm-require">
-						<label for="">邮箱：</label><input type="text"  v-model="formUser.useremail">
-						<div class="wm-reg-error" v-if='emailError'>{{emailError}}</div>
-					</div>
-					<div class="wm-reg-form-item">
-						<label for="">手机：</label><input type="text" v-model="formUser.usermobile">
+					<section class='zmiti-add-form zmiti-scroll' >
+						<div class='zmiti-admin-avatar' @click="showAvatarModal = true">
+							<span class='zmt_iconfont' v-html='formUser.avatar'></span>
+							<label>更换头像</label>
+						</div>
+						<Form class='zmiti-add-form-C' :model="formUser" :label-width="80">
+							<FormItem label="用户名：">
+								<Input v-model="formUser.username" placeholder="用户名：" />
+							</FormItem>
+							<FormItem label="真实姓名：">
+								<Input v-model="formUser.realname" placeholder="真实姓名：" />
+							</FormItem>
+							<FormItem label="密码：">
+								<Input type='password' v-model="formUser.password" placeholder="密码：" />
+							</FormItem>
+							<FormItem label="确认密码：" v-if='false'>
+								<Input type='password' v-model="formUser.repassword" placeholder="确认密码：" />
+							</FormItem>
+							<FormItem label="邮箱：">
+								<Input v-model="formUser.useremail" placeholder="邮箱：" />
+							</FormItem>
+							<FormItem label="电话：">
+								<Input v-model="formUser.usermobile" placeholder="电话：" />
+							</FormItem>
+						</Form>
 						
-					</div>
-				
+						<div class='zmiti-add-form-item zmiti-add-btns'>
+							<Button size='large' type='primary' @click="reg">注册</Button>
+						</div>
+					 
+					</section>
 					
-					<div class="wm-reg-form-item wx-reg-btn" @click="reg">
-						注 册
-					</div>
 				</div>
 				<div class="wm-copyright">
 					智媒体 &copy;版权所有
 				</div>
 			</div>
 		</section>
+		<Avatar v-model="showAvatarModal" :avatar='formUser.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
+<style lang="scss" scoped>
+	@import './index.scss';
+</style>
+
 <script>
-	import './index.css';
 	import zmitiUtil from '../../common/lib/util';
 	var userActions = zmitiUtil.userActions;
 	import Vue from "vue";
+
+	import Avatar from '../../common/avatar';
 
 	export default {
 		props:['obserable'],
@@ -63,6 +72,7 @@
 			return{
 				imgs:window.imgs,
 				username:'',
+				showAvatarModal:false,
 				password:'',
 				checked:false,
 				isLogined:false,
@@ -80,16 +90,21 @@
 				repassError:"",
 				emailError:"",
 				formUser:{
-					cityids:[]
+					avatar:'&#xe6a4;'
 				},
 
 				viewH:document.documentElement.clientHeight
 			}
 		},
+	
 		components:{
+			Avatar
 		},
 		
 		methods:{
+			getAvatar(avatar){
+				this.formUser.avatar = avatar;
+			},
 			checkUserName(){
 				if(!this.formUser.username){
 					this.toastError('请输入用户名');

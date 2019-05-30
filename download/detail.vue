@@ -14,7 +14,7 @@
 							-webkit-display:flex;
 							flex-flow: column;
 							-webkit-flex-flow: column;
-							width:100%;
+							width:100%; 
 							height:100%;
 							-webkit-justify-content: space-between;
 							justify-content: space-between;
