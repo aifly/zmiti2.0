@@ -7,7 +7,7 @@
 						<div v-if='!(tab.children && tab.children.length>0)'><router-link :to="tab.link">{{tab.name}}</router-link></div>
 						<div v-if='tab.children && tab.children.length>0'>{{tab.name}}</div>
 						<ol :style='{height:(tab.status?tab.children.length*50:0)+"px"}' v-if='tab.children' >
-							<li :key="k" @click.stop.prevent='tab2(i,k)' :class="{'active':(tabIndex[1]===k) ||($route.name === child.link)}" v-for='(child,k) in tab.children'>
+							<li :key="k" @click.stop.prevent='tab2(i,k)' :class="{'active':($route.name === child.link)}" v-for='(child,k) in tab.children'>
 								<div v-if='child.link'><router-link :to="child.link">{{child.name}}</router-link></div>
 								<div v-if='!child.link'>{{child.name}}</div>
 							</li>
@@ -27,6 +27,8 @@
 	import Tab from '../tab/index';
 	import Vue from 'vue';
 	import menuObj from './menu';
+
+	
 	
 
 	export default {

@@ -79,6 +79,12 @@ var zmitiUtil = {
 		});
 	},
 
+	createViewData(h5id){
+		axios.post('http://newapi.zmiti.com:50293/api/viewdata', JSON.stringify({ h5id, appsecret: 'c9GxtUre3kOJCgvp' })).then(data => {
+			console.log(data.data);
+		})
+	},
+
 	ajax(option,adminErrorFn){
 
 		
