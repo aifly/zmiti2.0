@@ -20,7 +20,7 @@ var user_company ={
 	]
 };
 
-var admin_rolegroup_setrole ={
+var admin_rolegroup_setrole_pv_form ={
 	title:"系统管理",
 	tabs: [
 		{
@@ -38,6 +38,19 @@ var admin_rolegroup_setrole ={
 					link: 'setrole'
 				}
 			]
+		},{
+			name:"简易统计",
+			link:'',
+			children:[
+				{
+					name:'浏览量统计',
+					link:'pv'
+				},
+				{
+					name:'简易表单',
+					link:'form'
+				}
+			]	
 		}
 	]
 };
@@ -45,7 +58,7 @@ var admin_rolegroup_setrole ={
 
 var menuObj = {
 	user_company,
-	admin_rolegroup_setrole
+	admin_rolegroup_setrole_pv_form
 };
 
 export default menuObj;

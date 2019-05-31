@@ -5,6 +5,8 @@ import Main from './common/main/index';
 import Product from './admin/product/index';
 import Home from './admin/home/index';
 import Admin from './admin/admin/index';
+import Pv from './admin/pv/index';
+import Form from './admin/form/index';
 /* import User from './admin/user/index';
 import Company from './admin/company/index';
 import RoleGroup from './admin/rolegroup/index';
@@ -61,6 +63,8 @@ const router = new VueRouter({
 				//{ path: '/user/', name: 'user', component: User },
 				//{ path: '/company/', name: 'company', component: Company },
 				{ path: '/admin/', name: 'admin', component: Admin},
+				{ path: '/pv/', name: 'pv', component: Pv},
+				{ path: '/form/', name: 'form', component: Form},
 				//{ path: '/rolegroup/', name: 'rolegroup', component: RoleGroup},
 				//{ path: '/setrole/', name: 'setrole', component: SetRole},
 			]

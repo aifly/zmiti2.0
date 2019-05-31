@@ -144,7 +144,7 @@
 						name:"系统管理",
 						link:'admin',
 						icon:'&#xe60f;',
-						active:'admin_rolegroup_setrole'.split('_') 
+						active:'admin_rolegroup_setrole_pv_form'.split('_') 
 					}
 				]
 			}

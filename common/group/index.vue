@@ -33,7 +33,7 @@
 		props:['obserable','menus'],
 		data(){
 			return{
-				tabIndex:[0,-1],
+				tabIndex:[0,-1,-1],
 				theme2:"light",
 				menuObj:{},
 				tabs:[
@@ -65,6 +65,7 @@
 			});
 
 			obserable.on('fillTabIndex',(data)=>{
+
 				
 				data[2]!==-1 && (this.tabs[data[2]].status = true);
 				data.length = 2;

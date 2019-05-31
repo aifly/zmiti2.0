@@ -19,8 +19,6 @@
 	import sysbinVerification from '../lib/verification';
 	import symbinUtil from '../lib/util';
 
-	import $ from 'jquery';
-
 	export default {
 		props:['title','tabs','tabIndex'],
 		name:'zmitiindex',
@@ -53,7 +51,7 @@
 		},
 		mounted(){
 			this.resizeTab()
-			$(window).on('resize',()=>{
+			window.addEventListener('resize',()=>{
 				this.resizeTab()
 			})
 		}
