@@ -1,56 +1,113 @@
 <template>
-	<div class="zmiti-company-main-ui">
+	<div class="zmiti-admin-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div>单位管理</div>
+				<div>管理员管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增单位</Button>
+					<Button type="primary" @click="addAdmin">新增管理员</Button>
 				</div>
 			</header>
 			<section class='zmiti-list-where'>
-				单位编号 <input type="text">
+				管理员编号 <input type="text">
 			</section>
-			<div class='zmiti-company-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-company-table' :class="{'active':showDetail}">
-					<Table :data='companyList' :columns='columns'></Table>
+			
+			<div class='zmiti-admin-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
+				<div class='zmiti-admin-table' :class="{'active':showDetail}">
+					<Table  :data='adminList' :columns='columns'></Table>
 				</div>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
-		<transition name='company'>
-			<section class='zmiti-add-form' v-if='showDetail'>
-				<header class='zmiti-add-header'>
-					<img :src="imgs.back" alt=""  @click='showDetail = false' >
-					<span>添加单位</span>
-				</header>
-				<Form class='zmiti-add-form-C' :model="formAdmin" :label-width="80">
-					<FormItem label="用户名">
-						<Input v-model="formAdmin.adminusername" placeholder="名称" />
-					</FormItem>
-					<FormItem label="真实姓名">
-						<Input v-model="formAdmin.realname" placeholder="真实姓名" />
-					</FormItem>
-				</Form>
+			<div class='lt-full' v-show='showDetailPage'>
+				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
+				<transition name='detail'>
+					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
+						<header class='zmiti-add-header'>
+							<img :src="imgs.back" alt=""  @click='showDetail = false' >
+							<span>基础信息</span>
+						</header>
+						<div class='zmiti-admin-avatar' @click="showAvatarModal = true">
+							<span class='zmt_iconfont' v-html='formAdmin.avatar'></span>
+							<label>更换头像</label>
+						</div>
+						<Form class='zmiti-add-form-C' :model="formAdmin" :label-width="80">
+							<FormItem label="用户名：">
+								<Input v-model="formAdmin.adminusername" placeholder="用户名：" />
+							</FormItem>
+							<FormItem label="真实姓名：">
+								<Input v-model="formAdmin.realname" placeholder="真实姓名：" />
+							</FormItem>
+							<FormItem label="密码：" v-if='!adminuserId'>
+								<Input type='password' v-model="formAdmin.adminpwd" placeholder="密码：" />
+							</FormItem>
+
+							
+							<FormItem label="邮箱：">
+								<Input v-model="formAdmin.adminemail" placeholder="邮箱：" />
+							</FormItem>
+							<FormItem label="电话：">
+								<Input v-model="formAdmin.adminmobile" placeholder="电话：" />
+							</FormItem>
+							<FormItem label="所在组：">
+								<Select v-model="formAdmin.groupid">
+									<Option v-for="item in groupList" :value="item.id" :key="item.id">{{ item.groupname }}</Option>
+								</Select>
+							</FormItem>
+							<FormItem label="状态：">
+								<RadioGroup v-model="formAdmin.isover">
+									<Radio :value='0' :label="0">正常</Radio>
+									<Radio :value='1' :label="1">禁用</Radio>
 				
-				<div class='zmiti-add-form-item zmiti-add-btns'>
-					<Button size='large' type='primary' @click='companyAction'>{{formcompany.companyid?'保存':'确定'}}</Button>
-				</div>
-			</section>
-		</transition>
+								</RadioGroup>
+							</FormItem>
+							
+							<FormItem label="备注：">
+								<Input v-model="formAdmin.admincomment" placeholder="备注：" />
+							</FormItem>
+						</Form>
+						
+						<div class='zmiti-add-form-item zmiti-add-btns'>
+							<Button size='large' type='primary' @click='adminAction'>{{adminuserId?'保存':'确定'}}</Button>
+						</div>
+						<template v-if='formAdmin.adminuserid'>
+							<header class='zmiti-add-header zmiti-safe-bar'>
+								<span>安全信息</span>
+							</header>
+							<div class='zmiti-safe-content'>
+								<div>密码初始化</div>
+								<div>点击右侧初始化按钮，系统将会把密码初始化为：123456。首次登录需更新密码</div>
+								<div>
+									<Poptip
+										confirm
+										title="确定要初始化吗?"
+										@on-ok="initPassword"
+										>
+										<span>初始化</span>
+									</Poptip>
+								</div>
+							</div>
+						</template>
+					</section>
+				</transition>
+			</div>
 
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
 		</Modal>
+ 
+		<Avatar v-model="showAvatarModal" :avatar='formAdmin.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
+<style lang="scss" scoped>
+	@import './index.scss';
+</style>
 <script>
-	import './index.css';
-	
+
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import Tab from '../../common/tab/index';
-	
+	import Avatar from '../../common/avatar';
+	var zmitiActions = zmitiUtil.adminActions;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -58,20 +115,35 @@
 			return{
 
 				tabIndex:[0,-1],
-
+				showAvatarModal:false,
 				visible:false,
+				avatarList:[
+					'&#xe6a5;',
+					'&#xe6a4;',
+					'&#xe6a3;',
+					'&#xe6a2;',
+					'&#xe6a0;'
+				],
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
+				showDetailPage:false,
 				currentClassId:-1, 
+				adminuserId:'',
 				currentUserid:'',
+				formAdmin:{
+					isover:0,
+					avatar:'&#xe6a4;'
+				},
 				address:'',
 				showPass:false,
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				companyList:[],
+				adminList:[],
+				groupList:[],
 				hideMenu:false,
 				roleCol:[
 					{
@@ -110,32 +182,28 @@
 				
 				columns:[
 					{
-						title:"单位名称",
-						key:'companyName',
+						title:"管理员名称",
+						key:'adminusername',
 						align:'center',
-						width:240
 					},
 					{
-						title:"负责人账号",
-						key:'username',
+						title:"真实姓名",
+						key:'realname',
 						align:'center'
 						
 					},{
-						title:"用戶总数",
-						key:'totalUserNum',
+						title:"邮箱",
+						key:'adminemail',
 						align:'center'
 						
 					},{
-						title:"到期时间",
-						key:'expirDate',
+						title:"电话",
+						key:'adminmobile',
 						align:'center'
-						
-					},
-					{
-						title:"空间使用量",
-						key:'userSpace',
+					},{
+						title:"所在组",
+						key:'groupname',
 						align:'center'
-						
 					},
 					{
 						title:'操作',
@@ -146,17 +214,14 @@
 
 							return h('div', [
                                
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
+                                h('span', {
+                                  
                                     style: {
-										margin: '2px 5px',
 										border:'none',
-										padding: '3px 7px 2px',
 										fontSize: '12px',
-										borderRadius: '3px'
+										cursor:'pointer',
+										color:'#06C'
+										
                                     },
                                     on: {
                                         click: () => {
@@ -177,45 +242,49 @@
                                         }
                                     }
 								}, '权限设置'),
-								 h('Button', {
+								 h('span', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
                                     },
                                     style: {
-										margin: '2px 5px',
+										margin: '2px 10px',
 										border:'none',
-										background:'#fab82e',
-										color:'#fff',
-										padding: '3px 7px 2px',
 										fontSize: '12px',
-										borderRadius: '3px'
+										cursor:'pointer',
+										color:'#06C'
 
                                     },
                                     on: {
                                         click: () => {
 											var s = this;
 											s.showDetail = true;
-											s.formcompany = params.row;
+											s.formAdmin = params.row;
+											s.adminuserId = params.row.adminuserid;
+											console.log( params.row);
                                         }
                                     }
                                 }, '详情'),
                                 h('Poptip',{
 									props:{
 										confirm:true,
-										title:"确定要删除吗"
+										title:"确定要删除吗？"
 									},
 									on:{
 										'on-ok':()=>{
-											this.delcompany(params.row.companyid);
+											this.delAdmin(params.row.adminuserid);
 										},
 										
 									}
 								},[
-									h('Button', {
+									h('span', {
 										props: {
 											type: 'error',
 											size: 'small'
+										},
+										style:{
+											cursor:'pointer',
+											color:'#06C'
 										},
 										on: {
 											click: () => {
@@ -240,12 +309,15 @@
 				directoryList:{
 
 				},
-				
+				condition:{
+					page_index:0,
+					page_size:10,
+				},
 				userinfo:{}
 			}
 		},
 		components:{
-			Tab
+			Avatar
 		},
 
 		beforeCreate(){
@@ -257,84 +329,169 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
-			this.getCompanyList();
-			
+			this.getAdminList();
 		},
 
 		watch:{
 			
+
+			showDetail(val){
+				if(val){
+					this.showDetailPage = true;
+				}else{
+					setTimeout(() => {
+						this.showDetailPage = false;
+					}, 310);
+				}
+			}
+			
 		},
 		
 		methods:{
-
-
-			addCourse(){
-				this.showDetail = true;
-				this.currentClassId = -1;
-				this.formcompany = {
-				}
+			getAvatar(avatar){
+				this.formAdmin.avatar = avatar;
 			},
-
-
-			refresh(val){
-				this.hideMenu = val;
-			},
-
-			getCompanyList(){
-				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'user/get_userlist/',
+			initPassword(){//初始化密码
+				var {$Message} = this;
+				zmitiUtil.adminAjax({
 					data:{
-						setusertypesign:2//1，个人帐号；2，公司帐号(包含公司管员)；3，系统管理帐号4，超级管理员
+						action:zmitiActions.modifyAdminPassword.action,
+						adminuserid:this.formAdmin.adminuserid,
+						adminpwd:window.config.defaultPass
+					},
+					success(data){
+						$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+						}
+					}
+				});
+			},
+			addAdmin(){
+				this.showDetail = true;
+				this.adminuserId = '';
+				this.formAdmin = {
+					isover:0,
+					avatar:'&#xe6a4;'
+				};
+			},
+
+			delAdmin(adminuserid){
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'delAdmin',
+					data:{
+						action:zmitiActions.delAdmin.action,
+						adminuserid
+					},
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+							s.getAdminList();
+							///s.adminList = data.list;	 
+						}
+					}
+				})
+			},
+
+
+			help(){
+				zmitiUtil.adminAjax({
+					remark:'getAdminList',
+					data:{
+						action:zmitiActions.getAdminList.action,
+						condition:this.condition
 					},
 					success(data){
 						if(data.getret === 0){
-							s.companyList = data.userlist;
+							s.adminList = data.list;	 
+							zmitiUtil.adminAjax({
+								remark:'getGroupList',
+								data:{
+									action:zmitiActions.getGroupList.action,
+									condition:this.condition
+								},
+								success(data){
+									if(data.getret === 0){
+										s.groupList = data.list;	 
+									}
+								}
+							})
 						}
 					}
+				})
+			},
+ 
+			getAdminList(){
+				var s = this;
+				if(typeof window.Promise !== 'function'){
+					this.help();
+					console.log('当前浏览器不支持Promise');
+					return;
+				}
+				var p = new Promise((resolve,reject)=>{
+					zmitiUtil.adminAjax({
+						remark:'getAdminList',
+						data:{
+							action:zmitiActions.getAdminList.action,
+							condition:this.condition
+						},
+						success(data){
+							if(data.getret === 0){
+								s.adminList = data.list;	 
+								resolve();
+							}
+						}
+					})
+				});
+				var p1 = new Promise((resolve,reject)=>{
+					zmitiUtil.adminAjax({
+						remark:'getGroupList',
+						data:{
+							action:zmitiActions.getGroupList.action,
+							condition:this.condition
+						},
+						success(data){
+							if(data.getret === 0){
+								s.groupList = data.list;	 
+								console.log(s.groupList,'groupList')
+								resolve();
+							}
+						}
+					})
+				});
+				Promise.all([p,p1]).then(()=>{
+					s.adminList.map((admin,i)=>{
+						s.groupList.map((group,j)=>{
+							if(admin.groupid == group.id){
+								admin.groupname = group.groupname;
+							}
+						})
+					});
+					s.adminList = s.adminList.concat([]);
 				})
 				 
 				
 			},
 		
-			delcompany(id){
+			 
+			adminAction(){
 				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
+				var action = this.adminuserId ? zmitiActions.editAdminUser.action:zmitiActions.addAdminUser.action;
+				
+				zmitiUtil.adminAjax({
+					remark:this.adminuserId ?　'editAdminUser':'addAdminUser',
 					data:{
-						admintoken:s.userinfo.accesstoken,
-						adminuserid:s.userinfo.userid,
-						id
+						action,
+						info:this.formAdmin
 					},
 					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
-							s.getCompanyList();
+							s.showDetail = false;
+							s.getAdminList();
 						}
-					}
-				})
-			},
-			companyAction(){
-				var s = this;
-				var p = JSON.parse(JSON.stringify(this.formcompany));
-				p.admintoken = s.userinfo.accesstoken;
-				p.adminuserid = s.userinfo.userid;
-				var url = window.config.baseUrl+'/zmitiadmin/addrateditems';
-				if(p.companyid>-1){
-					url = window.config.baseUrl+'/zmitiadmin/updaterateditems';
-					p.id = p.companyid;
-				}else{
-					this.formcompany = {
-					}
-				}
-
-				zmitiUtil.ajax({
-					url,
-					data:p,
-					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
-						//s.showDetail = false;
-						s.getCompanyList();
 					}
 				})
 			},

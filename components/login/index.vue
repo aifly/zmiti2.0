@@ -112,10 +112,8 @@
 					},
 					success(data){
 						s.showLoading = false;
-						if(data.getret === 0){
+						if(data.getret === 0 || data.getret === 100){
 							var param = data;
-							delete param.getret;
-							delete param.getmsg;
 
 							var p = data;
 							p.username =  _this.username;
@@ -130,6 +128,9 @@
 							}
 							
 							_this.$Message.success('登录成功~');
+							if(data.getret == 100){
+
+							}
 							window.location.hash = '#/home';
 							
 							
@@ -137,7 +138,7 @@
 							_this.isLogined = true;
 							
 						}else{
-							_this.toastError(data.getmsg);
+							_this.toastError(data.msg);
 						}
 					}
 				})

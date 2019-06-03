@@ -3,9 +3,13 @@
 		<Tab :title='menuObj.title' :tabs='tabs' :tabIndex='tabIndex'>
 			<div slot='zmiti-tab-menu'>
 				<ul class="symbin-tab-menu">
-					<li :key="i" @click.stop.prevent='tab1(i,tab.children)' v-for='(tab,i) in tabs' :class='{"active":(tabIndex[0] ===i && !tab.children)||(tab.link === $route.name && !tab.children),"level1":tab.children && !tab.status,"open":tab.status }'>
-						<div v-if='!(tab.children && tab.children.length>0)'><router-link :to="tab.link">{{tab.name}}</router-link></div>
-						<div v-if='tab.children && tab.children.length>0'>{{tab.name}}</div>
+					<li :key="i" @click.stop.prevent='tab1(i,tab.children)' v-for='(tab,i) in tabs' :class='{"active": !tab.children && (tab.link === $route.name && !tab.children),"level1":tab.children && !tab.status,"open":tab.status || (tab.children && tab.children.some(child=> child.link === $route.name )) }'>
+						<div v-if='!(tab.children && tab.children.length>0)'>
+							<router-link :to="tab.link">{{tab.name}}</router-link>
+						</div>
+						<div v-if='tab.children && tab.children.length>0'>
+							{{tab.name}}
+						</div>
 						<ol :style='{height:(tab.status?tab.children.length*50:0)+"px"}' v-if='tab.children' >
 							<li :key="k" @click.stop.prevent='tab2(i,k)' :class="{'active':($route.name === child.link)}" v-for='(child,k) in tab.children'>
 								<div v-if='child.link'><router-link :to="child.link">{{child.name}}</router-link></div>
@@ -28,11 +32,8 @@
 	import Vue from 'vue';
 	import menuObj from './menu';
 
-	
-	
-
 	export default {
-		props:['obserable','menus'],
+		props:[],
 		data(){
 			return{
 				tabIndex:[0,-1,-1],
@@ -86,12 +87,23 @@
 		},
 		methods:{
 
+			checkActive(tabs){
+				tabs.forEach((tab)=>{
+					
+					if(tab.children){
+						tab.status = tab.children.some(item=>{
+							return item.link === this.$route.name;
+						})
+					}
+				})
+			},
 			changeGroup(){
 				Object.keys(menuObj).forEach((key,i)=>{
 					key.split('_').forEach((item,j)=>{
 						if(item === this.$route.name){
 							this.menuObj = menuObj[key];
 							this.tabs = menuObj[key].tabs;
+							this.checkActive(this.tabs);
 						}
 					})
 				})

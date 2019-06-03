@@ -182,26 +182,39 @@
 				
 				columns:[
 					{
-						title:"管理员名称",
+						title:"标识号",
 						key:'adminusername',
 						align:'center',
 					},
 					{
-						title:"真实姓名",
+						title:"名称",
 						key:'realname',
 						align:'center'
 						
 					},{
-						title:"邮箱",
+						title:"实际浏览量",
 						key:'adminemail',
 						align:'center'
 						
 					},{
-						title:"电话",
+						title:"加权浏览量",
 						key:'adminmobile',
 						align:'center'
 					},{
-						title:"所在组",
+						title:"权重值",
+						key:'groupname',
+						align:'center'
+					},{
+						title:"appsecret",
+						key:'groupname',
+						align:'center'
+					},
+					{
+						title:"部署时间",
+						key:'groupname',
+						align:'center'
+					},{
+						title:"状态",
 						key:'groupname',
 						align:'center'
 					},

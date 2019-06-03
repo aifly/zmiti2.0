@@ -87,6 +87,7 @@ $primary-color: #00c1de;
 					 @include pos(r);
 					 img{
 						 width: 80px;
+						 vertical-align: middle;
 					 }
 					 span{
 						 @include pos(a);
@@ -127,6 +128,7 @@ $primary-color: #00c1de;
 						 cursor: pointer;
 						 text-align: center;
 						 width: 50px;
+						 
 						 &:hover{
 							 background: #00c1de;
 							 ul{
@@ -135,6 +137,7 @@ $primary-color: #00c1de;
 						 }
 						 @include pos(r);
 						 ul{
+							 cursor: default;
 							display:none;
 							text-align: left;
 							@include pos(a);
@@ -143,7 +146,7 @@ $primary-color: #00c1de;
 							right: 0;
 							top: 50px;
 							background: #252b30;
-							z-index: 1;
+							z-index: 100;
 							li{
 								width: 90%;
 								margin: 0 auto;
@@ -197,6 +200,7 @@ $primary-color: #00c1de;
 				img{
 					@include br();
 					width: 30px;
+					vertical-align: middle;
 				}
 				  
 			 }

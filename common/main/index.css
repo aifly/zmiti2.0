@@ -100,6 +100,7 @@
 
 .layout .ivu-layout-header > div:nth-of-type(1) .zmiti-title img {
   width: 80px;
+  vertical-align: middle;
 }
 
 .layout .ivu-layout-header > div:nth-of-type(1) .zmiti-title span {
@@ -154,6 +155,7 @@
 }
 
 .layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul {
+  cursor: default;
   display: none;
   text-align: left;
   position: absolute;
@@ -162,7 +164,7 @@
   right: 0;
   top: 50px;
   background: #252b30;
-  z-index: 1;
+  z-index: 100;
 }
 
 .layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li {
@@ -221,6 +223,7 @@
 .layout .ivu-layout-header > div.zmiti-user-info img {
   border-radius: 50%;
   width: 30px;
+  vertical-align: middle;
 }
 
 .layout .zmiti-user img {

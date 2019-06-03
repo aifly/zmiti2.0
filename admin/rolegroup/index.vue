@@ -1,83 +1,113 @@
 <template>
-	<div class="zmiti-rolegroup-main-ui">
+	<div class="zmiti-admin-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div>权限组管理</div>
+				<div>管理员管理</div>
 				<div>
-					<Button type="primary" @click="addAdmin">新增权限组</Button>
+					<Button type="primary" @click="addAdmin">新增管理员</Button>
 				</div>
 			</header>
 			<section class='zmiti-list-where'>
-				权限组编号 <input type="text">
+				管理员编号 <input type="text">
 			</section>
-			<div class='zmiti-rolegroup-main zmiti-scroll ' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-rolegroup-table' :class="{'active':showDetail}">
-					<Table  :data='adminGroupList' :columns='columns'></Table>
+			
+			<div class='zmiti-admin-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
+				<div class='zmiti-admin-table' :class="{'active':showDetail}">
+					<Table  :data='adminList' :columns='columns'></Table>
 				</div>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
-		<transition name='company'>
-			<section class='zmiti-add-form zmiti-scroll' v-if='showDetail'>
-				<header class='zmiti-add-header'>
-					<img :src="imgs.back" alt=""  @click='showDetail = false' >
-					<span>添加权限组</span>
-				</header>
-				 <Form class='zmiti-add-form-C' :model="formAdmin" :label-width="80">
-					<FormItem label="用户名：">
-						<Input v-model="formAdmin.adminusername" placeholder="用户名：" />
-					</FormItem>
-					<FormItem label="真实姓名：">
-						<Input v-model="formAdmin.realname" placeholder="真实姓名：" />
-					</FormItem>
-					<FormItem label="密码：" v-if='!adminuserId'>
-						<Input type='password' v-model="formAdmin.adminpwd" placeholder="密码：" />
-					</FormItem>
-					<FormItem label="邮箱：">
-						<Input v-model="formAdmin.adminemail" placeholder="邮箱：" />
-					</FormItem>
-					<FormItem label="电话：">
-						<Input v-model="formAdmin.adminmobile" placeholder="电话：" />
-					</FormItem>
-					<FormItem label="所在组：">
-						<Select v-model="formAdmin.groupid">
-							<Option v-for="item in groupList" :value="item.id" :key="item.id">{{ item.groupname }}</Option>
-						</Select>
-					</FormItem>
-					<FormItem label="状态：">
-						<RadioGroup v-model="formAdmin.isover">
-							<Radio :value='0' :label="0">正常</Radio>
-							<Radio :value='1' :label="1">禁用</Radio>
-							<Radio :value='2' :label="2">删除</Radio>
-						</RadioGroup>
-					</FormItem>
-					
-					<FormItem label="备注：">
-						<Input v-model="formAdmin.admincomment" placeholder="备注：" />
-					</FormItem>
-				</Form>
+			<div class='lt-full' v-show='showDetailPage'>
+				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
+				<transition name='detail'>
+					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
+						<header class='zmiti-add-header'>
+							<img :src="imgs.back" alt=""  @click='showDetail = false' >
+							<span>基础信息</span>
+						</header>
+						<div class='zmiti-admin-avatar' @click="showAvatarModal = true">
+							<span class='zmt_iconfont' v-html='formAdmin.avatar'></span>
+							<label>更换头像</label>
+						</div>
+						<Form class='zmiti-add-form-C' :model="formAdmin" :label-width="80">
+							<FormItem label="用户名：">
+								<Input v-model="formAdmin.adminusername" placeholder="用户名：" />
+							</FormItem>
+							<FormItem label="真实姓名：">
+								<Input v-model="formAdmin.realname" placeholder="真实姓名：" />
+							</FormItem>
+							<FormItem label="密码：" v-if='!adminuserId'>
+								<Input type='password' v-model="formAdmin.adminpwd" placeholder="密码：" />
+							</FormItem>
+
+							
+							<FormItem label="邮箱：">
+								<Input v-model="formAdmin.adminemail" placeholder="邮箱：" />
+							</FormItem>
+							<FormItem label="电话：">
+								<Input v-model="formAdmin.adminmobile" placeholder="电话：" />
+							</FormItem>
+							<FormItem label="所在组：">
+								<Select v-model="formAdmin.groupid">
+									<Option v-for="item in groupList" :value="item.id" :key="item.id">{{ item.groupname }}</Option>
+								</Select>
+							</FormItem>
+							<FormItem label="状态：">
+								<RadioGroup v-model="formAdmin.isover">
+									<Radio :value='0' :label="0">正常</Radio>
+									<Radio :value='1' :label="1">禁用</Radio>
 				
-				<div class='zmiti-add-form-item zmiti-add-btns'>
-					<Button size='large' type='primary' @click='adminAction'>{{adminuserId?'保存':'确定'}}</Button>
-				</div>
-			</section>
-		</transition>
+								</RadioGroup>
+							</FormItem>
+							
+							<FormItem label="备注：">
+								<Input v-model="formAdmin.admincomment" placeholder="备注：" />
+							</FormItem>
+						</Form>
+						
+						<div class='zmiti-add-form-item zmiti-add-btns'>
+							<Button size='large' type='primary' @click='adminAction'>{{adminuserId?'保存':'确定'}}</Button>
+						</div>
+						<template v-if='formAdmin.adminuserid'>
+							<header class='zmiti-add-header zmiti-safe-bar'>
+								<span>安全信息</span>
+							</header>
+							<div class='zmiti-safe-content'>
+								<div>密码初始化</div>
+								<div>点击右侧初始化按钮，系统将会把密码初始化为：123456。首次登录需更新密码</div>
+								<div>
+									<Poptip
+										confirm
+										title="确定要初始化吗?"
+										@on-ok="initPassword"
+										>
+										<span>初始化</span>
+									</Poptip>
+								</div>
+							</div>
+						</template>
+					</section>
+				</transition>
+			</div>
 
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
 		</Modal>
-
-		
+ 
+		<Avatar v-model="showAvatarModal" :avatar='formAdmin.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
+<style lang="scss" scoped>
+	@import './index.scss';
+</style>
 <script>
-	import './index.css';
-	
+
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import zmitiActions from '../../common/action';
-	
+	import Avatar from '../../common/avatar';
+	var zmitiActions = zmitiUtil.adminActions;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -85,26 +115,34 @@
 			return{
 
 				tabIndex:[0,-1],
-
+				showAvatarModal:false,
 				visible:false,
+				avatarList:[
+					'&#xe6a5;',
+					'&#xe6a4;',
+					'&#xe6a3;',
+					'&#xe6a2;',
+					'&#xe6a0;'
+				],
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
-				showDetail:true,
+				showDetail:false,
+				showDetailPage:false,
 				currentClassId:-1, 
 				adminuserId:'',
 				currentUserid:'',
 				formAdmin:{
-					isover:0
+					isover:0,
+					avatar:'&#xe6a4;'
 				},
-				showAvatarModal:true,
 				address:'',
 				showPass:false,
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				companyList:[],
-				adminGroupList:[],
+				adminList:[],
 				groupList:[],
 				hideMenu:false,
 				roleCol:[
@@ -144,29 +182,28 @@
 				
 				columns:[
 					{
-						title:"权限组名称",
-						key:'groupname',
+						title:"管理员名称",
+						key:'adminusername',
 						align:'center',
 					},
 					{
-						title:"组类型",
-						key:'grouptype',
-						align:'center',
-						render:(h,params)=>{
-							return h('div',{},params.row.grouptype === 1 ?'超级管理员':'普通管理员');
-						}
+						title:"真实姓名",
+						key:'realname',
+						align:'center'
 						
 					},{
-						title:"描述",
-						key:'describes',
+						title:"邮箱",
+						key:'adminemail',
+						align:'center'
+						
+					},{
+						title:"电话",
+						key:'adminmobile',
 						align:'center'
 					},{
-						title:"是否为系统管理组",
-						key:'issys',
-						align:'center',
-						render:(h,params)=>{
-							return h('div',{},params.row.issys === 1 ? '是':'否');
-						}
+						title:"所在组",
+						key:'groupname',
+						align:'center'
 					},
 					{
 						title:'操作',
@@ -280,7 +317,7 @@
 			}
 		},
 		components:{
-			
+			Avatar
 		},
 
 		beforeCreate(){
@@ -292,21 +329,50 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
-			this.getGroupList();
-			
+			this.getAdminList();
 		},
 
 		watch:{
 			
+
+			showDetail(val){
+				if(val){
+					this.showDetailPage = true;
+				}else{
+					setTimeout(() => {
+						this.showDetailPage = false;
+					}, 310);
+				}
+			}
+			
 		},
 		
 		methods:{
-
+			getAvatar(avatar){
+				this.formAdmin.avatar = avatar;
+			},
+			initPassword(){//初始化密码
+				var {$Message} = this;
+				zmitiUtil.adminAjax({
+					data:{
+						action:zmitiActions.modifyAdminPassword.action,
+						adminuserid:this.formAdmin.adminuserid,
+						adminpwd:window.config.defaultPass
+					},
+					success(data){
+						$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+						}
+					}
+				});
+			},
 			addAdmin(){
 				this.showDetail = true;
 				this.adminuserId = '';
 				this.formAdmin = {
-					isover:0
+					isover:0,
+					avatar:'&#xe6a4;'
 				};
 			},
 
@@ -315,14 +381,14 @@
 				zmitiUtil.adminAjax({
 					remark:'delAdmin',
 					data:{
-						action:zmitiActions.delAdmin,
+						action:zmitiActions.delAdmin.action,
 						adminuserid
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							
-							s.getGroupList();
+							s.getAdminList();
 							///s.adminList = data.list;	 
 						}
 					}
@@ -330,26 +396,81 @@
 			},
 
 
-	 
- 
-			getGroupList(){
-				var s = this;
-				var {condition} = this;
-				 
+			help(){
 				zmitiUtil.adminAjax({
-					remark:'getGroupList',
+					remark:'getAdminList',
 					data:{
-						action:zmitiActions.getGroupList,
-						condition
-					
+						action:zmitiActions.getAdminList.action,
+						condition:this.condition
 					},
 					success(data){
 						if(data.getret === 0){
-							s.adminGroupList = data.list;	 
+							s.adminList = data.list;	 
+							zmitiUtil.adminAjax({
+								remark:'getGroupList',
+								data:{
+									action:zmitiActions.getGroupList.action,
+									condition:this.condition
+								},
+								success(data){
+									if(data.getret === 0){
+										s.groupList = data.list;	 
+									}
+								}
+							})
 						}
 					}
 				})
-				
+			},
+ 
+			getAdminList(){
+				var s = this;
+				if(typeof window.Promise !== 'function'){
+					this.help();
+					console.log('当前浏览器不支持Promise');
+					return;
+				}
+				var p = new Promise((resolve,reject)=>{
+					zmitiUtil.adminAjax({
+						remark:'getAdminList',
+						data:{
+							action:zmitiActions.getAdminList.action,
+							condition:this.condition
+						},
+						success(data){
+							if(data.getret === 0){
+								s.adminList = data.list;	 
+								resolve();
+							}
+						}
+					})
+				});
+				var p1 = new Promise((resolve,reject)=>{
+					zmitiUtil.adminAjax({
+						remark:'getGroupList',
+						data:{
+							action:zmitiActions.getGroupList.action,
+							condition:this.condition
+						},
+						success(data){
+							if(data.getret === 0){
+								s.groupList = data.list;	 
+								console.log(s.groupList,'groupList')
+								resolve();
+							}
+						}
+					})
+				});
+				Promise.all([p,p1]).then(()=>{
+					s.adminList.map((admin,i)=>{
+						s.groupList.map((group,j)=>{
+							if(admin.groupid == group.id){
+								admin.groupname = group.groupname;
+							}
+						})
+					});
+					s.adminList = s.adminList.concat([]);
+				})
 				 
 				
 			},
@@ -357,8 +478,8 @@
 			 
 			adminAction(){
 				var s = this;
-				var action = this.adminuserId ? zmitiActions.editAdminUser:zmitiActions.addAdminUser;
-				 
+				var action = this.adminuserId ? zmitiActions.editAdminUser.action:zmitiActions.addAdminUser.action;
+				
 				zmitiUtil.adminAjax({
 					remark:this.adminuserId ?　'editAdminUser':'addAdminUser',
 					data:{
@@ -369,7 +490,7 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							s.showDetail = false;
-							s.getGroupList();
+							s.getAdminList();
 						}
 					}
 				})

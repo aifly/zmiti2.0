@@ -34,6 +34,10 @@
 
 <script>
 	import zmitiUtil from '../../common/lib/util';
+
+	var userActions = zmitiUtil.userActions;
+
+	
 	import Vue from 'vue';
 	var json = {};
 	export default {
@@ -93,6 +97,8 @@
 
 
 			this.date = '今日，'+year+'年'+month+'月'+date+'日 '+ day + ' ，欢迎回到智媒体2.0单位控制平台';
+
+			
 
 
 

@@ -8,9 +8,9 @@ import Admin from './admin/admin/index';
 import Pv from './admin/pv/index';
 import Form from './admin/form/index';
 /* import User from './admin/user/index';
-import Company from './admin/company/index';
+import Company from './admin/company/index';*/
 import RoleGroup from './admin/rolegroup/index';
-import SetRole from './admin/setrole/index'; */
+import SetRole from './admin/setrole/index'; 
 import Login from './admin/login/index';
 import Managertype from './admin/managertype/index'
 import iView from 'iview';
@@ -65,8 +65,8 @@ const router = new VueRouter({
 				{ path: '/admin/', name: 'admin', component: Admin},
 				{ path: '/pv/', name: 'pv', component: Pv},
 				{ path: '/form/', name: 'form', component: Form},
-				//{ path: '/rolegroup/', name: 'rolegroup', component: RoleGroup},
-				//{ path: '/setrole/', name: 'setrole', component: SetRole},
+				{ path: '/rolegroup/', name: 'rolegroup', component: RoleGroup},
+				{ path: '/setrole/', name: 'setrole', component: SetRole},
 			]
 		}
 		

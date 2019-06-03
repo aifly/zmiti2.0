@@ -74,6 +74,10 @@ let userActions = {
 		desc:'用户注册',
 		action: '2000004'
 	},//用户注册
+	userCommitWorkOrder:{
+		desc:'用户提交工单',
+		action:"2001000"
+	}
 };
 
 let zmitiActions =  {

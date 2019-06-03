@@ -55,10 +55,24 @@ var admin_rolegroup_setrole_pv_form ={
 	]
 };
 
+let workorder_workorderlist = {
+	title: "工单管理",
+	tabs: [
+		{
+			name: '提交工单',
+			link: 'workorder'
+		},{
+			name:'工单列表',
+			link:'workorderlist'
+		}
+	]
+};
+
 
 var menuObj = {
 	user_company,
-	admin_rolegroup_setrole_pv_form
+	admin_rolegroup_setrole_pv_form,
+	workorder_workorderlist
 };
 
 export default menuObj;

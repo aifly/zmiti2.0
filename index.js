@@ -1,27 +1,16 @@
 import Vue from "vue";
 import Obserable from './common/lib/obserable';
-import Main from './common/main/index';
-import Login from './components/login/index'
-import Home from './components/home/index'
+import Main from './common/main';
+import Login from './components/login'
+import Home from './components/home'
+import WorkOrder from './components/workorder'
+import WorkOrderList from './components/workorderlist'
 
-import TaskManager from './task/taskmgr/index';
-import TaskManagerEdit from './task/taskmgr/edit';
-import TaskManagerUserlist from './task/taskmgr/userlist';
-import TaskMyList from './task/taskmgr/mylist';
-
-import TaskLogin from './task/login/index';
-import TaskHome from './task/home/index';
-import TaskProject from './task/project/index';
-
-import Group from './common/group/index'
-
-import TaskAdminProject from './task/admin/project/index';
-import TaskAdminCompany from './task/admin/company/index';
-import TaskAdminTaskType from './task/admin/tasktype/index';
 import Practice from './task/practice/index'
 
 import Register from './components/register';
 
+import Group from './common/group/index'
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import './components/css/index.css';
@@ -59,66 +48,13 @@ const router = new VueRouter({
       name: "home",
       component: Home,
       props: true
-    },
-    {
-      path: "/tasklogin",
-      name: "tasklogin",
-      component: TaskLogin,
-      props: true
-    },
-    {
-      path: "/taskhome",
-      name: "taskhome",
-      component: TaskHome,
-      props: true
-    },
-    {
-      path: "/taskproject",
-      name: "taskproject",
-      component: TaskProject,
-      props: true
-    },
-    {
-      path: "/taskmgrlist/:id?",
-      name: "taskmgrlist",
-      component: TaskManager,
-      props: true
-    },
-    {
-      path: "/taskmgrmylist",
-      name: "taskmgrmylist",
-      component: TaskMyList,
-      props: true
-    },
-    {
-      path: "/taskmgredit/:id?",
-      name: "taskmgredit",
-      component: TaskManagerEdit,
-      props: true
-    },
-    {
-      path: "/taskmgruserlist",
-      name: "taskmgruserlist",
-      component: TaskManagerUserlist,
-      props: true
-     },
-    {
-      path: "/taskadminproject",
-      name: "taskadminproject",
-      component: TaskAdminProject,
-      props: true
-    },
-    {
-      path: "/taskadmincompany",
-      name: "taskadmincompany",
-      component: TaskAdminCompany,
-      props: true
-    }, {
-      path: "/taskadmintasktype",
-      name: "taskadmintasktype",
-      component: TaskAdminTaskType,
-      props: true
-    },
+	},
+	{
+		path: '/group/', name: 'group', component: Group, props: true, children: [
+			{path: "/workorder",name: "workorder",component: WorkOrder,props: true},
+			{ path: "/workorderlist", name: "workorderlist", component: WorkOrderList,props: true},
+		]
+	},
     {
     	path: "/practice",
       name: "practice",
