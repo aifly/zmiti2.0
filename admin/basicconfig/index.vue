@@ -2,105 +2,16 @@
 	<div class="zmiti-basicconfig-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div>单位管理</div>
+				<div>基础配置</div>
 				<div>
-					<Button type="primary" @click="addAdmin">新增单位</Button>
+					
 				</div>
 			</header>
-			<section class='zmiti-list-where'>
-				单位编号 <input type="text">
-			</section>
-			
-			<div class='zmiti-basicconfig-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<div class='zmiti-basicconfig-table' :class="{'active':showDetail}">
-					<Table  :data='companyList' :columns='columns'></Table>
-				</div>
-			</div>
-			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
-		</div>
-			<div class='lt-full' v-show='showDetailPage'>
-				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
-				<transition name='detail'>
-					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
-						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt=""  @click='showDetail = false' >
-							<span>基础信息</span>
-						</header>
-						<div class='zmiti-basicconfig-avatar' @click="showAvatarModal = true">
-							<span class='zmt_iconfont' v-html='formCompany.logourl'></span>
-							<label>更换头像</label>
-						</div>
-						<Form class='zmiti-add-form-C' :model="formCompany" :label-width="120">
-							<FormItem label="单位名称：">
-								<Input v-model="formCompany.companyname" placeholder="单位名称：" />
-							</FormItem>
-							<FormItem label="单位地址：">
-								<Input v-model="formCompany.companyaddress" placeholder="单位地址：" />
-							</FormItem>
-							<FormItem label="单位编码：">
-								<Input v-model="formCompany.companycode" placeholder="单位编码：" />
-							</FormItem>
-							<FormItem label="单位电话：">
-								<Input v-model="formCompany.companyphone" placeholder="单位电话：" />
-							</FormItem>
-							<FormItem label="开户行：">
-								<Input v-model="formCompany.bank" placeholder="开户行：" />
-							</FormItem>
-							<FormItem label="开户行账号：">
-								<Input v-model="formCompany.bankcode" placeholder="开户行账号：" />
-							</FormItem>
-							<FormItem label="单位合同扫描件：">
-								<Input v-model="formCompany.contract" placeholder="单位合同扫描件：" />
-							</FormItem>
-							<FormItem label="营业执照：">
-								<Input v-model="formCompany.businesslicensepath" placeholder="营业执照：" />
-							</FormItem>
-							<FormItem label="是否系统管理组：">
-								<RadioGroup v-model="formCompany.isover">
-									<Radio :value='0' :label="0">正常使用</Radio>
-									<Radio :value='1' :label="1">禁用</Radio>
-								</RadioGroup>
-							</FormItem>
-							
-							<FormItem label="备注：">
-								<Input v-model="formCompany.comment" placeholder="备注：" />
-							</FormItem>
-							<FormItem label="配置：">
-								<Input v-model="formCompany.config" placeholder="配置：" />
-							</FormItem>
-							
-						</Form>
-						
-						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='adminAction'>{{adminuserId?'保存':'确定'}}</Button>
-						</div>
-						<template v-if='formCompany.adminuserid'>
-							<header class='zmiti-add-header zmiti-safe-bar'>
-								<span>安全信息</span>
-							</header>
-							<div class='zmiti-safe-content'>
-								<div>密码初始化</div>
-								<div>点击右侧初始化按钮，系统将会把密码初始化为：123456。首次登录需更新密码</div>
-								<div>
-									<Poptip
-										confirm
-										title="确定要初始化吗?"
-										@on-ok="initPassword"
-										>
-										<span>初始化</span>
-									</Poptip>
-								</div>
-							</div>
-						</template>
-					</section>
-				</transition>
-			</div>
+			<div style='height:400px;'>
 
-		<Modal title='权限设置' v-model="visible">
-			<Table :data='roleList' :columns='roleCol'></Table>
-		</Modal>
- 
-		<Avatar v-model="showAvatarModal" :avatar='formCompany.avatar' @getAvatar='getAvatar'></Avatar>
+			</div>
+		</div>
+		
 	</div>
 </template>
 
