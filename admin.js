@@ -1,21 +1,23 @@
 import Vue from "vue";
 import './common/directive';
 import Obserable from './common/lib/obserable';
-import Main from './common/main/index';
-import Product from './admin/product/index';
-import Home from './admin/home/index';
-import Admin from './admin/admin/index';
-import Pv from './admin/pv/index';
-import Form from './admin/form/index';
-/* import User from './admin/user/index';
-import Company from './admin/company/index';*/
-import RoleGroup from './admin/rolegroup/index';
-import SetRole from './admin/setrole/index'; 
-import Login from './admin/login/index';
-import Managertype from './admin/managertype/index'
+import Main from './common/main';
+import Product from './admin/product';
+import Home from './admin/home';
+import Admin from './admin/admin';
+import Pv from './admin/pv';
+import Form from './admin/form';
+ import User from './admin/user';
+/*import Company from './admin/company/index';*/
+import RoleGroup from './admin/rolegroup';
+import Basicconfig from './admin/basicconfig';
+import Company from './admin/company';
+import SetRole from './admin/setrole'; 
+import Login from './admin/login';
+import Managertype from './admin/managertype'
 import iView from 'iview';
 import VueRouter from 'vue-router'
-import Group from './common/group/index';
+import Group from './common/group';
 import './admin/css/index.css';
 import './components/css/theme.less'
 ///import 'iview/dist/styles/iview.css';
@@ -60,13 +62,14 @@ const router = new VueRouter({
 		},
 		{
 			path: '/group/', name: 'group', component: Group, props: true, children: [
-				//{ path: '/user/', name: 'user', component: User },
-				//{ path: '/company/', name: 'company', component: Company },
+				{ path: '/user/', name: 'user', component: User },
+				{ path: '/company/', name: 'company', component: Company },
 				{ path: '/admin/', name: 'admin', component: Admin},
 				{ path: '/pv/', name: 'pv', component: Pv},
 				{ path: '/form/', name: 'form', component: Form},
 				{ path: '/rolegroup/', name: 'rolegroup', component: RoleGroup},
 				{ path: '/setrole/', name: 'setrole', component: SetRole},
+				{ path: '/basicconfig/', name: 'basicconfig', component: Basicconfig},
 			]
 		}
 		

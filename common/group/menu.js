@@ -20,9 +20,13 @@ var user_company ={
 	]
 };
 
-var admin_rolegroup_setrole_pv_form ={
+var basicconfig_admin_rolegroup_setrole_pv_form ={
 	title:"系统管理",
 	tabs: [
+		{
+			name: '基础配置',
+			link: 'basicconfig'
+		}, 
 		{
 			name: '管理员管理',
 			link: 'admin'
@@ -71,7 +75,7 @@ let workorder_workorderlist = {
 
 var menuObj = {
 	user_company,
-	admin_rolegroup_setrole_pv_form,
+	basicconfig_admin_rolegroup_setrole_pv_form,
 	workorder_workorderlist
 };
 

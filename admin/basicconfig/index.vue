@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-company-main-ui">
+	<div class="zmiti-basicconfig-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
 				<div>单位管理</div>
@@ -11,8 +11,8 @@
 				单位编号 <input type="text">
 			</section>
 			
-			<div class='zmiti-company-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<div class='zmiti-company-table' :class="{'active':showDetail}">
+			<div class='zmiti-basicconfig-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
+				<div class='zmiti-basicconfig-table' :class="{'active':showDetail}">
 					<Table  :data='companyList' :columns='columns'></Table>
 				</div>
 			</div>
@@ -26,7 +26,7 @@
 							<img :src="imgs.back" alt=""  @click='showDetail = false' >
 							<span>基础信息</span>
 						</header>
-						<div class='zmiti-company-avatar' @click="showAvatarModal = true">
+						<div class='zmiti-basicconfig-avatar' @click="showAvatarModal = true">
 							<span class='zmt_iconfont' v-html='formCompany.logourl'></span>
 							<label>更换头像</label>
 						</div>
@@ -114,6 +114,7 @@
 	import Avatar from '../../common/avatar';
 	var companyActions = zmitiUtil.adminActions;
 	var companyActions = zmitiUtil.companyActions;
+	var basicConfigActions = zmitiUtil.basicConfigActions;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -187,18 +188,23 @@
 				
 				columns:[
 					{
-						title:"单位名称",
-						key:'companyname',
+						title:"用户名",
+						key:'username',
 						align:'center',
 					},
 					{
-						title:"单位地址",
-						key:'companyaddress',
+						title:"姓名",
+						key:'realname',
 						align:'center',
 						width:200
 						
 					},{
-						title:"联系电话",
+						title:"邮箱",
+						key:'companyphone',
+						align:'center'
+						
+					},{
+						title:"手机",
 						key:'companyphone',
 						align:'center'
 						
@@ -246,36 +252,7 @@
 											})
                                         }
                                     }
-								}, '权限'),
-								h('span', {
-                                  
-                                    style: {
-										marginLeft: '10px',
-										border:'none',
-										fontSize: '12px',
-										cursor:'pointer',
-										color:'#06C'
-										
-                                    },
-                                    on: {
-                                        click: () => {
-											
-											this.visible = true;
-											var s = this;
-											this.currentUserid = params.row.userid;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;									
-													console.log(data);
-												}
-											})
-                                        }
-                                    }
-								}, '用户'),
+								}, '所属单位'),
 								 h('span', {
                                     props: {
                                         type: 'primary',

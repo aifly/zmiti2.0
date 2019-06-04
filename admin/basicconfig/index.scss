@@ -1,7 +1,7 @@
 ﻿@import "../css/base.scss";
 
 
-.zmiti-rolegroup-main-ui {
+.zmiti-basicconfig-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
@@ -83,7 +83,7 @@
 	  
     }
 
-    .zmiti-rolegroup-main {
+    .zmiti-basicconfig-main {
       flex: 5;
 	  -webkit-flex: 5;
 	  width: 100%;
@@ -92,7 +92,7 @@
         @include transition(0.3s);
       }
 
-      .zmiti-rolegroup-table {
+      .zmiti-basicconfig-table {
         width: 98%;
         margin: 0 auto;
 
@@ -176,7 +176,7 @@
 	}
 	
 
-	.zmiti-rolegroup-avatar{
+	.zmiti-basicconfig-avatar{
 		background: rgba(51,144,255,.1);
 		@include br();
 		text-align: center;

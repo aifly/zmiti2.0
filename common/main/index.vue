@@ -122,7 +122,7 @@
                 menus:[
 					{
 						name:"用户单位",
-						link:'user',
+						link:'company',
 						icon:'&#xe605;',
 						active:['user','company'] //高亮的路由
 					},{
@@ -144,7 +144,7 @@
 						name:"系统管理",
 						link:'admin',
 						icon:'&#xe60f;',
-						active:'admin_rolegroup_setrole_pv_form'.split('_') 
+						active:'basicconfig_admin_rolegroup_setrole_pv_form'.split('_') 
 					}
 				]
 			}

@@ -97,3 +97,30 @@ header.zmiti-add-header img {
 .ivu-icon-ios-help-circle {
   left: 24px;
 }
+
+.zmiti-action-list .zmiti-action-title {
+  font-size: 14px;
+}
+
+.zmiti-action-list .zmiti-action-content {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+}
+
+.zmiti-action-list .zmiti-action-content > div {
+  margin: 5px;
+  border: 1px solid #ccc;
+  line-height: 16px;
+  height: 24px;
+  padding: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.zmiti-action-list .zmiti-action-content > div.active {
+  color: #f90;
+  border: 1px solid #f90;
+}
