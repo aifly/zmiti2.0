@@ -9,7 +9,7 @@
 		@include pos(a);
 		left: 0;
 		top: 0;
-		z-index: 10;
+		z-index: 14;
 		overflow: hidden;
 
 		@include transition(.2s);
@@ -90,7 +90,7 @@
 	.zmiti-tab-content{
 		@include pos(a);
 		height: 100%;
-		z-index: 12;
+		z-index: 10;
 		right: 0;
 		background: #f2f2f2;
 		
