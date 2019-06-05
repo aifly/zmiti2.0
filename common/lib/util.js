@@ -5,6 +5,7 @@ var zmitiUtil = {
 	userActions: zmitiActions.userActions,
 	adminActions: zmitiActions.adminActions,
 	companyActions: zmitiActions.companyActions,
+	resourceActions: zmitiActions.resourceActions,
 	basicConfigActions: zmitiActions.basicConfigActions,
 	getQueryString: function(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");

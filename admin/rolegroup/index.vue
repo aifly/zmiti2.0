@@ -69,6 +69,8 @@
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
 		</Modal>
+
+		<upload-dialog></upload-dialog>
  
 	</div>
 </template>
@@ -80,10 +82,12 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
+	import UploadDialog from '../../common/modal';
 	var zmitiActions = zmitiUtil.adminActions;
 	var userActions =  zmitiUtil.userActions;
 	var companyActions = zmitiUtil.companyActions;
 	var basicConfigActions = zmitiUtil.basicConfigActions;
+	var resourceActions = zmitiUtil.resourceActions;
 	var	actions = [
 		{
 			name:'基础配置模块',
@@ -98,6 +102,9 @@
 		},{
 			name:'用户端模块',
 			actions:Object.values(userActions)
+		},{
+			name:'资源模块',
+			actions:Object.values(resourceActions)
 		}
 	];
 	export default {
@@ -346,6 +353,7 @@
 			}
 		},
 		components:{
+			'upload-dialog':UploadDialog
 		},
 
 		beforeCreate(){

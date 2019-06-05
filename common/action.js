@@ -137,6 +137,7 @@ let userActions = {
 	}
 };
 
+//基础配置
 let basicConfigActions = {
 	getBasicConfig:{
 		action:'1000210',
@@ -148,8 +149,48 @@ let basicConfigActions = {
 	}
 };
 
+//通用接口
+let resourceActions = {
+	getResourceCateList:{
+		desc:'获取资源分类',
+		action:'1001300'
+	},
+	addResourceCate:{
+		desc:'添加资源分类',
+		action:'1001301'
+	},
+	editReourceCate:{
+		desc:'编辑资源分类',
+		action:'1001302'
+	},
+	delResourceCate:{
+		desc:'删除资源分类',
+		action:'1001303'
+	},
+	getResourceList:{
+		desc:'获取资源文件列表',
+		action:'1001310'
+	},
+	editResource:{
+		desc:'编辑资源文件',
+		action:'1001312'
+	},
+	delResource:{
+		desc:'删除资源文件',
+		action:'1001313'
+	},
+	basicUpdload:{
+		desc:"基础上传",
+		action:'/index/upload/upload_file'
+	}
+
+};
+
+
+
 let zmitiActions =  {
 	userActions,
+	resourceActions,
 	adminActions,
 	companyActions,
 	basicConfigActions

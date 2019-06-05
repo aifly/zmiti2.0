@@ -1,5 +1,8 @@
 @import "../../components/css/base.scss";
 
+li{
+	list-style: none;
+}
 .zmiti-modal-main {
     @include displayFlex(row);
 
@@ -13,6 +16,7 @@
         border-right: 1px solid #ddd;
 
         li {
+
             padding-left: 30px;
             height: 40px;
             line-height: 40px;

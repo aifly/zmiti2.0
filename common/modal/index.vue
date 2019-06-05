@@ -100,8 +100,19 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../lib/util';
 	import IScroll from 'iscroll';
+	var resourceActions = zmitiUtil.resourceActions;
     export default {
-		props:['obserable','type','onFinish'],//type 当前对话框的资源分类。0，图片1，音频2，视频3，VR视频
+		props:{
+			type:{//type 当前对话框的资源分类。0，图片1，音频2，视频3，VR视频
+				type:Number,
+				default:0
+			},
+			onFinish:{
+				type:Function,
+				default:()=>{}
+			},
+			
+		},
 		name:'zmitiindex',
 		data(){
 			return{
@@ -116,6 +127,12 @@
 				cateName:'',
 				cateIndex:-1,
 				currentImgId:"",
+				condition:{
+					page_index:0,
+					page_size:10,
+					classname:'',
+					classtype:-1,
+				},
 				showAddCateModal:false
 
 			}
@@ -129,7 +146,7 @@
 			
 		},
 		mounted(){
-			 this.userinfo = zmitiUtil.getUserInfo();
+			 this.userinfo = zmitiUtil.getAdminUserInfo();
 			 this.getCateList();
 
 			 this.cateScroll = new IScroll(this.$refs['classis'],{
@@ -264,13 +281,16 @@
 			},
 			getCateList(){
 				var self = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+"datainfoclass/get_datainfo",
+				zmitiUtil.adminAjax({
+					remark:"getResourceCateList",
 					data:{
-						setdatainfotype: self.type || 0,
-						setdatainfoclassid:self.defaultIds[self.current]
+						action:resourceActions.getResourceCateList.action,
+						condition:self.condition
 					},
 					success(data){
+						
+						console.log(data,'getResourceCateList');
+						return;
 						if(data.getret === 0){
 							self.cateList = data.dataInfo;
 							
