@@ -78,6 +78,7 @@ var zmitiUtil = {
 				}, 10);
 			}
 			window.location.hash = 'login';
+			window.location.reload();
 			
 		});
 	},
@@ -103,7 +104,7 @@ var zmitiUtil = {
 			if (dt.getret === 0){
 				
 			}
-			else if(dt.getret === 9997){
+			else if (dt.getret === 9997 || dt.getret === 9996){
 				window.localStorage[option.isAdmin ? 'adminlogin' : 'login'] = '';
 				if (option.isAdmin) {
 					adminErrorFn && adminErrorFn();

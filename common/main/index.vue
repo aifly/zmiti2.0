@@ -56,7 +56,7 @@
                </div>
             </Header>
             <Layout class="zmiti-main-layout" :style='{height:(viewH - 50)+"px"}'>
-                <div class="zmiti-tab-C" :style='{height:(viewH - 50)+"px"}'>
+                <div class="zmiti-tab-C" :class="{'active':showMenu}" :style='{height:(viewH - 50)+"px"}' @mouseover='mouseover' @mouseout="mouseout">
                    <div>
                        <ul>
                            <li class='zmiti-menu-title' v-if='!isAdmin'>
@@ -71,7 +71,7 @@
                                 </div>
                            </li>
                            <template v-if='isAdmin'>
-                                <li  class='zmiti-menu-item' :class="{'active':menu.active.some(ar=>ar === $route.name)}" v-for="(menu,i) in menus" :key='i'>
+                                <li @click='mouseout'  class='zmiti-menu-item' :class="{'active':menu.active.some(ar=>ar === $route.name)}" v-for="(menu,i) in menus" :key='i'>
 									
                                     <div><router-link :to="menu.link"><span class='zmt_iconfont' v-html='menu.icon'></span></router-link> </div>
                                     <div><router-link :to="menu.link">{{menu.name}}</router-link></div>
@@ -109,6 +109,7 @@
 		data(){
 			return{
 				imgs:window.imgs,
+				showMenu:false,
                 viewH:document.documentElement.clientHeight,
                 tabIndex:0,
                 userinfo:{},
@@ -182,6 +183,12 @@
             }
         },
 		methods:{
+			mouseout(){
+				this.showMenu = false;
+			},
+			mouseover(){
+				this.showMenu = true;
+			},
             logout(){
                 var s = this;
                 

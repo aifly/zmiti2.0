@@ -3,10 +3,11 @@
 .zmiti-basicconfig-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
-  height: 100%;
+  height: 99%;
   width: 99%;
   @include pos(r);
   margin:0 auto;
+  @include displayFlex(row);
 
 	
 	input{
@@ -22,8 +23,6 @@
     flex: 2;
     -webkit-flex: 2;
 	@include pos(r);
-
-
 	.zmiti-thumb-list{
 		&>div{
 			@include displayFlex(row);
@@ -53,7 +52,7 @@
       height: 100%;
       left: 0;
       top: 0;
-      box-shadow: 0 0 0 1px #ccc;
+     border:1px solid #ccc;
     }
 
     .zmiti-add-form-close {
