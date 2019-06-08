@@ -1,4 +1,5 @@
 var path = require('path');
+const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
 //const HtmlWebpackPlugin = require('html-webpack-plugin');
 var port = 8000;
 //const VueLoaderPlugin = require('vue-loader/lib/plugin')
@@ -92,6 +93,7 @@ module.exports = {
 
     // 插件
     plugins: [
+    		new WebpackDeepScopeAnalysisPlugin(),
         ///new VueLoaderPlugin(),
 
         /*new HtmlWebpackPlugin({

@@ -1,4 +1,4 @@
-{
+    {
   "name": "hotwords2019",
   "version": "1.0.0",
   "description": "",
@@ -65,6 +65,7 @@
     "vuex": "^3.1.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
+    "webpack-deep-scope-plugin": "^1.6.1",
     "webpack-dev-server": "^3.1.14"
   }
 }

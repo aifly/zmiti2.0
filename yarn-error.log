@@ -1,5 +1,5 @@
 Arguments: 
-  D:\Program Files\nodejs\node.exe C:\Users\fly\AppData\Roaming\npm\node_modules\.yarn_npminstall\node_modules\.1.15.2@yarn\bin\yarn.js
+  D:\Program Files\nodejs\node.exe C:\Users\fly\AppData\Roaming\npm\node_modules\.yarn_npminstall\node_modules\.1.15.2@yarn\bin\yarn.js add webpack-deep-scope-plugin -D
 
 PATH: 
   C:\Users\fly\bin;D:\Git\mingw64\bin;D:\Git\usr\local\bin;D:\Git\usr\bin;D:\Git\usr\bin;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\fly\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files\TortoiseSVN\bin;D:\python3.6.1;D:\Git\cmd;D:\Program Files\nodejs;D:\Ruby23-x64\bin;D:\python3.6.1\Scripts;C:\Users\fly\AppData\Local\GitHubDesktop\bin;C:\Program Files\nodejs;D:\pycharm\PyCharm 2018.3\bin;D:\Anaconda3;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\fly\AppData\Roaming\npm;D:\Git\usr\bin\vendor_perl;D:\Git\usr\bin\core_perl
@@ -14,8 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: connect ETIMEDOUT 104.16.20.35:443
-      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1117:14)
+  Error: EPERM: operation not permitted, mkdir 'E:\project2019\zmiti2.0\node_modules\postcss-modules-local-by-default\node_modules\chalk\node_modules'
 
 npm manifest: 
   {
@@ -82,6 +81,7 @@ npm manifest:
       "vue": "^2.6.6",
       "vue-loader": "^14.2.2",
       "vue-template-compiler": "^2.6.6",
+      "vuex": "^3.1.1",
       "webpack": "^4.29.6",
       "webpack-cli": "^3.3.0",
       "webpack-dev-server": "^3.1.14"
@@ -8418,6 +8418,10 @@ Lockfile:
   vue@^2.6.6:
     version "2.6.10"
     resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
+  
+  vuex@^3.1.1:
+    version "3.1.1"
+    resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.1.tgz#0c264bfe30cdbccf96ab9db3177d211828a5910e"
   
   watchpack@^1.5.0:
     version "1.6.0"
