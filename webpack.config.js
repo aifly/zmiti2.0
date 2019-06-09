@@ -2,6 +2,7 @@ var path = require('path');
 const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
 //const HtmlWebpackPlugin = require('html-webpack-plugin');
 var port = 8000;
+var webpack = require('webpack');
 //const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
 	// 定义模块引用的绝对路径前缀
@@ -34,18 +35,8 @@ module.exports = {
 			//'@': resolve('src'),
 		}
 	},
-	performance: {
+	 
 
-		hints: "warning", // 枚举
-		maxAssetSize: 30000000, // 整数类型（以字节为单位）
-		maxEntrypointSize: 50000000, // 整数类型（以字节为单位）
-		assetFilter: function (assetFilename) {
-			// 提供资源文件名的断言函数
-			return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
-
-		}
-
-	},
 
 	// 模块加载配置
 	module: {
@@ -105,7 +96,8 @@ module.exports = {
 
 	// 插件
 	plugins: [
-		new WebpackDeepScopeAnalysisPlugin(),
+		///new WebpackDeepScopeAnalysisPlugin(),
+		
 		///new VueLoaderPlugin(),
 
         /*new HtmlWebpackPlugin({

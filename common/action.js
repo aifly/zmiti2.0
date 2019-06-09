@@ -1,6 +1,5 @@
 
-
-
+import Vue from 'vue';
 let adminActions = {
 	//管理员模块
 	adminlogin: {
@@ -242,7 +241,6 @@ var zmitiActions =  {
 	companyActions,
 	basicConfigActions
 }
-
 
 export  default zmitiActions;
 

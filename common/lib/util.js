@@ -1,6 +1,4 @@
 import zmitiActions from '../action.js';
-
-
 var zmitiUtil = {
 	userActions: zmitiActions.userActions,
 	adminActions: zmitiActions.adminActions,
