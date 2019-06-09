@@ -7,9 +7,9 @@
 					
 				</div>
 			</header>
-			<div :style="{height:viewH - 130+'px',width:'98%',overflow:'auto'}" class='zmiti-scroll'>
+			<div :style="{height:viewH - 155+'px',width:'99%',overflow:'auto',margin:'6px auto 0'}" class='zmiti-scroll'>
 				<h2 style="height:50px;"></h2>
-				<Form class='' :model="formBasicConfig" :label-width="150">
+				<Form class='' :model="formBasicConfig" :label-width="150" style="width:90%;margin:0 auto;">
 					<FormItem label="是否OSS上传：">
 						<RadioGroup v-model="formBasicConfig.is_oss_upload">
 							<Radio :value='1' :label="1">OSS上传</Radio>

@@ -10,34 +10,50 @@
 			<header class='zmiti-workorder-header-bar'>
 				咨询类工单问题
 			</header>
-			<ul v-if='formWorkOrder.setworkordertype <= -1'>
-				<li v-for='(type ,i) of workOrderType' :key="i">
-					<div class='zmiti-workerorder-type-top'>
-						<div>{{type.type}}</div>
-						<div><Button @click="formWorkOrder.setworkordertype = i">提问</Button></div>
-					</div>
-					<div>
-						{{type.desc}}
-					</div>
-				</li>
-			</ul>
-			<Form :rules="ruleValidate"  style="padding-top:20px" v-else class='zmiti-add-form-C' :model="formWorkOrder" :label-width="100">
-				<FormItem label="问题描述：" prop='setcontent'>
-					<Input :rows="4"  type='textarea' v-model="formWorkOrder.setcontent" placeholder="问题描述：" />
+			<template v-if='formWorkOrder.workordertype <= -1 && !formWorkOrder.productid'>
+				<ul >
+					<li v-for='(type ,i) of workOrderType' :key="i">
+						<div class='zmiti-workerorder-type-top'>
+							<div>{{type.type}}</div>
+							<div><Button @click="formWorkOrder.workordertype = i">提问</Button></div>
+						</div>
+						<div>
+							{{type.desc}}
+						</div>
+					</li>
+				</ul>
+				<header class='zmiti-workorder-header-bar' style='margin-top:30px;'>
+					产品类型工单问题
+				</header>
+				<ul>
+					<li v-for='(type ,i) of productionList' :key="i" style="background:#eee">
+						<div class='zmiti-workerorder-type-top zmiti-workerorder-type-top1'>
+							<div style='margin-right:30px;'>{{type.productname}}</div>
+							<div><Button @click="chooseOrderType(type)">提问</Button></div>
+						</div>
+						<div>
+							{{type.desc}}
+						</div>
+					</li>
+				</ul>
+			</template>
+			<Form :rules="ruleValidate"  style="padding-top:20px;width:90%;margin:0 auto;" v-else class='zmiti-add-form-C' :model="formWorkOrder" :label-width="100">
+				<FormItem label="问题描述：" prop='content'>
+					<Input :rows="4"  type='textarea' v-model="formWorkOrder.content" placeholder="问题描述：" />
 				</FormItem>
-				<FormItem label="手机号：" prop='setusermobile'>
-					<Input v-model="formWorkOrder.setusermobile" placeholder="手机号：" />
+				<FormItem label="手机号：" prop='usermobile'>
+					<Input v-model="formWorkOrder.usermobile" placeholder="手机号：" />
 				</FormItem>
 				
 				<FormItem  label="接收短信时间：">
-					 <RadioGroup v-model="formWorkOrder.setsmstime">
+					 <RadioGroup v-model="formWorkOrder.smstime">
 						<Radio :label="0">任意时间</Radio>
 						<Radio :label="1">每天9点~18点</Radio>
 						<Radio :label="2">从不接收</Radio>
 					</RadioGroup>
 				</FormItem>
-				<FormItem label="邮箱：" prop='setuseremail'>
-					<Input v-model="formWorkOrder.setuseremail" placeholder="邮箱：" />
+				<FormItem label="邮箱：" prop='useremail'>
+					<Input v-model="formWorkOrder.useremail" placeholder="邮箱：" />
 				</FormItem>
 				<FormItem  label="附件上传：">
 					 <Button icon='md-cloud-upload'>上传</Button>
@@ -67,9 +83,11 @@
 		data(){
 			return{
 
+				productionList:[],
 				formWorkOrder:{
-					setworkordertype:-1,
-					setsmstime:2
+					workordertype:-1,
+					smstime:2,
+				 	productid:'',
 				},
 
 				imgs:window.imgs,
@@ -78,10 +96,10 @@
 					avatar:window.imgs.zmiti1
 				},
 				ruleValidate: {
-					setcontent: [
+					content: [
 						{ required: true, message: '问题描述不能为空', trigger: 'blur' }
 					],
-					setusermobile:[
+					usermobile:[
 						{ required: true, message: '手机号不能为空', trigger: 'blur' }
 					]
 				},
@@ -121,17 +139,8 @@
 		},
 		mounted(){
 			
-			this.userinfo = zmitiUtil.getUserInfo();
-			var week = ['日','一','二','三','四','五','六'];
-			var D = new Date();
-			var year = D.getFullYear();
-			var month = D.getMonth()+1;
-			var date = D.getDate();
-			var day = "星期"+week[D.getDay()]
-
-
-
-			this.date = '今日，'+year+'年'+month+'月'+date+'日 '+ day + ' ，欢迎回到智媒体2.0单位控制平台';
+			
+			this.getProductList();
 
 			
 
@@ -140,8 +149,24 @@
 		},
 		
 		methods:{
+			chooseOrderType(type){
+				
+				this.formWorkOrder.productid = type.productid
+				console.log(this.formWorkOrder,'this.formWorkOrder')
+			},
+			getProductList(){
+				zmitiUtil.getProductList((data)=>{
+					if(data.getret  === 0){
+						this.productionList = data.list;
+					}
+				})
+			},
 
 			submitWorkOrder(){//提交工单
+				if(this.formWorkOrder.workordertype === -1){
+					delete this.formWorkOrder.workordertype;
+				}
+				var {$Message} = this;
 				zmitiUtil.ajax({
 					remark:'userCommitWorkOrder',
 					data:{
@@ -149,6 +174,7 @@
 						info:this.formWorkOrder
 					},
 					success(data){
+						$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						console.log(data,'data');
 					}
 				});

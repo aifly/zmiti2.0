@@ -14,7 +14,8 @@ import Basicconfig from './admin/basicconfig';
 import Company from './admin/company';
 import SetRole from './admin/setrole'; 
 import Login from './admin/login';
-import Managertype from './admin/managertype'
+import WorkOrder from './admin/workorder';
+import WorkOrderList from './admin/workorderlist';
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import Group from './common/group';
@@ -54,12 +55,8 @@ const router = new VueRouter({
 			name: 'login',
 			component: Login,
 			props: true
-		}, {
-			path: "/managertype",
-			name: "managertype",
-			component: Managertype,
-			props: true
-		},
+		}, { path: '/workorderlist/:id?', name: 'workorderlist', component: WorkOrderList },
+		{ path: '/workorder/', name: 'workorder', component: WorkOrder },
 		{
 			path: '/group/', name: 'group', component: Group, props: true, children: [
 				{ path: '/user/', name: 'user', component: User },
@@ -70,6 +67,7 @@ const router = new VueRouter({
 				{ path: '/rolegroup/', name: 'rolegroup', component: RoleGroup},
 				{ path: '/setrole/', name: 'setrole', component: SetRole},
 				{ path: '/basicconfig/', name: 'basicconfig', component: Basicconfig},
+				
 			]
 		}
 		

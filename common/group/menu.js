@@ -3,17 +3,17 @@ var user_company ={
 	tabs:[
 		{
 			name: '用户单位',
-			link: '',
+			link: '/',
 			status: true,
 			children: [
 				{
 					name: '用户管理',
-					link: 'user'
+					link: '/user'
 
 				},
 				{
 					name: '单位管理',
-					link: 'company'
+					link: '/company'
 				}
 			]
 		}
@@ -25,34 +25,34 @@ var basicconfig_admin_rolegroup_setrole_pv_form ={
 	tabs: [
 		{
 			name: '基础配置',
-			link: 'basicconfig'
+			link: '/basicconfig'
 		}, 
 		{
 			name: '管理员管理',
-			link: 'admin'
+			link: '/admin'
 		}, {
 			name: '权限管理',
-			link: 'role',
+			link: '/role',
 			children: [
 				{
 					name: '权限组管理',
-					link: 'rolegroup'
+					link: '/rolegroup'
 				}, {
 					name: '权限分配',
-					link: 'setrole'
+					link: '/setrole'
 				}
 			]
 		},{
 			name:"简易统计",
-			link:'',
+			link:'/',
 			children:[
 				{
 					name:'浏览量统计',
-					link:'pv'
+					link:'/pv'
 				},
 				{
 					name:'简易表单',
-					link:'form'
+					link:'/form'
 				}
 			]	
 		}
@@ -64,10 +64,10 @@ let workorder_workorderlist = {
 	tabs: [
 		{
 			name: '提交工单',
-			link: 'workorder'
+			link: '/workorder'
 		},{
 			name:'工单列表',
-			link:'workorderlist'
+			link:'/workorderlist'
 		}
 	]
 };

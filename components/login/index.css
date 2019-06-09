@@ -49,52 +49,6 @@
   }
 }
 
-.lt-full {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.zmiti-text-overflow {
-  overflow: hidden;
-  white-space: nowrap;
-  word-break: break-all;
-  text-overflow: ellipsis;
-  -webkit-text-overflow: ellipsis;
-}
-
-.zmiti-play {
-  width: .8rem;
-  height: .8rem;
-  border-radius: 50%;
-  position: fixed;
-  z-index: 1000;
-  right: .5rem;
-  top: .5rem;
-}
-
-.zmiti-play.rotate {
-  -webkit-animation: rotate 5s linear infinite;
-  animation: rotate 5s linear infinite;
-}
-
-.symbin-left {
-  float: left !important;
-}
-
-.symbin-right {
-  float: right !important;
-}
-
-@-webkit-keyframes rotate {
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
 .zmiti-login-ui {
   display: flex;
   display: -webkit-flex;
@@ -167,6 +121,20 @@
   margin-left: 5%;
   line-height: 40px;
   text-align: right;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form > div.zmiti-remember-pass a {
+  color: #333;
+  text-decoration: underline;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form > div.zmiti-remember-pass label {
+  display: block;
 }
 
 .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form > div.zmiti-login-btn {

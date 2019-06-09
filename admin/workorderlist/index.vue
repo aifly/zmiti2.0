@@ -1,26 +1,28 @@
 <template>
-	<div class="zmiti-admin-main-ui">
+	<div class="zmiti-workorder-main-ui">
 		<div class="zmiti-list-main">
-			<template  v-if='!$route.params.id'>
+			<section v-if='!$route.params.id'>
 				<header class="zmiti-tab-header">
-					<div>工单列表</div>
+					<div>工单管理</div>
 					<div>
 					</div>
 				</header>
 				<section class='zmiti-list-where'>
-						工单编号 <input type="text">
-					</section>
-					
-					<div class='zmiti-admin-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-						<div class='zmiti-admin-table' :class="{'active':showDetail}">
-							<Table  :data='dataSource' :columns='columns'></Table>
-						</div>
+					工单编号 <input type="text">
+				</section>
+				
+				<div class='zmiti-workorder-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
+					<div class='zmiti-workorder-table' :class="{'active':showDetail}">
+						<Table  :data='dataSource' :columns='columns'></Table>
 					</div>
-			</template>
+				</div>
+
+			</section>
 			<section v-else style='width:100%;position:relative;z-index:1;'>
-				<WorkOrderDetail ></WorkOrderDetail>
+				<WorkOrderDetail :isAdmin='true'></WorkOrderDetail>
 			</section>
 		</div>
+		 
 	</div>
 </template>
 
@@ -33,7 +35,8 @@
 	import zmitiUtil from '../../common/lib/util';
 	import WorkOrderDetail from '../../common/workorderdetail';
 	import {orderStatus,workOrderType} from '../../common/config';
-	var userActions = zmitiUtil.userActions;
+	var adminActions = zmitiUtil.adminActions;
+	
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -42,61 +45,15 @@
 
 				tabIndex:[0,-1],
 				showAvatarModal:false,
-				visible:false,
-				avatarList:[
-					'&#xe6a5;',
-					'&#xe6a4;',
-					'&#xe6a3;',
-					'&#xe6a2;',
-					'&#xe6a0;'
-				],
-				roleList:[],
+				
 				imgs:window.imgs,
-				isLoading:false,
 				showDetail:false,
-				showDetailPage:false,
-				workOrderDetail:{
-
-				},
-				formWorkOrder:{
-					isover:0,
-					avatar:'&#xe6a4;'
-				},
-				address:'',
-				showPass:false,
-				showMap:false,
+ 
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				dataSource:[],
-				productionList:[],
-				hideMenu:false,
-				roleCol:[
-					{
-						title:"产品名称",
-						key:'productname',
-						align:'center',
-					},
-					{
-						title:"访问权限",
-						key:'role',
-						align:'center',
-						render:(h,params)=>{
-							console.log(params.row)
-							return h('Checkbox',{
-								props:{
-									checked:true,
-									value:params.row.authstatus === 1
-								},
-								on:{
-									'on-change':(e)=>{
-										var s = this;
-										 
-									}
-								}
-							},'访问权限')
-						}
-					}
-				],
+				groupList:[],
+			 
 				
 				columns:[
 					{
@@ -164,8 +121,8 @@
 											
                                         }
                                     }
-                                }, '查看'),
-                                h('Poptip',{
+                                }, '查看')
+                               /*  h('Poptip',{
 									props:{
 										confirm:true,
 										title:"确定要删除吗？"
@@ -188,18 +145,20 @@
 										},
 										on: {
 											click: () => {
+												
 											}
 										}
 									}, '删除')
-								])
+								]) */
                             ]);
 							
 							 
 						}
 					}
 				],
-			 
-			
+				directoryList:{
+
+				},
 				condition:{
 					page_index:0,
 					page_size:10,
@@ -219,11 +178,13 @@
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getUserInfo();
+			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getDataList();
 		},
 
 		watch:{
+			
+
 			showDetail(val){
 				if(val){
 					this.showDetailPage = true;
@@ -233,54 +194,52 @@
 					}, 310);
 				}
 			}
+			
 		},
 		
 		methods:{
-			
 			formatDate:zmitiUtil.formatDate,
 			getAvatar(avatar){
-				this.formWorkOrder.avatar = avatar;
+				this.formCompany.avatar = avatar;
 			},
-			 
-			add(){
+			initPassword(){//初始化密码
+				var {$Message} = this;
+				zmitiUtil.adminAjax({
+					data:{
+						action:companyActions.modifyAdminPassword.action,
+						adminuserid:this.formCompany.adminuserid,
+						adminpwd:window.config.defaultPass
+					},
+					success(data){
+						$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+						}
+					}
+				});
+			},
+			addAdmin(){
 				this.showDetail = true;
 				this.adminuserId = '';
-				this.formWorkOrder = {
+				this.formCompany = {
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
 			},
-			delete(workorderid){
-				var s = this;
-				zmitiUtil.ajax({
-					remark:'delWorkOrder',
-					data:{
-						action:userActions.delWorkOrder.action,
-						info:{
-							workorderid
-						}
-					},
-					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							
-							s.getDataList();
-							///s.dataSource = data.list;	 
-						}
-					}
-				})
-			},
+
+			
 			getDataList(){
 				var s = this;
 				if(typeof window.Promise !== 'function'){
 					console.log('当前浏览器不支持Promise');
 					return;
 				}
+				
 				var p = new Promise((resolve,reject)=>{
-					zmitiUtil.ajax({
+					zmitiUtil.adminAjax({
 						remark:'getUserWorkOrderList',
 						data:{
-							action:userActions.getUserWorkOrderList.action,
+							action:adminActions.getUserWorkOrderList.action,
 							condition:this.condition
 						},
 						success(data){
@@ -291,16 +250,19 @@
 						}
 					})
 				});
-			},
-			action(){
+ 			},
+		
+			 
+			adminAction(){
 				var s = this;
-				var action = this.adminuserId ? zmitiActions.editAdminUser.action:zmitiActions.addAdminUser.action;
+				var id = this.formCompany.companyid;
+				var action =  id ? companyActions.editCompany.action:companyActions.addCompany.action;
 				
-				zmitiUtil.ajax({
-					remark:this.adminuserId ?　'editAdminUser':'addAdminUser',
+				zmitiUtil.adminAjax({
+					remark:id ?　'editAdminUser':'addAdminUser',
 					data:{
 						action,
-						info:this.formWorkOrder
+						info:this.formCompany
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);

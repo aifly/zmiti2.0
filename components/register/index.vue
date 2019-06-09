@@ -17,24 +17,24 @@
 							<span class='zmt_iconfont' v-html='formUser.avatar'></span>
 							<label>更换头像</label>
 						</div>
-						<Form class='zmiti-add-form-C' :model="formUser" :label-width="80">
-							<FormItem label="用户名：">
+						<Form class='zmiti-add-form-C' :rules="ruleValidate" :model="formUser" :label-width="100">
+							<FormItem label="用户名：" prop='username'>
 								<Input v-model="formUser.username" placeholder="用户名：" />
 							</FormItem>
-							<FormItem label="真实姓名：">
+							<FormItem label="真实姓名：" prop='realname'>
 								<Input v-model="formUser.realname" placeholder="真实姓名：" />
 							</FormItem>
-							<FormItem label="密码：">
+							<FormItem label="密码：" prop='password'>
 								<Input type='password' v-model="formUser.password" placeholder="密码：" />
 							</FormItem>
 							<FormItem label="确认密码：" v-if='false'>
 								<Input type='password' v-model="formUser.repassword" placeholder="确认密码：" />
 							</FormItem>
-							<FormItem label="邮箱：">
+							<FormItem label="邮箱：" prop='useremail'>
 								<Input v-model="formUser.useremail" placeholder="邮箱：" />
 							</FormItem>
-							<FormItem label="电话：">
-								<Input v-model="formUser.usermobile" placeholder="电话：" />
+							<FormItem label="手机号：" prop='usermobile'>
+								<Input v-model="formUser.usermobile" placeholder="手机号：" />
 							</FormItem>
 						</Form>
 						
@@ -93,6 +93,24 @@
 					avatar:'&#xe6a4;'
 				},
 
+				ruleValidate:{
+					username: [
+                        { required: true, message: '用户名不能为空', trigger: 'blur' }
+					],
+					realname: [
+                        { required: true, message: '真实姓名不能为空', trigger: 'blur' }
+					],
+					password: [
+                        { required: true, message: '密码不能为空', trigger: 'blur' }
+					],
+					useremail: [
+                        { required: true, message: '邮箱不能为空', trigger: 'blur' }
+					],
+					usermobile: [
+                        { required: true, message: '手机号不能为空', trigger: 'blur' }
+                    ],
+				},
+
 				viewH:document.documentElement.clientHeight
 			}
 		},
@@ -113,10 +131,7 @@
 			 
 			},
 			toastError(msg =  '用户名不能为空',type='userError'){
-				this[type] = msg;
-				setTimeout(() => {
-					this[type] = '';
-				}, 2000);
+				this.$Message.error(msg);
 			},
 			reg(){
 				var _this = this;
@@ -125,23 +140,28 @@
 					this.toastError();
  					return;
 				}
+				
 				if(!this.formUser.password){
 					this.toastError('密码不能为空','passError');
  					return;
 				}
-				if(!this.formUser.repassword){
+				/* if(!this.formUser.repassword){
 					this.toastError('确认密码不能为空','repassError');
  					return;
 				}
 				if(this.formUser.repassword !==this.formUser.password) {
 					this.toastError('两次密码输入不一致','repassError');
  					return;
+				} */
+				if(!this.formUser.useremail){
+					this.toastError('邮箱不能为空','usernameError');
+ 					return;
 				}
 				if(!this.formUser.realname){
 					this.toastError('姓名不能为空','usernameError');
  					return;
 				}
-				if(!this.formUser.useremail){
+				if(!this.formUser.usermobile){
 					this.toastError('手机不能为空','emailError');
  					return;
 				}
@@ -171,7 +191,7 @@
 								window.location.hash = '#/login'
 							},4000)
 						}else{
-							_this.$Message.error(data.getmsg);
+							_this.$Message.error(data.msg);
 						}
 					}
 				})

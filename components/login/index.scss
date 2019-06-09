@@ -116,6 +116,18 @@ $color: #ff6801;
 						margin-left: 5%;
 						line-height: 40px;
 						text-align: right;
+
+						@include displayFlex(row);
+						justify-content:space-between;
+						-webkit-justify-content:space-between;
+						a{
+							color:#333;
+							//color:inherit;
+							text-decoration: underline;
+						}
+						label{
+							display: block;
+						}
 					}
 					&.zmiti-login-btn{
 						background:$color;

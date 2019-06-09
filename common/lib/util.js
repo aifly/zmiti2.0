@@ -37,36 +37,29 @@ var zmitiUtil = {
 	getAdminUserInfo(){
 		return this.getUserInfo('adminlogin');
 	},
+	formatDate(time = +new Date()) {
+		var date = new Date(time*1000 + 8 * 3600 * 1000); // 增加8小时
+		return date.toJSON().substr(0, 19).replace('T', ' ');
+	},
+	getProductListByAdmin(){
+		
+	},
+	getProductList(fn) { //
 
-	getProductList(fn, self) { //
 		this.ajax({
-			self,
-			url: window.config.baseUrl + 'product/get_product/',
-			success(data) {
-				if (data.getret === 0) {
-					var arr = [];
-					data.productlist.map((item, i) => {
-
-						arr.push({
-							"productid": item.productid,
-							"linkTo": item.producturl,
-							"key": item.producturl.split('/')[1],
-							"title": item.productname,
-							"iconType": item.icontype,
-							"type": item.producticon,
-							"outline": item.outline,
-						})
-					});
-					window.globalMenus = arr;
-					fn && fn(arr);
-				}else if(data.getret === 1300){
-					
-					if (self && self.isAdmin) {
-						window.location.href = './#/login';
-					}
+			remark:'getProductList',
+			data:{
+				action: zmitiActions.userActions.getProductList.action,
+				condition:{
+					page_index:0,
+					page_size:20,
 				}
+			},
+			success(data){
+				fn && fn(data);
 			}
-		});
+		})
+		 
 	},
 
 	adminAjax(option = {}){
@@ -99,6 +92,7 @@ var zmitiUtil = {
 			opt.ui = userInfo.ui;
 		}
 		
+ 
 		axios.post(window.config.baseUrl + '?name=' + (option.remark || '').toLowerCase(), JSON.stringify(opt)).then((dt) => {
 			var dt = dt.data;
 			if (dt.getret === 0){

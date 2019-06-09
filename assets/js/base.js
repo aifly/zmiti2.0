@@ -41,18 +41,6 @@ var imgs = {
 		console.log(data.data)
 	});
  */
-`
-	Web开发还有前途吗？
 
-
-
-
-
-
-
-
-
-
-`
 })();
 

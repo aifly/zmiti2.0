@@ -168,9 +168,10 @@
 
             this.userinfo = userinfo; 
             if(this.$route.name !== 'login' && this.$route.name !== 'register' && !this.isAdmin){
-               zmitiUtil.getProductList((arr)=>{
+				
+               /* zmitiUtil.getProductList((arr)=>{
                    this.productList = arr;
-               },this);
+               },this); */
             }
         },
         watch:{

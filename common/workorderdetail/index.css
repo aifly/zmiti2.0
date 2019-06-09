@@ -1,0 +1,35 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-wo-detail-ui {
+  width: 100%;
+  height: 100%;
+}
+
+.zmiti-wo-detail-ui .zmiti-wo-detail-header {
+  background: #d9dee4;
+}
+
+.zmiti-wo-detail-ui .zmiti-wo-detail-header > div {
+  padding: 10px 10px 10px 10px;
+  line-height: 30px;
+}
+
+.zmiti-wo-detail-ui .zmiti-wo-detail-header > div:nth-of-type(2) {
+  padding-top: 0;
+}
+
+.zmiti-wo-detail-status {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.zmiti-close-order {
+  cursor: pointer;
+  color: blue;
+}

@@ -3,7 +3,7 @@
 		<Tab :title='menuObj.title' :tabs='tabs' :tabIndex='tabIndex'>
 			<div slot='zmiti-tab-menu'>
 				<ul class="symbin-tab-menu">
-					<li :key="i" @click.stop.prevent='tab1(i,tab.children)' v-for='(tab,i) in tabs' :class='{"active": !tab.children && (tab.link === $route.name && !tab.children),"level1":tab.children && !tab.status,"open":tab.status || (tab.children && tab.children.some(child=> child.link === $route.name )) }'>
+					<li :key="i" @click.stop.prevent='tab1(i,tab.children)' v-for='(tab,i) in tabs' :class='{"active": !tab.children && (tab.link.substring(1) === $route.name && !tab.children),"level1":tab.children && !tab.status,"open":tab.status || (tab.children && tab.children.some(child=> child.link.substring(1) === $route.name )) }'>
 						<div v-if='!(tab.children && tab.children.length>0)'>
 							<router-link :to="tab.link">{{tab.name}}</router-link>
 						</div>
@@ -11,7 +11,7 @@
 							{{tab.name}}
 						</div>
 						<ol :style='{height:(tab.status?tab.children.length*50:0)+"px"}' v-if='tab.children' >
-							<li :key="k" @click.stop.prevent='tab2(i,k)' :class="{'active':($route.name === child.link)}" v-for='(child,k) in tab.children'>
+							<li :key="k" @click.stop.prevent='tab2(i,k)' :class="{'active':($route.name === child.link.substring(1))}" v-for='(child,k) in tab.children'>
 								<div v-if='child.link'><router-link :to="child.link">{{child.name}}</router-link></div>
 								<div v-if='!child.link'>{{child.name}}</div>
 							</li>
@@ -92,7 +92,7 @@
 					
 					if(tab.children){
 						tab.status = tab.children.some(item=>{
-							return item.link === this.$route.name;
+							return item.link.substring(1) === this.$route.name;
 						})
 					}
 				})

@@ -55,6 +55,22 @@ let adminActions = {
 	getAdminGroupSipleList:{
 		desc:'管理员组列表（简要信息，不参与权限验证）',
 		action:'1000204'
+	},
+	getProductList: {
+		desc: "获取产品列表",
+		action: '1000300'
+	},
+	getUserWorkOrderList:{
+		desc:'管理员查看工单列表',
+		action:'1000111'
+	},
+	userReadWorkOrder:{
+		desc:"管理员查看工单",
+		action:'1000113'
+	},
+	replayWorkOrder:{
+		desc:"管理员回复工单",
+		action:'1000112'
 	}
 }
 
@@ -134,6 +150,34 @@ let userActions = {
 	userCommitWorkOrder:{
 		desc:'用户提交工单',
 		action:"2001000"
+	},
+	userCloseWorkOrder:{
+		desc:"用户关闭工单",
+		action:'2001001'
+	},
+	userReadWorkOrder:{
+		desc:"用户查看工单",
+		action:'2001002'
+	},
+	userDelWorkOrderFile:{
+		desc:'用户删除工单附件',
+		action:'20010003'
+	},
+	delWorkOrder:{
+		desc:'用户删除工单',
+		action:'2001004'
+	},
+	getUserWorkOrderList:{
+		desc:"获取用户工单列表",
+		action:'2001006'
+	},
+	getProductList:{
+		desc:"获取产品列表",
+		action:'2001007'
+	}, 
+	replayWorkOrder: {
+		desc: "用户回复工单",
+		action: '2001005'
 	}
 };
 
@@ -148,6 +192,9 @@ let basicConfigActions = {
 		desc:'更新基础配置'
 	}
 };
+
+
+
 
 //通用接口
 let resourceActions = {

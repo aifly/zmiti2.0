@@ -19,6 +19,7 @@
 						</label>
 					</div>
 					<div class='zmiti-remember-pass'>
+						<label><router-link to='register'>用户注册</router-link></label>
 						<label><Checkbox v-model="checked">记住密码</Checkbox></label>
 					</div>
 					<div class='zmiti-login-btn' v-press>

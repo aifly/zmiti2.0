@@ -72,7 +72,7 @@
 						</Form>
 						
 						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='adminAction'>{{formCompany.companyid?'保存':'确定'}}</Button>
+							<Button size='large' type='primary' @click='adminAction'>{{adminuserId?'保存':'确定'}}</Button>
 						</div>
 						 
 					</section>
@@ -288,7 +288,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delete(params.row.companyid);
+											this.delAdmin(params.row.adminuserid);
 										},
 										
 									}
@@ -391,13 +391,13 @@
 				};
 			},
 
-			delete(companyid){
+			delAdmin(adminuserid){
 				var s = this;
 				zmitiUtil.adminAjax({
-					remark:'delCompany',
+					remark:'delAdmin',
 					data:{
-						action:companyActions.delCompany.action,
-						companyid
+						action:companyActions.delAdmin.action,
+						adminuserid
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
@@ -452,7 +452,7 @@
 				var action =  id ? companyActions.editCompany.action:companyActions.addCompany.action;
 				
 				zmitiUtil.adminAjax({
-					remark:id ?　'editCompany':'addCompany',
+					remark:id ?　'editAdminUser':'addAdminUser',
 					data:{
 						action,
 						info:this.formCompany

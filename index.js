@@ -53,7 +53,7 @@ const router = new VueRouter({
 	{
 		path: '/group/', name: 'group', component: Group, props: true, children: [
 			{path: "/workorder",name: "workorder",component: WorkOrder,props: true},
-			{ path: "/workorderlist", name: "workorderlist", component: WorkOrderList,props: true},
+			{ path: "/workorderlist/:id?", name: "workorderlist", component: WorkOrderList,props: true},
 		]
 	},
     {
