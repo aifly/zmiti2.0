@@ -1,4 +1,4 @@
-import zmitiActions from '../action';
+import zmitiActions from '../action.js';
 
 
 var zmitiUtil = {

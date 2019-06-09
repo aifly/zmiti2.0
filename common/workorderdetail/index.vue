@@ -27,6 +27,7 @@ import {orderStatus} from '../config';
 
 var {userActions,adminActions} = zmitiUtil;
 
+
 export default {
 	props:{
 		isAdmin:{

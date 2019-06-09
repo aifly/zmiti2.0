@@ -235,7 +235,7 @@ let resourceActions = {
 
 
 
-let zmitiActions =  {
+var zmitiActions =  {
 	userActions,
 	resourceActions,
 	adminActions,
@@ -243,4 +243,6 @@ let zmitiActions =  {
 	basicConfigActions
 }
 
-export default zmitiActions;
+
+export  default zmitiActions;
+
