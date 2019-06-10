@@ -123,27 +123,27 @@
                 menus:[
 					{
 						name:"用户单位",
-						link:'company',
+						link:'/company',
 						icon:'&#xe605;',
 						active:['user','company'] //高亮的路由
 					},{
 						name:"产品管理",
-						link:'product',
+						link:'/product',
 						icon:'&#xe64c;',
 						active:['product'] 
 					},{
 						name:"财务管理",
-						link:'finance',
+						link:'/finance',
 						icon:'&#xe600;',
 						active:['finance'] 
 					},{
 						name:"订单管理",
-						link:'order',
+						link:'/order',
 						icon:'&#xe60b;',
 						active:['order']
 					},{
 						name:"系统管理",
-						link:'admin',
+						link:'/admin',
 						icon:'&#xe60f;',
 						active:'basicconfig_admin_rolegroup_setrole_pv_form'.split('_') 
 					}

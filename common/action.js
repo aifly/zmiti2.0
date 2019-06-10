@@ -1,5 +1,4 @@
 
-import Vue from 'vue';
 let adminActions = {
 	//管理员模块
 	adminlogin: {
@@ -199,31 +198,31 @@ let basicConfigActions = {
 let resourceActions = {
 	getResourceCateList:{
 		desc:'获取资源分类',
-		action:'1001300'
+		action:'3001300'
 	},
 	addResourceCate:{
 		desc:'添加资源分类',
-		action:'1001301'
+		action:'3001301'
 	},
 	editReourceCate:{
 		desc:'编辑资源分类',
-		action:'1001302'
+		action:'3001302'
 	},
 	delResourceCate:{
 		desc:'删除资源分类',
-		action:'1001303'
+		action:'3001303'
 	},
 	getResourceList:{
 		desc:'获取资源文件列表',
-		action:'1001310'
+		action:'3001310'
 	},
 	editResource:{
 		desc:'编辑资源文件',
-		action:'1001312'
+		action:'3001312'
 	},
 	delResource:{
 		desc:'删除资源文件',
-		action:'1001313'
+		action:'3001313'
 	},
 	basicUpdload:{
 		desc:"基础上传",

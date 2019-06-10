@@ -18,6 +18,7 @@
 					</div>
 			</template>
 			<section v-else style='width:100%;position:relative;z-index:1;'>
+				<WorkOrderDetail></WorkOrderDetail>
 			</section>
 		</div>
 	</div>
@@ -31,6 +32,7 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import {orderStatus,workOrderType} from '../../common/config';
+	import WorkOrderDetail from '../../common/workorderdetail';
 	var {userActions,adminActions} = zmitiUtil;
 
 
@@ -206,9 +208,9 @@
 				},
 				userinfo:{}
 			}
-		},
+		}, 
 		components:{
-			//WorkOrderDetail
+			WorkOrderDetail
 		},
 
 		beforeCreate(){

@@ -1,5 +1,13 @@
 <template>
-	<div class='zmiti-wo-detail-ui'>
+	<div class='zmiti-wo-detail-ui' :style="{height:viewH - 60+'px'}">
+		<div class='zmiti-wo-step'>
+			<ul>
+				<li :class="{'through':workinfo.status>i,'active':workinfo.status==i}" v-for='(step,i) of orderStatus' :key="i">
+					<span v-if='i<=2'>{{step.status}}</span>
+					<span v-else>{{workinfo.status === 3 ? step.status:"未评价"}}</span>
+				</li>
+			</ul>
+		</div>
 		<header class='zmiti-wo-detail-header'>
 			<div>问题标题：{{workinfo.content}}</div>
 			<div class='zmiti-wo-detail-status'>
@@ -11,11 +19,30 @@
 			</div>
 		</header>
 
-		<div class='zmiti-wo-detail-content'>
-			<header>沟通内容</header>
-			<Input v-model='content'/>
-			<Button style='position:relative;z-index:1' type='primary' @click='replyOrder'>提交</Button>
+		<div class='zmiti-wo-detail-content zmiti-scroll'>
+			<div>
+				<header>沟通内记录</header>
+				<ul>
+					<li v-for='(op,i) of workinfo.operainfo' :key="i">
+						<div>{{op.operauser}}</div>
+						<div class='zmiti-reply-content'>
+							{{op.content}}
+						</div>
+						<div>
+							{{op.operatime}}
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class='zmiti-wo-reply-ui'>
+				<header>{{workinfo.status === 2 ? '我要评价':'我要反馈'}}</header>
+				<Input class='zmiti-reply-input' type='textarea' :rows='8' v-model='content'/>
+				<div class='zmiti-reply-btn'>
+					<Button style='position:relative;z-index:1' type='primary' @click='replyOrder'>提交</Button>
+				</div>
+			</div>
 		</div>
+		
 	</div>
 </template>
 <style lang="scss">
@@ -40,8 +67,10 @@ export default {
 		return {
 			content:"",
 			orderStatus,
+			viewH:window.innerHeight,
 			workinfo:{
-				status:0
+				status:0,
+				operainfo:[]
 			}
 		}
 
@@ -52,7 +81,8 @@ export default {
 	methods: {
 		formatDate:zmitiUtil.formatDate,
 		replyOrder(){//回复工单
-			var {content,isAdmin,workinfo} = this;
+			var {content,isAdmin,workinfo,$Message} = this;
+			var s = this;
 			zmitiUtil[isAdmin ? 'adminAjax':'ajax']({
 				remark:"replayWorkOrder",
 				data:{
@@ -65,7 +95,8 @@ export default {
 					}
 				},
 				success(data){
-					console.log(data,'replayWorkOrder')
+					s.content = '' ;
+					$Message[data.getret === 0 ? 'success':'error'](data.msg);
 				}
 			});
 		},
@@ -92,7 +123,7 @@ export default {
 			if(this.isAdmin){
 				return;
 			}
-			var {workinfo} = this;
+			var {workinfo,$Message} = this;
 			zmitiUtil.ajax({
 				remark:"userCloseWorkOrder",
 				data:{
@@ -102,7 +133,7 @@ export default {
 					}
 				},
 				success(data){
-					console.log(data,'userCloseWorkOrder');
+					$Message[data.getret === 0 ? 'success':'error'](data.msg);
 				}
 			})
 		}

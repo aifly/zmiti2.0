@@ -175,7 +175,9 @@
 					},
 					success(data){
 						$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						console.log(data,'data');
+						setTimeout(() => {
+							window.location.hash = '/workorderlist';
+						}, 1000);
 					}
 				});
 			}

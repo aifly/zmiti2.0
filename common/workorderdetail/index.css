@@ -5,6 +5,9 @@
 }*/
 .zmiti-wo-detail-ui {
   width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
   height: 100%;
 }
 
@@ -29,7 +32,116 @@
   width: 100%;
 }
 
+.zmiti-wo-step {
+  width: 100%;
+}
+
+.zmiti-wo-step ul {
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  color: #fff;
+  margin: 4px 0;
+}
+
+.zmiti-wo-step ul li {
+  background: #cacaca;
+  text-align: center;
+  line-height: 30px;
+  flex: 1;
+  -webkit-flex: 1;
+  position: relative;
+  font-size: 14px;
+}
+
+.zmiti-wo-step ul li.through {
+  background: linear-gradient(to right, #9bdbf6, #9ddcee);
+}
+
+.zmiti-wo-step ul li.through::before {
+  background: linear-gradient(to right, #9bdbf6, #9ddcee);
+}
+
+.zmiti-wo-step ul li.active {
+  background: linear-gradient(to right, #00a4c5, #089fca);
+}
+
+.zmiti-wo-step ul li.active::before {
+  background: linear-gradient(to right, #00a4c5, #089fca);
+}
+
+.zmiti-wo-step ul li:last-of-type::before {
+  display: none;
+}
+
+.zmiti-wo-step ul li:before {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 3px;
+  border: 4px solid #fff;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  border-left: none;
+  border-bottom: none;
+  right: -14px;
+  z-index: 10;
+}
+
 .zmiti-close-order {
   cursor: pointer;
   color: blue;
+}
+
+.zmiti-wo-detail-content {
+  flex: 1;
+  -webkit-flex: 1;
+  margin-top: 10px;
+  overflow: auto;
+}
+
+.zmiti-wo-detail-content header {
+  height: 40px;
+  line-height: 40px;
+  text-indent: 1em;
+  background: #e2eee2;
+  border-left: 4px solid #333;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.zmiti-wo-detail-content ul {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.zmiti-wo-detail-content ul li {
+  min-height: 100px;
+  border-bottom: 1px dashed #ccc;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+  justify-content: space-around;
+}
+
+.zmiti-wo-detail-content ul li > div.zmiti-reply-content {
+  font-weight: bold;
+}
+
+.zmiti-reply-input {
+  width: 90%;
+  margin: 20px auto;
+  display: block;
+}
+
+.zmiti-reply-btn {
+  width: 90%;
+  margin: 20px auto 60px;
+}
+
+.zmiti-reply-btn button {
+  width: 100px;
 }

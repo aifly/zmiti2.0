@@ -13,7 +13,7 @@
 			
 			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
 				<div class='zmiti-user-table' :class="{'active':showDetail}">
-					<Table  :data='companyList' :columns='columns'></Table>
+					<Table  :data='dataSrouce' :columns='columns'></Table>
 				</div>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
@@ -27,54 +27,58 @@
 							<span>基础信息</span>
 						</header>
 						<div class='zmiti-user-avatar' @click="showAvatarModal = true">
-							<span class='zmt_iconfont' v-html='formCompany.logourl'></span>
+							<span class='zmt_iconfont' v-html='formUser.avatar'></span>
 							<label>更换头像</label>
 						</div>
-						<Form class='zmiti-add-form-C' :model="formCompany" :label-width="120">
-							<FormItem label="单位名称：">
-								<Input v-model="formCompany.companyname" placeholder="单位名称：" />
+						<Form class='zmiti-add-form-C' :model="formUser" :label-width="120">
+							<FormItem label="用户名：">
+								<Input v-model="formUser.username" @on-blur="checkUser" placeholder="用户名：" />
 							</FormItem>
-							<FormItem label="单位地址：">
-								<Input v-model="formCompany.companyaddress" placeholder="单位地址：" />
+							<FormItem label="姓名：">
+								<Input v-model="formUser.realname" placeholder="姓名：" />
 							</FormItem>
-							<FormItem label="单位编码：">
-								<Input v-model="formCompany.companycode" placeholder="单位编码：" />
+							<FormItem label="密码：">
+								<Input v-model="formUser.userpwd" type="password" placeholder="密码：" />
 							</FormItem>
-							<FormItem label="单位电话：">
-								<Input v-model="formCompany.companyphone" placeholder="单位电话：" />
+							<FormItem label="所在单位：">
+								<Select v-model="formUser.companyid">
+									<Option v-for="item in companyList" :value="item.companyid" :key="item.companyid">{{ item.companyname }}</Option>
+								</Select>
 							</FormItem>
-							<FormItem label="开户行：">
-								<Input v-model="formCompany.bank" placeholder="开户行：" />
+
+							<FormItem label="邮箱：">
+								<Input v-model="formUser.useremail" placeholder="邮箱：" />
 							</FormItem>
-							<FormItem label="开户行账号：">
-								<Input v-model="formCompany.bankcode" placeholder="开户行账号：" />
+							<FormItem label="手机号：">
+								<Input v-model="formUser.usermobile" placeholder="手机号：" />
 							</FormItem>
-							<FormItem label="单位合同扫描件：">
-								<Input v-model="formCompany.contract" placeholder="单位合同扫描件：" />
+							
+							<FormItem label="用户类型：">
+								<RadioGroup v-model="formUser.usertypesign">
+									<Radio :value='1' :label="1">普通用户</Radio>
+									<Radio :value='2' :label="2">公司管理员</Radio>
+								</RadioGroup>
 							</FormItem>
-							<FormItem label="营业执照：">
-								<Input v-model="formCompany.businesslicensepath" placeholder="营业执照：" />
-							</FormItem>
-							<FormItem label="是否系统管理组：">
-								<RadioGroup v-model="formCompany.isover">
+
+							<FormItem label="状态：">
+								<RadioGroup v-model="formUser.isover">
 									<Radio :value='0' :label="0">正常使用</Radio>
 									<Radio :value='1' :label="1">禁用</Radio>
 								</RadioGroup>
 							</FormItem>
-							
-							<FormItem label="备注：">
-								<Input v-model="formCompany.comment" placeholder="备注：" />
+							<FormItem label="用户归属：">
+								<RadioGroup v-model="formUser.usersign">
+									<Radio :value='1' :label="1">本地</Radio>
+									<Radio :value='2' :label="2">微信</Radio>
+									<Radio :value='3' :label="3">QQ</Radio>
+								</RadioGroup>
 							</FormItem>
-							<FormItem label="配置：">
-								<Input v-model="formCompany.config" placeholder="配置：" />
-							</FormItem>
-							
 						</Form>
 						
 						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='adminAction'>{{adminuserId?'保存':'确定'}}</Button>
+							<Button size='large' type='primary' @click='adminAction'>{{formUser.userid?'保存':'确定'}}</Button>
 						</div>
-						<template v-if='formCompany.adminuserid'>
+						<template v-if='formUser.userid && false'>
 							<header class='zmiti-add-header zmiti-safe-bar'>
 								<span>安全信息</span>
 							</header>
@@ -100,7 +104,7 @@
 			<Table :data='roleList' :columns='roleCol'></Table>
 		</Modal>
  
-		<Avatar v-model="showAvatarModal" :avatar='formCompany.avatar' @getAvatar='getAvatar'></Avatar>
+		<Avatar v-model="showAvatarModal" :avatar='formUser.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
@@ -112,8 +116,9 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
-	var companyActions = zmitiUtil.adminActions;
 	var companyActions = zmitiUtil.companyActions;
+	var zmitiActions = zmitiUtil.companyActions;
+
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -133,13 +138,15 @@
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
-				showDetail:true,
-				showDetailPage:true,
+				showDetail:false,
+				showDetailPage:false,
 				currentClassId:-1, 
 				adminuserId:'',
 				currentUserid:'',
-				formCompany:{
+				formUser:{
 					isover:0,
+					usersign:1,
+					usertypesign:1,
 					avatar:'&#xe6a4;'
 				},
 				address:'',
@@ -147,8 +154,9 @@
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
-				companyList:[],
+				dataSrouce:[],
 				groupList:[],
+				companyList:[],
 				hideMenu:false,
 				roleCol:[
 					{
@@ -199,12 +207,12 @@
 						
 					},{
 						title:"邮箱",
-						key:'companyphone',
+						key:'useremail',
 						align:'center'
 						
 					},{
 						title:"手机",
-						key:'companyphone',
+						key:'usermobile',
 						align:'center'
 						
 					},{
@@ -269,9 +277,8 @@
                                         click: () => {
 											var s = this;
 											s.showDetail = true;
-											s.formCompany = params.row;
-											s.adminuserId = params.row.adminuserid;
-											console.log( params.row);
+											s.formUser = params.row;
+										
                                         }
                                     }
                                 }, '编辑'),
@@ -282,7 +289,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delAdmin(params.row.adminuserid);
+											this.delete(params.row.userid);
 										},
 										
 									}
@@ -309,7 +316,7 @@
 					}
 				],
 				
-				formcompany:{
+				formUser:{
 					pdfurl:'',
 					longitude :'116.585856',
 					latitude :'40.364989'
@@ -338,6 +345,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
+			this.getDataList();
 			this.getCompanyList();
 		},
 
@@ -357,15 +365,48 @@
 		},
 		
 		methods:{
+			getCompanyList(){
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'getCompanyList',
+					data:{
+						action:companyActions.getCompanyList.action,
+						condition:{
+							page_index:0,
+							page_size:100
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							s.companyList = data.list;	 
+						}
+					}
+				})
+				
+			},
+			checkUser(){
+				var username = this.formUser.username;
+				var {$Message} = this;
+				zmitiUtil.adminAjax({
+					remark:'checkUserName',
+					data:{
+						action:zmitiActions.checkUserName.action,
+						username
+					},
+					success(data){
+						$Message[data.getret === 0 ? data.used  ? 'error':'success':'error'](data.msg);
+					}
+				})
+			},
 			getAvatar(avatar){
-				this.formCompany.avatar = avatar;
+				this.formUser.avatar = avatar;
 			},
 			initPassword(){//初始化密码
 				var {$Message} = this;
 				zmitiUtil.adminAjax({
 					data:{
 						action:companyActions.modifyAdminPassword.action,
-						adminuserid:this.formCompany.adminuserid,
+						adminuserid:this.formUser.adminuserid,
 						adminpwd:window.config.defaultPass
 					},
 					success(data){
@@ -379,31 +420,31 @@
 			addAdmin(){
 				this.showDetail = true;
 				this.adminuserId = '';
-				this.formCompany = {
+				this.formUser = {
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
 			},
 
-			delAdmin(adminuserid){
+			delete(userid){
 				var s = this;
 				zmitiUtil.adminAjax({
-					remark:'delAdmin',
+					remark:'delUser',
 					data:{
-						action:companyActions.delAdmin.action,
-						adminuserid
+						action:companyActions.delUser.action,
+						userid
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							
-							s.getCompanyList();
-							///s.companyList = data.list;	 
+							s.getDataList();
+							///s.dataSrouce = data.list;	 
 						}
 					}
 				})
 			},
-			getCompanyList(){
+			getDataList(){
 				var s = this;
 				if(typeof window.Promise !== 'function'){
 					console.log('当前浏览器不支持Promise');
@@ -411,50 +452,35 @@
 				}
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.adminAjax({
-						remark:'getCompanyList',
+						remark:'getUserList',
 						data:{
-							action:companyActions.getCompanyList.action,
+							action:companyActions.getUserList.action,
 							condition:this.condition
 						},
 						success(data){
 							if(data.getret === 0){
-								s.companyList = data.list;	 
+								s.dataSrouce = data.list;	 
 								resolve();
 							}
 						}
 					})
 				});
-				
-				Promise.all([p]).then(()=>{
-					s.companyList.map((admin,i)=>{
-						s.groupList.map((group,j)=>{
-							if(admin.groupid == group.id){
-								admin.groupname = group.groupname;
-							}
-						})
-					});
-					s.companyList = s.companyList.concat([]);
-				})
-				 
-				
 			},
-		
-			 
 			adminAction(){
 				var s = this;
-				var action = this.adminuserId ? companyActions.editAdminUser.action:companyActions.addAdminUser.action;
+				var action = this.formUser.userid ? companyActions.editUser.action:companyActions.addUser.action;
 				
 				zmitiUtil.adminAjax({
-					remark:this.adminuserId ?　'editAdminUser':'addAdminUser',
+					remark:this.formUser.userid ?　'editUser':'addUser',
 					data:{
 						action,
-						info:this.formCompany
+						info:this.formUser
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							s.showDetail = false;
-							s.getCompanyList();
+							s.getDataList();
 						}
 					}
 				})

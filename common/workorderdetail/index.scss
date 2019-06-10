@@ -1,7 +1,7 @@
 @import "../css//base.scss";
 .zmiti-wo-detail-ui {
   width: 100%;
-  
+  @include displayFlex(column);
   height: 100%;
   .zmiti-wo-detail-header {
 	background: #d9dee4;	
@@ -19,8 +19,106 @@
   justify-content: space-between;
   width: 100%;
 }
+.zmiti-wo-step{
+	width:100%;
+	ul{
+		width: 100%;
+		@include displayFlex(row);
+		justify-content:space-between;
+		
+		color:#fff;
+		margin: 4px 0;
+		li{
+			background: #cacaca;
+			text-align: center;
+			line-height: 30px;;
+			flex:1;
+			-webkit-flex:1;
+			@include pos(r);
+			font-size:14px;
+			&.through{
+				background: linear-gradient(to right, #9bdbf6, #9ddcee);
+				&::before{
+					background: linear-gradient(to right, #9bdbf6, #9ddcee);
+				}
+			}
+			&.active{
+				background: linear-gradient(to right, #00a4c5, #089fca);
+				&::before{
+					background: linear-gradient(to right, #00a4c5, #089fca);
+				}
+			}
+			&:last-of-type{
+				&::before{
+					display: none;
+				}
+			}
+			&:before{
+				content:"";
+				@include pos(a);
+				width: 24px;
+				height: 24px;
+				top: 3px;
+				border:4px solid #fff;
+				@include transform(rotate(45deg));
+				border-left: none;
+				border-bottom: none;
+				right: -14px;
+				z-index: 10;
+			}
+		}
 
+	}
+}
 .zmiti-close-order{
 	cursor: pointer;
 	color:blue
+}
+.zmiti-wo-detail-content{
+	flex:1;
+	-webkit-flex:1;
+	margin-top: 10px;
+	overflow: auto;
+	header{
+		height:40px;
+		line-height: 40px;
+		text-indent: 1em;
+		background: #e2eee2;
+		border-left: 4px solid #333;
+		font-size:14px;
+		font-weight: bold;
+
+	}
+	ul{
+		width: 90%;
+		margin: 0 auto;
+		li{
+			min-height: 100px;
+
+			border-bottom: 1px dashed #ccc;
+			@include displayFlex(column);
+			justify-content: space-around;
+			&>div{
+				&.zmiti-reply-content{
+					font-weight: bold;
+				}	
+			}
+
+			
+		}
+	}
+	
+}
+.zmiti-reply-input{
+	width:90%;
+	margin:20px auto;
+	display: block;
+}
+.zmiti-reply-btn{
+	width: 90%;
+	margin: 20px auto 60px;
+	button{
+		width: 100px;
+		
+	}
 }

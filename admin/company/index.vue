@@ -429,19 +429,7 @@
 							}
 						}
 					})
-				});
-				
-				Promise.all([p]).then(()=>{
-					s.companyList.map((admin,i)=>{
-						s.groupList.map((group,j)=>{
-							if(admin.groupid == group.id){
-								admin.groupname = group.groupname;
-							}
-						})
-					});
-					s.companyList = s.companyList.concat([]);
-				})
-				 
+				}); 
 				
 			},
 		
