@@ -84,10 +84,11 @@ var zmitiUtil = {
 
 		
 		var opt = option.data || {};
+		var _ui = option._ui || {};
 		var userInfo = this.getUserInfo(option.isAdmin? 'adminlogin':'login');
 		
 		if (userInfo && userInfo.ui) {
-			opt.ui = userInfo.ui;
+			opt.ui = Object.assign( userInfo.ui,_ui);
 		}
 		
  

@@ -16,12 +16,15 @@ import SetRole from './admin/setrole';
 import Login from './admin/login';
 import WorkOrder from './admin/workorder';
 import WorkOrderList from './admin/workorderlist';
+import ResourceList from './admin/resourcelist';
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import Group from './common/group';
 import './admin/css/index.css';
 import './components/css/theme.less'
 ///import 'iview/dist/styles/iview.css';
+
+console.log(ResourceList)
 
 Vue.use(VueRouter)
 Vue.use(iView)
@@ -55,7 +58,9 @@ const router = new VueRouter({
 			name: 'login',
 			component: Login,
 			props: true
-		}, { path: '/workorderlist/:id?', name: 'workorderlist', component: WorkOrderList },
+		},
+		 { path: '/workorderlist/:id?', name: 'workorderlist', component: WorkOrderList },
+		 { path: '/resourcelist/:id?', name: 'resourcelist', component: ResourceList },
 		{ path: '/workorder/', name: 'workorder', component: WorkOrder },
 		{
 			path: '/group/', name: 'group', component: Group, props: true, children: [

@@ -233,7 +233,7 @@ let resourceActions = {
 
 
 
-var zmitiActions =  {
+var zmitiActions =   /*#__PURE__*/{
 	userActions,
 	resourceActions,
 	adminActions,

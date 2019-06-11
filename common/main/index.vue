@@ -15,18 +15,24 @@
                <div class="zmiti-user-info">
 				    <template v-if='!isAdmin'>
 						<span>
+							<router-link to='/resourcelist'>资源库</router-link> 
+						</span>
+						<span>
 							消息
 						</span>
 						<span>
-							工单
+							<router-link to='/workorderlist'>工单</router-link> 
 						</span>
 					</template>
 					<template v-else>
 						<span>
+							<router-link to='/resourcelist'>资源库</router-link> 
+						</span>
+						<span>
 							信息发布
 						</span>
 						<span>
-							工单处理
+							<router-link to='/workorderlist'>工单处理</router-link> 
 						</span>
 					</template>
                    <span class="zmiti-text-overflow">

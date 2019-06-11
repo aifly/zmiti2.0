@@ -1,0 +1,198 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-resourcelist-ui {
+  width: 99%;
+  height: 99%;
+  background: #fff;
+  margin: 0.5% auto;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-header {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-header h3 {
+  text-indent: 1em;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-header div {
+  text-indent: -1em;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-header div i {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content {
+  flex: 1;
+  -webkit-flex: 1;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate {
+  width: 220px;
+  border-right: 1px solid #ddd;
+  position: relative;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate .zmiti-resource-upload {
+  position: absolute;
+  bottom: 10px;
+  left: 8px;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate .zmiti-resource-upload input[type=file] {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate .zmiti-resource-upload button {
+  width: 200px;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate .zmiti-resource-upload button i {
+  font-size: 20px;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate div {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  text-indent: 1em;
+  border-bottom: 1px solid #f2f2f2;
+  position: relative;
+  cursor: pointer;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate div.active {
+  color: #00c1de;
+  font-weight: bold;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate div.active i {
+  font-weight: bold;
+  color: #00c1de;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate div.active::before {
+  border-color: #00c1de;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate div:before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #f2f2f2;
+  top: 12px;
+  right: 20px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  border-left: none;
+  border-bottom: none;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate .zmiti-child-cate {
+  font-size: 12px;
+  text-indent: 3em;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate .zmiti-child-cate li {
+  color: #666;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-cate .zmiti-child-cate li.active {
+  color: #00c1de;
+  background: #f2f2f2;
+  font-weight: bold;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list {
+  flex: 1;
+  -webkit-flex: 1;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-header {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  width: 100%;
+  overflow: hidden;
+  height: 40px;
+  line-height: 36px;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-header > div:nth-of-type(1) {
+  width: 40px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 30px;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-header > div:nth-of-type(2) {
+  flex: 1;
+  -webkit-flex: 1;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-header > div:nth-of-type(3) {
+  width: 100px;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-header .zmiti-resource-cate-list-C {
+  overflow: hidden;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-header .zmiti-resource-cate-list-C ul {
+  margin-top: 2px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-header .zmiti-resource-cate-list-C ul li {
+  user-select: none;
+  -webkit-user-select: none;
+  text-align: center;
+  width: 100px;
+  cursor: pointer;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-footer {
+  height: 50px;
+  line-height: 50px;
+  text-align: right;
+  border-top: 1px solid #ddd;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-footer button {
+  margin-right: 20px;
+}

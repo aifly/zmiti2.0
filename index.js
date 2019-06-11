@@ -9,7 +9,7 @@ import WorkOrderList from './components/workorderlist'
 import Practice from './task/practice/index'
 
 import Register from './components/register';
-
+import ResourceList from './common/resourcelist';
 import Group from './common/group/index'
 import iView from 'iview';
 import VueRouter from 'vue-router'
@@ -74,12 +74,13 @@ new Vue({
 	},
 	el: '#app',
 	template: `<div id="app1">
-      <Main :obserable='obserable'></Main>
+	  <Main :obserable='obserable'></Main>
     </div>`,
 	methods: {},
 	components: {
 		Main,
-		Login
+		Login,
+		
 	},
 	mounted() {
 
