@@ -44,7 +44,7 @@
 						<span @click="scrollToCate(-1)">
 							<Icon type="ios-arrow-forward" />
 						</span>
-						<span title='添加分类'>
+						<span title='添加分类' @click='showAddCateModal'>
 							<Icon type="ios-add-circle" />
 						</span>
 					</div>
@@ -103,6 +103,7 @@ export default {
 			],
 			showModal:false,
 			viewW:window.innerWidth,
+
 			currentCateId:3,
 			formResource:{
 				isshare:0
@@ -123,15 +124,7 @@ export default {
 	},
 	mounted() {
 		this.init();
-		for(var i = 0;i<10;i++){
-			this.cateList.push({
-				classname:"分类"+(i+1),
-				fileclassid:1,
-			})
-		}
-		setTimeout(() => {
-			this.scroll.refresh();
-		}, 100);
+		
 	},
 	methods: {
 		init(){
@@ -141,6 +134,9 @@ export default {
 				mouseWheel:true,
 				preventDefault:false,
 			})
+		},
+		showAddCateModal(){
+			this.showModal = true;
 		},
 		getCateByChildId(item){
 			this.childCateId = item.type;
@@ -190,7 +186,11 @@ export default {
 				},
 				success(data){
 					if(data.getret === 0){
-						//s.cateList = data.list;
+						s.cateList = data.list;
+						console.log(data.list,'data');
+						setTimeout(() => {
+							s.scroll.refresh();
+						}, 100);
 					}
 				}
 			});
