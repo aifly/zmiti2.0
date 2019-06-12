@@ -80,6 +80,35 @@ var zmitiUtil = {
 		})
 	},
 
+	baseUpload(option){
+		var opt = option.data || {};
+		axios.post(window.config.baseUrl + '/index/upload/upload_file', (opt)).then((dt) => {
+			var dt = dt.data;
+			if (dt.getret === 0) {
+
+			}
+			else if (dt.getret === 9997 || dt.getret === 9996) {
+				window.localStorage[option.isAdmin ? 'adminlogin' : 'login'] = '';
+				if (option.isAdmin) {
+					adminErrorFn && adminErrorFn();
+				} else {
+					window.location.hash = '/login';
+					setTimeout(() => {
+						window.location.reload();
+					}, 10);
+				}
+
+			}
+			option.fn && option.fn(dt);
+			option.success && option.success(dt);
+		}).catch((err) => {
+
+			option.fnError && option.fnError();
+			option.error && option.error();
+			option._this && option._this.$Message.error('服务器开小差了，请稍后重试');
+		});
+	},
+
 	ajax(option,adminErrorFn){
 
 		

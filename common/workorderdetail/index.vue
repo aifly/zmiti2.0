@@ -24,7 +24,10 @@
 				<header>沟通内记录</header>
 				<ul>
 					<li v-for='(op,i) of workinfo.operainfo' :key="i">
-						<div>{{op.operauser}}</div>
+						<div>
+							<span class='zmt_iconfont' v-html='op.avatar||"&#xe6a4;"'></span>
+							<span class='zmiti-realname'>{{op.realname}}</span>
+						</div>
 						<div class='zmiti-reply-content'>
 							{{op.content}}
 						</div>
@@ -83,22 +86,49 @@ export default {
 		replyOrder(){//回复工单
 			var {content,isAdmin,workinfo,$Message} = this;
 			var s = this;
-			zmitiUtil[isAdmin ? 'adminAjax':'ajax']({
-				remark:"replayWorkOrder",
-				data:{
-					action:(isAdmin?adminActions:userActions).replayWorkOrder.action,
-					info:{
-						workorderid:workinfo.workorderid,
-						content,
-						attachment:"",
-						operatype:isAdmin ? 0 : 1 //
+			if(workinfo.status >= 2){//已确认
+				if(workinfo.status === 3 ||isAdmin){
+					return;
+				} 
+
+				zmitiUtil[isAdmin ? 'adminAjax':'ajax']({
+					remark:"evaluateWorkOrder",
+					data:{
+						action:userActions.evaluateWorkOrder.action,
+						info:{
+							workorderid:workinfo.workorderid,
+							feedback:content,
+							attachment:"",
+							starclass:4
+						}
+					},
+					success(data){
+						s.content = '' ;
+						$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						//s.userReadWorkOrder();
 					}
-				},
-				success(data){
-					s.content = '' ;
-					$Message[data.getret === 0 ? 'success':'error'](data.msg);
-				}
-			});
+				});
+
+			}
+			else{
+				zmitiUtil[isAdmin ? 'adminAjax':'ajax']({
+					remark:"replayWorkOrder",
+					data:{
+						action:(isAdmin?adminActions:userActions).replayWorkOrder.action,
+						info:{
+							workorderid:workinfo.workorderid,
+							content,
+							attachment:"",
+							operatype:isAdmin ? 0 : 1 //
+						}
+					},
+					success(data){
+						s.content = '' ;
+						$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						s.userReadWorkOrder();
+					}
+				});
+			}
 		},
 		userReadWorkOrder(){
 			var {isAdmin } = this;

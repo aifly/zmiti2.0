@@ -23,7 +23,7 @@
 
 				<section class='zmiti-resource-upload'>
 					<Button type='primary'><Icon type="ios-cloud-upload" /> 点击上传资源</Button>
-					<input type="file" >
+					<input type="file" ref='file' @change='uploadFile' name='fileobj'>
 				</section>
 			</div>
 			<div class='zmiti-resource-list'>
@@ -33,8 +33,12 @@
 					</div>
 					<div ref='cate' class='zmiti-resource-cate-list-C'  :style="{width:viewW-440+'px'}">
 						<ul :style="{width:100* cateList.length+'px'}">
-							<li v-for='(item,i) in cateList' :key="i">
+							<li @click='changeCurrentClass({fileclassid:-1})' :class="{'active':currentClassId === -1}">
+								全部
+							</li>
+							<li @click='changeCurrentClass(item)' :class="{'active':currentClassId === item.fileclassid}" title='双击可编辑分类' @dblclick="showAddCateModal(item)" v-for='(item,i) in cateList' :key="i">
 								<span>
+									<label v-if='item.isshare' class='zmt_iconfont' v-html='"&#xe636;"'></label>
 									{{item.classname}}
 								</span>
 							</li>
@@ -49,6 +53,20 @@
 						</span>
 					</div>
 				</header>
+				<header class='zmiti-resource-header1'>
+					<div><Checkbox>全选</Checkbox></div>
+					<div><Button type='error' size='small'>删除</Button></div>
+				</header>
+				<div class='zmiti-resource-C'>
+					<ul>
+						<li v-for="(resource,i) of resourceList" :key="i">
+							<div class='zmiti-resource-file'>
+								<img draggable="false" :src="resource.filepath" alt="">
+							</div>
+						</li>
+					</ul>
+				</div>
+
 			</div>
 			<div></div>
 		</div>
@@ -58,6 +76,7 @@
 		</div>
 		<Modal title='添加分类' v-model="showModal"
 			@on-ok="addCate"
+		
 		>
 			<Form class='zmiti-add-form-C' :rules="ruleValidate" :model="formResource" :label-width="100">
 				<FormItem label="分类名称：" prop='classname'>
@@ -70,9 +89,25 @@
 					</RadioGroup>
 				</FormItem>
 				<FormItem label="备注：" prop='content'>
-					<Input v-model="formResource.content" placeholder="备注：" />
+					<Input type='textarea' v-model="formResource.content" placeholder="备注：" />
 				</FormItem>
 			</Form>
+			 <div slot="footer" class='zmiti-addacte-footer'>
+				<div>
+					 <Poptip
+						confirm
+						:title="'确定删除此分类吗?'"
+						@on-ok="deleteCate"
+					>
+						<span v-if='formResource.fileclassid'>删除此分类</span>
+					</Poptip>
+					
+				</div>
+				<div>
+					<Button @click='showModal = false'>取消</Button>
+					<Button type='primary' @click="addCate">确定</Button>
+				</div>
+			</div>
 		</Modal>
 	</div>
 </template>
@@ -101,6 +136,7 @@ export default {
 			cateList:[
 				
 			],
+			currentClassId:-1,
 			showModal:false,
 			viewW:window.innerWidth,
 
@@ -119,7 +155,12 @@ export default {
 				classtype:0,
 				page_index:0,
 				page_size:20
-			}
+			},
+			resourceCondition:{
+				page_index:0,
+				page_size:20
+			},
+			resourceList:[],//资源集合
 		}
 	},
 	mounted() {
@@ -133,10 +174,93 @@ export default {
 				scrollX:true,
 				mouseWheel:true,
 				preventDefault:false,
-			})
+			});
+			this.getResourceByClassId();
 		},
-		showAddCateModal(){
+		changeCurrentClass(item){
+			this.currentClassId = item.fileclassid;
+			this.getResourceByClassId();
+		},
+		getResourceByClassId(){
+			var {isAdmin,$Message} = this;
+			var s = this; 
+			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId})
+			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
+				remark:'getResourceList',
+				_ui:{
+					type:isAdmin?1:2,
+				},
+				data:{
+					action:resourceActions.getResourceList.action,
+					condition
+				},
+				success(data){
+					//$Message[data.getret === 0 ?　'success':'error'](data.msg);
+					if(data.getret === 0 ){
+						data.list.forEach((list)=>{
+							list.filepath = window.config.host+list.filepath;
+						})
+						s.resourceList = data.list;
+					}
+				}
+			});
+		},
+		deleteCate(){
+			var {isAdmin,$Message} = this;
+			var s = this;  
+			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
+				remark:'delResourceCate',
+				_ui:{
+					type:isAdmin?1:2,
+				},
+				data:{
+					action:resourceActions.delResourceCate.action,
+					fileclassid:s.formResource.fileclassid
+				},
+				success(data){
+					$Message[data.getret === 0 ?　'success':'error'](data.msg);
+					s.showModal = false;
+					s.getDefaultCate();
+				}
+			});
+		},
+		uploadFile(){//开始上传文件
+			var {isAdmin,$Message} = this;
+			var s = this;  
+			var userinfo = zmitiUtil[isAdmin?'getAdminUserInfo':'getUserInfo']();
+			
+			var {userid,token} = userinfo.ui;
+
+			var formData = new FormData();
+
+			formData.append('userid',userid);
+			formData.append('token',token);
+			formData.append('fileclassid',s.currentClassId);
+			formData.append('usertype',isAdmin?1:2);
+			formData.append('fileobj',this.$refs['file'].files[0]);
+			formData.append('file_attr_name','fileobj');
+			formData.append('companyid','');
+			formData.append('verify_key','25c1c1f3597bc5b258bd68be8804576e');
+
+			zmitiUtil.baseUpload({
+				data:formData,
+				success(data){
+					if(data.getret === 0 ){
+						s.getResourceByClassId();
+					}
+					
+				}
+			});
+		},
+		showAddCateModal(item){
 			this.showModal = true;
+			if(item){
+				this.formResource = item;
+			}else{
+				this.formResource = {
+					isshare:0
+				};
+			}
 		},
 		getCateByChildId(item){
 			this.childCateId = item.type;
@@ -147,24 +271,35 @@ export default {
 		addCate(){
 			var {isAdmin,$Message} = this;
 			var userinfo = zmitiUtil[isAdmin?'getAdminUserInfo':'getUserInfo']();
-			 
+			
+			var isEdit = this.formResource.fileclassid;
 			var s = this;
-			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
-				remark:'addResourceCate',
-				_ui:{
-					type:isAdmin?1:2,
-				},
-				data:{
-					action:resourceActions.addResourceCate.action,
-					info:{
+			if(s.formResource.classname.length>5){
+				$Message.error('分类名称最可输入5个字');
+				return;
+			}
+			var info = {
 						classname:s.formResource.classname,
 						content:s.formResource.content,
 						classtype : s.currentCateId,
 						userid:userinfo.userid
-					}
+				};
+			if(isEdit){
+				info = Object.assign(info,s.formResource);
+			}
+			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
+				remark:isEdit?'editResourceCate' :'addResourceCate',
+				_ui:{
+					type:isAdmin?1:2,
+				},
+				data:{
+					action:(resourceActions[isEdit?'editResourceCate':'addResourceCate']).action,
+					info
 				},
 				success(data){
 					$Message[data.getret === 0 ? 'success':'error'](data.msg);
+					s.showModal = false;
+					s.getDefaultCate();
 				}
 			});
 		},
@@ -187,7 +322,6 @@ export default {
 				success(data){
 					if(data.getret === 0){
 						s.cateList = data.list;
-						console.log(data.list,'data');
 						setTimeout(() => {
 							s.scroll.refresh();
 						}, 100);

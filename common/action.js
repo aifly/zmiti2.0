@@ -176,6 +176,10 @@ let userActions = {
 	replayWorkOrder: {
 		desc: "用户回复工单",
 		action: '2001005'
+	},
+	evaluateWorkOrder:{
+		desc:"用户评价工单",
+		action:"2001008"
 	}
 };
 
@@ -204,7 +208,7 @@ let resourceActions = {
 		desc:'添加资源分类',
 		action:'3001301'
 	},
-	editReourceCate:{
+	editResourceCate:{
 		desc:'编辑资源分类',
 		action:'3001302'
 	},

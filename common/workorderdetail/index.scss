@@ -93,7 +93,7 @@
 		width: 90%;
 		margin: 0 auto;
 		li{
-			min-height: 100px;
+			min-height: 130px;
 
 			border-bottom: 1px dashed #ccc;
 			@include displayFlex(column);
@@ -102,6 +102,20 @@
 				&.zmiti-reply-content{
 					font-weight: bold;
 				}	
+			}
+			.zmt_iconfont{
+				font-size:20px;
+				@include br();
+				padding: 10px;
+				color:rgba(51, 144, 255, 0.8);
+				background:rgba(51, 144, 255, 0.1);
+			}
+
+			.zmiti-realname{
+				font-weight: bold;
+				color:rgba(51, 144, 255, 0.8);
+				margin-left: 10px;
+				font-size:14px;
 			}
 
 			
