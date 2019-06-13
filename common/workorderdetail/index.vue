@@ -38,11 +38,26 @@
 				</ul>
 			</div>
 			<div class='zmiti-wo-reply-ui'>
-				<header>{{workinfo.status === 2 ? '我要评价':'我要反馈'}}</header>
-				<Input class='zmiti-reply-input' type='textarea' :rows='8' v-model='content'/>
-				<div class='zmiti-reply-btn'>
-					<Button style='position:relative;z-index:1' type='primary' @click='replyOrder'>提交</Button>
-				</div>
+				<template v-if='!(workinfo.status >=2 && isAdmin)'>
+					<header >{{workinfo.status === 2 ? '我要评价':workinfo.status === 3 ?"用户评价": '我要反馈'}}</header>
+					<div class='zmiti-reply-input' v-if='workinfo.status>=2' >
+						评分 :<Rate :disabled='workinfo.status === 3' clearable v-model="workinfo.grade" /> 
+					</div>
+					<div class='zmiti-reply-input'  v-if='workinfo.status>=3'>
+						用户评价 :{{workinfo.feedback}}
+					</div>
+					<div class='zmiti-reply-input' v-if='workinfo.status>=2'>
+						是否解决：
+						<RadioGroup v-model="workinfo.issettle" >
+							<Radio :value='0' :label="0" :disabled='workinfo.status === 3'>已解决</Radio>
+							<Radio :value='1' :label="1" :disabled='workinfo.status === 3'>未解决</Radio>
+						</RadioGroup>
+					</div>
+					<Input v-if='workinfo.status < 3' class='zmiti-reply-input' type='textarea' :rows='8' v-model='content'/>
+					<div class='zmiti-reply-btn' v-if='workinfo.status < 3'>
+						<Button style='position:relative;z-index:1' type='primary' @click='replyOrder'>提交</Button>
+					</div>
+				</template>
 			</div>
 		</div>
 		
@@ -73,6 +88,8 @@ export default {
 			viewH:window.innerHeight,
 			workinfo:{
 				status:0,
+				grade:1,
+				issettle:1,
 				operainfo:[]
 			}
 		}
@@ -85,12 +102,12 @@ export default {
 		formatDate:zmitiUtil.formatDate,
 		replyOrder(){//回复工单
 			var {content,isAdmin,workinfo,$Message} = this;
+			var {grade,issettle} = workinfo;
 			var s = this;
 			if(workinfo.status >= 2){//已确认
 				if(workinfo.status === 3 ||isAdmin){
 					return;
 				} 
-
 				zmitiUtil[isAdmin ? 'adminAjax':'ajax']({
 					remark:"evaluateWorkOrder",
 					data:{
@@ -98,14 +115,14 @@ export default {
 						info:{
 							workorderid:workinfo.workorderid,
 							feedback:content,
-							attachment:"",
-							starclass:4
+							grade,
+							issettle
 						}
 					},
 					success(data){
 						s.content = '' ;
 						$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						//s.userReadWorkOrder();
+						 s.userReadWorkOrder();
 					}
 				});
 
@@ -154,6 +171,7 @@ export default {
 				return;
 			}
 			var {workinfo,$Message} = this;
+			var s = this;
 			zmitiUtil.ajax({
 				remark:"userCloseWorkOrder",
 				data:{
@@ -164,6 +182,7 @@ export default {
 				},
 				success(data){
 					$Message[data.getret === 0 ? 'success':'error'](data.msg);
+					s.userReadWorkOrder();
 				}
 			})
 		}

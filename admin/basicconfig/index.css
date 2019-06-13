@@ -15,6 +15,33 @@
   flex-flow: row;
 }
 
+.zmiti-basicconfig-main-ui .zmiti-oss-title.active {
+  color: #00c1de;
+}
+
+.zmiti-basicconfig-main-ui .zmiti-oss-used {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 1px solid #00c1de;
+  margin-top: 9px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 50%;
+  position: relative;
+}
+
+.zmiti-basicconfig-main-ui .zmiti-oss-used.active:before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00c1de;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+}
+
 .zmiti-basicconfig-main-ui input {
   border: 1px solid red;
   width: 94% !important;
