@@ -8,7 +8,7 @@
 				</div>
 			</header>
 			<div :style="{height:viewH - 155+'px',width:'99%',overflow:'auto',margin:'6px auto 0'}" class='zmiti-scroll'>
-				<h2 style="height:50px;"></h2>
+				<h2 style="height:50px;">{{cityname}} IP：{{ip}}</h2>
 
 			</div>
 		</div>
@@ -49,6 +49,7 @@
 				viewW:window.innerWidth,
 				userinfo:{},
 				ip:'',
+				cityname:''
 			}
 		},
 		components:{
@@ -233,6 +234,7 @@
 			},
 			loadRongJs(){
 				this.ip=returnCitySN['cip'];
+				this.cityname=returnCitySN['cname'];
 				console.log(this.ip,returnCitySN['cname'],'外网ip');
 			}
 		 
