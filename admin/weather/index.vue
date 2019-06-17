@@ -233,7 +233,7 @@
 			},
 			loadRongJs(){
 				this.ip=returnCitySN['cip'];
-				console.log(this.ip,'外网ip');
+				console.log(this.ip,returnCitySN['cname'],'外网ip');
 			}
 		 
 		}
