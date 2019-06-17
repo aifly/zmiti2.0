@@ -237,11 +237,38 @@ let resourceActions = {
 
 //天气预报
 let weatherActions = {
-	ipCityData:{
+	viewTrafficdata:{
+		desc:"限行数据",
+		action:'3002000'
+	},
+	viewLastdata:{
+		desc:"精简预报6天",
+		action:'3002001'
+	},
+	viewTimedata:{
+		desc:"精简实况",
+		action:'3002002'
+	},
+	viewAir:{
+		desc:"空气质量指数",
+		action:'3002003'
+	},
+	viewCitydata:{
+		desc:"天气预警",
+		action:'3002004'
+	}
+};
+//获取城市信息
+let cityActions = {
+	ipView:{
 		desc:"通过IP地址获取城市信息",
 		action:'3002005'
+	},
+	postView:{
+		desc:"通过经纬度获取城市信息",
+		action:'3002006'
 	}
-}
+};
 
 var zmitiActions =   /*#__PURE__*/{
 	userActions,
@@ -249,7 +276,8 @@ var zmitiActions =   /*#__PURE__*/{
 	adminActions,
 	companyActions,
 	basicConfigActions,
-	weatherActions
+	weatherActions,
+	cityActions
 }
 
 export  default zmitiActions;

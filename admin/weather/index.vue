@@ -30,6 +30,7 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	var weatherActions = zmitiUtil.weatherActions;
+	var cityActions = zmitiUtil.cityActions;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -57,7 +58,13 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
-			this.getCity();
+			this.getipcity();
+			this.getpostcity();
+			this.gettrafficdata();
+			this.getLastdata();
+			this.gettimedata();
+			this.getCityWeather();
+			this.getair();
 		},
 
 		watch:{
@@ -74,24 +81,144 @@
 		},
 		
 		methods:{
-
-
-			
-			getCity(){
+			getipcity(){//通过IP地址获取城市信息
 				var s = this;
-				
 				zmitiUtil.adminAjax({
-					remark:'ipCityData',
+					remark:'ipView',
+					_ui:{
+						type:1,
+					},
 					data:{
-						action:weatherActions.ipCityData.action,
+						action:cityActions.ipView.action						
+					},
+					success(data){
+						console.log(data,'getipcity');
+						//s.$Message[data.getret === 0?'success':'error'](data.msg);
+
+					}
+				});
+			},
+			getpostcity(){//通过经纬度获取城市信息
+				zmitiUtil.adminAjax({
+					remark:'postView',
+					_ui:{
+						type:1,
+					},
+					data:{
+						action:cityActions.postView.action,
+						info:{
+							longitude:'116.46',
+							latitude:'39.92'
+						}					
+					},
+					success(data){
+						console.log(data,'getpostcity');
+						//s.$Message[data.getret === 0?'success':'error'](data.msg);
+
+					}
+				});
+			},
+			gettrafficdata(){//限行数据
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'viewTrafficdata',
+					_ui:{
+						type:1,
+					},
+					data:{
+						action:weatherActions.viewTrafficdata.action,
 						info: {
-						    "longitude": 139.011,
-						    "latitude": 138
+						    cityid:2
 						}
 						
 					},
 					success(data){
-						console.log(data,'getCity');
+						console.log(data,'gettrafficdata');
+						//s.$Message[data.getret === 0?'success':'error'](data.msg);
+
+					}
+				});
+			},
+			getLastdata(){//精简预报6天
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'viewLastdata',
+					_ui:{
+						type:1,
+					},
+					data:{
+						action:weatherActions.viewLastdata.action,
+						info: {
+						    cityid:2
+						}
+						
+					},
+					success(data){
+						console.log(data,'getLastdata');
+						//s.$Message[data.getret === 0?'success':'error'](data.msg);
+
+					}
+				});
+			},
+			gettimedata(){//精简实况
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'viewTimedata',
+					_ui:{
+						type:1,
+					},
+					data:{
+						action:weatherActions.viewTimedata.action,
+						info: {
+						    cityid:2
+						}
+						
+					},
+					success(data){
+						console.log(data,'gettimedata');
+						//s.$Message[data.getret === 0?'success':'error'](data.msg);
+
+					}
+				});
+			},
+			getair(){//空气质量
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'viewAir',
+					_ui:{
+						type:1,
+					},
+					data:{
+						action:weatherActions.viewAir.action,
+						info: {
+						    cityid:2
+						}
+						
+					},
+					success(data){
+						console.log(data,'getair');
+						//s.$Message[data.getret === 0?'success':'error'](data.msg);
+
+					}
+				});
+			},
+			getCityWeather(){//天气预警
+				var s = this;
+				
+				zmitiUtil.adminAjax({
+					remark:'viewCitydata',
+					_ui:{
+						type:1,
+					},
+					data:{
+						action:weatherActions.viewCitydata.action,
+						info: {
+						    cityid:2
+						}
+						
+					},
+					success(data){
+						console.log(data,'getCityWeather');
 						//s.$Message[data.getret === 0?'success':'error'](data.msg);
 
 					}
