@@ -12,7 +12,7 @@
 
 			</div>
 		</div>
-		
+		<remote-js :js-url="'http://pv.sohu.com/cityjson?ie=utf-8'" :js-load-call-back="loadRongJs"></remote-js>
 	</div>
 </template>
 
@@ -29,6 +29,7 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
+	import RemoteJs from './ip'
 	var weatherActions = zmitiUtil.weatherActions;
 	var cityActions = zmitiUtil.cityActions;
 	export default {
@@ -46,16 +47,19 @@
 				},
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
-				userinfo:{}
+				userinfo:{},
+				ip:'',
 			}
 		},
 		components:{
+			'remote-js':RemoteJs
 		},
 
 		beforeCreate(){
 
 		},
 		mounted(){
+
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getipcity();
@@ -79,10 +83,13 @@
 			}
 			
 		},
-		
+		created(){
+			
+		},
 		methods:{
 			getipcity(){//通过IP地址获取城市信息
 				var s = this;
+
 				zmitiUtil.adminAjax({
 					remark:'ipView',
 					_ui:{
@@ -224,9 +231,10 @@
 					}
 				});
 			},
-
-			 
-
+			loadRongJs(){
+				this.ip=returnCitySN['cip'];
+				console.log(this.ip,'外网ip');
+			}
 		 
 		}
 	}
