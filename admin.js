@@ -17,6 +17,7 @@ import Login from './admin/login';
 import WorkOrder from './admin/workorder';
 import WorkOrderList from './admin/workorderlist';
 import ResourceList from './admin/resourcelist';
+import Weather from './admin/weather';
 import iView from 'iview';
 import VueRouter from 'vue-router'
 import Group from './common/group';
@@ -59,9 +60,10 @@ const router = new VueRouter({
 			component: Login,
 			props: true
 		},
-		 { path: '/workorderlist/:id?', name: 'workorderlist', component: WorkOrderList },
-		 { path: '/resourcelist/:id?', name: 'resourcelist', component: ResourceList },
+		{ path: '/workorderlist/:id?', name: 'workorderlist', component: WorkOrderList },
+		{ path: '/resourcelist/:id?', name: 'resourcelist', component: ResourceList },
 		{ path: '/workorder/', name: 'workorder', component: WorkOrder },
+		{ path: '/weather/', name: 'weather', component: Weather },
 		{
 			path: '/group/', name: 'group', component: Group, props: true, children: [
 				{ path: '/user/', name: 'user', component: User },

@@ -5,6 +5,7 @@ var zmitiUtil = {
 	companyActions: zmitiActions.companyActions,
 	resourceActions: zmitiActions.resourceActions,
 	basicConfigActions: zmitiActions.basicConfigActions,
+	weatherActions:zmitiActions.weatherActions,
 	getQueryString: function(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 		var r = window.location.search.substr(1).match(reg);

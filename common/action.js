@@ -235,14 +235,21 @@ let resourceActions = {
 
 };
 
-
+//天气预报
+let weatherActions = {
+	ipCityData:{
+		desc:"通过IP地址获取城市信息",
+		action:'3002005'
+	}
+}
 
 var zmitiActions =   /*#__PURE__*/{
 	userActions,
 	resourceActions,
 	adminActions,
 	companyActions,
-	basicConfigActions
+	basicConfigActions,
+	weatherActions
 }
 
 export  default zmitiActions;
