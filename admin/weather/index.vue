@@ -85,7 +85,20 @@
 					<div class="zmiti-systemhome-right">
 						<div class="zmiti-systemhome-weather">
 							<div class="zmiti-systemhome-weather-inner">
-								<div class="zmiti-systemhome-weather-cityname">{{cityname}}</div>
+								<dl>
+									<dt>{{weather.temperature}}&#8451;</dt>
+									<dd>										
+										<div class="zmiti-systemhome-tq">
+										{{weather.conditionDay}}
+										</div>
+										<div class="zmiti-systemhome-cityname">
+										{{cityname}}
+										</div>
+									</dd>
+								</dl>
+								<div class="zmiti-systemhome-windDir">
+									{{weather.windDirDay}}
+								</div>
 							</div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
@@ -158,6 +171,11 @@
 				cityname:'',
 				provicename:'',
 				cityId:'2',
+				weather:{
+					temperature:'26',
+					conditionDay:'晴',
+					windDirDay:'3-4级北风'
+				},
 				userinfor:{
 					userface:'../../assets/images/zmiti.jpg',
 					userlevel:'../../assets/images/system-level1.png'

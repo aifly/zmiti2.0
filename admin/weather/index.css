@@ -36,6 +36,30 @@
       height: 180px;
       background-color: #3f8fff;
       color: #ffffff; }
+      .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather .zmiti-systemhome-weather-inner {
+        padding: 0 0 0 30px;
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: column;
+        height: 100%;
+        justify-content: center; }
+      .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather dl {
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: row; }
+        .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather dl dt {
+          font-size: 60px;
+          line-height: 1;
+          margin-right: 10px; }
+        .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather dl dd {
+          font-size: 18px;
+          line-height: 1; }
+          .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather dl dd .zmiti-systemhome-tq {
+            padding: 8px 0; }
+      .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather .zmiti-systemhome-windDir {
+        line-height: 1;
+        font-size: 18px;
+        padding-top: 10px; }
 
 .zmiti-systemhome-bor {
   padding: 8px 15px 3px 15px;
