@@ -27,7 +27,7 @@
     "file-loader": "^0.8.5",
     "html-loader": "^0.5.4",
     "iscroll": "^5.2.0",
-    "iview": "^3.3.3",
+    "iview": "^3.4.2",
     "iview-loader": "^1.2.2",
     "iview-theme": "^1.1.0",
     "jquery": "^3.3.1",

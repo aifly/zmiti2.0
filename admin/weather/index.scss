@@ -1,0 +1,168 @@
+@import "../css/base.scss";
+@mixin flexrows($k){
+	flex:$k;
+	-webkit-flex:$k;
+}
+.zmiti-weather-main-ui{
+	background: #f2f2f2;
+	box-sizing: border-box;
+	height: 99%;
+	width: 100%;
+	@include pos(r);
+	margin:0 auto;
+	@include displayFlex(row);
+	.zmiti-list-main {
+	    box-sizing: border-box;
+	    margin: 0 auto;
+	    flex: 2;
+	    -webkit-flex: 2;
+		@include pos(r);
+	}
+}
+.zmiti-systemhome-pane{
+	@include displayFlex(row);
+	.zmiti-systemhome-left{
+		flex:1;
+		-webkit-flex:1;
+		margin-left: 5px;
+	}
+	.zmiti-systemhome-right{
+		width:320px;
+		margin-left: 18px;
+		margin-right: 5px;
+		.zmiti-systemhome-weather{
+			height: 180px;
+			background-color:#3f8fff;
+			color: #ffffff;
+		}
+	}
+}
+.zmiti-systemhome-bor{
+	padding:8px 15px 3px 15px;
+	background-color:#ffffff;
+	box-shadow: 0px 0px 2px 2px #d3d3d3;
+}
+.zmiti-systemhome-hr{
+	height: 18px;
+	line-height: 0;
+	font-size: 0;
+}
+.zmiti-systemhome-h3{
+	font-size: 18px;
+	line-height: 40px;
+	color:#222222;
+	font-weight: bold;
+}
+.zmiti-systemhome-more{
+	line-height: 1;
+	a{
+		color: #3390ff;
+		font-size: 14px;
+		line-height: 40px;
+	}
+}
+.zmiti-systemhome-ulist{	
+	li{
+		font-size: 14px;
+		line-height: 24px;
+		margin-bottom: 10px;
+		&:last-child{
+			margin-bottom: 0;
+		}
+		a{
+			color:#222222;
+		}
+		h5{
+			font-weight: normal;
+			font-size: 14px;
+			color: #bbbbbb;
+		}
+	}
+}
+.zmiti-systemhome-ucount{
+	ul{
+		@include displayFlex(row);
+		li{
+			@include flexrows(1);
+			color: #ffffff;
+			margin-right:20px;
+			&:nth-child(1){
+				background-color:#2f91f2;
+			}
+			&:nth-child(2){
+				background-color:#f87738;
+			}
+			&:nth-child(3){
+				background-color:#9428f6;
+				margin-right:0px;
+			}
+			dl{
+				line-height: 40px;
+				@include displayFlex(column);
+				justify-content: center;
+				height: 100%;
+				dt{
+					font-size: 40px;
+					padding-bottom: 5px;
+					border-bottom:1px solid rgba(255,255,255, .2);
+				}
+				dd{
+					font-size:24px;
+				}
+			}
+			.zmiti-systemhome-ucount-li{
+				@include displayFlex(row);
+				padding:0 25px;
+				height: 150px;
+				.zmiti-systemhome-ucount-icon{
+					margin-left: auto;					
+					.zmiti-systemhome-ucount-img{
+						@include displayFlex(column);
+						align-items: center;
+						justify-content: center;
+						height: 100%;
+					}
+				}
+			}
+		}
+	}	
+}
+.zmiti-systemhome-user{
+	@include displayFlex(row);
+	padding:25px;
+	background-color:#ffffff;
+	box-shadow: 0px 0px 2px 2px #d3d3d3;
+	.zmiti-systemhome-userface{
+		margin-right: 20px;
+		img{
+			display: block;
+			width:120px;
+			height: 120px;
+			border:4px solid #eaf4ff;
+			border-radius:50%;
+		}
+	}
+	.zmiti-systemhome-userinfo{
+		height: 120px;
+		@include displayFlex(column);
+		justify-content: center;
+		.zmiti-systemhome-username{
+			font-size: 24px;
+			line-height: 1;
+			color: #222222;
+			b{
+				font-weight: normal;
+				padding-right:15px;
+			}
+			span{
+				color: #3390ff;
+				font-size: 16px;
+			}
+		}
+		.zmiti-systemhome-logintime{
+			color: #777777;
+			font-size: 16px;
+			padding:10px 0 0 0;
+		}
+	}
+}
