@@ -51,7 +51,7 @@
 							<li class='zmiti-hover-company'>
 								<span class='zmt_iconfont'>&#xe6a1;</span> 单位信息
 							</li>
-							<li class='zmiti-hover-exit'>
+							<li class='zmiti-hover-exit' @click='logout'>
 								退出平台
 							</li>
 						</ul>
@@ -199,25 +199,8 @@
             logout(){
                 var s = this;
                 
-                zmitiUtil.ajax({
-                    _this:s,
-                    url:window.config.baseUrl+'user/user_loginout/',
-                    data:{
-                        username:s.userinfo.username,
-                        getusersigid:s.userinfo.getusersigid
-                    },
-                    success(data){
-                        if(data.getret === 0){
-                            s.$Message.success('注销成功');
-                            setTimeout(() => {
-                                window.location.hash = '#/login';
-                            }, 500);
-                        }
-                        else{
-                            s.$Message.error('注销失败');
-                        }
-                    }
-                })
+				window.localStorage.setItem(this.isAdmin?'adminlogin':'login','');
+				window.location.hash = '#/login';
             },
             tab(index){
                 this.tabIndex = index;

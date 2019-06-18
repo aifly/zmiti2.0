@@ -25,7 +25,6 @@ import './admin/css/index.css';
 import './components/css/theme.less'
 ///import 'iview/dist/styles/iview.css';
 
-console.log(ResourceList)
 
 Vue.use(VueRouter)
 Vue.use(iView)
@@ -66,7 +65,7 @@ const router = new VueRouter({
 		{ path: '/weather/', name: 'weather', component: Weather },
 		{
 			path: '/group/', name: 'group', component: Group, props: true, children: [
-				{ path: '/user/', name: 'user', component: User },
+				{ path: '/user/:companyid?', name: 'user', component: User },
 				{ path: '/company/', name: 'company', component: Company },
 				{ path: '/admin/', name: 'admin', component: Admin},
 				{ path: '/pv/', name: 'pv', component: Pv},

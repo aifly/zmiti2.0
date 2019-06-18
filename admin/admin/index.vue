@@ -106,6 +106,7 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
+	var weatherActions = zmitiUtil.weatherActions;
 	var zmitiActions = zmitiUtil.adminActions;
 	export default {
 		props:['obserable'],
@@ -329,6 +330,8 @@
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getAdminList();
+	this.getWeatherData();
+			
 		},
 
 		watch:{
@@ -347,6 +350,23 @@
 		},
 		
 		methods:{
+			getWeatherData(){
+				zmitiUtil.adminAjax({
+					remark:'viewTrafficdata',
+					_ui:{
+						type:1
+					},
+					data:{
+						action:weatherActions.viewTrafficdata.action,
+						info:{
+							cityid:2
+						}
+					},
+					success(data){
+						console.log(data);
+					}
+				})
+			},
 			getAvatar(avatar){
 				this.formAdmin.avatar = avatar;
 			},

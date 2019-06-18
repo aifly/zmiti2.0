@@ -178,6 +178,13 @@
   cursor: pointer;
   text-align: center;
   color: #777;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+
+.layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li.zmiti-hover-exit:hover {
+  color: #fff;
+  border-color: #fff;
 }
 
 .layout .ivu-layout-header > div.zmiti-user-info div {

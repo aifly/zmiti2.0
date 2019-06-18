@@ -78,10 +78,6 @@
 					</section>
 				</transition>
 			</div>
-
-		<Modal title='权限设置' v-model="visible">
-			<Table :data='roleList' :columns='roleCol'></Table>
-		</Modal>
  
 		<Avatar v-model="showAvatarModal" :avatar='formCompany.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
@@ -133,40 +129,7 @@
 				companyList:[],
 				groupList:[],
 				hideMenu:false,
-				roleCol:[
-					{
-						title:"产品名称",
-						key:'productname',
-						align:'center',
-					},
-					{
-						title:"访问权限",
-						key:'role',
-						align:'center',
-						render:(h,params)=>{
-							console.log(params.row)
-							return h('Checkbox',{
-								props:{
-									checked:true,
-									value:params.row.authstatus === 1
-								},
-								on:{
-									'on-change':(e)=>{
-										var s = this;
-										zmitiUtil.ajax({
-											url:window.config.baseUrl+'admin/setuserauth',
-											data:{
-												setuserid:s.currentUserid,
-												productids:params.row.productid,
-												isdel:params.row.authstatus === 1 ? 1:2
-											}
-										})
-									}
-								}
-							},'访问权限')
-						}
-					}
-				],
+			 
 				
 				columns:[
 					{
@@ -214,19 +177,7 @@
                                     on: {
                                         click: () => {
 											
-											this.visible = true;
-											var s = this;
-											this.currentUserid = params.row.userid;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;									
-													console.log(data);
-												}
-											})
+										 
                                         }
                                     }
 								}, '权限'),
@@ -242,20 +193,7 @@
                                     },
                                     on: {
                                         click: () => {
-											
-											this.visible = true;
-											var s = this;
-											this.currentUserid = params.row.userid;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;									
-													console.log(data);
-												}
-											})
+											this.$router.push('/user/'+params.row.companyid)
                                         }
                                     }
 								}, '用户'),

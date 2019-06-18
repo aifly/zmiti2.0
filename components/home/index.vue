@@ -37,7 +37,7 @@
 
 	var userActions = zmitiUtil.userActions;
 
-	
+	var weatherActions = zmitiUtil.weatherActions;
 	import Vue from 'vue';
 	var json = {};
 	export default {
@@ -98,7 +98,8 @@
 
 			this.date = '今日，'+year+'年'+month+'月'+date+'日 '+ day + ' ，欢迎回到智媒体2.0单位控制平台';
 
-			
+
+			 this.getWeatherData();
 
 
 
@@ -106,6 +107,23 @@
 		
 		methods:{
 
+			getWeatherData(){
+				zmitiUtil.ajax({
+					remark:'viewTrafficdata',
+					_ui:{
+						type:2
+					},
+					data:{
+						action:weatherActions.viewLastdata.action,
+						info:{
+							cityid:2
+						}
+					},
+					success(data){
+						console.log(data);
+					}
+				})
+			}
 			
 			
 		}

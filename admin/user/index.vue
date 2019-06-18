@@ -2,13 +2,13 @@
 	<div class="zmiti-user-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div>单位管理</div>
+				<div><span v-if='companyname'>{{companyname}} —— </span>用户管理</div>
 				<div>
-					<Button type="primary" @click="addAdmin">新增单位</Button>
+					<Button type="primary" @click="addAdmin">新增用户</Button>
 				</div>
 			</header>
 			<section class='zmiti-list-where'>
-				单位编号 <input type="text">
+				用户编号 <input type="text">
 			</section>
 			
 			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
@@ -40,7 +40,7 @@
 							<FormItem label="密码：">
 								<Input v-model="formUser.userpwd" type="password" placeholder="密码：" />
 							</FormItem>
-							<FormItem label="所在单位：">
+							<FormItem label="所在单位：" v-if='!$route.params.companyid'>
 								<Select v-model="formUser.companyid">
 									<Option v-for="item in companyList" :value="item.companyid" :key="item.companyid">{{ item.companyname }}</Option>
 								</Select>
@@ -101,7 +101,7 @@
 			</div>
 
 		<Modal title='权限设置' v-model="visible">
-			<Table :data='roleList' :columns='roleCol'></Table>
+			
 		</Modal>
  
 		<Avatar v-model="showAvatarModal" :avatar='formUser.avatar' @getAvatar='getAvatar'></Avatar>
@@ -116,8 +116,8 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
-	var companyActions = zmitiUtil.companyActions;
-	var zmitiActions = zmitiUtil.companyActions;
+
+	var {companyActions,zmitiActions} = zmitiUtil;
 
 	export default {
 		props:['obserable'],
@@ -127,7 +127,7 @@
 
 				tabIndex:[0,-1],
 				showAvatarModal:false,
-				visible:false,
+				visible:true,
 				avatarList:[
 					'&#xe6a5;',
 					'&#xe6a4;',
@@ -135,6 +135,7 @@
 					'&#xe6a2;',
 					'&#xe6a0;'
 				],
+				companyname:'',
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
@@ -158,41 +159,6 @@
 				groupList:[],
 				companyList:[],
 				hideMenu:false,
-				roleCol:[
-					{
-						title:"产品名称",
-						key:'productname',
-						align:'center',
-					},
-					{
-						title:"访问权限",
-						key:'role',
-						align:'center',
-						render:(h,params)=>{
-							console.log(params.row)
-							return h('Checkbox',{
-								props:{
-									checked:true,
-									value:params.row.authstatus === 1
-								},
-								on:{
-									'on-change':(e)=>{
-										var s = this;
-										zmitiUtil.ajax({
-											url:window.config.baseUrl+'admin/setuserauth',
-											data:{
-												setuserid:s.currentUserid,
-												productids:params.row.productid,
-												isdel:params.row.authstatus === 1 ? 1:2
-											}
-										})
-									}
-								}
-							},'访问权限')
-						}
-					}
-				],
-				
 				columns:[
 					{
 						title:"用户名",
@@ -360,6 +326,13 @@
 						this.showDetailPage = false;
 					}, 310);
 				}
+			},
+			$route:{
+				deep:true,
+				handler(){
+					
+					this.getDataList()
+				}
 			}
 			
 		},
@@ -378,7 +351,15 @@
 					},
 					success(data){
 						if(data.getret === 0){
-							s.companyList = data.list;	 
+							s.companyList = data.list;
+							if(s.$route.params.companyid){
+								data.list.forEach((dt)=>{
+									if(dt.companyid === s.$route.params.companyid){
+										s.companyname = dt.companyname;
+									}
+								})
+
+							}
 						}
 					}
 				})
@@ -450,6 +431,8 @@
 					console.log('当前浏览器不支持Promise');
 					return;
 				}
+				var companyid = this.$route.params.companyid;
+				this.condition.companyid = companyid;
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.adminAjax({
 						remark:'getUserList',
@@ -469,7 +452,10 @@
 			adminAction(){
 				var s = this;
 				var action = this.formUser.userid ? companyActions.editUser.action:companyActions.addUser.action;
-				
+				var companyid = this.$route.params.companyid;
+				if(companyid){
+					this.formUser.companyid = companyid;
+				}
 				zmitiUtil.adminAjax({
 					remark:this.formUser.userid ?　'editUser':'addUser',
 					data:{

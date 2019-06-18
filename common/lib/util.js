@@ -125,10 +125,13 @@ var zmitiUtil = {
  
 		axios.post(window.config.baseUrl + '?name=' + (option.remark || '').toLowerCase(), JSON.stringify(opt)).then((dt) => {
 			var dt = dt.data;
+			
+		 
 			if (dt.getret === 0){
 				
 			}
 			else if (dt.getret === 9997 || dt.getret === 9996){
+			
 				window.localStorage[option.isAdmin ? 'adminlogin' : 'login'] = '';
 				if (option.isAdmin) {
 					adminErrorFn && adminErrorFn();

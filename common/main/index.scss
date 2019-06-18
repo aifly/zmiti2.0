@@ -157,6 +157,11 @@ $primary-color: #00c1de;
 									cursor: pointer;
 									text-align: center;
 									color:#777;
+									@include transition(.1s);
+									&:hover{
+										color:#fff;
+										border-color:#fff;
+									}
 								}
 							}
 						 }
