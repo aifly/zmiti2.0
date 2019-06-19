@@ -74,11 +74,13 @@
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
 							<div class="zmiti-systemhome-h3">单位名称</div>
 							<i-table :columns="columns1" :data="data1"></i-table>
+							<div class="zmiti-systemhome-more"><a href="#">更多</a></div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
 							<div class="zmiti-systemhome-h3">产品列表</div>
 							<i-table :columns="columns2" :data="data2"></i-table>
+							<div class="zmiti-systemhome-more"><a href="#">更多</a></div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 					</div>
@@ -241,7 +243,7 @@
 				],
 				columns1: [
                     {
-                        title: '单位名称',
+                        title: '名称',
                         key: 'companyname'
                     },
                     {
