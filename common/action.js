@@ -58,6 +58,18 @@ let adminActions = {
 		desc: "获取产品列表",
 		action: '1000300'
 	},
+	delProduct:{
+		desc:"管理员删除产品",
+		action:'1000303'
+	},
+	addProduct: {
+		desc: "管理员添加产品",
+		action: '1000301'
+	}, 
+	editProduct: {
+		desc: "管理员修改产品",
+		action: '1000302'
+	},
 	getUserWorkOrderList:{
 		desc:'管理员查看工单列表',
 		action:'1000111'

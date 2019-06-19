@@ -3,86 +3,70 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
-.lt-full {
-  width: 100%;
+.zmiti-user-main-ui {
+  background: #f2f2f2;
+  box-sizing: border-box;
   height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
+  width: 99%;
+  margin: 0 auto;
 }
 
-.zmiti-text-overflow {
-  overflow: hidden;
-  white-space: nowrap;
-  word-break: break-all;
-  text-overflow: ellipsis;
-  -webkit-text-overflow: ellipsis;
-}
-
-.zmiti-play {
-  width: .8rem;
-  height: .8rem;
-  border-radius: 50%;
-  position: fixed;
-  z-index: 1000;
-  right: .5rem;
-  top: .5rem;
-}
-
-.zmiti-play.rotate {
-  -webkit-animation: rotate 5s linear infinite;
-  animation: rotate 5s linear infinite;
-}
-
-.symbin-left {
-  float: left !important;
-}
-
-.symbin-right {
-  float: right !important;
-}
-
-@-webkit-keyframes rotate {
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-.zmiti-product-main-ui {
+.zmiti-user-main-ui .zmiti-avatar-list {
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
 }
 
-.zmiti-product-main-ui .ivu-table-wrapper {
+.zmiti-user-main-ui .zmiti-avatar-list span {
+  font-size: 40px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.zmiti-user-main-ui .zmiti-avatar-list span.active {
+  color: #3390ff;
+}
+
+.zmiti-user-main-ui .ivu-table-wrapper {
   border-bottom: none;
   border-right: none;
 }
 
-.zmiti-product-main-ui > div:nth-of-type(1) {
-  width: 200px;
-}
-
-.zmiti-product-main-ui .zmiti-tab-content {
+.zmiti-user-main-ui .zmiti-list-main {
   box-sizing: border-box;
-  flex: 1;
-  -webkit-flex: 1;
+  background: #fff;
+  margin: 0 auto;
+  flex: 2;
+  -webkit-flex: 2;
+  position: relative;
+  top: 5px;
   display: flex;
   display: -webkit-flex;
   flex-flow: column;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content > div {
-  width: 98%;
+.zmiti-user-main-ui .zmiti-list-main:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 0 1px #ccc;
+}
+
+.zmiti-user-main-ui .zmiti-list-main .zmiti-add-form-close {
+  z-index: 100;
+}
+
+.zmiti-user-main-ui .zmiti-list-main > div {
   margin: 10px auto 10px;
   position: relative;
   flex: 1;
   -webkit-flex: 1;
-  overflow: auto;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content > div .zmiti-meet-form {
+.zmiti-user-main-ui .zmiti-list-main > div .zmiti-meet-form {
   width: 100%;
   margin: 0px auto;
   padding: 20px 40px;
@@ -90,103 +74,168 @@
   overflow: auto;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content .zmiti-tab-header {
-  width: 50px;
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: row;
-  width: 100%;
-  padding: 0 20px;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
-  line-height: 50px;
-  font-size: 20px;
-}
-
-.zmiti-product-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1) {
+.zmiti-user-main-ui .zmiti-list-main .zmiti-list-where {
+  width: 98%;
+  margin: 10px auto 0;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
   position: relative;
-  text-indent: .5em;
+  z-index: 10;
 }
 
-.zmiti-product-main-ui .zmiti-tab-content .zmiti-tab-header > div:nth-of-type(1):before {
-  content: '';
-  width: 4px;
-  height: 24px;
-  background: #be0000;
-  left: -4px;
-  position: absolute;
-  top: 12px;
+.zmiti-user-main-ui .zmiti-list-main .zmiti-list-where input {
+  height: 30px;
 }
 
-.zmiti-product-main-ui .zmiti-product-main {
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main {
+  flex: 5;
+  -webkit-flex: 5;
   width: 100%;
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: row;
 }
 
-.zmiti-product-main-ui .zmiti-product-main > div {
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main > div {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-table {
-  width: 100%;
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main .zmiti-user-table {
+  width: 98%;
+  margin: 0 auto;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-table .ivu-table-wrapper {
-  margin-top: 10px;
-}
-
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-table.active {
-  width: 70%;
-}
-
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form {
-  margin-top: 10px;
-  margin-left: 2%;
-  width: 28%;
-  position: absolute;
-  right: 0;
-}
-
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form.detail-enter-active, .zmiti-product-main-ui .zmiti-product-main .zmiti-product-form.detail-leave-active {
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form.detail-enter, .zmiti-product-main-ui .zmiti-product-main .zmiti-product-form.detail-leave-to {
-  width: 0;
+.zmiti-user-main-ui .lt-full {
+  position: fixed !important;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
   overflow: hidden;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form > header {
-  line-height: 40px;
-  height: 40px;
-  font-weight: bold;
-  color: #515a6e;
-  text-indent: 2em;
-  background: #f8f8f9;
+.zmiti-user-main-ui .lt-full .zmiti-left-pannel {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  left: 0;
+  top: 0;
+  z-index: 10;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form .zmiti-product-form-item {
+.zmiti-user-main-ui .zmiti-add-form {
+  flex: 1;
+  -webkit-flex: 1;
+  width: 500px;
+  overflow: auto;
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  height: 100%;
+  position: relative;
+  box-shadow: 0 0 0 1px #ccc;
+  box-sizing: border-box;
+  background: #f9f9f9;
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-safe-content {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-align-items: center;
+  align-items: center;
+  margin-top: 30px;
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  border: 1px dashed #ccc;
+  padding: 10px 0;
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(1) {
+  text-align: center;
+  width: 120px;
+  font-weight: bold;
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(2) {
+  flex: 1;
+  -webkit-flex: 1;
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(3) {
+  width: 80px;
+  cursor: pointer;
+  text-align: center;
+  color: #0066cc;
+}
+
+.zmiti-user-main-ui .zmiti-add-form.detail-enter-active, .zmiti-user-main-ui .zmiti-add-form.detail-leave-active {
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.zmiti-user-main-ui .zmiti-add-form.detail-enter, .zmiti-user-main-ui .zmiti-add-form.detail-leave-to {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-user-avatar {
+  background: rgba(51, 144, 255, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto 30px;
+  cursor: pointer;
+  position: relative;
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-user-avatar label {
+  position: absolute;
+  bottom: -50px;
+  font-size: 12px;
+  width: 100%;
+  text-align: center;
+  left: 0;
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-user-avatar span {
+  font-size: 40px;
+  color: rgba(51, 144, 255, 0.8);
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-add-form-C {
+  margin: 10px auto 2px;
+  width: 90%;
+}
+
+.zmiti-user-main-ui .zmiti-add-form .zmiti-add-form-item {
   line-height: 50px;
   height: 50px;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form .zmiti-product-form-item.zmiti-product-btns {
+.zmiti-user-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
   text-align: center;
+  position: relative;
+  z-index: 10;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form .zmiti-product-form-item.zmiti-product-btns button {
+.zmiti-user-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
   margin: 0 20px;
   padding: 2px 20px;
 }
 
-.zmiti-product-main-ui .zmiti-product-main .zmiti-product-form .zmiti-product-form-item input {
+.zmiti-user-main-ui .zmiti-add-form .zmiti-add-form-item input {
   padding-left: 6px;
-  height: 26px;
+  height: 32px;
   width: 70%;
   border: 1px solid #d8d8d8;
   outline: none;
+}
+
+.ivu-icon-ios-help-circle {
+  left: 25px;
+}
+
+.ivu-radio-inner:after {
+  border-radius: 10px !important;
 }

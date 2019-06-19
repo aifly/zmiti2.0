@@ -1,72 +1,123 @@
 <template>
-	<div class="zmiti-product-main-ui">
-		<div class="zmiti-tab-content">
+	<div class="zmiti-user-main-ui">
+		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div>产品管理</div>
+				<div><span v-if='companyname'>{{companyname}} —— </span>产品管理</div>
 				<div>
-					<Button type="primary" @click="addCourse">新增产品</Button>
+					<Button type="primary" @click="addAdmin">新增产品</Button>
 				</div>
 			</header>
-			<div class='zmiti-product-main' :style="{height:viewH - 120+'px' }">
-				<div class='zmiti-product-table' :class="{'active':showDetail}">
-					<Table :data='productList' :columns='columns'></Table>
+			<section class='zmiti-list-where'>
+				产品编号：<Input placeholder="产品编号" style="width: auto" />
+				产品简称：<Input placeholder="产品简称" style="width: auto" />
+				<Button type='primary'>查询</Button>
+			</section>
+			
+			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
+				<div class='zmiti-user-table' :class="{'active':showDetail}">
+					<Table  :data='dataSrouce' :columns='columns'></Table>
 				</div>
+			</div>
+			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
+		</div>
+			<div class='lt-full' v-show='showDetailPage'>
+				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
 				<transition name='detail'>
-					<div class='zmiti-product-form' v-if='showDetail'>
-						<header>
-							{{formproduct.productid?'编辑评分项':'新增评分项'}}
+					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
+						<header class='zmiti-add-header'>
+							<img :src="imgs.back" alt=""  @click='showDetail = false' >
+							<span>产品信息</span>
 						</header>
-						<div class='zmiti-product-form-item'>
-							<label for="">产品名称：</label><input placeholder="请输入产品名称" v-model="formproduct.productname" />
+						<div class='zmiti-user-avatar' @click="showAvatarModal = true">
+							<span class='zmt_iconfont' v-html='formObj.icon'></span>
+							<label>更换头像</label>
 						</div>
-						<div class='zmiti-product-form-item'>
-							<label for="">产品简称：</label><input placeholder="请输入产品简称" v-model="formproduct.outline" />
+						<Form class='zmiti-add-form-C' :model="formObj" :label-width="120">
+							<FormItem label="产品名：">
+								<Input v-model="formObj.productname"  placeholder="产品名：" />
+							</FormItem>
+							<FormItem label="产品介绍：">
+								<Input v-model="formObj.introduce" placeholder="产品介绍：" />
+							</FormItem>
+							<FormItem label="链接：">
+								<Input v-model="formObj.producturl" placeholder="链接：" />
+							</FormItem>
+						 
+						</Form>
+						
+						<div class='zmiti-add-form-item zmiti-add-btns'>
+							<Button size='large' type='primary' @click='action'>{{formObj.productid?'保存':'确定'}}</Button>
 						</div>
 						
-						<div class='zmiti-product-form-item zmiti-product-btns'>
-							<Button @click='showDetail = false' size ='small' type='default'>返回</Button>
-							<Button size ='small' type='primary' @click='productAction'>{{formproduct.productid?'保存':'确定'}}</Button>
-						</div>
-					</div>
+					</section>
 				</transition>
 			</div>
-		</div>
-		<ZmitiModal></ZmitiModal>
+
+		<Avatar v-model="showAvatarModal" :avatar='formObj.icon' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
+<style lang="scss" scoped>
+	@import './index.scss';
+</style>
 <script>
-	import './index.css';
-	
+
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import ZmitiModal  from '../../common/modal/index';
+	import Avatar from '../../common/avatar';
+
+	var {adminActions,companyActions } = zmitiUtil;
+
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
 
+				tabIndex:[0,-1],
+				showAvatarModal:false,
+				visible:false,
+				avatarList:[
+					'&#xe6a5;',
+					'&#xe6a4;',
+					'&#xe6a3;',
+					'&#xe6a2;',
+					'&#xe6a0;'
+				],
+				companyname:'',
+				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
+				showDetailPage:false,
 				currentClassId:-1, 
+				adminuserId:'',
+				currentUserid:'',
+				formObj:{
+					isover:0,
+					usersign:1,
+					usertypesign:1,
+					avatar:'&#xe6a4;'
+				},
 				address:'',
 				showPass:false,
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
-				productList:[],
+				dataSrouce:[],
+				groupList:[],
+				companyList:[],
+				hideMenu:false,
 				columns:[
 					{
 						title:"产品名称",
-						key:'title',
+						key:'productname',
 						align:'center'
 						
 					},
 					{
 						title:"产品简称",
-						key:'outline',
+						key:'introduce',
 						align:'center'
 						
 					},
@@ -78,45 +129,48 @@
 
 							return h('div', [
                                
-                                h('Button', {
+                               
+								 h('span', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
                                     },
                                     style: {
-										margin: '2px 5px',
+										margin: '2px 10px',
 										border:'none',
-										background:'#fab82e',
-										color:'#fff',
-										padding: '3px 7px 2px',
 										fontSize: '12px',
-										borderRadius: '3px'
+										cursor:'pointer',
+										color:'#06C'
 
                                     },
                                     on: {
                                         click: () => {
 											var s = this;
 											s.showDetail = true;
-											s.formproduct = params.row;
+											s.formObj = params.row; 
                                         }
                                     }
                                 }, '详情'),
                                 h('Poptip',{
 									props:{
 										confirm:true,
-										title:"确定要删除吗"
+										title:"确定要删除吗？"
 									},
 									on:{
 										'on-ok':()=>{
-											this.delproduct(params.row.productid);
+											this.delete(params.row.productid);
 										},
 										
 									}
 								},[
-									h('Button', {
+									h('span', {
 										props: {
 											type: 'error',
 											size: 'small'
+										},
+										style:{
+											cursor:'pointer',
+											color:'#06C'
 										},
 										on: {
 											click: () => {
@@ -125,28 +179,22 @@
 									}, '删除')
 								])
                             ]);
-							
-							 
 						}
 					}
 				],
-				
-				formproduct:{
-					pdfurl:'',
-					longitude :'116.585856',
-					latitude :'40.364989'
+				formObj:{
+					 
 				},
-				courseList:[],
 				 
-				directoryList:{
-
+				condition:{
+					page_index:0,
+					page_size:10,
 				},
-				
 				userinfo:{}
 			}
 		},
 		components:{
-			ZmitiModal
+			Avatar
 		},
 
 		beforeCreate(){
@@ -157,80 +205,121 @@
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getUserInfo();
-			
-			this.getProductList();
-			
-
-			
+			this.userinfo = zmitiUtil.getAdminUserInfo();
+			this.getDataList();
 		},
 
 		watch:{
 			
+
+			showDetail(val){
+				if(val){
+					this.showDetailPage = true;
+				}else{
+					setTimeout(() => {
+						this.showDetailPage = false;
+					}, 310);
+				}
+			},
+			$route:{
+				deep:true,
+				handler(){
+					
+					this.getDataList()
+				}
+			}
+			
 		},
 		
 		methods:{
-
-			addCourse(){
-				this.showDetail = true;
-				this.currentClassId = -1;
-				this.formproduct = {
-				}
+		 
+			 
+			getAvatar(avatar){
+				this.formObj.icon = avatar;
 			},
-
-
-			refresh(){
-				this.showDetail = false;
-				this.currentClassId = -1;
-			},
-
-			getProductList(){
-				var s = this;
-
-				zmitiUtil.getProductList((arr)=>{
-					this.productList = arr;
-				})
-				
-			},
-		
-			delproduct(id){
-				var s = this;
-				zmitiUtil.ajax({
-					url:window.config.baseUrl+'/zmitiadmin/delrateditems',
+			initPassword(){//初始化密码
+				var {$Message} = this;
+				zmitiUtil.adminAjax({
 					data:{
-						admintoken:s.userinfo.accesstoken,
-						adminuserid:s.userinfo.userid,
-						id
+						action:companyActions.modifyAdminPassword.action,
+						adminuserid:this.formObj.adminuserid,
+						adminpwd:window.config.defaultPass
 					},
 					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
+						$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
-							s.getProductList();
+							
+						}
+					}
+				});
+			},
+			addAdmin(){
+				this.showDetail = true;
+				this.adminuserId = '';
+				this.formObj = {
+					isover:0,
+					avatar:'&#xe6a4;'
+				};
+			},
+
+			delete(productids){
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'delProduct',
+					data:{
+						action:adminActions.delProduct.action,
+						condition:{
+							productids
+						}
+					},
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+							s.getDataList();
+							///s.dataSrouce = data.list;	 
 						}
 					}
 				})
 			},
-			productAction(){
+			getDataList(){
 				var s = this;
-				var p = JSON.parse(JSON.stringify(this.formproduct));
-				p.admintoken = s.userinfo.accesstoken;
-				p.adminuserid = s.userinfo.userid;
-				var url = window.config.baseUrl+'/zmitiadmin/addrateditems';
-				if(p.productid>-1){
-					url = window.config.baseUrl+'/zmitiadmin/updaterateditems';
-					p.id = p.productid;
-				}else{
-					this.formproduct = {
-					}
+				if(typeof window.Promise !== 'function'){
+					console.log('当前浏览器不支持Promise');
+					return;
 				}
-
-				zmitiUtil.ajax({
-					url,
-					data:p,
+				var p = new Promise((resolve,reject)=>{
+					zmitiUtil.adminAjax({
+						remark:'getProductList',
+						data:{
+							action:adminActions.getProductList.action,
+							condition:this.condition
+						},
+						success(data){
+							if(data.getret === 0){
+								s.dataSrouce = data.list;	 
+								resolve();
+							}
+						}
+					})
+				});
+			},
+			action(){
+				var s = this;
+				var action = this.formObj.productid ? adminActions.editProduct.action:adminActions.addProduct.action;
+				
+				zmitiUtil.adminAjax({
+					remark:this.formObj.productid ?　'editUser':'addUser',
+					data:{
+						action,
+						info:this.formObj
+					},
 					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.getmsg);
-						//s.showDetail = false;
-						s.getProductList();
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							s.showDetail = false;
+							s.getDataList();
+						}
 					}
 				})
 			},
