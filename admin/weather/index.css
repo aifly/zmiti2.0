@@ -35,7 +35,12 @@
     .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather {
       height: 180px;
       background-color: #3f8fff;
-      color: #ffffff; }
+      color: #ffffff;
+      position: relative; }
+      .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather .zmiti-systemhome-weather-icon {
+        position: absolute;
+        right: 10px;
+        top: 10px; }
       .zmiti-systemhome-pane .zmiti-systemhome-right .zmiti-systemhome-weather .zmiti-systemhome-weather-inner {
         padding: 0 0 0 30px;
         display: flex;

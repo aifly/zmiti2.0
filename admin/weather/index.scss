@@ -34,6 +34,12 @@
 			height: 180px;
 			background-color:#3f8fff;
 			color: #ffffff;
+			position: relative;
+			.zmiti-systemhome-weather-icon{
+				position:absolute;
+				right:10px;
+				top:10px;
+			}
 			.zmiti-systemhome-weather-inner{
 				padding:0 0 0 30px;
 				@include displayFlex(column);

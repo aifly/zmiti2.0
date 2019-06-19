@@ -16,7 +16,7 @@
 									<span>{{userinfo.info.groupname}}</span>
 								</div>
 								<div class="zmiti-systemhome-logintime">
-								今日，2019年5月16日 星期四，欢迎您回到智媒体2.0单位控制平台。
+								今日，{{time | formatDate}}，欢迎您回到智媒体2.0单位控制平台。
 								</div>
 							</div>							
 						</div>
@@ -74,22 +74,27 @@
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
 							<div class="zmiti-systemhome-h3">单位名称</div>
 							<i-table :columns="columns1" :data="data1"></i-table>
+							<div class="zmiti-systemhome-more"><a href="#">更多</a></div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
 							<div class="zmiti-systemhome-h3">产品列表</div>
 							<i-table :columns="columns2" :data="data2"></i-table>
+							<div class="zmiti-systemhome-more"><a href="#">更多</a></div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 					</div>
 					<div class="zmiti-systemhome-right">
-						<div class="zmiti-systemhome-weather">
+						<div class="zmiti-systemhome-weather" :style="{backgroundImage: 'url(../../assets/images/weather-bg.jpg)'}">
+							<div class="zmiti-systemhome-weather-icon">
+								<img :src="'../../assets/images/weather/W'+weather.icon+'.png'">
+							</div>
 							<div class="zmiti-systemhome-weather-inner">
 								<dl>
-									<dt>{{weather.temperature}}&#8451;</dt>
+									<dt>{{weather.temp}}&#8451;</dt>
 									<dd>										
 										<div class="zmiti-systemhome-tq">
-										{{weather.conditionDay}}
+										{{weather.condition}}
 										</div>
 										<div class="zmiti-systemhome-cityname">
 										{{cityname}}
@@ -97,7 +102,7 @@
 									</dd>
 								</dl>
 								<div class="zmiti-systemhome-windDir">
-									{{weather.windDirDay}}
+									{{weather.windLevel}} 级 {{weather.windDir}}
 								</div>
 							</div>
 						</div>
@@ -172,9 +177,15 @@
 				provicename:'',
 				cityId:'2',
 				weather:{
-					temperature:'26',
-					conditionDay:'晴',
-					windDirDay:'3-4级北风'
+					condition:"晴",
+					humidity:"59",
+					icon:"0",
+					temp:"25",
+					updatetime:"2019-06-19 09:35:08",
+					vis:"4453",
+					windDegrees:"90",
+					windDir:"东风",
+					windLevel:"2"
 				},
 				userinfor:{
 					userface:'../../assets/images/zmiti.jpg',
@@ -232,20 +243,23 @@
 				],
 				columns1: [
                     {
-                        title: '单位名称',
+                        title: '名称',
                         key: 'companyname'
                     },
                     {
                         title: '负责人',
-                        key: 'username'
+                        key: 'username',
+                        width:150
                     },
                     {
                         title: '电话',
-                        key: 'telphone'
+                        key: 'telphone',
+                        width:150
                     },
                     {
                         title: '人数',
-                        key: 'personals'
+                        key: 'personals',
+                        width:150
                     }
                 ],
                 data1: [
@@ -282,12 +296,12 @@
                     {
                         title: '上线时间',
                         key: 'pubtime',
-                        width:120
+                        width:150
                     },
                     {
                         title: '使用数量',
                         key: 'usage',
-                        width:120
+                        width:150
                     }
                 ],
                 data2: [
@@ -316,7 +330,8 @@
                         pubtime: '2018-09-30',
                         usage: 78564732
                     }
-                ]
+                ],
+                time: new Date()
 			}
 		},
 		components:{
@@ -370,8 +385,8 @@
 						console.log(data,'getipcity');
 						//s.$Message[data.getret === 0?'success':'error'](data.msg);
 						if (data.getret==0) {
-							s.cityname=data.cityinfo.cityname;
-							s.provicename=data.cityinfo.provicename;
+							//s.cityname=data.cityinfo.cityname;
+							//s.provicename=data.cityinfo.provicename;
 						}
 
 					}
@@ -455,8 +470,8 @@
 					},
 					success(data){
 						console.log(data,'gettimedata');
-						//s.$Message[data.getret === 0?'success':'error'](data.msg);
-
+						s.weather=data.list.data.condition;
+						s.cityname=data.list.data.city.name;
 					}
 				});
 			},
@@ -512,7 +527,38 @@
 	          }
 	    
 	          return value;
-	        }
+	        },
+	        formatDate: function (value) {
+				let date = new Date(value);
+				let y = date.getFullYear();
+				let MM = date.getMonth() + 1;
+				MM = MM < 10 ? ('0' + MM) : MM;
+				let d = date.getDate();
+				d = d < 10 ? ('0' + d) : d;
+				let h = date.getHours();
+				h = h < 10 ? ('0' + h) : h;
+				let m = date.getMinutes();
+				m = m < 10 ? ('0' + m) : m;
+				let s = date.getSeconds();
+				s = s < 10 ? ('0' + s) : s;				
+				let week='';
+				if (date.getDay() == 0) {
+					week = "星期天";
+				} else if (date.getDay() == 1) {
+					week = "星期一";
+				} else if (date.getDay() == 2) {
+					week = "星期二";
+				} else if (date.getDay() == 3) {
+					week = "星期三";
+				} else if (date.getDay() == 4) {
+					week = "星期四";
+				} else if (date.getDay() == 5) {
+					week = "星期五";
+				} else if (date.getDay() == 6) {
+					week = "星期六";
+				}
+				return y + '年' + MM + '月' + d + '日 ' + week;
+		    }
 	    }
 	}
 </script>
