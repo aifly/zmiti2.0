@@ -100,8 +100,17 @@
 				</transition>
 			</div>
 
-		<Modal title='权限设置' v-model="visible">
-			
+		<Modal title='加入单位' v-model="visible">
+			<div>
+				 <Transfer
+					:data="unJoinedCompany"
+					:titles="['单位列表','当前加入的单位']"
+					:target-keys="targetKeys"
+					filterable
+					:filter-method="filterMethod"
+					@on-change="handleChange2">
+				</Transfer>
+			</div>
 		</Modal>
  
 		<Avatar v-model="showAvatarModal" :avatar='formUser.avatar' @getAvatar='getAvatar'></Avatar>
@@ -125,9 +134,10 @@
 		data(){
 			return{
 
-				tabIndex:[0,-1],
+				
+				targetKeys:[],
 				showAvatarModal:false,
-				visible:true,
+				visible:false,
 				avatarList:[
 					'&#xe6a5;',
 					'&#xe6a4;',
@@ -159,6 +169,7 @@
 				groupList:[],
 				companyList:[],
 				hideMenu:false,
+				unJoinedCompany:[],
 				columns:[
 					{
 						title:"用户名",
@@ -213,16 +224,8 @@
 											this.visible = true;
 											var s = this;
 											this.currentUserid = params.row.userid;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;									
-													console.log(data);
-												}
-											})
+											this.getJoinedCompany();
+											
                                         }
                                     }
 								}, '所属单位'),
@@ -338,6 +341,51 @@
 		},
 		
 		methods:{
+		 
+			handleChange2(ids,index,companyids){
+				var s = this;
+				companyids.forEach((companyid,i)=>{
+					zmitiUtil.adminAjax({
+						remark:index === 'left'?"exitCompany":"joinCompany",
+						data:{
+							action:companyActions[index === 'left'?"exitCompany":"joinCompany"].action,
+							userid:s.currentUserid,
+							companyid
+						},
+						success(data){
+							s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg);
+							s.getJoinedCompany();
+						}
+					});
+				})
+
+			},
+			filterMethod (data, query) {
+                return data.label.indexOf(query) > -1;
+            },
+			getJoinedCompany(){
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'getJoinedCompany',
+					data:{
+						action:companyActions.getJoinedCompany.action,
+						condition:{
+							userid:s.currentUserid,
+							page_index:0,
+							page_size:20,
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							s.targetKeys = [];
+							data.list.forEach(dt=>{
+								s.targetKeys .push(dt.companyid)
+							})
+						}
+					}
+				});
+			},
+			 
 			getCompanyList(){
 				var s = this;
 				zmitiUtil.adminAjax({
@@ -352,14 +400,19 @@
 					success(data){
 						if(data.getret === 0){
 							s.companyList = data.list;
-							if(s.$route.params.companyid){
-								data.list.forEach((dt)=>{
-									if(dt.companyid === s.$route.params.companyid){
-										s.companyname = dt.companyname;
-									}
+							s.unJoinedCompany = [];
+							s.companyList.forEach(dt=>{
+								if(dt.companyid === s.$route.params.companyid){
+									s.companyname = dt.companyname;
+								}
+								s.unJoinedCompany .push({
+									key : dt.companyid,
+									label:dt.companyname,
+									description:dt.companyname,
 								})
 
-							}
+							})
+							console.log(s.companyList);
 						}
 					}
 				})
@@ -435,9 +488,9 @@
 				this.condition.companyid = companyid;
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.adminAjax({
-						remark:'getUserList',
-						data:{
-							action:companyActions.getUserList.action,
+						remark:companyid ? "getUserListByCompanyId":"getUserList",
+						data:{//getUserListByCompanyId
+							action:companyActions[companyid ? "getUserListByCompanyId":"getUserList"].action,
 							condition:this.condition
 						},
 						success(data){

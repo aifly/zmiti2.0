@@ -140,7 +140,29 @@ let companyActions = {//用户单位模块
 	checkUserMobile:{
 		desc:'用户检测手机号',
 		action:'1000808'
+	},
+	joinCompany:{
+		desc:'用户加入单位',
+		action:'1000809'
+	},
+	exitCompany: {
+		desc: '用户退出单位',
+		action: '1000810'
+	},
+	getUserListByCompanyId:{
+		desc:"单位获取用户列表",
+		action:'1000708'
+	},
+	getJoinedCompany:{
+		desc:'用户获取已加入单位',
+		action:'1000811'
+	},
+	changeCompanyAdmin:{
+		desc:'单位变更管理员',
+		action:'1000709'
 	}
+	
+
 }
 
 let userActions = {

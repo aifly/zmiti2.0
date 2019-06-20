@@ -8,7 +8,9 @@
 				</div>
 			</header>
 			<section class='zmiti-list-where'>
-				单位编号 <input type="text">
+				单位名称：<Input placeholder="单位名称" style="width: auto" />
+				单位地址：<Input placeholder="单位地址" style="width: auto" />
+				<Button type='primary'>查询</Button>
 			</section>
 			
 			<div class='zmiti-company-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
