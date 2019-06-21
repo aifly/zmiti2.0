@@ -57,20 +57,32 @@
 					<div><Checkbox>全选</Checkbox></div>
 					<div><Button type='error' size='small'>删除</Button></div>
 				</header>
-				<div class='zmiti-resource-C'>
+				
+				<div class='zmiti-resource-C zmiti-scroll'>
 					<ul>
 						<li v-for="(resource,i) of resourceList" :key="i">
-							<div class='zmiti-resource-file'>
-								<img draggable="false" :src="resource.filepath" alt="">
+							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
+								<div :style="{background:'url('+resource.filepath+') no-repeat center center',backgroundSize:'cover'}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1'>
+
+								</div>
+								<img v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="resource.filepath" alt="">
+								<span v-else :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
+
+								<Checkbox size='large' v-model='resource.checked' class='zmiti-resource-check'></Checkbox>
+								<div class='zmiti-resource-check zmiti-resource-check-icon ' :class="{'active':resource.checked}">
+									
+								</div>
 							</div>
+							<div class='zmiti-reource-name zmiti-text-overflow'>{{resource.filename}}</div>
 						</li>
+						
 					</ul>
 				</div>
 
 			</div>
 			<div></div>
 		</div>
-		<div class="zmiti-resourcelist-footer">
+		<div class="zmiti-resourcelist-footer" v-if='isDialog'>
 			<Button style='width:100px;'>取消</Button>
 			<Button style='width:100px;' type='primary'>确定</Button>
 		</div>
@@ -116,8 +128,9 @@
 </style>
 <script>
 import zmitiUtil from '../lib/util';
-import {defaultClass} from '../config';
+import {defaultClass,defaultExtNames} from '../config';
 import IScroll from 'iscroll';
+
 let {resourceActions} = zmitiUtil;
 export default {
 	props:{
@@ -136,6 +149,7 @@ export default {
 			cateList:[
 				
 			],
+			defaultExtNames,
 			currentClassId:-1,
 			showModal:false,
 			viewW:window.innerWidth,
@@ -198,7 +212,8 @@ export default {
 					//$Message[data.getret === 0 ?　'success':'error'](data.msg);
 					if(data.getret === 0 ){
 						data.list.forEach((list)=>{
-							list.filepath = window.config.host+list.filepath;
+							list.filepath = window.config.host + list.filepath;
+							//list.checked = false;
 						})
 						s.resourceList = data.list;
 					}
@@ -248,6 +263,7 @@ export default {
 					if(data.getret === 0 ){
 						s.getResourceByClassId();
 					}
+					$Message[data.getret === 0 ? 'success':'error'](data.msg);
 					
 				}
 			});

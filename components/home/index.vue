@@ -9,7 +9,17 @@
 					</h2>
 					<div>{{date}}</div>
 				</div>
-				<div class='zmiti-weather-ui'>天气</div>
+				<div class='zmiti-weather-ui'>
+					<div>
+						<span>城市：</span><span>{{weatherObj.city}}</span>
+					</div>
+					<div>
+						<span>温度：</span><span>{{weatherObj.temperature}}度</span>
+					</div>
+					<div>
+						<span>天气：</span><span>{{weatherObj.weather}}</span>
+					</div>
+				</div>
 			</header>
 			<section>
 				<aside class='zmiti-company-product'>
@@ -120,9 +130,8 @@
 <script>
 	import zmitiUtil from '../../common/lib/util';
 
-	var userActions = zmitiUtil.userActions;
-
-	var weatherActions = zmitiUtil.weatherActions;
+	
+	var {cityActions,weatherActions,userActions} = zmitiUtil;
 	import Vue from 'vue';
 	var json = {};
 	export default {
@@ -297,7 +306,10 @@
 						]
 					}
 				],
-				date:""
+				date:"",
+				weatherObj:{
+
+				}
 			}
 		},
 		components:{
@@ -329,13 +341,44 @@
 
 
 			 this.getWeatherData();
-
+			this.getCityByIP();
 		 
 
 		},
 		
 		methods:{
 
+			getCityByIP(){
+				var  s = this;
+				zmitiUtil.ajax({
+					remark:'ipView',
+					_ui:{
+						type:2
+					},
+					data:{
+						action:cityActions.ipView.action,
+					},
+					success(data){
+						if(data.getret === 0){
+
+							AMap.plugin('AMap.Weather', function() {
+								//创建天气查询实例
+								var weather = new AMap.Weather();
+	
+								//执行实时天气信息查询
+								
+								weather.getLive(data.cityinfo.cityname, function(err, data) {
+									if(!err){
+										s.weatherObj = data;
+									}
+									console.log(err, data);
+								});
+							});
+							 
+						}
+					}
+				})
+			},
 			getWeatherData(){
 				zmitiUtil.ajax({
 					remark:'viewTrafficdata',

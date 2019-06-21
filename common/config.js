@@ -59,8 +59,34 @@ let defaultClass = (id=3)=> [ //资源库默认分类
 	}
 ];
 
+let defaultExtNames = {
+	pdf:'&#xe665;',
+
+	xls:'&#xe614;',
+	xlsx: '&#xe614;',
+	
+	mp3:'&#xe7df;',
+	ogg:'&#xe7df;',
+	m4a:'&#xe7df;',
+	
+	doc:'&#xe63c;',
+	docx:'&#xe63c;',
+	
+	mp4:'&#xe601;',
+	webm:'&#xe601;',
+	mov:'&#xe601;',
+	flv:'&#xe601;',
+
+	other:'&#xe606;'
+
+
+	
+
+}
+
  export {
 	workOrderType,
 	orderStatus,
-	defaultClass
+	defaultClass,
+	defaultExtNames
 };

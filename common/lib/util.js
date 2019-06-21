@@ -84,7 +84,7 @@ var zmitiUtil = {
 
 	baseUpload(option){
 		var opt = option.data || {};
-		axios.post(window.config.baseUrl + '/index/upload/upload_file', (opt)).then((dt) => {
+		axios.post('http://file.zmiti.com/index/upload/upload_file', (opt)).then((dt) => {
 			var dt = dt.data;
 			if (dt.getret === 0) {
 

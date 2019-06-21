@@ -35,6 +35,16 @@ $color: #be0000;
 			}
 			.zmiti-weather-ui{
 				width: 200px;
+				div{
+					line-height: 30px;
+					height: 30px;
+					span{
+						&:nth-of-type(2){
+							font-size:18px;
+							color:#3390ff
+						}
+					}
+				}
 			}
 			img{
 				width: 40px;
