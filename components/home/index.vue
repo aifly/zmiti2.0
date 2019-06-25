@@ -11,13 +11,15 @@
 				</div>
 				<div class='zmiti-weather-ui'>
 					<div>
-						<span>城市：</span><span>{{weatherObj.city}}</span>
+						<span>城市：</span><span>{{weatherObj.aqi.cityName}}</span>
 					</div>
 					<div>
-						<span>温度：</span><span>{{weatherObj.temperature}}度</span>
+						<span>温度：</span><span>{{weatherObj.briefcondition.temp}}度</span>
 					</div>
 					<div>
-						<span>天气：</span><span>{{weatherObj.weather}}</span>
+						<span>天气：</span>
+						<img :src='imgs["W"+weatherObj.briefcondition.icon]' alt="">
+						<span>{{weatherObj.briefcondition.condition}}</span>
 					</div>
 				</div>
 			</header>
@@ -308,7 +310,9 @@
 				],
 				date:"",
 				weatherObj:{
-
+					briefcondition:"",
+					aqi:'',
+					
 				}
 			}
 		},
@@ -341,58 +345,27 @@
 
 
 			 this.getWeatherData();
-			this.getCityByIP();
 		 
 
 		},
 		
 		methods:{
-
-			getCityByIP(){
-				var  s = this;
-				zmitiUtil.ajax({
-					remark:'ipView',
-					_ui:{
-						type:2
-					},
-					data:{
-						action:cityActions.ipView.action,
-					},
-					success(data){
-						if(data.getret === 0){
-
-							AMap.plugin('AMap.Weather', function() {
-								//创建天气查询实例
-								var weather = new AMap.Weather();
-	
-								//执行实时天气信息查询
-								
-								weather.getLive(data.cityinfo.cityname, function(err, data) {
-									if(!err){
-										s.weatherObj = data;
-									}
-									console.log(err, data);
-								});
-							});
-							 
-						}
-					}
-				})
-			},
+ 
 			getWeatherData(){
 				zmitiUtil.ajax({
-					remark:'viewTrafficdata',
+					remark:'getWeatherData',
 					_ui:{
 						type:2
 					},
 					data:{
-						action:weatherActions.viewLastdata.action,
-						info:{
-							cityid:2
-						}
+						action:weatherActions.getWeatherData.action,
+						
 					},
 					success(data){
 						console.log(data);
+						if(data.getret === 0){
+							s.weatherObj = data.data
+						}
 					}
 				})
 			}

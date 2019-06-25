@@ -290,6 +290,10 @@ let weatherActions = {
 	viewCitydata:{
 		desc:"天气预警",
 		action:'3002004'
+	},
+	getWeatherData:{
+		desc:"天气预报",
+		action:'3002007'
 	}
 };
 //获取城市信息

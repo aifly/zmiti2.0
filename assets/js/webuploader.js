@@ -4955,8 +4955,8 @@
             },
     
             destroy: function() {
-                this.input.off();
-                this.label.off();
+                this.input && this.input.off();
+                this.input && this.label.off();
             }
         });
     });

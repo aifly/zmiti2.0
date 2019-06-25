@@ -23,7 +23,10 @@
 
 				<section class='zmiti-resource-upload'>
 					<Button type='primary'><Icon type="ios-cloud-upload" /> 点击上传资源</Button>
-					<input type="file" ref='file' @change='uploadFile' name='fileobj'>
+					<input type="file" ref='file' @change='uploadFile' v-if='false' name='fileobj'>
+					<div class='zmiti-upload-before'></div>		
+
+					
 				</section>
 			</div>
 			<div class='zmiti-resource-list'>
@@ -55,25 +58,36 @@
 				</header>
 				<header class='zmiti-resource-header1'>
 					<div><Checkbox>全选</Checkbox></div>
-					<div><Button type='error' size='small'>删除</Button></div>
+					<div><Button type='error' size='small' @click='delResource'>删除</Button></div>
 				</header>
 				
 				<div class='zmiti-resource-C zmiti-scroll'>
 					<ul>
 						<li v-for="(resource,i) of resourceList" :key="i">
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
-								<div :style="{background:'url('+resource.filepath+') no-repeat center center',backgroundSize:'cover'}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1'>
+								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+resource.filepath+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1'>
 
 								</div>
 								<img v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="resource.filepath" alt="">
 								<span v-else :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
 
-								<Checkbox size='large' v-model='resource.checked' class='zmiti-resource-check'></Checkbox>
-								<div class='zmiti-resource-check zmiti-resource-check-icon ' :class="{'active':resource.checked}">
-									
+								<template  v-if='!resource.isUploading'>
+									<Checkbox @on-change='toggleResource(resource)' size='large' v-model='resource.checked' class='zmiti-resource-check'></Checkbox>
+									<div class='zmiti-resource-check zmiti-resource-check-icon ' :class="{'active':resource.checked}">
+										
+									</div>
+								</template>
+								<div v-if='resource.isUploading' class='zmiti-file-progress'>
+									<div>
+										<label for="">{{resource.process=== 0 ? '0%' : resource.process}}</label>
+									</div>
+									<div class='zmiti-progress-bar'>
+										<span :style="{transform:'translateX('+(parseInt(resource.process) - 100)+'%)'}"></span>
+									</div>
+									<div>上传中。。。</div>
 								</div>
 							</div>
-							<div class='zmiti-reource-name zmiti-text-overflow'>{{resource.filename}}</div>
+							<div class='zmiti-reource-name zmiti-text-overflow'>{{resource.filetitle}}</div>
 						</li>
 						
 					</ul>
@@ -126,6 +140,39 @@
 <style lang="scss" scoped>
 	@import './index.scss';
 </style>
+<style lang="scss">
+	.zmiti-upload-before{
+			position: absolute !important;
+			&::before{
+				display: none;
+			}
+			width:100%;
+			height:100%;
+			left:0;
+			top:0;
+			
+			.webuploader-pick{
+				width: 100%;
+				height: 40px;
+			
+			}
+			&>div:nth-of-type(2){
+				height:100% !important;
+				width: 100% !important;
+				top:0;
+				opacity:0;
+			}
+			input[type="file"] {	
+				position: absolute;
+			  top: 0;
+			  width: 100%;
+			  height: 100%;
+			  left: 0;
+			  opacity: 1;
+			  cursor: pointer;
+			}
+		}
+</style>
 <script>
 import zmitiUtil from '../lib/util';
 import {defaultClass,defaultExtNames} from '../config';
@@ -149,6 +196,7 @@ export default {
 			cateList:[
 				
 			],
+			checkedList:[],
 			defaultExtNames,
 			currentClassId:-1,
 			showModal:false,
@@ -172,16 +220,69 @@ export default {
 			},
 			resourceCondition:{
 				page_index:0,
-				page_size:20
+				page_size:30
 			},
 			resourceList:[],//资源集合
 		}
 	},
 	mounted() {
 		this.init();
+		this.upload();
+
+		/* setTimeout(() => {
+			this.resourceList.unshift({
+				fileid:111,
+				filetitle:'aa.txt',
+				checked:false,
+				process:'90%',
+				isUploading:true,
+				fileextname:'gif',
+				filepath:'./assets/images/poster.gif'
+			})
+		}, 1000); */
+
+		
 		
 	},
 	methods: {
+		toggleResource(item){
+			if(item.checked){
+				this.checkedList.push(item)
+			}else{
+				this.checkedList.forEach((ck,i)=>{
+					if(ck.fileid ===  item.fileid){
+						this.checkedList.spliec(i,1);
+					}
+				})
+			}
+		
+		},
+		delResource(){
+			var {isAdmin,$Message} = this;
+			var s = this; 
+			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId})
+			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
+				remark:'delResource',
+				_ui:{
+					type:isAdmin?1:2,
+				},
+				data:{
+					action:resourceActions.delResource.action,
+					fileid:s.checkedList.join(',')
+				},
+				success(data){
+					//$Message[data.getret === 0 ?　'success':'error'](data.msg);
+					if(data.getret === 0 ){
+						data.list.forEach((list)=>{
+							list.filepath = window.config.host + list.filepath;
+							list.size = 'cover';
+							//list.checked = false;
+						})
+						s.resourceList = data.list;
+					}
+				}
+			});
+		},
 		init(){
 			this.getDefaultCate();
 			this.scroll = new IScroll(this.$refs['cate'],{
@@ -213,6 +314,7 @@ export default {
 					if(data.getret === 0 ){
 						data.list.forEach((list)=>{
 							list.filepath = window.config.host + list.filepath;
+							list.size = 'cover';
 							//list.checked = false;
 						})
 						s.resourceList = data.list;
@@ -238,6 +340,214 @@ export default {
 					s.getDefaultCate();
 				}
 			});
+		},
+		upload(){
+			var {isAdmin,$Message} = this;
+			var s = this;  
+			var userinfo = zmitiUtil[isAdmin?'getAdminUserInfo':'getUserInfo']();
+			
+			var {userid,token} = userinfo.ui;
+
+		
+			var formData = {
+				userid,
+				token,
+				fileclassid:s.currentClassId,
+				usertype:isAdmin?1:2,
+				partsize:10*1024*1024,
+				//fileobj:document.querySelector('input[type="file"]').files[0],
+				companyid:"",
+				verify_key:'25c1c1f3597bc5b258bd68be8804576e',
+				file_token:Math.random().toString(36).substr(2)
+			};
+
+			if(s.uploader){
+				///s.uploader.destroy();
+			}
+			var uploader = WebUploader.create({
+				auto: true,
+				server: 'http://file.zmiti.com/index/upload/upload_file',
+				// 选择文件的按钮。可选。
+				// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+				pick: '.zmiti-upload-before',
+				chunkSize:10*1024*1024,
+				chunked: true, //开启分片上传
+				threads: 1, //上传并发数
+				method: 'POST',
+				compress:false,
+				prepareNextFile:true,//是否允许在文件传输时提前把下一个文件准备好。 对于一个文件的准备工作比较耗时，比如图片压缩，md5序列化。 如果能提前在当前文件传输期处理，可以节省总体耗时。
+				formData,
+				thumb:{
+					
+					//height: 110,
+					// 图片质量，只有type为`image/jpeg`的时候才有效。
+					quality: 100,
+					// 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+					allowMagnify: true,
+					// 是否允许裁剪。
+					crop: true,
+					// 为空的话则保留原有图片格式。
+					// 否则强制转换成指定的类型。
+					type: 'image/jpeg'
+				},
+			
+				//accept:accepts[s.currentType],
+				//dnd:'.wm-myreport-left',
+				disableGlobalDnd :true,//是否禁掉整个页面的拖拽功能，如果不禁用，图片拖进来的时候会默认被浏览器打开。
+			});
+
+			/* uploader.on('uploadBeforeSend',function(obj,data){
+				data.uploadfilename = s.formUpload.filetitle;
+				data.filedesc = s.formUpload.filedesc;
+				data.publicadtype = s.menus[s.currentType];
+				if(s.formUpload.tagList){
+					data.userlabel = s.formUpload.tagList.concat([]).join(',');
+				}
+				data.author = s.formUpload.author;
+				data.telphone = s.formUpload.telphone;
+				data.previewurl = s.formUpload.previewurl;
+				var D = new Date();
+				symbinUtil.ajax({
+					url:window.config.baseUrl+'/wmshare/writelog',
+					type:'get',
+					data:{
+						type:'info',
+						msg:JSON.stringify({
+							msg:"uploadBeforeSend ....",
+							data,
+							date:[D.getFullYear(),D.getMonth()+1,D.getDate(),D.getHours(),D.getMinutes(),D.getSeconds()].join('-'),
+							userinfo:s.userinfo
+						})
+					}
+				})
+			});
+			
+			uploader.on('dndAccept',(file,a)=>{
+				console.log(accepts[s.currentType].extensions,(file['0'].type.split('/')[1]))
+
+				if(accepts[s.currentType].extensions.indexOf(file['0'].type.split('/')[1])<=-1){
+					s.$Message.error('目前不支持'+file['0'].type.split('/')[1]+'文件格式');
+					return;
+				}
+
+				symbinUtil.ajax({
+					url:window.config.baseUrl+'/wmadvuser/getuserauth',
+					data:{
+						username:s.userinfo.username,
+						usertoken:s.userinfo.accesstoken,
+						resourceid:id,
+					},
+					success(data){
+						if(data.getret === 0){
+							if(data.authtype<2){//没有写的权限；
+								s.$Message.error('您没有上传的权限');
+								uploader.stop();
+							}else{
+							
+							}
+						}
+						
+					}
+				})
+
+			})
+ 
+			uploader.on("beforeFileQueued",function(file){
+				if(accepts[s.currentType].extensions.indexOf(file['type'].split('/')[1])<=-1){
+					s.$Message.error('当前文件格式不支持');
+					return;
+				}
+				var data = s.configList.filter((item)=>{return item.fieldname === 'publicadtype'})[0]?s.configList.filter((item)=>{return item.fieldname === 'publicadtype'})[0].data:[]
+				s.publicadtype = {data:data[s.currentType]}||'';
+				s.showUploadDialog = false;
+			});
+*/
+			s.uploader = uploader;
+
+			// 当有文件添加进来的时候
+
+			
+			var i = 0;
+			var fileIndex = 0;
+			
+			uploader.on('fileQueued', function (file) {
+
+				i++;
+				s.isUpLoading = true;
+				s.resourceList.unshift({
+					fileid:file.id,
+					filetitle:file.name.split('.')[0],
+					checked:false,
+					process:0,
+					isUploading:true,
+					fileextname:'gif',
+					size:'cover',
+					filepath:'./assets/images/poster.gif'
+				})
+
+			});
+			// 文件上传过程中创建进度条实时显示。
+				var index = -1;
+			uploader.on('uploadProgress', function (file, percentage) {
+				
+				var scale = (percentage * 100|0);
+				s.resourceList.forEach((item,i)=>{
+					if(item.fileid === file.id){
+						index = i;
+						console.log(percentage);
+						item.process = scale + '%';
+						if(scale >=100){
+							setTimeout(()=>{
+								item.isUploading = false;
+								s.resourceList.forEach(item=>{
+									item.size ='contain'
+								});
+								s.resourceList = s.resourceList.concat([]);
+								s.resourceList.forEach(item=>{
+									item.size ='cover';
+								})
+								s.resourceList = s.resourceList.concat([]);
+								s.getResourceByClassId();
+							},1500)
+						}
+					}
+				});
+				
+			});
+
+			// 文件上传成功，给item添加成功class, 用样式标记上传成功。
+			var iNow = 0;
+			uploader.on('uploadSuccess', function (file,response) {
+				if(response.getret !== 0){
+					s.$Modal.error({
+						title: '错误提示',
+						content: response.msg
+					});
+					return;
+				};
+			 
+
+				
+			});
+
+			// 文件上传失败，显示上传出错。
+			uploader.on('uploadError', function (file) {
+				console.log('error')
+				s.$Message.error('文件上传超时，请刷新重试');
+				
+				//$('#' + file.id).find('p.state').text('上传出错');
+			});
+
+			// 完成上传完了，成功或者失败，先删除进度条。
+			
+			uploader.on('uploadComplete', function (file) {
+			 
+				console.log('uploadComplete');
+				//
+				/* $('#' + file.id).find('.progress').remove();
+				$('#' + file.id).find('p.state').text('已上传'); */
+			});
+			
 		},
 		uploadFile(){//开始上传文件
 			var {isAdmin,$Message} = this;

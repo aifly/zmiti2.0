@@ -79,9 +79,6 @@ let defaultExtNames = {
 
 	other:'&#xe606;'
 
-
-	
-
 }
 
  export {

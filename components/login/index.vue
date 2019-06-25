@@ -113,6 +113,15 @@
 					},
 					success(data){
 						s.showLoading = false;
+						if(data.getret === 7){
+							_this.$Message.error(data.msg);
+							return;
+						}
+						if(data.verify >=3){
+							s.showJigsaw=true;
+							return;
+							
+						}
 						if(data.getret === 0 || data.getret === 100){
 							var param = data;
 
@@ -139,7 +148,7 @@
 							_this.isLogined = true;
 							
 						}else{
-							_this.toastError(data.msg);
+							_this.$Message.error(data.msg);
 						}
 					}
 				})
