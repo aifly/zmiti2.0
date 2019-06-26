@@ -7,21 +7,21 @@
 					<div>
 						<label>
 							<img :src="imgs.adminUser" alt="">
-							<input type="text" v-model="username" placeholder="请输入账号">
+							<input id='username' type="text" v-model="username" placeholder="请输入账号">
 						</label>
 						<div class='zmiti-login-error' v-if='loginError'>{{loginError}}</div>
 					</div>
 					<div>
 						<label>
 							<img :src="imgs.adminLock" alt="">
-							<input @keydown.13='login' type="password" v-model="password" placeholder="请输入密码">
+							<input id='password' @keydown.13='login' type="password" v-model="password" placeholder="请输入密码">
 						</label>
 					</div>
 					<div class='zmiti-remember-pass'>
 						<label><Checkbox v-model="checked">记住密码</Checkbox></label>
 					</div>
 					<div class='zmiti-login-btn' v-press>
-						<div @click="login">登  录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
+						<div id='login' @click="login">登  录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
 					</div>
 				</div>
 				<div class='zmiti-browner-tip' v-if='isNotChrome'>

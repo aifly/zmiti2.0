@@ -70,7 +70,6 @@
 			<Table :data='roleList' :columns='roleCol'></Table>
 		</Modal>
 
-		<upload-dialog></upload-dialog>
  
 	</div>
 </template>
@@ -82,7 +81,6 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import UploadDialog from '../../common/modal';
 	var zmitiActions = zmitiUtil.adminActions;
 	var userActions =  zmitiUtil.userActions;
 	var companyActions = zmitiUtil.companyActions;
@@ -353,7 +351,6 @@
 			}
 		},
 		components:{
-			'upload-dialog':UploadDialog
 		},
 
 		beforeCreate(){

@@ -11,7 +11,7 @@
 		</header>
 		<div class="zmiti-resourcelist-content">
 			<div class='zmiti-resource-cate'>
-				<div @click="getCateById(item)" :class="{'active':currentCateId === item.id}" v-for='(item ,i ) of defaultClass' :key="i">
+				<div @click="getCateById(item,i)" :class="{'active':currentCateIndex === i}" v-for='(item ,i ) of defaultClass' :key="i">
 					<span class='zmt_iconfont' v-html='item.icon'></span>
 					<span>{{item.name}}</span>
 					<ul v-if='item.cateList' class='zmiti-child-cate'>
@@ -63,12 +63,12 @@
 				
 				<div class='zmiti-resource-C zmiti-scroll'>
 					<ul>
+						<li v-if='resourceList.length<=0' class='zmiti-resouce-nodata'>暂无数据 ^_^</li>
 						<li v-for="(resource,i) of resourceList" :key="i">
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
-								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+resource.filepath+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1'>
-
+								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+resource.filepath+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1 && false'>
 								</div>
-								<img v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="resource.filepath" alt="">
+								<img :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="resource.filepath" alt="">
 								<span v-else :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
 
 								<template  v-if='!resource.isUploading'>
@@ -87,10 +87,14 @@
 									<div>上传中。。。</div>
 								</div>
 							</div>
-							<div class='zmiti-reource-name zmiti-text-overflow'>{{resource.filetitle}}</div>
+							<div class='zmiti-reource-name zmiti-text-overflow'>文件名：{{resource.filename}}</div>
+							<div class='zmiti-reource-name zmiti-text-overflow'>大小：{{(resource.filesize*1).toFixed(2)}} {{resource.filesizeunit}}</div>
+							<div class='zmiti-reource-name zmiti-text-overflow'>文件格式：{{resource.fileextname}} </div>
+							<div class='zmiti-reource-name zmiti-text-overflow'>上传时间：{{formatDate(resource.createdate)}} </div>
 						</li>
 						
 					</ul>
+					<Page v-if='showPager' @on-change='changeSize' @on-page-size-change='changeSize' style="margin:20px 0 0 20px;" :total="total" :page-size='resourceCondition.page_size' :current='resourceCondition.page_index+1'  prev-text="上一页" next-text="下一页" />
 				</div>
 
 			</div>
@@ -178,7 +182,7 @@ import zmitiUtil from '../lib/util';
 import {defaultClass,defaultExtNames} from '../config';
 import IScroll from 'iscroll';
 
-let {resourceActions} = zmitiUtil;
+let {resourceActions,formatDate} = zmitiUtil;
 export default {
 	props:{
 		isDialog:{
@@ -196,13 +200,17 @@ export default {
 			cateList:[
 				
 			],
+			total:0,
+			formatDate,
 			checkedList:[],
 			defaultExtNames,
 			currentClassId:-1,
 			showModal:false,
 			viewW:window.innerWidth,
+			showPager:true,
 
 			currentCateId:3,
+			currentCateIndex:2,
 			formResource:{
 				isshare:0
 			},
@@ -220,7 +228,9 @@ export default {
 			},
 			resourceCondition:{
 				page_index:0,
-				page_size:30
+				page_size:20,
+				filetype:'视频',
+				//classtype:1,
 			},
 			resourceList:[],//资源集合
 		}
@@ -245,6 +255,11 @@ export default {
 		
 	},
 	methods: {
+
+		changeSize(e){
+			this.resourceCondition.page_index  = e - 1;
+			this.getResourceByClassId();
+		},
 		toggleResource(item){
 			if(item.checked){
 				this.checkedList.push(item)
@@ -255,7 +270,6 @@ export default {
 					}
 				})
 			}
-		
 		},
 		delResource(){
 			var {isAdmin,$Message} = this;
@@ -264,7 +278,7 @@ export default {
 			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
 				remark:'delResource',
 				_ui:{
-					type:isAdmin?1:2,
+					type:isAdmin ? 1 : 2,
 				},
 				data:{
 					action:resourceActions.delResource.action,
@@ -299,7 +313,8 @@ export default {
 		getResourceByClassId(){
 			var {isAdmin,$Message} = this;
 			var s = this; 
-			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId})
+			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId});
+
 			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
 				remark:'getResourceList',
 				_ui:{
@@ -312,12 +327,38 @@ export default {
 				success(data){
 					//$Message[data.getret === 0 ?　'success':'error'](data.msg);
 					if(data.getret === 0 ){
+						s.total = data.total;
+						s.defaultResourceList = data.list.concat([]);
+						var iNow = 0;
 						data.list.forEach((list)=>{
 							list.filepath = window.config.host + list.filepath;
-							list.size = 'cover';
+
+							if(list.filetype === '图片'){
+								var img = new Image();
+								img.onload = img.onerror = function(e){
+									iNow++;
+									if(e.type === 'load'){
+										list.classList='';
+										if(this.width/this.height>1.3){
+											list.classList =  'fill_height'
+										}
+										if(this.width<=150 && this.height <= 150){
+											list.classList = ' small '
+										}
+									}
+									
+									if(iNow >= data.list.filter(item=>{item.filetype === '图片'}).length){
+										s.resourceList = s.resourceList.concat([]);
+									}
+								};
+
+								img.src = list.filepath;
+							}
 							//list.checked = false;
+
 						})
 						s.resourceList = data.list;
+						
 					}
 				}
 			});
@@ -358,6 +399,7 @@ export default {
 				//fileobj:document.querySelector('input[type="file"]').files[0],
 				companyid:"",
 				verify_key:'25c1c1f3597bc5b258bd68be8804576e',
+				classtype:defaultClass()[this.currentCateIndex].id,//
 				file_token:Math.random().toString(36).substr(2)
 			};
 
@@ -507,6 +549,7 @@ export default {
 									item.size ='cover';
 								})
 								s.resourceList = s.resourceList.concat([]);
+								s.resourceCondition.page_index = 0;//
 								s.getResourceByClassId();
 							},1500)
 						}
@@ -590,9 +633,16 @@ export default {
 		},
 		getCateByChildId(item){
 			this.childCateId = item.type;
+		    this.showPager = item.name === '全部';
+			this.resourceList = this.defaultResourceList.filter(res=>{
+				return item.name === '全部' ? true : res.filetype === item.name;
+			})
+			
 		},
-		getCateById(item){
+		getCateById(item,index){
 			this.currentCateId = item.id;
+			this.currentCateIndex = index;
+			 
 		},
 		addCate(){
 			var {isAdmin,$Message} = this;
