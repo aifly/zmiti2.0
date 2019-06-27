@@ -1,5 +1,8 @@
 @import "../css/base.scss";
 
+li{
+	list-style: none;
+}
 .zmiti-resourcelist-ui {
   width: 99%;
   height: 99%;
@@ -347,7 +350,7 @@
                 width: 99%;
                 height: 99%;
                 z-index: 10;
-                box-shadow: 0 0 0 1px #ddd;
+                box-shadow: 0 0 0 1px #ddd inset;
               }
             }
             span {
@@ -450,6 +453,97 @@
         }
       }
     }
+  }
+
+
+  .zmiti-detail-C{
+	 width: 96%;
+	 margin: 0 auto;
+	 
+	 .zmiti-detail-img{
+		 background: #f5f5f6;
+
+		 @include pos(r);
+
+		@include displayFlex(row);
+		justify-content: center;
+		height:360px;
+		-webkit-justify-content: center;
+		align-items:center;
+		-webkit-align-items:center;
+		 img{
+			max-width: 100%;
+			max-height: 360px;
+			display: block;
+		 }
+
+		 .zmiti-deitail-btn{
+			 @include pos(a);
+			 width: 28px;
+			 height: 56px;
+			 line-height: 56px;
+			 font-size:24px;
+			 left: 0;
+			 top: 50%;
+			 background: rgba(0, 0, 0, 0.2);
+			 margin-top: -28px;
+			 text-align: center;
+			 cursor: pointer;
+			 &:nth-of-type(2){
+				left: auto;
+				right: 0;
+			 }
+
+		 }
+
+	 }
+
+	 
+
+	 .zmiti-detail-item{
+		 width: 90%;
+		 margin: 10px auto;
+		 
+		
+		 @include displayFlex(row);
+
+		 
+		 &>div{
+			 margin:0 5px;
+			 &:nth-of-type(1){
+				 width: 70px;
+				text-align: right;
+				line-height: 30px;;
+			}
+			&:nth-of-type(2){
+				line-height: 30px;
+				-webkit-flex:1;
+				flex:1;
+			 }
+		 }
+
+		 .zmiti-tag-list{
+			 @include displayFlex(row);
+			 flex-wrap:wrap;
+			 -webkit-flex-wrap:wrap;
+			 div{
+				 margin: 5px 2px 0 0;
+			 }
+		 }
+	 }
+	 .zmiti-detail-submit{
+		 text-align: center;
+		 button{
+			 width: 100px;
+		 }
+	 }
+	 .zmiti-hr{
+		 width: 90%;
+		 margin:10px auto;
+		 height:1px;
+		 background:#eee;
+		 
+	 }
   }
   .zmiti-resourcelist-footer {
     height: 50px;

@@ -51,7 +51,7 @@
 						<span @click="scrollToCate(-1)">
 							<Icon type="ios-arrow-forward" />
 						</span>
-						<span title='添加分类' @click='showAddCateModal'>
+						<span title='添加分类' @click='showAddCateModal(null)'>
 							<Icon type="ios-add-circle" />
 						</span>
 					</div>
@@ -64,7 +64,7 @@
 				<div class='zmiti-resource-C zmiti-scroll'>
 					<ul>
 						<li v-if='resourceList.length<=0' class='zmiti-resouce-nodata'>暂无数据 ^_^</li>
-						<li v-for="(resource,i) of resourceList" :key="i">
+						<li v-for="(resource,i) of resourceList" :key="i" @click="currentResourceIndex =  i">
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
 								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+resource.filepath+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1 && false'>
 								</div>
@@ -87,7 +87,7 @@
 									<div>上传中。。。</div>
 								</div>
 							</div>
-							<div class='zmiti-reource-name zmiti-text-overflow'>文件名：{{resource.filename}}</div>
+							<div class='zmiti-reource-name zmiti-text-overflow'>文件名：{{resource.filetitle}}</div>
 							<div class='zmiti-reource-name zmiti-text-overflow'>大小：{{(resource.filesize*1).toFixed(2)}} {{resource.filesizeunit}}</div>
 							<div class='zmiti-reource-name zmiti-text-overflow'>文件格式：{{resource.fileextname}} </div>
 							<div class='zmiti-reource-name zmiti-text-overflow'>上传时间：{{formatDate(resource.createdate)}} </div>
@@ -139,6 +139,81 @@
 				</div>
 			</div>
 		</Modal>
+
+		<ZmitiMask v-model='currentResourceIndex' @closeMaskPage='closeMaskPage'>
+			<div slot='mask-content'>
+				<header class='zmiti-add-header'>
+					<img @click="closeMaskPage" :src="imgs.back" alt=""  >
+					<span>详情</span>
+				</header>
+				<div class='zmiti-detail-C' v-if='currentResourceIndex >-1'>
+					<div class='zmiti-detail-img'>
+						<div class='zmiti-deitail-btn' @click="changeResource(-1)"><Icon type="ios-arrow-back" /></div>
+						<img v-if='resourceList[currentResourceIndex].filetype === "图片"' draggable="false" :src="resourceList[currentResourceIndex].filepath" alt="">
+						<span v-else>当前格式不支持预览</span>
+						
+						<div class='zmiti-deitail-btn' @click="changeResource(1)"><Icon type="ios-arrow-forward" /></div>
+					</div>
+
+					
+
+					<div class='zmiti-detail-item zmiti-text-overflow'>
+						<div>文件名称 ：</div>
+						<div>
+							<Input v-if='isCanEdit' v-model='resourceList[currentResourceIndex].filetitle' />
+							<span v-else>{{resourceList[currentResourceIndex].filetitle}}</span>
+						</div>
+					</div>
+
+					<div class='zmiti-detail-item zmiti-text-overflow'>
+						<div>文件大小 ：</div><div>{{(resourceList[currentResourceIndex].filesize*1).toFixed(2)}} {{resourceList[currentResourceIndex].filesizeunit}}</div>
+					</div>
+					<div class='zmiti-detail-item zmiti-text-overflow'>
+						<div>文件格式 ：</div><div>{{resourceList[currentResourceIndex].fileextname}}</div>
+					</div>
+					<div class='zmiti-detail-item zmiti-text-overflow'>
+						<div>文件地址 ：</div>
+						<div>
+							<Input disabled v-model= 'resourceList[currentResourceIndex].filepath' />
+						</div>
+					</div>
+					<div class='zmiti-detail-item zmiti-text-overflow'>
+						<div>上传时间 ：</div>
+						<div>
+							{{formatDate(resourceList[currentResourceIndex].createdate)}} 
+						</div>
+					</div>
+					<div class='zmiti-hr'></div>
+
+					<div class='zmiti-detail-item zmiti-text-overflow'>
+						<div>标签 ：</div>
+						<div>
+							<Input placeholder="回车添加标签" :disabled='!isCanEdit' v-model="userlabel" @on-keydown.13='addlabel' />
+							<section class='zmiti-tag-list'>
+								<div  v-for='(tag,i) in resourceList[currentResourceIndex].userlabel.split(",")' :key="i">
+									<Tag v-if='tag' closable color="primary" @on-close='deleteLabel(i)'>
+									{{tag}}
+									</Tag>
+								</div>	 
+							</section>
+						</div>
+						
+					</div>
+					<div class='zmiti-hr'></div>
+					<div class='zmiti-detail-item zmiti-text-overflow'>
+						<div>备注 ：</div>
+						<div>
+							<Input v-if='isCanEdit' type='textarea' v-model='resourceList[currentResourceIndex].filedesc' />
+							<span v-else>{{resourceList[currentResourceIndex].filedesc}}</span>
+						</div>
+					</div>
+
+					<div class='zmiti-detail-submit'>
+						<Button @click='editResource' size='large' type='primary'>{{isCanEdit?'保存':'编辑'}}</Button>
+					</div>
+				</div>
+			</div>
+		</ZmitiMask>
 	</div>
 </template>
 <style lang="scss" scoped>
@@ -181,6 +256,8 @@
 import zmitiUtil from '../lib/util';
 import {defaultClass,defaultExtNames} from '../config';
 import IScroll from 'iscroll';
+import ZmitiMask from '../mask';
+
 
 let {resourceActions,formatDate} = zmitiUtil;
 export default {
@@ -200,8 +277,14 @@ export default {
 			cateList:[
 				
 			],
+
+			userlabel:"",
+			showMaskPage:true,
+			imgs:window.imgs,
 			total:0,
+			isCanEdit:false,
 			formatDate,
+			currentResourceIndex:-1,
 			checkedList:[],
 			defaultExtNames,
 			currentClassId:-1,
@@ -235,6 +318,9 @@ export default {
 			resourceList:[],//资源集合
 		}
 	},
+	components:{
+		ZmitiMask
+	},
 	mounted() {
 		this.init();
 		this.upload();
@@ -251,11 +337,82 @@ export default {
 			})
 		}, 1000); */
 
+
 		
 		
 	},
 	methods: {
+		deleteLabel(index){
+			var labels = this.resourceList[this.currentResourceIndex].userlabel.split(',');
+			labels.splice(index,1);
+			
+			this.resourceList[this.currentResourceIndex].userlabel = labels.join(',');
 
+			this.editResourceData();
+
+			
+
+		},
+		editResourceData(){
+
+			var {isAdmin} = this;
+			var s = this;
+			
+			var {fileid,userlabel,status,filetitle,filedesc} = s.resourceList[s.currentResourceIndex];
+			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
+				remark:'editResource',
+				_ui:{
+					type:isAdmin ? 1 : 2,
+				},
+				data:{
+					action:resourceActions.editResource.action,
+					info:{
+						fileid,
+						userlabel,
+						filetitle,
+						status,
+						filedesc,
+					}
+				},
+				success(data){
+					//$Message[data.getret === 0 ?　'success':'error'](data.msg);
+						console.log(data)
+					if(data.getret === 0 ){
+						s.userlabel = '';
+						s.isCanEdit = false;
+					}
+					s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+				}
+			});
+		},
+		addlabel(){
+			var s = this;
+			s.resourceList[s.currentResourceIndex].userlabel += ','+this.userlabel;
+			this.editResourceData();
+
+		},
+
+		closeMaskPage(){
+			this.currentResourceIndex = -1;
+			
+		},
+
+		changeResource(range){
+			this.currentResourceIndex += range;
+
+			if(this.currentResourceIndex < 0){
+				this.currentResourceIndex = this.resourceList.length -1;
+			}
+
+			this.currentResourceIndex %= this.resourceList.length;
+		},
+		editResource(){
+			if(this.isCanEdit){
+				this.editResourceData();
+			}else{
+				this.isCanEdit = true;
+			}
+		},
 		changeSize(e){
 			this.resourceCondition.page_index  = e - 1;
 			this.getResourceByClassId();
@@ -266,7 +423,7 @@ export default {
 			}else{
 				this.checkedList.forEach((ck,i)=>{
 					if(ck.fileid ===  item.fileid){
-						this.checkedList.spliec(i,1);
+						this.checkedList.splice(i,1);
 					}
 				})
 			}
@@ -332,6 +489,8 @@ export default {
 						var iNow = 0;
 						data.list.forEach((list)=>{
 							list.filepath = window.config.host + list.filepath;
+							
+							//list.filepath = s.imgs.deleted;
 
 							if(list.filetype === '图片'){
 								var img = new Image();
@@ -345,6 +504,8 @@ export default {
 										if(this.width<=150 && this.height <= 150){
 											list.classList = ' small '
 										}
+									}else{
+										list.filepath = s.imgs.deleted;
 									}
 									
 									if(iNow >= data.list.filter(item=>{item.filetype === '图片'}).length){
@@ -623,6 +784,7 @@ export default {
 		},
 		showAddCateModal(item){
 			this.showModal = true;
+			
 			if(item){
 				this.formResource = item;
 			}else{

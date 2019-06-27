@@ -3,6 +3,10 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
+li {
+  list-style: none;
+}
+
 .zmiti-resourcelist-ui {
   width: 99%;
   height: 99%;
@@ -374,7 +378,7 @@
   width: 99%;
   height: 99%;
   z-index: 10;
-  box-shadow: 0 0 0 1px #ddd;
+  box-shadow: 0 0 0 1px #ddd inset;
 }
 
 .zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-C ul li span {
@@ -488,6 +492,100 @@
 
 .zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-header .zmiti-resource-cate-list-C ul li.active span {
   font-weight: bold;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C {
+  width: 96%;
+  margin: 0 auto;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-img {
+  background: #f5f5f6;
+  position: relative;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: center;
+  height: 360px;
+  -webkit-justify-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-img img {
+  max-width: 100%;
+  max-height: 360px;
+  display: block;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-img .zmiti-deitail-btn {
+  position: absolute;
+  width: 28px;
+  height: 56px;
+  line-height: 56px;
+  font-size: 24px;
+  left: 0;
+  top: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  margin-top: -28px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-img .zmiti-deitail-btn:nth-of-type(2) {
+  left: auto;
+  right: 0;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-item {
+  width: 90%;
+  margin: 10px auto;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-item > div {
+  margin: 0 5px;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-item > div:nth-of-type(1) {
+  width: 70px;
+  text-align: right;
+  line-height: 30px;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-item > div:nth-of-type(2) {
+  line-height: 30px;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-item .zmiti-tag-list {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-item .zmiti-tag-list div {
+  margin: 5px 2px 0 0;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-submit {
+  text-align: center;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-detail-submit button {
+  width: 100px;
+}
+
+.zmiti-resourcelist-ui .zmiti-detail-C .zmiti-hr {
+  width: 90%;
+  margin: 10px auto;
+  height: 1px;
+  background: #eee;
 }
 
 .zmiti-resourcelist-ui .zmiti-resourcelist-footer {

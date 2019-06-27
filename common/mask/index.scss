@@ -1,0 +1,33 @@
+@import '../css/base.scss';
+.zmiti-mask-ui{
+	@include pos(f);
+	z-index: 1002;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.6);
+	left: 0;
+	top: 0;
+
+
+	.zmiti-mask-right{
+		@include pos(a);
+		background: #fff;
+		top: 50px;
+		right: 0;
+		overflow:auto;
+		z-index: 10;
+		&.right-enter-active,
+		&.right-leave-active {
+			@include transition(.2s);
+		}
+
+		&.right-leave-to,
+		&.right-enter {
+			@include transform(translate3d(600px,0,0));
+		}
+	}
+	.lt-full{
+		z-index: 8;
+		
+	}
+}

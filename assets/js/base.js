@@ -11,10 +11,12 @@ var imgs = {
 	loginBg:"./assets/images/login-bg.jpg",
 	logout:'./assets/images/logout.png',
 	back:'./assets/images/back.png',
+	deleted:'./assets/images/deleted.png',
 	checked:'./assets/images/checked.png',
 	adminLoginBg:'./assets/images/adminlogin-bg.jpg',
 	adminUser:'./assets/images/admin-user.png',
 	adminLock:'./assets/images/admin-lock.png',
+
 
 	W0:'./assets/images/weather/W0.png',
 	W1:'./assets/images/weather/W1.png',
