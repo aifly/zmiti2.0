@@ -20,66 +20,65 @@
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
-			<div class='lt-full' v-show='showDetailPage'>
-				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
-				<transition name='detail'>
-					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
-						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt=""  @click='showDetail = false' >
-							<span>基础信息</span>
-						</header>
-						<div class='zmiti-company-avatar' @click="showAvatarModal = true">
-							<span class='zmt_iconfont' v-html='formCompany.logourl'></span>
-							<label>更换头像</label>
-						</div>
-						<Form class='zmiti-add-form-C' :model="formCompany" :label-width="120">
-							<FormItem label="单位名称：">
-								<Input v-model="formCompany.companyname" placeholder="单位名称：" />
-							</FormItem>
-							<FormItem label="单位地址：">
-								<Input v-model="formCompany.companyaddress" placeholder="单位地址：" />
-							</FormItem>
-							<FormItem label="纳税识别号：">
-								<Input v-model="formCompany.companycode" placeholder="纳税识别号：" />
-							</FormItem>
-							<FormItem label="单位电话：">
-								<Input v-model="formCompany.companyphone" placeholder="单位电话：" />
-							</FormItem>
-							<FormItem label="开户行：">
-								<Input v-model="formCompany.bank" placeholder="开户行：" />
-							</FormItem>
-							<FormItem label="开户行账号：">
-								<Input v-model="formCompany.bankcode" placeholder="开户行账号：" />
-							</FormItem>
-							<FormItem label="单位合同扫描件：">
-								<Input v-model="formCompany.contract" placeholder="单位合同扫描件：" />
-							</FormItem>
-							<FormItem label="营业执照：">
-								<Input v-model="formCompany.businesslicensepath" placeholder="营业执照：" />
-							</FormItem>
-							<FormItem label="标识：">
-								<RadioGroup v-model="formCompany.isover">
-									<Radio :value='0' :label="0">正常使用</Radio>
-									<Radio :value='1' :label="1">禁用</Radio>
-								</RadioGroup>
-							</FormItem>
-							
-							<FormItem label="备注：">
-								<Input v-model="formCompany.comment" placeholder="备注：" />
-							</FormItem>
-							<FormItem label="配置：">
-								<Input v-model="formCompany.config" placeholder="配置：" />
-							</FormItem>
-							
-						</Form>
+		<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
+			<div slot='mask-content' name='detail'>
+				<section class='zmiti-add-form zmiti-scroll'  >
+					<header class='zmiti-add-header'>
+						<img :src="imgs.back" alt=""  @click='showDetail = false' >
+						<span>基础信息</span>
+					</header>
+					<div class='zmiti-company-avatar' @click="showAvatarModal = true">
+						<span class='zmt_iconfont' v-html='formCompany.logourl'></span>
+						<label>更换头像</label>
+					</div>
+					<Form class='zmiti-add-form-C' :model="formCompany" :label-width="120">
+						<FormItem label="单位名称：">
+							<Input v-model="formCompany.companyname" placeholder="单位名称：" />
+						</FormItem>
+						<FormItem label="单位地址：">
+							<Input v-model="formCompany.companyaddress" placeholder="单位地址：" />
+						</FormItem>
+						<FormItem label="纳税识别号：">
+							<Input v-model="formCompany.companycode" placeholder="纳税识别号：" />
+						</FormItem>
+						<FormItem label="单位电话：">
+							<Input v-model="formCompany.companyphone" placeholder="单位电话：" />
+						</FormItem>
+						<FormItem label="开户行：">
+							<Input v-model="formCompany.bank" placeholder="开户行：" />
+						</FormItem>
+						<FormItem label="开户行账号：">
+							<Input v-model="formCompany.bankcode" placeholder="开户行账号：" />
+						</FormItem>
+						<FormItem label="单位合同扫描件：">
+							<Input v-model="formCompany.contract" placeholder="单位合同扫描件：" />
+						</FormItem>
+						<FormItem label="营业执照：">
+							<Input v-model="formCompany.businesslicensepath" placeholder="营业执照：" />
+						</FormItem>
+						<FormItem label="标识：">
+							<RadioGroup v-model="formCompany.isover">
+								<Radio :value='0' :label="0">正常使用</Radio>
+								<Radio :value='1' :label="1">禁用</Radio>
+							</RadioGroup>
+						</FormItem>
 						
-						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='adminAction'>{{formCompany.companyid?'保存':'确定'}}</Button>
-						</div>
-						 
-					</section>
-				</transition>
+						<FormItem label="备注：">
+							<Input v-model="formCompany.comment" placeholder="备注：" />
+						</FormItem>
+						<FormItem label="配置：">
+							<Input v-model="formCompany.config" placeholder="配置：" />
+						</FormItem>
+						
+					</Form>
+					
+					<div class='zmiti-add-form-item zmiti-add-btns'>
+						<Button size='large' type='primary' @click='adminAction'>{{formCompany.companyid?'保存':'确定'}}</Button>
+					</div>
+					
+				</section>
 			</div>
+		</ZmitiMask>
  
 		<Avatar v-model="showAvatarModal" :avatar='formCompany.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
@@ -95,6 +94,7 @@
 	import Avatar from '../../common/avatar';
 	var companyActions = zmitiUtil.adminActions;
 	var companyActions = zmitiUtil.companyActions;
+	import ZmitiMask from '../../common/mask/';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -115,7 +115,7 @@
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
-				showDetailPage:false,
+				showDetailPage:-1,
 				currentClassId:-1, 
 				adminuserId:'',
 				currentUserid:'',
@@ -272,7 +272,8 @@
 			}
 		},
 		components:{
-			Avatar
+			Avatar,
+			ZmitiMask
 		},
 
 		beforeCreate(){
@@ -292,10 +293,10 @@
 
 			showDetail(val){
 				if(val){
-					this.showDetailPage = true;
+					this.showDetailPage = 1;
 				}else{
 					setTimeout(() => {
-						this.showDetailPage = false;
+						this.showDetailPage = -1;
 					}, 310);
 				}
 			}
@@ -303,6 +304,9 @@
 		},
 		
 		methods:{
+			closeMaskPage(){
+				this.showDetailPage = -1;
+			},
 			getAvatar(avatar){
 				this.formCompany.avatar = avatar;
 			},
@@ -329,6 +333,7 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
+				this.showDetailPage = 1;
 			},
 
 			delete(companyid){

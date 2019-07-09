@@ -394,7 +394,6 @@ export default {
 
 		closeMaskPage(){
 			this.currentResourceIndex = -1;
-			
 		},
 
 		changeResource(range){

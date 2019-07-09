@@ -207,7 +207,7 @@ $primary-color: #00c1de;
 		background:$color;
 		width:50px;
 		@include pos(a);
-		z-index: 15;
+		z-index: 18;
 		overflow: hidden;
 		@include transition(width .2s .1s);
 		color:#fff;

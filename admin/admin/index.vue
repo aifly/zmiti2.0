@@ -18,10 +18,10 @@
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
-			<div class='lt-full' v-show='showDetailPage'>
-				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
+		<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
+			<div slot='mask-content'>
 				<transition name='detail'>
-					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
+					<section class='zmiti-add-form zmiti-scroll' >
 						<header class='zmiti-add-header'>
 							<img :src="imgs.back" alt=""  @click='showDetail = false' >
 							<span>基础信息</span>
@@ -35,12 +35,12 @@
 								<Input v-model="formAdmin.adminusername" placeholder="用户名：" />
 							</FormItem>
 							<FormItem label="真实姓名：">
-								<Input v-model="formAdmin.realname" placeholder="真实姓名：" />
+								<Input v-model="formAdmin.realname" :name='new Date().getTime()+""' autocomplete='on' placeholder="真实姓名：" />
 							</FormItem>
 							<FormItem label="密码：" v-if='!adminuserId'>
-								<Input type='password' v-model="formAdmin.adminpwd" placeholder="密码：" />
+								<Input @on-focus='focus($event)' type='password' autocomplete='on'  :name='new Date().getTime()+""' v-model="formAdmin.adminpwd" placeholder="密码：" />
+								<input class='zmiti-hidepass' v-model="formAdmin.adminpwd" />
 							</FormItem>
-
 							
 							<FormItem label="邮箱：">
 								<Input v-model="formAdmin.adminemail" placeholder="邮箱：" />
@@ -89,6 +89,8 @@
 					</section>
 				</transition>
 			</div>
+		</ZmitiMask>
+			 
 
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
@@ -106,6 +108,7 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
+	import ZmitiMask from '../../common/mask/';
 	var weatherActions = zmitiUtil.weatherActions;
 	var zmitiActions = zmitiUtil.adminActions;
 	export default {
@@ -128,7 +131,7 @@
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
-				showDetailPage:false,
+				showDetailPage:-1,
 				currentClassId:-1, 
 				adminuserId:'',
 				currentUserid:'',
@@ -317,7 +320,8 @@
 			}
 		},
 		components:{
-			Avatar
+			Avatar,
+			ZmitiMask
 		},
 
 		beforeCreate(){
@@ -330,7 +334,7 @@
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getAdminList();
-	this.getWeatherData();
+			this.getWeatherData();
 			
 		},
 
@@ -339,10 +343,10 @@
 
 			showDetail(val){
 				if(val){
-					this.showDetailPage = true;
+					this.showDetailPage = 1;
 				}else{
 					setTimeout(() => {
-						this.showDetailPage = false;
+						this.showDetailPage = -1;
 					}, 310);
 				}
 			}
@@ -350,6 +354,13 @@
 		},
 		
 		methods:{
+			focus(e){
+				e.preventDefault();
+				return false;
+			},
+			closeMaskPage(){
+				this.showDetailPage = -1;
+			},
 			getWeatherData(){
 				zmitiUtil.adminAjax({
 					remark:'viewTrafficdata',
@@ -393,6 +404,7 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
+				this.showDetailPage = 1;
 			},
 
 			delAdmin(adminuserid){

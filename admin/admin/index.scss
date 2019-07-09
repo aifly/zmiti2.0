@@ -209,6 +209,15 @@
 	.zmiti-add-form-C{
 		margin: 10px auto 2px;
 		width: 90%;
+		@include pos(r);
+		.zmiti-hidepass{
+			@include pos(a);
+			top:0;
+			height:40px;
+			width:100%;
+			left:0;
+			opacity:0;
+		}
 	}
 
     .zmiti-add-form-item {

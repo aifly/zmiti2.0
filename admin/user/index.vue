@@ -18,9 +18,8 @@
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
-			<div class='lt-full' v-show='showDetailPage'>
-				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
-				<transition name='detail'>
+			<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
+				<div slot='mask-content' name='detail'>
 					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
 						<header class='zmiti-add-header'>
 							<img :src="imgs.back" alt=""  @click='showDetail = false' >
@@ -97,8 +96,8 @@
 							</div>
 						</template>
 					</section>
-				</transition>
-			</div>
+				</div>
+			</ZmitiMask>
 
 		<Modal title='加入单位' v-model="visible">
 			<div>
@@ -125,7 +124,7 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
-
+	import ZmitiMask from '../../common/mask/';
 	var {companyActions,zmitiActions} = zmitiUtil;
 
 	export default {
@@ -150,7 +149,7 @@
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
-				showDetailPage:false,
+				showDetailPage:-1,
 				currentClassId:-1, 
 				adminuserId:'',
 				currentUserid:'',
@@ -302,7 +301,8 @@
 			}
 		},
 		components:{
-			Avatar
+			Avatar,
+			ZmitiMask
 		},
 
 		beforeCreate(){
@@ -323,10 +323,10 @@
 
 			showDetail(val){
 				if(val){
-					this.showDetailPage = true;
+					this.showDetailPage = 1;
 				}else{
 					setTimeout(() => {
-						this.showDetailPage = false;
+						this.showDetailPage = -1;
 					}, 310);
 				}
 			},
@@ -341,7 +341,10 @@
 		},
 		
 		methods:{
-		 
+
+			closeMaskPage(){
+				this.showDetailPage = -1;
+			},
 			handleChange2(ids,index,companyids){
 				var s = this;
 				companyids.forEach((companyid,i)=>{
@@ -452,12 +455,14 @@
 				});
 			},
 			addAdmin(){
+
 				this.showDetail = true;
 				this.adminuserId = '';
 				this.formUser = {
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
+				this.showDetailPage = 1;
 			},
 
 			delete(userid){

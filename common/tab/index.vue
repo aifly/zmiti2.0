@@ -13,9 +13,11 @@
 		</div>
 	</div>
 </template>
-
+<style lang="scss">
+	@import './index.scss';
+</style>
 <script>
-	import './index.css';
+	
 	import sysbinVerification from '../lib/verification';
 	import symbinUtil from '../lib/util';
 

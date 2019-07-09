@@ -18,53 +18,55 @@
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
-			<div class='lt-full' v-show='showDetailPage'>
-				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
-				<transition name='detail'>
-					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
-						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt=""  @click='showDetail = false' >
-							<span>基础信息</span>
-						</header>
-						<h2 style='height:50px;'></h2>
-						<Form class='zmiti-add-form-C' :model="formRoleGroup" :label-width="110">
-							<FormItem label="权限组名称：">
-								<Input v-model="formRoleGroup.groupname" placeholder="权限组名称：" />
-							</FormItem>
-							<FormItem label="描述：">
-								<Input v-model="formRoleGroup.describes" placeholder="描述：" />
-							</FormItem>
-							<FormItem label="管理员类别：">
-								<RadioGroup v-model="formRoleGroup.grouptype">
-									<Radio :value='2' :label="2">普通管理员</Radio>
-									<Radio :value='1' :label="1">超级管理员</Radio>
-								</RadioGroup>
-							</FormItem>
+			<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
+				<div slot='mask-content'>
+					<transition name='detail'>
+						<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
+							<header class='zmiti-add-header'>
+								<img :src="imgs.back" alt=""  @click='showDetail = false' >
+								<span>基础信息</span>
+							</header>
+							<h2 style='height:50px;'></h2>
+							<Form class='zmiti-add-form-C' :model="formRoleGroup" :label-width="110">
+								<FormItem label="权限组名称：">
+									<Input v-model="formRoleGroup.groupname" placeholder="权限组名称：" />
+								</FormItem>
+								<FormItem label="描述：">
+									<Input v-model="formRoleGroup.describes" placeholder="描述：" />
+								</FormItem>
+								<FormItem label="管理员类别：">
+									<RadioGroup v-model="formRoleGroup.grouptype">
+										<Radio :value='2' :label="2">普通管理员</Radio>
+										<Radio :value='1' :label="1">超级管理员</Radio>
+									</RadioGroup>
+								</FormItem>
 
-							<FormItem label="actions列表：">
-								<div class='zmiti-action-list' v-for='(item,i) of actions' :key='i'>
-									<div class='zmiti-action-title'>{{(i+1 ) + '.' + item.name}}：</div>
-									<div class='zmiti-action-content' >
-										<div v-for='(action,k) of item.actions' :key='k'  :class="{'active':formRoleGroup.actions && formRoleGroup.actions.some(ac=> ac === action.action)}" type="border" @click="toggleAction(action)" >
-											{{action.desc}}
+								<FormItem label="actions列表：">
+									<div class='zmiti-action-list' v-for='(item,i) of actions' :key='i'>
+										<div class='zmiti-action-title'>{{(i+1 ) + '.' + item.name}}：</div>
+										<div class='zmiti-action-content' >
+											<div v-for='(action,k) of item.actions' :key='k'  :class="{'active':formRoleGroup.actions && formRoleGroup.actions.some(ac=> ac === action.action)}" type="border" @click="toggleAction(action)" >
+												{{action.desc}}
+											</div>
 										</div>
 									</div>
-								</div>
-							</FormItem>
-							<FormItem label="是否系统管理组：">
-								<RadioGroup v-model="formRoleGroup.issys">
-									<Radio :value='1' :label="1">是</Radio>
-									<Radio :value='0' :label="0">否</Radio>
-								</RadioGroup>
-							</FormItem>
-						</Form>
-						
-						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='roleGroupAction'>{{formRoleGroup.id?'保存':'确定'}}</Button>
-						</div>
-					</section>
-				</transition>
-			</div>
+								</FormItem>
+								<FormItem label="是否系统管理组：">
+									<RadioGroup v-model="formRoleGroup.issys">
+										<Radio :value='1' :label="1">是</Radio>
+										<Radio :value='0' :label="0">否</Radio>
+									</RadioGroup>
+								</FormItem>
+							</Form>
+							
+							<div class='zmiti-add-form-item zmiti-add-btns'>
+								<Button size='large' type='primary' @click='roleGroupAction'>{{formRoleGroup.id?'保存':'确定'}}</Button>
+							</div>
+						</section>
+					</transition>
+				</div>
+			</ZmitiMask>
+			 
 
 		<Modal title='权限设置' v-model="visible">
 			<Table :data='roleList' :columns='roleCol'></Table>
@@ -86,6 +88,7 @@
 	var companyActions = zmitiUtil.companyActions;
 	var basicConfigActions = zmitiUtil.basicConfigActions;
 	var resourceActions = zmitiUtil.resourceActions;
+	import ZmitiMask from '../../common/mask/';
 	var	actions = [
 		{
 			name:'基础配置模块',
@@ -124,7 +127,7 @@
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
-				showDetailPage:false,
+				showDetailPage:-1,
 				currentClassId:-1, 
 				adminuserId:'',
 				currentUserid:'',
@@ -351,6 +354,7 @@
 			}
 		},
 		components:{
+			ZmitiMask
 		},
 
 		beforeCreate(){
@@ -368,10 +372,10 @@
 		watch:{
 			showDetail(val){
 				if(val){
-					this.showDetailPage = true;
+					this.showDetailPage = 1;
 				}else{
 					setTimeout(() => {
-						this.showDetailPage = false;
+						this.showDetailPage = -1;
 					}, 310);
 				}
 			}
@@ -379,7 +383,9 @@
 		},
 		
 		methods:{
-			
+			closeMaskPage(){
+				this.showDetailPage = -1;
+			},
 			toggleAction(tag){
 				var {actions} = this.formRoleGroup;
 				if(actions.some((item)=>{
@@ -422,6 +428,7 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
+				this.showDetailPage = 1;
 			},
 
 			delGroup(id){

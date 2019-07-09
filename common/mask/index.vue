@@ -53,7 +53,11 @@
 				this.$emit('input', false); 
 				this.$emit('closeMaskPage');
 			}	
+			
 		},
+		mounted(){
+			
+		}
 	}
 </script>
 
