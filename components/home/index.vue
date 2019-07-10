@@ -353,6 +353,8 @@
 					action:companyAdminActions.getDepartmentList.action,
 					condition:{
 
+						start:1,
+
 						page_index:0,
 						page_size:12
 
