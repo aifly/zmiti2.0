@@ -20,38 +20,35 @@
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
-			<div class='lt-full' v-show='showDetailPage'>
-				<div class='zmiti-left-pannel' @click="showDetail = false" :style="{height:viewH+'px'}"></div>
-				<transition name='detail'>
-					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
-						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt=""  @click='showDetail = false' >
-							<span>产品信息</span>
-						</header>
-						<div class='zmiti-user-avatar' @click="showAvatarModal = true">
-							<span class='zmt_iconfont' v-html='formObj.icon'></span>
-							<label>更换头像</label>
-						</div>
-						<Form class='zmiti-add-form-C' :model="formObj" :label-width="120">
-							<FormItem label="产品名：">
-								<Input v-model="formObj.productname"  placeholder="产品名：" />
-							</FormItem>
-							<FormItem label="产品介绍：">
-								<Input v-model="formObj.introduce" placeholder="产品介绍：" />
-							</FormItem>
-							<FormItem label="链接：">
-								<Input v-model="formObj.producturl" placeholder="链接：" />
-							</FormItem>
-						 
-						</Form>
-						
-						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='action'>{{formObj.productid?'保存':'确定'}}</Button>
-						</div>
-						
-					</section>
-				</transition>
-			</div>
+			<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
+				<section slot='mask-content' class='zmiti-add-form zmiti-scroll' >
+					<header class='zmiti-add-header'>
+						<img :src="imgs.back" alt=""  @click='showDetail = false' >
+						<span>产品信息</span>
+					</header>
+					<div class='zmiti-user-avatar' @click="showAvatarModal = true">
+						<span class='zmt_iconfont' v-html='formObj.icon'></span>
+						<label>更换头像</label>
+					</div>
+					<Form class='zmiti-add-form-C' :model="formObj" :label-width="120">
+						<FormItem label="产品名：">
+							<Input v-model="formObj.productname"  placeholder="产品名：" />
+						</FormItem>
+						<FormItem label="产品介绍：">
+							<Input v-model="formObj.introduce" placeholder="产品介绍：" />
+						</FormItem>
+						<FormItem label="链接：">
+							<Input v-model="formObj.producturl" placeholder="链接：" />
+						</FormItem>
+					
+					</Form>
+					
+					<div class='zmiti-add-form-item zmiti-add-btns'>
+						<Button size='large' type='primary' @click='action'>{{formObj.productid?'保存':'确定'}}</Button>
+					</div>
+					
+				</section>
+			</ZmitiMask>
 
 		<Avatar v-model="showAvatarModal" :avatar='formObj.icon' @getAvatar='getAvatar'></Avatar>
 	</div>
@@ -65,6 +62,7 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
+	import ZmitiMask from '../../common/mask';
 
 	var {adminActions,companyActions } = zmitiUtil;
 
@@ -89,7 +87,7 @@
 				imgs:window.imgs,
 				isLoading:false,
 				showDetail:false,
-				showDetailPage:false,
+				showDetailPage:-1,
 				currentClassId:-1, 
 				adminuserId:'',
 				currentUserid:'',
@@ -146,7 +144,8 @@
                                     on: {
                                         click: () => {
 											var s = this;
-											s.showDetail = true;
+											s.showDetailPage = 1;
+
 											s.formObj = params.row; 
                                         }
                                     }
@@ -194,7 +193,8 @@
 			}
 		},
 		components:{
-			Avatar
+			Avatar,
+			ZmitiMask
 		},
 
 		beforeCreate(){
@@ -214,10 +214,10 @@
 
 			showDetail(val){
 				if(val){
-					this.showDetailPage = true;
+					this.showDetailPage = 1;
 				}else{
 					setTimeout(() => {
-						this.showDetailPage = false;
+						this.showDetailPage = -1;
 					}, 310);
 				}
 			},
@@ -233,6 +233,9 @@
 		
 		methods:{
 		 
+			 closeMaskPage(){
+				this.showDetailPage = -1;
+			},
 			 
 			getAvatar(avatar){
 				this.formObj.icon = avatar;
@@ -260,6 +263,7 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
+				this.showDetailPage = 1;
 			},
 
 			delete(productids){

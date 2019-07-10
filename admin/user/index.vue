@@ -246,6 +246,7 @@
 											var s = this;
 											s.showDetail = true;
 											s.formUser = params.row;
+											s.showDetailPage = 1;
 										
                                         }
                                     }

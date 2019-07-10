@@ -133,7 +133,7 @@
 	import zmitiUtil from '../../common/lib/util';
 
 	
-	var {cityActions,weatherActions,userActions} = zmitiUtil;
+	var {cityActions,weatherActions,userActions,companyAdminActions} = zmitiUtil;
 	import Vue from 'vue';
 	var json = {};
 	export default {
@@ -345,6 +345,23 @@
 
 
 			 this.getWeatherData();
+
+
+			 zmitiUtil.ajax({
+				 remark:'getDepartmentList',
+				 data:{
+					action:companyAdminActions.getDepartmentList.action,
+					condition:{
+
+						page_index:0,
+						page_size:12
+
+					}
+				 },
+				 success(data){
+					 console.log(data,'获取部门测试接口~~')
+				 }
+			 })
 		 
 
 		},

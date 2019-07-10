@@ -39,7 +39,9 @@
 					   {{userinfo.username}}
 					</span>
 					<span class='zmiti-user-avatar'>
-						<img :src="imgs.zmiti1" alt="">
+						<span class='zmt_iconfont' v-html='userinfo.info.avatar||"&#xe6a4;"'>
+							
+						</span>
 						<ul>
 							<li class='zmiti-hover-username'>
 								{{userinfo.username}}
@@ -118,7 +120,9 @@
 				showMenu:false,
                 viewH:document.documentElement.clientHeight,
                 tabIndex:0,
-                userinfo:{},
+                userinfo:{
+					info:{}
+				},
                 productList:[],
                 kw:"",
                 topMenu:[

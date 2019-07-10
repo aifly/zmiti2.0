@@ -264,7 +264,7 @@
 											s.showDetail = true;
 											s.formAdmin = params.row;
 											s.adminuserId = params.row.adminuserid;
-											console.log( params.row);
+											s.showDetailPage = 1;
                                         }
                                     }
                                 }, '详情'),

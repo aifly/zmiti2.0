@@ -62,6 +62,15 @@
 								<Radio :value='1' :label="1">禁用</Radio>
 							</RadioGroup>
 						</FormItem>
+						<FormItem label="单位管理员：">
+							<Select v-model="formCompany.userid">
+								<Option :value="user.userid" v-for='(user,i) of userList' :key="i">
+									{{user.username}}
+								</Option>
+							</Select>
+						</FormItem>
+
+						
 						
 						<FormItem label="备注：">
 							<Input v-model="formCompany.comment" placeholder="备注：" />
@@ -217,7 +226,7 @@
 											var s = this;
 											s.showDetail = true;
 											s.formCompany = params.row;
-										
+											s.showDetailPage = 1;
                                         }
                                     }
                                 }, '编辑'),
@@ -268,6 +277,11 @@
 					page_index:0,
 					page_size:10,
 				},
+				userCondition:{
+					page_index:0,
+					page_size:10,
+				},
+				userList:[],
 				userinfo:{}
 			}
 		},
@@ -286,6 +300,7 @@
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getCompanyList();
+			this.getUserList();
 		},
 
 		watch:{
@@ -304,6 +319,29 @@
 		},
 		
 		methods:{
+			getUserList(){
+				var s = this;
+				if(typeof window.Promise !== 'function'){
+					console.log('当前浏览器不支持Promise');
+					return;
+				}
+				var companyid = this.$route.params.companyid;
+				var p = new Promise((resolve,reject)=>{
+					zmitiUtil.adminAjax({
+						remark:"getUserList",
+						data:{//getUserListByCompanyId
+							action:companyActions["getUserList"].action,
+							condition:this.userCondition
+						},
+						success(data){
+							if(data.getret === 0){
+								s.userList = data.list;	 
+								resolve();
+							}
+						}
+					})
+				});
+			},
 			closeMaskPage(){
 				this.showDetailPage = -1;
 			},
