@@ -73,14 +73,18 @@
 						<div class="zmiti-systemhome-hr"></div>
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
 							<div class="zmiti-systemhome-h3">单位名称</div>
-							<i-table :columns="columns1" :data="data1"></i-table>
-							<div class="zmiti-systemhome-more"><a href="#">更多</a></div>
+							<Table :columns="columns1" :data="data1"></Table>
+							<div class="zmiti-systemhome-more">
+								<router-link to="/company">更多</router-link>
+							</div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
 							<div class="zmiti-systemhome-h3">产品列表</div>
-							<i-table :columns="columns2" :data="data2"></i-table>
-							<div class="zmiti-systemhome-more"><a href="#">更多</a></div>
+							<Table :columns="columns2" :data="data2"></Table>
+							<div class="zmiti-systemhome-more">
+								<router-link to="/product">更多</router-link>
+							</div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 					</div>
@@ -152,6 +156,8 @@
 	import RemoteJs from './ip'
 	var weatherActions = zmitiUtil.weatherActions;
 	var cityActions = zmitiUtil.cityActions;
+	var adminActions =zmitiUtil.adminActions;
+	var companyActions = zmitiUtil.companyActions;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -191,9 +197,9 @@
 					userface:'../../assets/images/zmiti.jpg',
 					userlevel:'../../assets/images/system-level1.png'
 				},
-				ucountnum1:5678234,
-				ucountnum2:6782341,
-				ucountnum3:7825632,
+				ucountnum1:5678234,//产品数量
+				ucountnum2:6782341,//单位数量
+				ucountnum3:7825632,//用户数量
 				iconImg1:'../../assets/images/icon-u1.png',
 				iconImg2:'../../assets/images/icon-u2.png',
 				iconImg3:'../../assets/images/icon-u3.png',
@@ -253,84 +259,50 @@
                     },
                     {
                         title: '电话',
-                        key: 'telphone',
+                        key: 'companyphone',
                         width:150
                     },
                     {
                         title: '人数',
-                        key: 'personals',
-                        width:150
+                        width:150,
+                        align: 'center',
+                        render:(h,params)=>{
+                        	return h('div',{
+                        		class:'nums'
+                        	},'-1');
+                        }
                     }
                 ],
-                data1: [
-                    {
-                        companyname:'单位名称单位名称1',
-                        username: '王小明',
-                        telphone: '13812345678',
-                        personals: 78564732
-                    },
-                    {
-                        companyname:'单位名称单位名称1',
-                        username: '张小刚',
-                        telphone: '13912345678',
-                        personals: 78564731
-                    },
-                    {
-                        companyname:'单位名称单位名称1',
-                        username: '李小红',
-                        telphone: '13712345678',
-                        personals: 78564730
-                    },
-                    {
-                        companyname:'单位名称单位名称1',
-                        username: '周小伟',
-                        telphone: '13612345678',
-                        personals: 78564732
-                    }
-                ],
+                data1: [],
                 columns2: [
                     {
                         title: '产品名',
-                        key: 'name'
+                        key: 'productname'
                     },
                     {
                         title: '上线时间',
-                        key: 'pubtime',
-                        width:150
+                        key: 'createtime',
+                        width:150,
+                        render:(h,params)=>{
+                        	return h('div',{
+                        		class:'createtime'
+                        	},this.formatPubDate(params.row.createtime))
+                        }
                     },
                     {
                         title: '使用数量',
-                        key: 'usage',
-                        width:150
+                        key: 'statue',
+                        width:150,
+                        align: 'center',
+                        render:(h,params)=>{
+                        	return h('div',{
+                        		class:'nums'
+                        	},'-1')
+                        }
                     }
                 ],
-                data2: [
-                    {
-                        name: '产品名称产品名称产品名称产品名称1',
-                        pubtime: '2018-09-30',
-                        usage: 78564732
-                    },
-                    {
-                        name: '产品名称产品名称产品名称产品名称1',
-                        pubtime: '2018-09-30',
-                        usage: 78564732
-                    },
-                    {
-                        name: '产品名称产品名称产品名称产品名称1',
-                        pubtime: '2018-09-30',
-                        usage: 78564732
-                    },
-                    {
-                        name: '产品名称产品名称产品名称产品名称1',
-                        pubtime: '2018-09-30',
-                        usage: 78564732
-                    },
-                    {
-                        name: '产品名称产品名称产品名称产品名称1',
-                        pubtime: '2018-09-30',
-                        usage: 78564732
-                    }
-                ],
+                data2: [],
+                userData:[],
                 time: new Date()
 			}
 		},
@@ -351,6 +323,9 @@
 			this.gettimedata();
 			this.getCityWeather();
 			this.getair();
+			this.getProductList();//产品列表
+			this.getCompanyList();//单位列表
+			this.getUserList();//获取用户列表
 			console.log(this.userinfo,'this.userinfo')
 		},
 
@@ -517,7 +492,95 @@
 
 					}
 				});
-			}
+			},
+			getProductList(){
+				var s = this;
+				console.log(adminActions,'adminActions')
+				zmitiUtil.adminAjax({
+					remark:'getProductList',
+					data:{
+						action:adminActions.getProductList.action,
+						condition:{
+							page_index:0,
+							page_size:20
+						}						
+					},
+					success(data){
+						console.log(data,'获取产品列表');
+						s.data2=data.list;
+						s.ucountnum1=data.total;
+					}
+				})
+			},
+			getCompanyList(){
+				//console.log(companyActions.getCompanyList.action,'companyActions');
+				zmitiUtil.adminAjax({
+					remark:'getCompanyList',
+					data:{
+						action:companyActions.getCompanyList.action,
+						condition:{
+							//companyname:'sss',
+							page_index:0,
+							page_size:10
+						}						
+					},
+					success(data){
+						console.log(data,'获取单位列表');
+						s.data1=data.list;
+						s.ucountnum2=data.total;
+					}
+				})
+			},
+			getUserList(){//获取所有单位下的用户
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:"getUserList",
+					data:{
+						action:companyActions.getUserList.action,
+						condition:{
+							page_index:0,
+							page_size:10
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							s.userData=data.list;
+							s.ucountnum3=data.total;
+						}
+					}
+				})
+			},
+			getCompanyUser:function(id){//获取本单位下的用户
+				let s = this;
+				let nums=0;
+
+					zmitiUtil.adminAjax({
+						remark:"getUserListByCompanyId",
+						data:{
+							action:companyActions.getUserListByCompanyId.action,
+							condition:{
+								page_index:0,
+								page_size:10,
+								companyid:id
+							}
+						},
+						success(data){
+							if(data.getret === 0){
+								nums=data.total;
+								s.userData.push(data.total);																
+							}
+						}
+					})
+			},
+			formatPubDate: function (value) {
+				let date = new Date(value*1000);
+				let y = date.getFullYear();
+				let MM = date.getMonth() + 1;
+				MM = MM < 10 ? ('0' + MM) : MM;
+				let d = date.getDate();
+				d = d < 10 ? ('0' + d) : d;	
+				return y + '-' + MM + '-' + d;
+		    }
 		 
 		},
 		filters: {
@@ -559,6 +622,12 @@
 				}
 				return y + '年' + MM + '月' + d + '日 ' + week;
 		    }
+		    
+	    },
+	    computed:{
+	    	userinfonum(){
+	    		return this.userData;
+	    	}
 	    }
 	}
 </script>

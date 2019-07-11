@@ -92,7 +92,8 @@
 .zmiti-systemhome-ulist li {
   font-size: 14px;
   line-height: 24px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  list-style: none; }
   .zmiti-systemhome-ulist li:last-child {
     margin-bottom: 0; }
   .zmiti-systemhome-ulist li a {
