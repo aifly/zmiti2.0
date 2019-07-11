@@ -32,15 +32,10 @@
 						<div v-for='(thumb,i) of formBasicConfig.info.thumb_list' :key="i" class='zmiti-thumb-list'>
 							<div>
 								<div>前缀列表：</div>
-								<div>
-									<div v-for='(fix,j) of thumb.fix' :key='j' class='zmiti-thumb-item'>
-										<Input  v-model="thumb.fix[j]" placeholder="前缀列表" />	
-									</div>
-									<template>
-										<Button @click='thumbAction(thumb.fix,"add")' type='primary'>添加</Button>
-										<Button @click="thumbAction(thumb.fix,'delete')">删除</Button>
-									</template>
+								<div class='zmiti-thumb-item'>
+									<Input  v-model="thumb.fix" placeholder="前缀名称" />	
 								</div>
+									
 							</div>
 							<div>
 								<div>宽：</div>
