@@ -354,6 +354,7 @@
 					condition:{
 
 						start:1,
+						companyid:2,
 
 						page_index:0,
 						page_size:12
@@ -364,8 +365,6 @@
 					 console.log(data,'获取部门测试接口~~')
 				 }
 			 })
-		 
-
 		},
 		
 		methods:{
