@@ -203,7 +203,7 @@
 						file_path:'',
 						oss_selected:0,
 						thumb_list:[{
-							fix:[],
+							fix:'',
 							w:0,
 							height:0
 						}],
