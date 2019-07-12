@@ -68,7 +68,7 @@
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
 								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+resource.filepath+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1 && false'>
 								</div>
-								<img :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="resource.filepath" alt="">
+								<img :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="resource.custombilethum[0]||resource.filepath" alt="">
 								<span v-else :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
 
 								<template  v-if='!resource.isUploading'>
@@ -312,7 +312,7 @@ export default {
 			resourceCondition:{
 				page_index:0,
 				page_size:20,
-				filetype:'视频',
+				filetype:'图片',
 				//classtype:1,
 			},
 			resourceList:[],//资源集合
@@ -445,6 +445,9 @@ export default {
 					if(data.getret === 0 ){
 						data.list.forEach((list)=>{
 							list.filepath = window.config.host + list.filepath;
+							
+							
+							
 							list.size = 'cover';
 							//list.checked = false;
 						})
@@ -469,8 +472,7 @@ export default {
 		getResourceByClassId(){
 			var {isAdmin,$Message} = this;
 			var s = this; 
-			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId});
-
+			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId,classtype:defaultClass()[this.currentCateIndex].id}); 
 			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
 				remark:'getResourceList',
 				_ui:{
@@ -490,6 +492,9 @@ export default {
 							list.filepath = window.config.host + list.filepath;
 							
 							//list.filepath = s.imgs.deleted;
+							for(var i = 0;i<list.custombilethum.length;i++){
+								list.custombilethum[i] =  window.config.host  + list.custombilethum[i];
+							}
 
 							if(list.filetype === '图片'){
 								var img = new Image();

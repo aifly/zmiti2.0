@@ -295,7 +295,6 @@
 					case 'add':
 						data.push({
 							accessKeyId: '',
-							accessKeySecret: '',
 							bucket: '',
 							endpoint: '',
 							idx: '',
@@ -333,7 +332,7 @@
 			
 			save(){
 				var s = this;
-				
+				s.formBasicConfig.info.accessKeySecret = s.formBasicConfig.info.accessKeySecret.replace(/\s+/g, "");
 				zmitiUtil.adminAjax({
 					remark:'updateBasicConfig',
 					data:{

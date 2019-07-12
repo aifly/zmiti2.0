@@ -1,8 +1,8 @@
 var path = require('path');
-const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
+//const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
 //const HtmlWebpackPlugin = require('html-webpack-plugin');
 var port = 8000;
-var webpack = require('webpack');
+//var webpack = require('webpack');
 //const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
 	// 定义模块引用的绝对路径前缀
