@@ -332,7 +332,7 @@
 			
 			save(){
 				var s = this;
-				s.formBasicConfig.info.accessKeySecret = s.formBasicConfig.info.accessKeySecret.replace(/\s+/g, "");
+				s.formBasicConfig.info.accessKeySecret = (s.formBasicConfig.info.accessKeySecret||"").replace(/\s+/g, "");
 				zmitiUtil.adminAjax({
 					remark:'updateBasicConfig',
 					data:{
