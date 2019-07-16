@@ -66,7 +66,7 @@
 						<li v-if='resourceList.length<=0' class='zmiti-resouce-nodata'>暂无数据 ^_^</li>
 						<li v-for="(resource,i) of resourceList" :key="i" @click="currentResourceIndex =  i">
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
-								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+resource.filepath+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1 && false'>
+								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+(resource.custombilethum[0]||resource.filepath)+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1 && false'>
 								</div>
 								<img :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="resource.custombilethum[0]||resource.filepath" alt="">
 								<span v-else :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
@@ -149,7 +149,7 @@
 				<div class='zmiti-detail-C' v-if='currentResourceIndex >-1'>
 					<div class='zmiti-detail-img'>
 						<div class='zmiti-deitail-btn' @click="changeResource(-1)"><Icon type="ios-arrow-back" /></div>
-						<img v-if='resourceList[currentResourceIndex].filetype === "图片"' draggable="false" :src="resourceList[currentResourceIndex].filepath" alt="">
+						<img v-if='resourceList[currentResourceIndex].filetype === "图片"' draggable="false" :src="(resourceList[currentResourceIndex].custombilethum[0]||resourceList[currentResourceIndex].filepath)" alt="">
 						<span v-else>当前格式不支持预览</span>
 						
 						<div class='zmiti-deitail-btn' @click="changeResource(1)"><Icon type="ios-arrow-forward" /></div>
@@ -444,7 +444,8 @@ export default {
 					//$Message[data.getret === 0 ?　'success':'error'](data.msg);
 					if(data.getret === 0 ){
 						data.list.forEach((list)=>{
-							list.filepath = window.config.host + list.filepath;
+							//list.filepath = window.config.host + list.filepath;
+							list.custombilethum[0] = window.config.host + list.custombilethum[0];
 							
 							
 							
@@ -452,6 +453,7 @@ export default {
 							//list.checked = false;
 						})
 						s.resourceList = data.list;
+						
 					}
 				}
 			});
@@ -509,7 +511,8 @@ export default {
 											list.classList = ' small '
 										}
 									}else{
-										list.filepath = s.imgs.deleted;
+										//list.filepath = s.imgs.deleted;
+										list.custombilethum[0] = list.filepath;
 									}
 									
 									if(iNow >= data.list.filter(item=>{item.filetype === '图片'}).length){
@@ -517,12 +520,16 @@ export default {
 									}
 								};
 
-								img.src = list.filepath;
+								//img.src = list.filepath;
+								
+								img.src = list.custombilethum[0];
 							}
 							//list.checked = false;
 
 						})
 						s.resourceList = data.list;
+
+						console.log(s.resourceList,'s.resourceList')
 						
 					}
 				}

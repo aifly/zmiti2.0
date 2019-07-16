@@ -14,9 +14,26 @@
 			</section>
 			
 			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<div class='zmiti-user-table' :class="{'active':showDetail}">
-					<Table  :data='dataSrouce' :columns='columns'></Table>
-				</div>
+				<ul>
+					<li v-for='(data,i) of dataSrouce' :key="i">
+						<div>产品名称：{{data.productname}}</div>
+						<div>产品说明：{{data.introduce}}</div>
+						<div>
+							<div>创建时间：{{formatDate(data.createtime)}}</div>
+							<div>
+								<span @click='showEditPage(data)'>编辑</span>
+								<Poptip
+									:confirm="true"
+									title="确定要删除吗？"
+									@on-ok="deletes(data.productid)"
+									
+								>
+									<span>删除</span>
+								</Poptip>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
@@ -37,8 +54,11 @@
 						<FormItem label="产品介绍：">
 							<Input v-model="formObj.introduce" placeholder="产品介绍：" />
 						</FormItem>
-						<FormItem label="链接：">
-							<Input v-model="formObj.producturl" placeholder="链接：" />
+						<FormItem label="用户端链接：">
+							<Input v-model="formObj.producturl" placeholder="用户端链接：：" />
+						</FormItem>
+						<FormItem label="管理端链接：">
+							<Input v-model="formObj.managerurl" placeholder="管理端链接：" />
 						</FormItem>
 					
 					</Form>
@@ -64,7 +84,7 @@
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask';
 
-	var {adminActions,companyActions } = zmitiUtil;
+	var {adminActions,companyActions,formatDate } = zmitiUtil;
 
 	export default {
 		props:['obserable'],
@@ -75,6 +95,7 @@
 				tabIndex:[0,-1],
 				showAvatarModal:false,
 				visible:false,
+				formatDate,
 				avatarList:[
 					'&#xe6a5;',
 					'&#xe6a4;',
@@ -157,7 +178,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delete(params.row.productid);
+											this.deletes(params.row.productid);
 										},
 										
 									}
@@ -232,8 +253,12 @@
 		},
 		
 		methods:{
-		 
-			 closeMaskPage(){
+			showEditPage(item){
+				var s = this;
+				s.showDetailPage = 1;
+				s.formObj = item; 
+			},
+			closeMaskPage(){
 				this.showDetailPage = -1;
 			},
 			 
@@ -266,7 +291,7 @@
 				this.showDetailPage = 1;
 			},
 
-			delete(productids){
+			deletes(productids){
 				var s = this;
 				zmitiUtil.adminAjax({
 					remark:'delProduct',

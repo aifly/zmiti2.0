@@ -132,7 +132,7 @@
 
 
 					<div v-for="(list,i) in formBasicConfig.info.oss_list" :key="i">
-						<h2 class='zmiti-oss-title' :class="{'active':formBasicConfig.info.oss_selected === i}">第{{i+1}}个OSS配置</h2>
+						<h2 class='zmiti-oss-title' :class="{'active':formBasicConfig.info.oss_selected === i+1}">第{{i+1}}个OSS配置</h2>
 						<FormItem label="索引：">
 							<Input v-model="list.idx" placeholder="索引：" />
 						</FormItem>
@@ -152,7 +152,7 @@
 							<Input v-model="list.accessKeySecret" placeholder="访问密钥：" />
 						</FormItem>
 						<FormItem label="是否启用：">
-							<div class='zmiti-oss-used' :class="{'active':formBasicConfig.info.oss_selected === i}" @click="setOssStatus(i)"></div>
+							<div class='zmiti-oss-used' :class="{'active':formBasicConfig.info.oss_selected === i+1}" @click="setOssStatus(i+1)"></div>
 						</FormItem>
 						<FormItem label="">
 							<Button @click='serverAction(formBasicConfig.info.oss_list,"add")' type='primary'>添加</Button>
@@ -201,7 +201,7 @@
 					info:{
 						is_oss_upload:1,
 						file_path:'',
-						oss_selected:0,
+						oss_selected:1,
 						thumb_list:[{
 							fix:'',
 							w:0,
@@ -358,7 +358,7 @@
 					success(data){
 						if(data.getret === 0){
 							s.formBasicConfig = data;
-							s.formBasicConfig.info.oss_selected = s.formBasicConfig.info.oss_selected || 0;
+							s.formBasicConfig.info.oss_selected = s.formBasicConfig.info.oss_selected || 1;
 
 							
 						}

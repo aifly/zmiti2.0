@@ -99,9 +99,53 @@
   transition: 0.3s;
 }
 
-.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main .zmiti-user-table {
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main ul {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
   width: 98%;
   margin: 0 auto;
+}
+
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main ul li {
+  list-style: none;
+  width: 23%;
+  margin-right: 2%;
+  height: 140px;
+  border: 1px solid #eee;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+}
+
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main ul li > div:nth-of-type(1) {
+  height: 34px;
+  line-height: 34px;
+  background: #eee;
+  padding: 0 3px;
+}
+
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main ul li > div:nth-of-type(3) {
+  height: 34px;
+  line-height: 34px;
+  padding: 0 3px;
+  background: #eee;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main ul li > div:nth-of-type(3) span {
+  cursor: pointer;
+}
+
+.zmiti-user-main-ui .zmiti-list-main .zmiti-user-main ul li > div:nth-of-type(2) {
+  flex: 1;
+  -webkit-flex: 1;
+  padding: 4px;
 }
 
 .zmiti-user-main-ui .lt-full {
