@@ -9,7 +9,7 @@
 				<Input />
 			</div>
 		</header>
-		<div class="zmiti-resourcelist-content">
+		<div class="zmiti-resourcelist-content" :style="{height:viewH - 108+'px'}">
 			<div class='zmiti-resource-cate'>
 				<div @click="getCateById(item,i)" :class="{'active':currentCateIndex === i}" v-for='(item ,i ) of defaultClass' :key="i">
 					<span class='zmt_iconfont' v-html='item.icon'></span>
@@ -58,7 +58,11 @@
 				</header>
 				<header class='zmiti-resource-header1'>
 					<div><Checkbox>全选</Checkbox></div>
-					<div><Button type='error' size='small' @click='delResource'>删除</Button></div>
+					<div>
+						<Button type='error' size='small' @click='delResource'>删除</Button>
+						<span style='opacity:0'>1</span>
+						<Button v-if='false' type='error' size='small' @click='downloadResource'>下载</Button>
+					</div>
 				</header>
 				
 				<div class='zmiti-resource-C zmiti-scroll'>
@@ -66,9 +70,9 @@
 						<li v-if='resourceList.length<=0' class='zmiti-resouce-nodata'>暂无数据 ^_^</li>
 						<li v-for="(resource,i) of resourceList" :key="i" @click="currentResourceIndex =  i">
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
-								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+(resource.custombilethum[0]||resource.filepath)+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1 && false'>
+								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+((resource.custombilethum&&resource.custombilethum[0])||resource.filepath)+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1 && false'>
 								</div>
-								<img :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="resource.custombilethum[0]||resource.filepath" alt="">
+								<img :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="(resource.custombilethum&&resource.custombilethum[0])||resource.filepath" alt="">
 								<span v-else :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
 
 								<template  v-if='!resource.isUploading'>
@@ -210,6 +214,7 @@
 
 					<div class='zmiti-detail-submit'>
 						<Button @click='editResource' size='large' type='primary'>{{isCanEdit?'保存':'编辑'}}</Button>
+						<Button size='large' @click="downloadResource">下载</Button>
 					</div>
 				</div>
 			</div>
@@ -290,6 +295,7 @@ export default {
 			currentClassId:-1,
 			showModal:false,
 			viewW:window.innerWidth,
+			viewH:window.innerHeight,
 			showPager:true,
 
 			currentCateId:3,
@@ -427,6 +433,11 @@ export default {
 				})
 			}
 		},
+		downloadResource(){
+			var  s = this;
+			var {fileid} = s.resourceList[s.currentResourceIndex];
+			 zmitiUtil.downloadFile(fileid);
+		},
 		delResource(){
 			var {isAdmin,$Message} = this;
 			var s = this; 
@@ -474,7 +485,13 @@ export default {
 		getResourceByClassId(){
 			var {isAdmin,$Message} = this;
 			var s = this; 
-			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId,classtype:defaultClass()[this.currentCateIndex].id}); 
+			var userinfo = zmitiUtil.getAdminUserInfo();
+			
+			var condition = Object.assign(this.resourceCondition,{
+				fileclassid:s.currentClassId,
+				filetype:s.filetype,
+				userid:userinfo.ui.userid,
+				classtype:defaultClass()[this.currentCateIndex].id}); 
 			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
 				remark:'getResourceList',
 				_ui:{
@@ -610,72 +627,7 @@ export default {
 				disableGlobalDnd :true,//是否禁掉整个页面的拖拽功能，如果不禁用，图片拖进来的时候会默认被浏览器打开。
 			});
 
-			/* uploader.on('uploadBeforeSend',function(obj,data){
-				data.uploadfilename = s.formUpload.filetitle;
-				data.filedesc = s.formUpload.filedesc;
-				data.publicadtype = s.menus[s.currentType];
-				if(s.formUpload.tagList){
-					data.userlabel = s.formUpload.tagList.concat([]).join(',');
-				}
-				data.author = s.formUpload.author;
-				data.telphone = s.formUpload.telphone;
-				data.previewurl = s.formUpload.previewurl;
-				var D = new Date();
-				symbinUtil.ajax({
-					url:window.config.baseUrl+'/wmshare/writelog',
-					type:'get',
-					data:{
-						type:'info',
-						msg:JSON.stringify({
-							msg:"uploadBeforeSend ....",
-							data,
-							date:[D.getFullYear(),D.getMonth()+1,D.getDate(),D.getHours(),D.getMinutes(),D.getSeconds()].join('-'),
-							userinfo:s.userinfo
-						})
-					}
-				})
-			});
-			
-			uploader.on('dndAccept',(file,a)=>{
-				console.log(accepts[s.currentType].extensions,(file['0'].type.split('/')[1]))
-
-				if(accepts[s.currentType].extensions.indexOf(file['0'].type.split('/')[1])<=-1){
-					s.$Message.error('目前不支持'+file['0'].type.split('/')[1]+'文件格式');
-					return;
-				}
-
-				symbinUtil.ajax({
-					url:window.config.baseUrl+'/wmadvuser/getuserauth',
-					data:{
-						username:s.userinfo.username,
-						usertoken:s.userinfo.accesstoken,
-						resourceid:id,
-					},
-					success(data){
-						if(data.getret === 0){
-							if(data.authtype<2){//没有写的权限；
-								s.$Message.error('您没有上传的权限');
-								uploader.stop();
-							}else{
-							
-							}
-						}
-						
-					}
-				})
-
-			})
- 
-			uploader.on("beforeFileQueued",function(file){
-				if(accepts[s.currentType].extensions.indexOf(file['type'].split('/')[1])<=-1){
-					s.$Message.error('当前文件格式不支持');
-					return;
-				}
-				var data = s.configList.filter((item)=>{return item.fieldname === 'publicadtype'})[0]?s.configList.filter((item)=>{return item.fieldname === 'publicadtype'})[0].data:[]
-				s.publicadtype = {data:data[s.currentType]}||'';
-				s.showUploadDialog = false;
-			});
-*/
+			 
 			s.uploader = uploader;
 
 			// 当有文件添加进来的时候
@@ -806,10 +758,14 @@ export default {
 		},
 		getCateByChildId(item){
 			this.childCateId = item.type;
-		    this.showPager = item.name === '全部';
-			this.resourceList = this.defaultResourceList.filter(res=>{
+			this.showPager = item.name === '全部';
+
+			item.type !== -1 && (this.filetype = item.type);
+			this.getResourceByClassId();
+
+			/* this.resourceList = this.defaultResourceList.filter(res=>{
 				return item.name === '全部' ? true : res.filetype === item.name;
-			})
+			}) */
 			
 		},
 		getCateById(item,index){
@@ -859,6 +815,7 @@ export default {
 		getDefaultCate(){//获取默认分类。
 			var {isAdmin,condition} = this;
 			var s = this;
+			var cdn = Object.assign(condition,{userid:zmitiUtil.getAdminUserInfo().ui.userid});
 			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
 				remark:'getResourceCateList',
 				_ui:{
@@ -866,7 +823,7 @@ export default {
 				},
 				data:{
 					action:resourceActions.getResourceCateList.action,
-					condition
+					condition:cdn
 				},
 				success(data){
 					if(data.getret === 0){

@@ -72,11 +72,28 @@ let workorder_workorderlist = {
 	]
 };
 
+let changyue = {
+	title:'畅阅',
+	tabs:[
+		{
+			name:"首页",
+			link:'/changyue'
+		},{
+			name:"CMS配置",
+			link:'/changyuesetting'
+		},{
+			name:'操作日志',
+			link:'/changyuelog'
+		}
+	]
+}
+
 
 var menuObj = {
 	user_company,
 	basicconfig_admin_rolegroup_setrole_pv_form,
-	workorder_workorderlist
+	workorder_workorderlist,
+	changyue
 };
 
 export default menuObj;

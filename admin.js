@@ -17,6 +17,7 @@ import Login from './admin/login';
 import WorkOrder from './admin/workorder';
 import WorkOrderList from './admin/workorderlist';
 import ResourceList from './admin/resourcelist';
+import ChangYue from './admin/changyue';
 import Weather from './admin/weather';
 import iView from 'iview';
 import VueRouter from 'vue-router'
@@ -66,6 +67,7 @@ const router = new VueRouter({
 		{
 			path: '/group/', name: 'group', component: Group, props: true, children: [
 				{ path: '/user/:companyid?', name: 'user', component: User },
+				{ path: '/changyue/', name: 'changyue', component: ChangYue },
 				{ path: '/company/', name: 'company', component: Company },
 				{ path: '/admin/', name: 'admin', component: Admin},
 				{ path: '/pv/', name: 'pv', component: Pv},

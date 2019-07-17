@@ -41,6 +41,13 @@ var zmitiUtil = {
 		var replaceText = arg + '=' + val;
 		return url.match(pattern) ? url.replace(eval('/(' + arg + '=)([^&]*)/gi'), replaceText) : (url.match('[\?]') ? url + '&' + replaceText : url + '?' + replaceText);
 	},
+	downloadFile(fileid){
+
+
+		window.location.href = 'http://file.zmiti.com/index/files/download?fileid=' + fileid;
+
+		
+	},
 	getUserInfo(key = 'login') {
 
 		var loginObj = {};
