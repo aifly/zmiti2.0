@@ -73,6 +73,7 @@ var imgs = {
 	}).then((data)=>{
 		console.log(data.data)
 	});
+ 
  */
 
 })();

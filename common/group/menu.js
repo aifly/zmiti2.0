@@ -72,7 +72,7 @@ let workorder_workorderlist = {
 	]
 };
 
-let changyue = {
+let changyue_changyuesetting_changyuelog = {
 	title:'畅阅',
 	tabs:[
 		{
@@ -88,12 +88,26 @@ let changyue = {
 	]
 }
 
+let product_productrole = {
+	title:"产品管理",
+	tabs:[
+		{
+			name:"产品列表",
+			link:'/product'
+		},{
+			name:'产品授权',
+			link:'/productrole'
+		}
+	]
+};
+
 
 var menuObj = {
 	user_company,
 	basicconfig_admin_rolegroup_setrole_pv_form,
 	workorder_workorderlist,
-	changyue
+	changyue_changyuesetting_changyuelog,
+	product_productrole
 };
 
 export default menuObj;

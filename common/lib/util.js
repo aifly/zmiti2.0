@@ -71,8 +71,18 @@ var zmitiUtil = {
 		var date = new Date(time * 1000 + 8 * 3600 * 1000); // 增加8小时
 		return date.toJSON().substr(0, 19).replace('T', ' ');
 	},
-	getProductListByAdmin() {
+	getProductListByAdmin(opt={}) {
 
+		var data = Object.assign({
+			action: this.companyActions.getCompanyList.action
+		},opt);
+		this.adminAjax({
+			remark:"getProductListByAdmin",
+			data,
+			success(data){
+				opt.success && opt.success(data);
+			}
+		})
 	},
 	getProductList(fn) { //
 

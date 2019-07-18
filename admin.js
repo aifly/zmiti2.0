@@ -18,6 +18,7 @@ import WorkOrder from './admin/workorder';
 import WorkOrderList from './admin/workorderlist';
 import ResourceList from './admin/resourcelist';
 import ChangYue from './admin/changyue';
+import ProductRole from './admin/productrole';
 import Weather from './admin/weather';
 import iView from 'iview';
 import VueRouter from 'vue-router'
@@ -42,12 +43,7 @@ const router = new VueRouter({
 			component: Home,
 		},
 	
-		{
-			path: '/product/',
-			name: 'product',
-			component: Product,
-			props: true
-		},
+		
 		{
 			path: '/',
 			name: 'login',
@@ -74,7 +70,9 @@ const router = new VueRouter({
 				{ path: '/form/', name: 'form', component: Form},
 				{ path: '/rolegroup/', name: 'rolegroup', component: RoleGroup},
 				{ path: '/setrole/', name: 'setrole', component: SetRole},
-				{ path: '/basicconfig/', name: 'basicconfig', component: Basicconfig},
+				{ path: '/basicconfig/', name: 'basicconfig', component: Basicconfig }, 
+				{path: '/product/',name: 'product',component: Product,props: true},
+				{ path: '/productrole/', name: 'productrole', component: ProductRole,props: true},
 				
 			]
 		}

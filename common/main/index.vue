@@ -140,7 +140,7 @@
 						name:"产品管理",
 						link:'/product',
 						icon:'&#xe64c;',
-						active:['product'] 
+						active:['product','productrole'] 
 					},{
 						name:"财务管理",
 						link:'/finance',

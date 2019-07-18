@@ -1,7 +1,7 @@
 <template>
 	<div class="zmiti-tab-ui lt-full">
 		<div class="zmiti-tab-bar" :class="{'hide':hideTab}">
-			<div class="zmiti-tab-title">{{title}}</div>
+			<div class="zmiti-tab-title">{{title}} </div>
 			<slot  name='zmiti-tab-menu'></slot>
 			<div class="zmiti-tab-btn" @click='toggleTab'>
 				<img style='transform: rotate(180deg)' v-if='hideTab' :src="imgs.open">

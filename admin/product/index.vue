@@ -55,10 +55,16 @@
 							<Input v-model="formObj.introduce" placeholder="产品介绍：" />
 						</FormItem>
 						<FormItem label="用户端链接：">
-							<Input v-model="formObj.producturl" placeholder="用户端链接：：" />
+							<Input v-model="formObj.producturl" placeholder="用户端链接：" />
 						</FormItem>
 						<FormItem label="管理端链接：">
 							<Input v-model="formObj.managerurl" placeholder="管理端链接：" />
+						</FormItem>
+						<FormItem label="状态：">
+							<RadioGroup v-model="formObj.status">
+								<Radio :value='0' :label="0">禁用</Radio>
+								<Radio :value='1' :label="1">正常</Radio>
+							</RadioGroup>
 						</FormItem>
 					
 					</Form>
@@ -113,7 +119,7 @@
 				adminuserId:'',
 				currentUserid:'',
 				formObj:{
-					isover:0,
+					status:0,
 					usersign:1,
 					usertypesign:1,
 					avatar:'&#xe6a4;'

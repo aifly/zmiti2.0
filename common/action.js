@@ -81,6 +81,10 @@ let adminActions = {
 	replayWorkOrder:{
 		desc:"管理员回复工单",
 		action:'1000112'
+	},
+	getProductPowerList:{
+		desc:"获取产品授权列表",
+		action:'1000310'
 	}
 }
 
