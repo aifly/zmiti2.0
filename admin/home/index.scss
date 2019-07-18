@@ -1,1243 +1,201 @@
 ﻿@import "../css/base.scss";
-
-$baseColor: #fcffb4;
-$viewW: 750px;
-$color: #be0000;
-
-.wm-myreport-main-ui {
-    &.webuploader-dnd-over {
-        background: red;
-    }
-
-    
-
-
-    height: 100%;
-
+@mixin flexrows($k){
+    flex:$k;
+    -webkit-flex:$k;
+}
+.zmiti-weather-main-ui{
+    background: #f2f2f2;
+    box-sizing: border-box;
+    height: 99%;
+    width: 100%;
     @include pos(r);
-
-    .webuploader-container {
-        position: relative;
+    margin:0 auto;
+    @include displayFlex(row);
+    .zmiti-list-main {
+        box-sizing: border-box;
+        margin: 0 auto;
+        flex: 2;
+        -webkit-flex: 2;
+        @include pos(r);
     }
-
-    .webuploader-element-invisible {
-        position: absolute !important;
-        left: 0;
-        top: 0;
-        width: 100%;
+}
+.zmiti-systemhome-pane{
+    @include displayFlex(row);
+    .zmiti-systemhome-left{
+        flex:1;
+        -webkit-flex:1;
+        margin-left: 5px;
     }
-
-    .webuploader-pick {
-        position: relative;
-        display: inline-block;
-        height: 100%;
-        cursor: pointer;
-        background: #00b7ee;
-        opacity: 0;
-
-        // padding: 10px 15px;
-        width: 100%;
-        color: #fff;
-        text-align: center;
-        border-radius: 3px;
-        overflow: hidden;
-    }
-
-    .webuploader-pick-hover {
-        background: #00a2d4;
-    }
-
-    .webuploader-pick-disable {
-        opacity: 0.6;
-        pointer-events: none;
-    }
-
-    .wm-myreport-left {
-        background: #fff;
-
-        &.webuploader-dnd-over {
-            .wm-myreport-upload-C {
-                display: block;
+    .zmiti-systemhome-right{
+        width:320px;
+        margin-left: 18px;
+        margin-right: 5px;
+        .zmiti-systemhome-weather{
+            height: 180px;
+            background-color:#3f8fff;
+            color: #ffffff;
+            position: relative;
+            .zmiti-systemhome-weather-icon{
+                position:absolute;
+                right:10px;
+                top:10px;
             }
-        }
-
-        .wm-myreport-upload-C {
-            display: none;
-            background: rgba(0, 0, 0, 0.7); //position: fixed !important;
-            z-index: 10000;
-
-            @include transform(scale(0.99));
-
-            border: 2px dashed  #fff;
-
-            @include br(10px);
-        }
-
-        @include pos(a);
-
-        width: 100%;
-        overflow: hidden;
-
-        //border:1px solid red;
-        height: 100%;
-
-        @include displayFlex(column);
-
-        header {
-            height: 60px;
-            line-height: 60px;
-
-            //  text-indent: 2em;
-            width: 100%;
-
-            @include pos(r);
-
-            a{
-                @include pos(a);
-                right: 20px;
-                top: 0px;
-            }
-
-            #wm-upload {
-                @include pos(a);
-
-                top: 0;
-                overflow: hidden;
-                left: 0;
-                height: 60px;
-                width: 200px;
-
-                & > div {
-                    width: 100% !important;
-                    height: 100% !important;
-                }
-            }
-
-            span {
-                font-size: 16px;
-                margin-left: 20px;
-
-                @include pos(a);
-            }
-
-            ul {
-                @include displayFlex(flex);
-
-                margin: 0 auto;
-                max-width: 600px;
-                width: 40vw;
-                justify-content: space-around;
-                -webkit-justify-content: space-around;
-
-                li {
-                    cursor: pointer;
-                    text-align: center;
-                    width: 23%;
-                    margin: 0 10px;
-
-                    @include pos(r);
-
-                    &.active {
-                        &:before {
-                            content: '';
-
-                            @include transition(0.3s);
-
-                            @include pos(a);
-
-                            width: 100%;
-                            height: 2px;
-                            left: 0;
-                            bottom: 0;
-                            background: #f5a420;
-                        }
-                    }
-
-                    &:nth-of-type(1) {
-                        &.active {
-                            &:before {
-                                background: #f5a420;
-                            }
-                        }
-                    }
-
-                    &:nth-of-type(2) {
-                        &.active {
-                            &:before {
-                                background: #86be24;
-                            }
-                        }
-                    }
-
-                    &:nth-of-type(3) {
-                        &.active {
-                            &:before {
-                                background: #63aee5;
-                            }
-                        }
-                    }
-
-                    &:nth-of-type(4) {
-                        &.active {
-                            &:before {
-                                background: #5c8ee3;
-                            }
-                        }
-                    }
-
-                    img {
-                        width: 20px;
-                        vertical-align: middle;
-                        margin-right: 10px;
-                    }
-                }
-            }
-
-            @include pos(r);
-
-            &:before {
-                content: '';
-
-                @include pos(a);
-
-                width: 98%;
-                left: 1%;
-                border-top: 1px solid #eeeeee;
-                bottom: 0;
-            }
-        }
-
-        section {
-            -webkit-flex-grow: 1;
-            flex-grow: 1;
-
-            @include displayFlex(column);
-
-            .wm-myreport-list-C {
-                -webkit-flex-grow: 1;
-                flex-grow: 1;
-            }
-
-            .wm-report-footer {
-                background: #f4f4f4;
-                height: 80px;
-                line-height: 70px;
-                -webkit-justify-content: space-around;
-                justify-content: space-around;
-
-                @include displayFlex(row);
-
-                -webkit-justify-content: center;
-                justify-content: center;
-                -webkit-align-items: center;
-                align-items: center;
-
-                @include pos(r);
-
-                &:before {
-                    content: "";
-                    width: 100%;
-                    height: 1px;
-                    left: 0;
-                    top: 0;
-
-                    @include pos(a);
-
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset;
-                }
-
-                .wm-upload {
-                    z-index: 10000;
-                    cursor: pointer;
-
-                    div:nth-of-type(2) {
-                        width: 100% !important;
-                        height: 100% !important;
-                    }
-                }
-
-                & > div {
-                    width: 260px;
-                    text-align: center;
-                    height: 30px;
-                    cursor: pointer;
-
-                    @include br(4px);
-
-                    line-height: 30px;
-                    background: #f5a420;
-
-                    .wm-upload-tip {
-                        top: 26px;
-
-                        @include pos(a);
-
-                        color: #999;
-                        width: 100%;
-                        text-align: center;
-                    }
-
-                    color: #fff;
-
-                    div:nth-of-type(2) {
-                        @include pos(a);
-
-                        z-index: 10;
-                    }
-
-                    @include pos(r);
-
-                    &.wm-uplad-add-video {
-                        background: #86be24;
-                    }
-
-                    &.wm-uplad-add-audio {
-                        background: #63aee5;
-                    }
-
-                    &.wm-uplad-add-dongman {
-                        background: #5c8ee3;
-                    }
-
-                    & > span {
-                        @include pos(a);
-
-                        width: 100%;
-                        height: 100%;
-                        left: 0;
-                        top: 0;
-                        z-index: 100;
-                    }
-
-                    i {
-                        vertical-align: middle;
-                        font-size: 16px;
-                    }
-                }
-            }
-
-            @include pos(r);
-
-            z-index: 1000;
-
-            .wm-no-report {
-                width: 100%;
+            .zmiti-systemhome-weather-inner{
+                padding:0 0 0 30px;
+                @include displayFlex(column);
                 height: 100%;
-
-                @include pos(a);
-
-                cursor: pointer;
-
-                @include displayFlex(row);
-
-                -webkit-justify-content: center;
                 justify-content: center;
-                -webkit-align-items: center;
-                align-items: center;
-
-                & > div {
-                    text-align: center;
-                    overflow: hidden;
-
-                    @include pos(r);
-
-                    img {
-                        width: 100px;
-                        display: block;
-                        margin: 10px auto;
-                    }
+            }
+            dl{
+                @include displayFlex(row);
+                dt{
+                    font-size: 60px;
+                    line-height: 1;
+                    margin-right: 10px;
                 }
-
-                .wm-upload {
-                    position: absolute !important;
-
-                    & > div:nth-of-type(2) {
-                        z-index: 1000;
-
-                        @include pos(a);
-
-                        left: 0;
-                        top: 0;
-                        width: 100% !important;
-                        height: 100% !important;
-                    }
-                }
-
-                @at-root .wm-upload {
-                    @include pos(a);
-
-                    width: 100%;
-                    z-index: 100;
-                    height: 100%;
-                    left: 0;
-                    top: 0;
-
-                    input[type='file'] {
-                        @include pos(a);
-
-                        width: 100%;
-                        height: 100%;
-                        left: 0;
-                        top: 0;
-                        z-index: 100;
-                        opacity: 0;
-                        cursor: pointer;
+                dd{
+                    font-size: 18px;
+                    line-height: 1;
+                    .zmiti-systemhome-tq{
+                        padding:8px 0;                      
                     }
                 }
             }
-        }
-
-        .wm-report-list {
-            overflow: auto;
-            height: 500px;
-
-            ul {
-                margin-top: 30px;
+            .zmiti-systemhome-windDir{
+                line-height: 1;
+                font-size: 18px;
+                padding-top:10px;
             }
-
-            li {
-                display: inline-block;
-                width: 18%;
-                margin: 12px;
-                height: 130px;
-                background: #f4f4f4;
-
-                @include pos(r);
-
-                &.uncheck,
-                &.pass {
-                    &:after {
-                        content: '';
-
-                        @include pos(a);
-
-                        width: 0;
-                        height: 0;
-                        left: 0;
-                        top: 0;
-                        border-top: 10px solid #f5a420;
-                        border-right: 10px solid transparent;
-                    }
-                }
-
-                &.pass {
-                    &:after {
-                        border-top: 10px solid yellowgreen;
-                    }
-                }
-
-                .wm-report-status {
-                    @include pos(a);
-
-                    top: 0;
-                    left: 0;
-                    width: 50px;
-                }
-
-                cursor: pointer;
-
-                &:hover {
-                    .wm-report-action {
-                        opacity: 1;
-                    }
-                }
-
-                .wm-uploading {
-                    @include pos(a);
-
-                    width: 100%;
-                    height: 100%;
-                    //background: rgba(0, 0, 0, 0.8);
-                    left: 0;
-                    top: 0;
-                    z-index: 0;
-                }
-
-                & > div.wm-report-item-bg {
-                    width: 100%;
-                    height: 100%;
-                    border: 1px solid #eee;
-                    @include displayFlex(row);
-                     -webkit-justify-content: center;
-                     justify-content: center;
-                     -webkit-align-items: center;
-                     align-items: center;
-                     overflow: hidden;
-                    img{
-                        display: block;
-                        width: auto;
-                        height: auto;
-                        max-width: 100%;
-                        max-height: 100%;
-                    }
-                    &.active {
-                        border-color: #f5a420;
-                    }
-                }
-
-                .wm-report-item-name {
-                    text-align: center;
-                    margin: 4px 0;
-                    font-size: 14px;
-                    height: 24px;
-                }
-
-                .wm-file-progress,
-                .wm-file-disabled {
-                    @include pos(a);
-
-                    width: 100%;
-                    height: 30px;
-                   // background: rgba(250, 184, 46, 0.2);
-                    text-align: center;
-                    top: 50%;
-                    margin-top: -15px;
-                    line-height: 30px;
-                    color: #fff;
-                    font-size: 14px;
-                }
-
-                .wm-file-progress {
-                    z-index: 10;
-                    background-color: #f5a420;
-                   // border: 1px solid rgba(250, 184, 46, 0.2);
-
-                    //  box-shadow: 1vw 3vh 10vh rgba(250, 184, 46, .7);
-                    background-size: 3em 3em;
-                    background-image: linear-gradient(-45deg, transparent 0em, transparent 0.8em, rgba(250, 184, 46, 0.7) 0.9em, rgba(250, 184, 46, 0.7) 2.1em, transparent 2.1em, transparent 2.9em, rgba(250, 184, 46, 0.7) 3.1em);
-                    -webkit-animation: warning-animation 750ms infinite linear;
-                    -moz-animation: warning-animation 750ms infinite linear;
-                    animation: warning-animation 750ms infinite linear;
-
-                    &:before {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        height: 100%;
-                        background-image: linear-gradient(to bottom, rgba(250, 184, 46, 0.7), rgba(250, 184, 46, 0.7) 15%, transparent 60%, rgba(250, 184, 46, 0.7));
-                    }
-                }
-
-                @-webkit-keyframes warning-animation {
-                    0% {
-                        background-position: 0 0;
-                    }
-
-                    100% {
-                        background-position: 3em 0;
-                    }
-                }
-
-                @keyframes warning-animation {
-                    0% {
-                        background-position: 0 0;
-                    }
-
-                    100% {
-                        background-position: 3em 0;
-                    }
-                }
-
-                .wm-report-disabled-mask {
-                    @include pos(a);
-
-                    width: 100%;
-                    height: 100%;
-                    left: 0;
-                    top: 0;
-                    background: rgba(255, 255, 255, 0.7);
-                }
-
-                .wm-file-disabled {
-                    color: #be0000;
-                    font-size: 12px;
-                    z-index: 10;
-                    width: 85%;
-                    padding-left: 20px;
-                    left: 50%;
-                    border: 1px solid #be0000;
-
-                    @include br(3px);
-                    @include transform(translate3d(-50%, 0, 0));
-
-                   // background: rgba(255, 255, 255, 0.8);
-
-                    span {
-                        @include pos(a);
-
-                        left: 0;
-                        top: 0px;
-
-                        &:before {
-                            content: '';
-                            width: 18px;
-                            height: 18px;
-
-                            @include pos(a);
-
-                            border: 1px solid #be0000;
-
-                            @include br;
-
-                            left: 2px;
-                            top: 5px;
-                        }
-
-                        &:after {
-                            content: "";
-
-                            @include pos(a);
-
-                            width: 18px;
-                            height: 2px;
-                            background: #be0000;
-                            left: 2px;
-                            top: 13px;
-
-                            @include transform(rotate(45deg));
-                        }
-                    }
-                }
-
-                .wm-report-action {
-                    @include pos(a);
-
-                    opacity: 0;
-                    top: 10px;
-                    right: 0;
-                    z-index: 1000;
-
-                    .wm-report-action-icon {
-                        width: 20px;
-                        height: 20px;
-                        background: #fff;
-
-                        @include br(2px);
-                        @include pos(a);
-
-                        right: 10px;
-
-                        &:before {
-                            content: "";
-
-                            @include pos(a);
-
-                            width: 12px;
-                            height: 12px;
-                            border: 1px solid #bbb;
-                            left: 4px;
-
-                            @include transform(rotate(45deg));
-
-                            border-left: none;
-                            border-top: none;
-                        }
-                    }
-
-                    &:hover {
-                        ul {
-                            display: block;
-
-                            i {
-                                color: #ff;
-                            }
-                        }
-                    }
-
-                    ul {
-                        display: none;
-                        background: #fff;
-                        width: 80px;
-                        margin-top: 20px;
-                        margin-right: 10px;
-
-                        .wm-del-ico {
-                            width: 100%;
-                            height: 100%;
-                            text-align: center;
-
-                            @include pos(a);
-
-                            left: 0;
-                            top: 0;
-                            text-indent: -.4rem;
-
-                            i {
-                                vertical-align: middle;
-                            }
-                        }
-
-                        li {
-                            .ivu-poptip-rel {
-                                width: 100%;
-                                height: 100%;
-                                left: 0;
-                                top: 0;
-
-                                @include pos(a);
-                            }
-
-                            &:hover {
-                                background: #be0000;
-                                color: #fff;
-
-                                div {
-                                    color: #fff;
-                                }
-
-                                .ivu-poptip-body-message {
-                                    color: #000;
-                                }
-                            }
-
-                            display: block;
-                            height: 30px;
-                            cursor: pointer;
-                            line-height: 30px;
-                            width: 100%;
-                            margin: 0;
-                            text-indent: .5em;
-                            vertical-align: middle;
-
-                            & > div {
-                                @include pos(a);
-
-                                left: 0;
-                                top: 0;
-                                width: 100%;
-                                height: 100%;
-                            }
-
-                            i {
-                                font-size: 20px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        @at-root .wm-report-list::-webkit-scrollbar,
-        .wm-myreport-right::-webkit-scrollbar {
-            /*滚动条整体样式*/
-            width: 8px;
-
-            /*高宽分别对应横竖滚动条的尺寸*/
-            height: 8px;
-        }
-
-        @at-root .wm-report-list::-webkit-scrollbar-thumb,
-        .wm-myreport-right::-webkit-scrollbar-thumb {
-            /*滚动条里面小方块*/
-            border-radius: 5px;
-            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .wm-report-list::-webkit-scrollbar-track,
-        .wm-myreport-right::-webkit-scrollbar-track {
-            /*滚动条里面轨道*/
-            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-            border-radius: 0;
-            background: rgba(0, 0, 0, 0.1);
         }
     }
-
-    .wm-myreport-item {
-        min-height: 24px;
+}
+.zmiti-systemhome-bor{
+    padding:8px 15px 3px 15px;
+    background-color:#ffffff;
+    box-shadow: 0px 0px 2px 2px #d3d3d3;
+}
+.zmiti-systemhome-hr{
+    height: 18px;
+    line-height: 0;
+    font-size: 0;
+}
+.zmiti-systemhome-h3{
+    font-size: 18px;
+    line-height: 40px;
+    color:#222222;
+    font-weight: bold;
+}
+.zmiti-systemhome-more{
+    line-height: 1;
+    a{
+        color: #3390ff;
+        font-size: 14px;
+        line-height: 40px;
+    }
+}
+.zmiti-systemhome-ulist{    
+    li{
+        font-size: 14px;
         line-height: 24px;
-        max-width: 90%;
-        margin: 4px auto;
-        float: left;
-        width: 100%;
-        background: #f4f4f4;
-
-        & > div {
-            float: left;
-
-            &:nth-of-type(1) {
-                text-align: center;
-                width: 20%;
-                margin-left: 2%;
-            }
-
-            &:nth-of-type(2) {
-                width: 78%;
-                cursor: pointer;
-                min-height: 30px;
-            }
-
-            input {
-                height: 24px;
-                border: 1px solid #eee;
-                outline: none;
-            }
+        margin-bottom: 10px;
+        list-style: none;
+        &:last-child{
+            margin-bottom: 0;
+        }
+        a{
+            color:#222222;
+        }
+        h5{
+            font-weight: normal;
+            font-size: 14px;
+            color: #bbbbbb;
         }
     }
-
-    .wm-myreport-right {
-        background: #fff;
-        overflow: auto;
-        height: 100%;
-
-        .wm-tag-list-C {
-            width: 100%;
-        }
-
-        .wm-userlabel-header {
-            @include displayFlex(row);
-
-            width: 95%;
-            margin: 40px auto 0;
-
-            & > div {
-                &:nth-of-type(1) {
-                    width: 40px;
-                    text-align: right;
-                }
-
-                &:nth-of-type(2) {
-                    -webkit-flex-grow: 1;
-                    flex-grow: 1;
-                    overflow: hidden;
-
-                    @include pos(r);
-
-                    input {
-                        width: 90%;
-                        margin-left: 10%;
-
-                        //border:none;
-                        border: 1px solid #eee;
-                        text-align: center;
-
-                        @include pos(r);
-
-                        outline: none;
-
-                        @include br(4px);
-
-                        &::-webkit-input-placeholder {
-                            color: #ccc;
-                        }
-                    }
-                }
-
-                &:nth-of-type(3) {
-                    width: 50px;
-
-                    @include pos(r);
-
-                    & > div {
-                        @include pos(a);
-
-                        cursor: pointer;
-                        width: 20px;
-                        height: 20px;
-
-                        @include br;
-
-                        top: 5px;
-                        left: 10px;
-                        border: 1px solid #f5a420;
-
-                        &:before, &:after {
-                            content: '';
-
-                            @include pos(a);
-
-                            width: 10px;
-                            height: 1px;
-                            background: #f5a420;
-                            left: 50%;
-                            top: 50%;
-
-                            @include transform(translate3d(-50%, -50%, 0));
-                        }
-
-                        &:after {
-                            width: 1px;
-                            height: 10px;
-                        }
-                    }
-                }
-            }
-        }
-
-        .wm-tag-list {
-            width: 85%;
-            margin: 10px auto;
-        }
-
-        .wm-myreport-item {
-            background: transparent;
-            width: 100%;
-            float: left;
-            @include displayFlex(row);
-
-            &>div {
-                &:nth-of-type(1) {
-                    text-align: center;
-                    width: 90px;
-                    text-align: left;
-                    margin-left: 1%;
-                    text-indent: 1em;
-                }
-
-                &:nth-of-type(2) {
-                    -webkit-flex: 1;
-                    flex: 1;
-                    cursor: pointer;
-                    min-height: 30px;
-                    @include pos(r);
-                }
-
-                input {
-                    height: 24px;
-                    border: 1px solid #eee;
-                    outline: none;
-                    @include pos(a);
-                    left: 0;
-                    top: 0;
-                }
-            }
-        }
-    }
-
-    .wm-report-mask-tip{
-        @include pos(a);
-        width: 100%;
-        left: 0;
-        bottom:0;
-        line-height: 30px;
-        color:#fff;
-        text-align: center;
-        z-index: -1;
-    }
-
-    .wm-right-thumb {
-        margin: 20px auto ;
-        height: 130px;
-        width: 230px;
-
+}
+.zmiti-systemhome-ucount{
+    ul{
         @include displayFlex(row);
-
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-align-items: center;
-        align-items: center;
-        overflow: hidden;
+        li{
+            @include flexrows(1);
+            color: #ffffff;
+            margin-right:20px;
+            &:nth-child(1){
+                background-color:#2f91f2;
+            }
+            &:nth-child(2){
+                background-color:#f87738;
+            }
+            &:nth-child(3){
+                background-color:#9428f6;
+                margin-right:0px;
+            }
+            dl{
+                line-height: 40px;
+                @include displayFlex(column);
+                justify-content: center;
+                height: 100%;
+                dt{
+                    font-size: 40px;
+                    padding-bottom: 5px;
+                    border-bottom:1px solid rgba(255,255,255, .2);
+                }
+                dd{
+                    font-size:24px;
+                }
+            }
+            .zmiti-systemhome-ucount-li{
+                @include displayFlex(row);
+                padding:0 25px;
+                height: 150px;
+                .zmiti-systemhome-ucount-icon{
+                    margin-left: auto;                  
+                    .zmiti-systemhome-ucount-img{
+                        @include displayFlex(column);
+                        align-items: center;
+                        justify-content: center;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }   
+}
+.zmiti-systemhome-user{
+    @include displayFlex(row);
+    padding:30px;
+    background-color:#ffffff;
+    box-shadow: 0px 0px 2px 2px #d3d3d3;
+    .zmiti-systemhome-userface{
+        margin-right: 20px;
         img{
             display: block;
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 100%;
+            width:120px;
+            height: 120px;
+            border:4px solid #eaf4ff;
+            border-radius:50%;
         }
     }
-
-    .wm-report-C {
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        position: fixed !important;
-
-        @include displayFlex(row);
-
-        -webkit-justify-content: center;
+    .zmiti-systemhome-userinfo{
+        height: 120px;
+        @include displayFlex(column);
         justify-content: center;
-        -webkit-align-items: center;
-        align-items: center;
-
-        & > div {
-            max-width: 80vw;
-            max-height: 60vh;
-
-            @include pos(r);
-
-            .xlsx, .pdf, .doc, .ppt, .xlsx, .doc, .docx, .pdf, .txt, .ppt, .pptx, .xls, .rar, .html, .css, .scss, .js, .vb, .shtml, .zip {
-                display: block;
-                margin: 0 auto;
-                position: relative !important;
+        .zmiti-systemhome-username{
+            font-size: 24px;
+            line-height: 1;
+            color: #222222;
+            b{
+                font-weight: normal;
+                padding-right:15px;
             }
-
-            .wm-report-qrcode{
-                width: 130px;
-                height: 130px;
-                @include pos(a);
-                right: 0;
-                bottom: 0;
-                z-index: 10;
-                img{
-                    @include pos(a);
-                    left: 0;
-                    top: 0;
-                }
-            }
-
-            .wm-report-detail {
-                padding: 10px;
-                box-sizing: border-box;
-
-                @include pos(a);
-                z-index: 12;
-
-                width: 100%;
-                min-width: 300px;
-                bottom: 0;
-                left: 50%;
-
-                @include transform(translate3d(-50%, 0, 0));
-
-                background: rgba(0, 0, 0, 0.7);
-                color: #fff;
-
-                @include transition(0.4s);
-
-                
-
-                &.hide {
-                    height: 40px;
-                    overflow: hidden;
-
-                    & > span {
-                        &:before, &:after {
-                            @include transform(rotate(225deg));
-
-                            top: 4px;
-                        }
-
-                        &:after {
-                            top: 8px;
-                        }
-                    }
-                }
-
-                &.wm-audio {
-                    @include pos(r);
-
-                    .wm-myreport-title {}
-                }
-
-                &.wm-video-detail {
-                    &.hide {
-                        bottom: -40px;
-                    }
-                }
-
-                & > span {
-                    @include pos(a);
-
-                    right: 30px;
-                    top: 10px;
-                    cursor: pointer;
-
-                    &:before, &:after {
-                        content: '';
-                        right: -12px;
-                        top: 0px;
-
-                        @include pos(a);
-
-                        width: 8px;
-                        height: 8px;
-                        border: 1px solid #fff;
-                        border-left: none;
-                        border-top: none;
-
-                        @include transform(rotate(45deg));
-                    }
-
-                    &:after {
-                        top: 4px;
-                    }
-                }
-
-                .wm-myreport-field-item {
-                    //background:#f4f4f4;
-                    background: transparent;
-
-                    @include displayFlex(row);
-
-                    & > div {
-                        //padding-right: 2px;
-                        text-align: left;
-                        line-height: 30px;
-
-                        &:nth-of-type(1) {
-                            width: 60px;
-                            text-align: right;
-                            margin-right: 20px;
-                        }
-                    }
-
-                    .wm-tag-list-C {
-                        @include displayFlex(row);
-
-                        -webkit-flex-grow: 1;
-                        flex-grow: 1;
-
-                        & > div {
-                            &:nth-of-type(1) {
-                                width: 40px;
-                            }
-
-                            &:nth-of-type(2) {
-                                margin-left: 20px;
-                                max-width: 200px;
-                            }
-                        }
-                    }
-                }
-            }
-
-            img {
-                width: auto;
-                height: auto;
-                max-height: 60vh;
-                max-width: 80vh;
-            }
-
-            video {
-                width: auto;
-                max-height: 60vh;
+            span{
+                color: #3390ff;
+                font-size: 16px;
             }
         }
-
-        &>.original{
-            overflow: auto;
-            padding: 30px;
-            width: 100vw;
-            height: 100vh;
-            max-width: 100vw;
-            max-height: 100vh;
-            text-align: center;
-            
-            .wm-myreport-item,
-            .wm-report-detail {
-                display: none;
-            }
-            img{
-                width:auto;
-                height: auto;
-                max-width: 1000vw;
-                max-height: 1000vh;
-            }
-         }
-    }
-
-    .wm-report-tips {
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 10000;
-        text-align: center;
-        position: fixed;
-
-        img {
-            width: 34%;
-            margin-top: 50px;
-            cursor: pointer;
-        }
-    }
-}
-
-.wm-tags {
-    input {
-        border: 1px solid #ddd;
-
-        @include br(4px);
-
-        width: 110px;
-        text-align: center;
-        box-sizing: border-box;
-        outline: none;
-
-        &::-webkit-input-placeholder {
-            color: #ccc;
-        }
-    }
-}
-
-.wm-report-upload-item {
-    background: #eee;
-    margin-bottom: 10px !important;
-    @include br(6px);
-    color:#666666 !important;
-
-    &.wm-require{
-        label{
-            @include pos(r);
-            &::before{
-                content:"*";
-                color:#f00;
-            }
-        }
-    }
-
-    padding: 12px 0;
-
-    input, textarea, .ivu-select-selection {
-        background: transparent;
-        outline: none;
-        border-color: #eee !important;
-        resize:none;
-        &:focus, &:hover {
-            border-color: #eee !important;
-            outline: 0;
-            -webkit-box-shadow: 0 0 0 2px rgba(45, 140, 240, 0);
-            box-shadow: 0 0 0 2px rgba(45, 140, 240, 0);
-        }
-    }
-
-    .ivu-input:focus {
-        border-color: #eee !important;
-    }
-
-    @include pos(r);
-}
-
-.wm-before-upload-C{
-    @include displayFlex(row);
-    overflow: hidden;
-    section{
-
-        &.disabled{
-            i{
-                color:#ccc;
-            }
-            cursor: not-allowed;
-        }
-        @include pos(r);
-        cursor: pointer;
-        background:#eee;
-        padding: 10px 14px;
-        left: -70px;
-        @include br(6px);
-        text-align: center;
-        i{
-            color:#f5a420;
-            font-size:36px;
-        }
-        @include pos(r);
-
-        .wm-upload-before{
-            @include pos(a);
-            width: 100%;
-            height: 100%;
-            left: 0;
-            z-index: 100;;
-            top: 0;
-            div{
-                width: 100% !important;
-                height: 100% !important;
-                opacity:0;
-            } 
-        }
-
-        .webuploader-container{
-            //opacity:0;
+        .zmiti-systemhome-logintime{
+            color: #777777;
+            font-size: 16px;
+            padding:10px 0 0 0;
         }
     }
 }
