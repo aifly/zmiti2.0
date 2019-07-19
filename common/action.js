@@ -84,8 +84,21 @@ let adminActions = {
 	},
 	getProductPowerList:{
 		desc:"获取产品授权列表",
-		action:'1000310'
+		action:'1000314'
+	},
+	delProductPower:{
+		desc:"删除产品授权",
+		action:'1000313'
+	},
+	addProductPower: {
+		desc: "添加产品授权",
+		action: '1000311'
+	},
+	editProductPower: {
+		desc: "修改产品授权",
+		action: '1000312'
 	}
+	
 }
 
 let companyActions = {//用户单位模块
@@ -209,7 +222,7 @@ let userActions = {
 	},
 	getProductList:{
 		desc:"获取产品列表",
-		action:'2001007'
+		action:'2001009'
 	}, 
 	replayWorkOrder: {
 		desc: "用户回复工单",

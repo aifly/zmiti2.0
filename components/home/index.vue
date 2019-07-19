@@ -344,10 +344,10 @@
 			this.date = '今日，'+year+'年'+month+'月'+date+'日 '+ day + ' ，欢迎回到智媒体2.0单位控制平台';
 
 
-			 this.getWeatherData();
+			this.getWeatherData();
 
 
-			 zmitiUtil.ajax({
+			/*  zmitiUtil.ajax({
 				 remark:'getDepartmentList',
 				 data:{
 					action:companyAdminActions.getDepartmentList.action,
@@ -364,7 +364,7 @@
 				 success(data){
 					 console.log(data,'获取部门测试接口~~')
 				 }
-			 })
+			 }) */
 		},
 		
 		methods:{
@@ -380,7 +380,6 @@
 						
 					},
 					success(data){
-						console.log(data);
 						if(data.getret === 0){
 							s.weatherObj = data.data
 						}

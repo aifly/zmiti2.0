@@ -10,7 +10,7 @@
 			</div>
 		</transition>
 
-		<div class='lt-full' @click='showPannel=false'></div>
+		<div class='lt-full' @click='hidePannel'></div>
 	</div>
 	
 </template>
@@ -48,6 +48,10 @@
 			}		
 		},
 		methods: {
+
+			hidePannel(){
+				this.showPannel = false;
+			},
 			
 			afterLeave(){
 				this.$emit('input', false); 

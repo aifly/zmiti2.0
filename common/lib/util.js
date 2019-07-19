@@ -11,6 +11,10 @@ var zmitiUtil = {
 	cityActions: zmitiActions.cityActions,
 	companyAdminActions: zmitiActions.companyAdminActions,
 
+	dataToNumber(date){
+		return new Date(date).getTime() / 1000
+	},
+
 	formatDate(inputTime,flag = false){
 		var date = new Date(inputTime * 1000);
 		var y = date.getFullYear();
@@ -84,13 +88,22 @@ var zmitiUtil = {
 			}
 		})
 	},
+	getCurrentCompanyId(){
+		return window.localStorage.getItem('currnetCompanyId');
+	},
 	getProductList(fn) { //
-
+		var companyid = this.getCurrentCompanyId();
+		if (!companyid){
+			window.localStorage.clear();
+			window.location.hash = '/login';
+			return;
+		}
 		this.ajax({
 			remark: 'getProductList',
 			data: {
 				action: zmitiActions.userActions.getProductList.action,
 				condition: {
+					companyid,
 					page_index: 0,
 					page_size: 20,
 				}

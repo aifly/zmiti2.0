@@ -15,7 +15,6 @@
 
 .zmiti-mask-ui .zmiti-mask-right {
   position: absolute;
-  width: 600px;
   background: #fff;
   top: 50px;
   right: 0;
@@ -35,4 +34,5 @@
 
 .zmiti-mask-ui .lt-full {
   z-index: 8;
+  height: 100%;
 }

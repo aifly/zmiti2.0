@@ -22,59 +22,37 @@
 					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
 						<header class='zmiti-add-header'>
 							<img :src="imgs.back" alt=""  @click='showDetail = false' >
-							<span>基础信息</span>
+							<span>{{formUser.powerid?'编辑授权':"添加授权"}}</span>
 						</header>
-						<div class='zmiti-user-avatar' @click="showAvatarModal = true">
+						<div class='zmiti-user-avatar' style='opacity:0' >
 							<span class='zmt_iconfont' v-html='formUser.avatar'></span>
 							<label>更换头像</label>
 						</div>
-						<Form class='zmiti-add-form-C' :model="formUser" :label-width="120">
-							<FormItem label="用户名：">
-								<Input v-model="formUser.username" @on-blur="checkUser" placeholder="用户名：" />
-							</FormItem>
-							<FormItem label="姓名：">
-								<Input v-model="formUser.realname" placeholder="姓名：" />
-							</FormItem>
-							<FormItem label="密码：">
-								<Input v-model="formUser.userpwd" type="password" placeholder="密码：" />
-							</FormItem>
-							<FormItem label="所在单位：" v-if='!$route.params.companyid'>
-								<Select v-model="formUser.companyid">
-									<Option v-for="item in companyList" :value="item.companyid" :key="item.companyid">{{ item.companyname }}</Option>
+						<Form class='zmiti-add-form-C' :model="formUser" :rules="ruleValidate" :label-width="120">
+							<FormItem label="产品列表：">
+								<Select v-model="formUser.productid">
+									<Option v-for="item in productList" :value="item.productid" :key="item.powerid">{{ item.productname }}</Option>
 								</Select>
 							</FormItem>
-
-							<FormItem label="邮箱：">
-								<Input v-model="formUser.useremail" placeholder="邮箱：" />
+							 <FormItem label="开始时间：" prop='startdate'>
+								<DatePicker format='yyyy-MM-dd HH:mm:ss' v-model="formUser.startdate" type="datetime" placeholder="开始时间：" style="width:100%" ></DatePicker>
 							</FormItem>
-							<FormItem label="手机号：">
-								<Input v-model="formUser.usermobile" placeholder="手机号：" />
+							 <FormItem label="结束时间：" prop='enddate'>
+								<DatePicker v-model="formUser.enddate" type="datetime" placeholder="结束时间：" style="width:100%"></DatePicker>
 							</FormItem>
-							
-							<FormItem label="用户类型：">
-								<RadioGroup v-model="formUser.usertypesign">
-									<Radio :value='1' :label="1">普通用户</Radio>
-									<Radio :value='2' :label="2">公司管理员</Radio>
-								</RadioGroup>
-							</FormItem>
-
 							<FormItem label="状态：">
-								<RadioGroup v-model="formUser.isover">
-									<Radio :value='0' :label="0">正常使用</Radio>
-									<Radio :value='1' :label="1">禁用</Radio>
+								<RadioGroup v-model="formUser.status">
+									<Radio :value='0' :label="0">禁用</Radio>
+									<Radio :value='1' :label="1">正常使用</Radio>
 								</RadioGroup>
 							</FormItem>
-							<FormItem label="用户归属：">
-								<RadioGroup v-model="formUser.usersign">
-									<Radio :value='1' :label="1">本地</Radio>
-									<Radio :value='2' :label="2">微信</Radio>
-									<Radio :value='3' :label="3">QQ</Radio>
-								</RadioGroup>
+							 <FormItem label="备注：">
+								<Input v-model="formUser.remarks" placeholder="备注：" type='textarea'/>
 							</FormItem>
 						</Form>
 						
 						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='adminAction'>{{formUser.userid?'保存':'确定'}}</Button>
+							<Button size='large' type='primary' @click='adminAction'>{{formUser.powerid?'确定':"保存"}}</Button>
 						</div>
 						<template v-if='formUser.userid && false'>
 							<header class='zmiti-add-header zmiti-safe-bar'>
@@ -111,7 +89,6 @@
 			</div>
 		</Modal>
  
-		<Avatar v-model="showAvatarModal" :avatar='formUser.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
@@ -122,10 +99,9 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
 	import Role from './role';
-	var {companyActions,zmitiActions,adminActions} = zmitiUtil;
+	var {companyActions,zmitiActions,adminActions,formatDate,dataToNumber} = zmitiUtil;
 
 	export default {
 		props:['obserable'],
@@ -154,7 +130,7 @@
 				adminuserId:'',
 				currentUserid:'',
 				formUser:{
-					isover:0,
+					status:1,
 					usersign:1,
 					usertypesign:1,
 					avatar:'&#xe6a4;'
@@ -177,8 +153,19 @@
                         render: (h, params) => {
                             return h(Role, {
                                 props: {
-                                    dataSource:this.dataSource[params.index].dataSource||[]
-                                }
+                                    dataSource:params.row.dataSource||[]
+								},
+								on:{
+									openMask:(data)=>{
+										var s = this;
+										s.showDetail = true;
+										s.formUser = data;
+										data.startdate = formatDate(data.startdate);
+										data.enddate = formatDate(data.enddate);
+										
+										s.showDetailPage = 1;
+									}
+								}
                             },"aaa")
                         }
                     },
@@ -202,6 +189,7 @@
 						title:"状态",
 						key:'isover',
 						align:'center',
+						
 						render:(h,params)=>{
 							return h('div',{},params.row.isover === 0 ? '正常使用' : params.row.isover === 1 ? '已禁用':'已删除');
 						}
@@ -250,10 +238,21 @@
 					longitude :'116.585856',
 					latitude :'40.364989'
 				},
+
+				ruleValidate:{
+					startdate: [
+                        { required: true, type:'date', message: '开始时间不为能空', trigger: 'blur' }
+					],
+					enddate: [
+                        { required: true,type:'date', message: '结束时间不为能空', trigger: 'blur' }
+                    ],
+				},
 				 
 				directoryList:{
 
 				},
+				productList:[],
+				powerList:[],
 				condition:{
 					page_index:0,
 					page_size:10,
@@ -266,7 +265,6 @@
 			}
 		},
 		components:{
-			Avatar,
 			ZmitiMask
 		},
 
@@ -280,7 +278,6 @@
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getDataList();
-			this.getCompanyList();
 		},
 
 		watch:{
@@ -307,33 +304,11 @@
 		
 		methods:{
 
+
+		 
+
 			expand(row,status){
-				var companyid = row.companyid;
-				var s = this;
-				var condition = Object.assign(this.powerListCondition,{companyid})
-				zmitiUtil.adminAjax({
-					remark:'getProductPowerList',
-					data:{
-						action:adminActions.getProductPowerList.action,
-						condition
-					},
-					success(data){
-						if(data.getret === 0 ){
-							row.dataSource = data.list;	
-
-
-							s.dataSource[status].dataSource = [
-								{
-									productname:'aaa'
-								}
-							]
-							
-							s.dataSource  = s.dataSource.concat([]);
-							console.log(row)
-						}
-						
-					}
-				})
+				 
 			},
 
 			closeMaskPage(){
@@ -480,30 +455,103 @@
 			getDataList(){
 				var s = this;
 
-				zmitiUtil.getProductListByAdmin({
-					condition:{
-						page_index:0,
-						page_size:10,
+				zmitiUtil.adminAjax({
+					remark:'getProductList',
+					data:{
+						action:adminActions.getProductList.action,
+						condition:this.condition
 					},
-					success:(data)=>{
+					success(data){
 						if(data.getret === 0){
-							s.dataSource = data.list;	 
+							s.productList = data.list;	 
 						}
 					}
 				})
+				var p1 = new Promise((resolve,reject)=>{
+					zmitiUtil.getProductListByAdmin({
+						condition:{
+							page_index:0,
+							page_size:10,
+						},
+						success:(data)=>{
+							if(data.getret === 0){
+								s.dataSource = data.list;	 
+								resolve();
+								console.log(s.dataSource,'dataSource')
+							}
+						}
+					})
+				});
+
+				var p2 = new Promise((resolve,reject)=>{
+				var condition = Object.assign(this.powerListCondition,{})
+					zmitiUtil.adminAjax({
+						remark:'getProductPowerList',
+						data:{
+							action:adminActions.getProductPowerList.action,
+							condition
+						},
+						success(data){
+							if(data.getret === 0 ){
+								s.powerList = data.list;
+								resolve();
+								
+							}
+							 
+							
+						}
+					})
+				});
+
+				Promise.all([p1,p2]).then(()=>{
+					s.dataSource.forEach(data=>{
+						data.dataSource = data.dataSource || [];
+						s.powerList.forEach(power=>{
+							if(data.companyid === power.companyid){
+								data.dataSource.push(power);
+							}
+						})
+					});
+					s.dataSource = s.dataSource.concat([]);
+				});
+
+
+
 			},
 			adminAction(){
 				var s = this;
-				var action = this.formUser.userid ? companyActions.editUser.action:companyActions.addUser.action;
-				var companyid = this.$route.params.companyid;
-				if(companyid){
-					this.formUser.companyid = companyid;
+				var action = adminActions[this.formUser.powerid?'editProductPower':'addProductPower']['action'];
+				
+
+
+				if(!this.formUser.startdate||!this.formUser.enddate){
+					return;
 				}
+				var startdate = dataToNumber(this.formUser.startdate),
+					enddate = dataToNumber(this.formUser.enddate);
+
+			 	var info = {
+					 productid:s.formUser.productid,
+					 companyid:s.formUser.companyid,
+					 startdate,
+					 enddate,
+					 status:s.formUser.status,
+					 remarks:s.formUser.remarks
+				 }
+				 if(this.formUser.powerid){
+					 info.powerid = this.formUser.powerid;
+				 }
+
+				 if(startdate>=enddate){
+					 this.$Message.error('开始时间不能大于结束时间');
+					 return;
+				 }
+
 				zmitiUtil.adminAjax({
-					remark:this.formUser.userid ?　'editUser':'addUser',
+					remark:'addProductPower',
 					data:{
 						action,
-						info:this.formUser
+						info
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);

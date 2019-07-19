@@ -179,9 +179,10 @@
             this.userinfo = userinfo; 
             if(this.$route.name !== 'login' && this.$route.name !== 'register' && !this.isAdmin){
 				
-               /* zmitiUtil.getProductList((arr)=>{
-                   this.productList = arr;
-               },this); */
+               zmitiUtil.getProductList((arr)=>{
+				  console.log(arr,'aaaaaaaaaaaaaaaaa');
+                   //this.productList = arr;
+               },this);
             }
         },
         watch:{

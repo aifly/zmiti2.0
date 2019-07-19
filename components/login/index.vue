@@ -138,14 +138,19 @@
 							}
 							
 							_this.$Message.success('登录成功~');
-							if(data.getret == 100){
+							
 
+							
+							if(data.info.company_list.length >= 2){
+
+							}else{
+								window.localStorage.setItem('currnetCompanyId',data.info.company_list[0].companyid);
 							}
-							window.location.hash = '#/home';
-							
-							
+							window.localStorage.setItem('currnetCompanyId',data.info.company_list[0].companyid);
+							_this.$router.push({path:'/home'})
 							window.location.reload();
 							_this.isLogined = true;
+
 							
 						}else{
 							_this.$Message.error(data.msg);
