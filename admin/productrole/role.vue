@@ -39,7 +39,7 @@ export default {
 					key:'status',
 					align:'center',
 					render:(h,params)=>{
-						var isOk = params.row.status === 0;
+						var isOk = params.row.status === 1;
 						return h('div',{
 							style:isOk ?　{
 								color:'green',

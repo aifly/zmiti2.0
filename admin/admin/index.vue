@@ -55,8 +55,8 @@
 							</FormItem>
 							<FormItem label="状态：">
 								<RadioGroup v-model="formAdmin.isover">
-									<Radio :value='0' :label="0">正常</Radio>
-									<Radio :value='1' :label="1">禁用</Radio>
+									<Radio :value='1' :label="1">正常</Radio>
+									<Radio :value='0' :label="0">禁用</Radio>
 								</RadioGroup>
 							</FormItem>
 							

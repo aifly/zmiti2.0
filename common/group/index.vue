@@ -33,7 +33,7 @@
 	import menuObj from './menu';
 
 	export default {
-		props:[],
+		props:['isAdmin'],
 		data(){
 			return{
 				tabIndex:[0,-1,-1],
@@ -58,18 +58,13 @@
 
 		mounted(){
 			var obserable = Vue.obserable;
-			
 			this.changeGroup();
-
-			
 			
 			obserable.on('fillTabs',(data)=>{
 				this.tabs = data || [];
 			});
 
 			obserable.on('fillTabIndex',(data)=>{
-
-				
 				data[2]!==-1 && (this.tabs[data[2]].status = true);
 				data.length = 2;
 				this.tabIndex = data;

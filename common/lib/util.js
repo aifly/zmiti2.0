@@ -9,6 +9,7 @@ var zmitiUtil = {
 	basicConfigActions: zmitiActions.basicConfigActions,
 	weatherActions: zmitiActions.weatherActions,
 	cityActions: zmitiActions.cityActions,
+	changYueAcions: zmitiActions.changYueAcions,
 	companyAdminActions: zmitiActions.companyAdminActions,
 
 	dataToNumber(date){

@@ -313,9 +313,7 @@
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getAdminUserInfo();
-			this.getDataList();
-			this.getCompanyList();
+			
 		},
 
 		watch:{
@@ -333,7 +331,6 @@
 			$route:{
 				deep:true,
 				handler(){
-					
 					this.getDataList()
 				}
 			}

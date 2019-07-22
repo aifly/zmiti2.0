@@ -287,6 +287,18 @@ let basicConfigActions = {
 };
 
 
+let changYueAcions = {
+	getMySubmitList:{
+		desc:'获取我的提交列表',
+		action:'2001910'
+	},
+	getMyCheckList:{
+		desc:'获取我的审核列表',
+		action:'2001909'
+	}
+
+}
+
 
 
 //通用接口
@@ -373,7 +385,8 @@ var zmitiActions =   /*#__PURE__*/{
 	basicConfigActions,
 	weatherActions,
 	cityActions,
-	companyAdminActions
+	companyAdminActions,
+	changYueAcions
 }
 
 export  default zmitiActions;

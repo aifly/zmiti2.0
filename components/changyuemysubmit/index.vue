@@ -124,7 +124,7 @@
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
-	var {companyActions,zmitiActions} = zmitiUtil;
+	var {companyActions,zmitiActions,changYueAcions} = zmitiUtil;
 
 	export default {
 		props:['obserable'],
@@ -313,9 +313,21 @@
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getAdminUserInfo();
-			this.getDataList();
-			this.getCompanyList();
+
+			zmitiUtil.ajax({
+				remark:"getMySubmitList",
+				data:{
+					action:changYueAcions.getMySubmitList.action,
+					condition:{
+						page_index:0,
+						page_size :10
+					}
+				},
+				success(data){
+					console.log(data);
+				}
+			})
+			
 		},
 
 		watch:{
@@ -333,7 +345,6 @@
 			$route:{
 				deep:true,
 				handler(){
-					
 					this.getDataList()
 				}
 			}

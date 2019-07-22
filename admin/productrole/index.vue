@@ -191,7 +191,7 @@
 						align:'center',
 						
 						render:(h,params)=>{
-							return h('div',{},params.row.isover === 0 ? '正常使用' : params.row.isover === 1 ? '已禁用':'已删除');
+							return h('div',{},params.row.status === 1 ? '正常使用' : params.row.status === 0 ? '已禁用':'已删除');
 						}
 					},
 					{

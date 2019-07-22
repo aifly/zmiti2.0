@@ -58,8 +58,8 @@
 						</FormItem>
 						<FormItem label="标识：">
 							<RadioGroup v-model="formCompany.isover">
-								<Radio :value='0' :label="0">正常使用</Radio>
-								<Radio :value='1' :label="1">禁用</Radio>
+								<Radio :value='1' :label="1">正常使用</Radio>
+								<Radio :value='0' :label="0">禁用</Radio>
 							</RadioGroup>
 						</FormItem>
 						<FormItem label="单位管理员：">
@@ -164,7 +164,7 @@
 						key:'isover',
 						align:'center',
 						render:(h,params)=>{
-							return h('div',{},params.row.isover === 0 ? '正常使用' : params.row.isover === 1 ? '已禁用':'已删除');
+							return h('div',{},params.row.isover === 1 ? '正常使用' : params.row.isover === 0 ? '已禁用':'已删除');
 						}
 					},
 					{

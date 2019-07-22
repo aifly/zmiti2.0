@@ -9,16 +9,19 @@ var workOrderType = {
 
 
 let  orderStatus = {
-	0:{
-		status:'已受理'
+	0: {
+		status: '已禁用'
 	},
 	1:{
-		status:'已处理'
+		status:'已受理'
 	},
 	2:{
-		status:'已确认'
+		status:'已处理'
 	},
 	3:{
+		status:'已确认'
+	},
+	4:{
 		status:'已评价'
 	}
 };

@@ -10,6 +10,9 @@ import Practice from './task/practice/index'
 
 import Register from './components/register';
 import ResourceList from './common/resourcelist';
+import ChangYue from './components/changyue';
+import ChangYueMySubmit from './components/changyuemysubmit';
+import ChangYueMyCheck from './components/changyuemycheck';
 import Group from './common/group/index'
 import iView from 'iview';
 import VueRouter from 'vue-router'
@@ -53,6 +56,9 @@ const router = new VueRouter({
 	{
 		path: '/group/', name: 'group', component: Group, props: true, children: [
 			{path: "/workorder",name: "workorder",component: WorkOrder,props: true},
+			{ path: "/changyue/", name: "changyue", component: ChangYue,props: true},
+			{ path: "/changyuemysubmit/", name: "changyuemysubmit", component: ChangYueMySubmit,props: true},
+			{ path: "/changyuemycheck/", name: "changyuemycheck", component: ChangYueMyCheck,props: true},
 			{ path: "/workorderlist/:id?", name: "workorderlist", component: WorkOrderList,props: true},
 		]
 	},
