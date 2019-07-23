@@ -259,7 +259,8 @@
 
             ok(){
 				var s = this;
-				var copy_fileclassid = s.destinationid;
+				var fileclassid = s.destinationid;
+				var $Message = this.$Message;
 				var fileids = [];
 				s.checkedList.forEach(c=>{
 					fileids.push(c.fileid);
@@ -273,7 +274,7 @@
 					data:{
 						action:resourceActions[isClip ? "fileClip":"fileCopy"]['action'],
 						fileids,
-						copy_fileclassid
+						fileclassid
 					},
 					success(data){
 						s.visibleChange();	
