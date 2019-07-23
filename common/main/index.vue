@@ -70,12 +70,10 @@
                            <li class='zmiti-menu-title' v-if='!isAdmin'>
                                <div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
                             </li>
-                           <li  :title='item.resourcecnname' :to='"/myreport/"+item.productid' class='zmiti-text-overflow zmiti-menu-item' :key='i' v-for="(item,i) in productList" :name="item.productid">
+                           <li  :to='"/myreport/"+item.productid' class='zmiti-text-overflow zmiti-menu-item' :key='i' v-for="(item,i) in productList" :name="item.productid">
+						  		 <div><router-link to="/admin"><span class='zmt_iconfont' v-html='"&#xe609;"'></span></router-link> </div>
                                 <div>
-                                    <router-link :to="item.linkTo"> <img :src="imgs.zmiti" alt=""></router-link>
-                                </div>
-                                <div>
-                                    <router-link :to="item.linkTo">{{item.title}}</router-link>
+                                    <router-link to='/admin' > {{item.productname}} </router-link>
                                 </div>
                            </li>
                            <template v-if='isAdmin'>
@@ -180,8 +178,10 @@
             if(this.$route.name !== 'login' && this.$route.name !== 'register' && !this.isAdmin){
 				
                zmitiUtil.getProductList((arr)=>{
-				  console.log(arr,'aaaaaaaaaaaaaaaaa');
-                   //this.productList = arr;
+				   if(arr.getret === 0 ){
+					   this.productList = arr.list;
+				   }
+
                },this);
             }
         },

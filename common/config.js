@@ -84,9 +84,18 @@ let defaultExtNames = {
 
 }
 
+let manuscriptStatus = [
+	'待审核',
+	'审核通过',
+	'拒绝',
+	'暂缓'
+];
+
+
  export {
 	workOrderType,
 	orderStatus,
 	defaultClass,
-	defaultExtNames
+	defaultExtNames,
+	manuscriptStatus
 };

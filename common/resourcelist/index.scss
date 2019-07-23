@@ -267,7 +267,7 @@ li{
               left: 17px;
               top: 14px;
               opacity: 0;
-              z-index: 20;
+              z-index: 131;
               &.zmiti-resource-check-icon {
                 width: 30px;
                 height: 30px;
@@ -276,7 +276,7 @@ li{
                 opacity: 1;
                 background: #febf8c;
                 @include br();
-                z-index: 19;
+                z-index: 111;
                 &:before {
                   content: "";
                   width: 66%;
@@ -359,16 +359,16 @@ li{
 			}
 			&:hover{
 				img{
-				
 					@include transform(scale(1.2));
 				}
 			}
             img {
               width: 100%;;
 			  height: auto;
+			  z-index: 110;
+			  @include pos(a);
 			  
-              left: 50%;
-			  top: 50%;
+			  
 			  @include transition(.21s);
 			  &.small{
 				  width: auto;

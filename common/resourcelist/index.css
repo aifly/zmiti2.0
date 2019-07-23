@@ -286,7 +286,7 @@ li {
   left: 17px;
   top: 14px;
   opacity: 0;
-  z-index: 20;
+  z-index: 131;
 }
 
 .zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-C ul li .zmiti-resource-check.zmiti-resource-check-icon {
@@ -297,7 +297,7 @@ li {
   opacity: 1;
   background: #febf8c;
   border-radius: 50%;
-  z-index: 19;
+  z-index: 111;
 }
 
 .zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-C ul li .zmiti-resource-check.zmiti-resource-check-icon:before {
@@ -394,8 +394,8 @@ li {
 .zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-C ul li img {
   width: 100%;
   height: auto;
-  left: 50%;
-  top: 50%;
+  z-index: 110;
+  position: absolute;
   -webkit-transition: 0.21s;
   transition: 0.21s;
 }

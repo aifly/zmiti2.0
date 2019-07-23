@@ -10,6 +10,7 @@ var imgs = {
 	
 	loginBg:"./assets/images/login-bg.jpg",
 	logout:'./assets/images/logout.png',
+	move:'./assets/images/move.png',
 	back:'./assets/images/back.png',
 	deleted:'./assets/images/deleted.png',
 	checked:'./assets/images/checked.png',

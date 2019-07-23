@@ -12,7 +12,7 @@
 			
 			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
 				<div class='zmiti-user-table' :class="{'active':showDetail}">
-					<Table  :data='dataSrouce' :columns='columns'></Table>
+					<Table :loading='loading' :data='dataSource' :columns='columns'></Table>
 				</div>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
@@ -97,21 +97,6 @@
 					</section>
 				</div>
 			</ZmitiMask>
-
-		<Modal title='加入单位' v-model="visible">
-			<div>
-				 <Transfer
-					:data="unJoinedCompany"
-					:titles="['单位列表','当前加入的单位']"
-					:target-keys="targetKeys"
-					filterable
-					:filter-method="filterMethod"
-					@on-change="handleChange2">
-				</Transfer>
-			</div>
-		</Modal>
- 
-		<Avatar v-model="showAvatarModal" :avatar='formUser.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
@@ -122,9 +107,13 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
+
 	var {companyActions,zmitiActions,changYueAcions} = zmitiUtil;
+
+	import {manuscriptStatus} from '../../common/config';
+
+	
 
 	export default {
 		props:['obserable'],
@@ -135,14 +124,7 @@
 				
 				targetKeys:[],
 				showAvatarModal:false,
-				visible:false,
-				avatarList:[
-					'&#xe6a5;',
-					'&#xe6a4;',
-					'&#xe6a3;',
-					'&#xe6a2;',
-					'&#xe6a0;'
-				],
+				
 				companyname:'',
 				roleList:[],
 				imgs:window.imgs,
@@ -151,6 +133,7 @@
 				showDetailPage:-1,
 				currentClassId:-1, 
 				adminuserId:'',
+				loading:true,
 				currentUserid:'',
 				formUser:{
 					isover:0,
@@ -163,39 +146,28 @@
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
-				dataSrouce:[],
+				dataSource:[],
 				groupList:[],
 				companyList:[],
 				hideMenu:false,
 				unJoinedCompany:[],
 				columns:[
 					{
-						title:"用户名",
-						key:'username',
+						title:"稿件编号",
+						key:'manuscriptid',
 						align:'center',
 					},
 					{
-						title:"姓名",
-						key:'realname',
+						title:"稿件标题",
+						key:'doctitle',
 						align:'center',
-						width:200
-						
-					},{
-						title:"邮箱",
-						key:'useremail',
-						align:'center'
-						
-					},{
-						title:"手机",
-						key:'usermobile',
-						align:'center'
-						
-					},{
-						title:"状态",
-						key:'isover',
+					},
+					{
+						title:'稿件状态',
+						key:'status',
 						align:'center',
 						render:(h,params)=>{
-							return h('div',{},params.row.isover === 0 ? '正常使用' : params.row.isover === 1 ? '已禁用':'已删除');
+							return h('div',{},manuscriptStatus[params.row.status]);
 						}
 					},
 					{
@@ -206,27 +178,6 @@
 						render:(h,params)=>{
 
 							return h('div', [
-                               
-                                h('span', {
-                                  
-                                    style: {
-										border:'none',
-										fontSize: '12px',
-										cursor:'pointer',
-										color:'#06C'
-										
-                                    },
-                                    on: {
-                                        click: () => {
-											
-											this.visible = true;
-											var s = this;
-											this.currentUserid = params.row.userid;
-											this.getJoinedCompany();
-											
-                                        }
-                                    }
-								}, '所属单位'),
 								 h('span', {
                                     props: {
                                         type: 'primary',
@@ -301,7 +252,6 @@
 			}
 		},
 		components:{
-			Avatar,
 			ZmitiMask
 		},
 
@@ -314,17 +264,20 @@
 		mounted(){
 			window.s = this;
 
+			var s = this;
+			var {condition} = this;
 			zmitiUtil.ajax({
 				remark:"getMySubmitList",
 				data:{
 					action:changYueAcions.getMySubmitList.action,
-					condition:{
-						page_index:0,
-						page_size :10
-					}
+					condition
 				},
 				success(data){
-					console.log(data);
+					s.loading = false;
+					if(data.getret === 0){
+
+						s.dataSource = data.list;
+					}
 				}
 			})
 			
@@ -489,7 +442,7 @@
 						if(data.getret === 0){
 							
 							s.getDataList();
-							///s.dataSrouce = data.list;	 
+							///s.dataSource = data.list;	 
 						}
 					}
 				})
@@ -511,7 +464,7 @@
 						},
 						success(data){
 							if(data.getret === 0){
-								s.dataSrouce = data.list;	 
+								s.dataSource = data.list;	 
 								resolve();
 							}
 						}

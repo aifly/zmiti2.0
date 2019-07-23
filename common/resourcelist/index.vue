@@ -41,7 +41,7 @@
 							</li>
 							<li @click='changeCurrentClass(item)' :class="{'active':currentClassId === item.fileclassid}" title='双击可编辑分类' @dblclick="showAddCateModal(item)" v-for='(item,i) in cateList' :key="i">
 								<span>
-									<label v-if='item.isshare' class='zmt_iconfont' v-html='"&#xe636;"'></label>
+									<label v-if='item.isshare===0' class='zmt_iconfont' v-html='"&#xe636;"'></label>
 									{{item.classname}}
 								</span>
 							</li>
@@ -57,9 +57,17 @@
 					</div>
 				</header>
 				<header class='zmiti-resource-header1'>
-					<div><Checkbox>全选</Checkbox></div>
+					<div><Checkbox v-model="selectAll">全选</Checkbox></div>
 					<div>
-						<Button type='error' size='small' @click='delResource'>删除</Button>
+
+						<Poptip
+							confirm
+							title="确定要删除吗？"
+							@on-ok="delResource">
+							<Button type='error' size='small'>删除</Button>
+						</Poptip>
+						<Button type='primary' size='small' @click="showClipDialog = true;moveType = 1">复制到</Button>
+						<Button type='primary' size='small' @click="showClipDialog = true;moveType = 2">剪切到</Button>
 						<span style='opacity:0'>1</span>
 						<Button v-if='false' type='error' size='small' @click='downloadResource'>下载</Button>
 					</div>
@@ -68,12 +76,11 @@
 				<div class='zmiti-resource-C zmiti-scroll'>
 					<ul>
 						<li v-if='resourceList.length<=0' class='zmiti-resouce-nodata'>暂无数据 ^_^</li>
-						<li v-for="(resource,i) of resourceList" :key="i" @click="currentResourceIndex =  i">
+						<li v-for="(resource,i) of resourceList" :key="i" >
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
-								<div :class="{'mask':resource.isUploading}" :style="{background:'url('+((resource.custombilethum&&resource.custombilethum[0])||resource.filepath)+') no-repeat center center',backgroundSize:resource.size}" class='lt-full' v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1 && false'>
-								</div>
-								<img :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="(resource.custombilethum&&resource.custombilethum[0])||resource.filepath" alt="">
-								<span v-else :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
+								 
+								<img @click="currentResourceIndex =  i" :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="(resource.custombilethum&&resource.custombilethum[0])||resource.filepath" alt="">
+								<span v-else  @click="currentResourceIndex =  i" :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
 
 								<template  v-if='!resource.isUploading'>
 									<Checkbox @on-change='toggleResource(resource)' size='large' v-model='resource.checked' class='zmiti-resource-check'></Checkbox>
@@ -118,8 +125,8 @@
 				</FormItem>
 				<FormItem label="是否共享：">
 					<RadioGroup v-model="formResource.isshare">
-						<Radio :value='0' :label="0">否</Radio>
-						<Radio :value='1' :label="1">是</Radio>
+						<Radio :value='1' :label="1">否</Radio>
+						<Radio :value='0' :label="0">是</Radio>
 					</RadioGroup>
 				</FormItem>
 				<FormItem label="备注：" prop='content'>
@@ -219,6 +226,7 @@
 				</div>
 			</div>
 		</ZmitiMask>
+		<Transfer  :currentType='currentType' :currentClassId='currentClassId' :cateList='cateList'  v-model='showClipDialog' :isAdmin='isAdmin'  @closeClipDialog='closeClipDialog' :moveType='moveType'  :checkedList='checkedList'  v-if='showClipDialog' ></Transfer>
 	</div>
 </template>
 <style lang="scss" scoped>
@@ -262,6 +270,7 @@ import zmitiUtil from '../lib/util';
 import {defaultClass,defaultExtNames} from '../config';
 import IScroll from 'iscroll';
 import ZmitiMask from '../mask';
+import Transfer from '../transfer';
 
 
 let {resourceActions,formatDate} = zmitiUtil;
@@ -282,7 +291,11 @@ export default {
 			cateList:[
 				
 			],
-
+			selectAll:false,
+			currentType:0,
+			menus:[],
+			showClipDialog:false,
+			moveType:1,
 			userlabel:"",
 			showMaskPage:true,
 			imgs:window.imgs,
@@ -325,7 +338,8 @@ export default {
 		}
 	},
 	components:{
-		ZmitiMask
+		ZmitiMask,
+		Transfer
 	},
 	mounted() {
 		this.init();
@@ -347,7 +361,29 @@ export default {
 		
 		
 	},
+	watch:{
+		selectAll(val){
+
+			var len = this.resourceList.length;
+			this.resourceList.forEach((item)=>{
+				item.checked = val;
+				if(val){
+					this.checkedList.push(item);
+				}
+				else{
+					this.checkedList.length = 0;
+				}
+			});
+
+		},
+	},
 	methods: {
+		closeClipDialog(){
+			this.showClipDialog = false;
+			this.checkedList = this.checkedList.slice(0,0);
+			this.selectAll = false;
+			//this.getMyreportList();
+		},
 		deleteLabel(index){
 			var labels = this.resourceList[this.currentResourceIndex].userlabel.split(',');
 			labels.splice(index,1);
@@ -441,7 +477,13 @@ export default {
 		delResource(){
 			var {isAdmin,$Message} = this;
 			var s = this; 
-			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId})
+	
+			var condition = Object.assign(this.resourceCondition,{fileclassid:s.currentClassId});
+
+			var fileids = [];
+			s.checkedList.forEach(c=>{
+				fileids.push(c.fileid);
+			});
 			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
 				remark:'delResource',
 				_ui:{
@@ -449,22 +491,13 @@ export default {
 				},
 				data:{
 					action:resourceActions.delResource.action,
-					fileid:s.checkedList.join(',')
+					fileids
 				},
 				success(data){
-					//$Message[data.getret === 0 ?　'success':'error'](data.msg);
+					$Message[data.getret === 0 ?　'success':'error'](data.msg);
 					if(data.getret === 0 ){
-						data.list.forEach((list)=>{
-							//list.filepath = window.config.host + list.filepath;
-							list.custombilethum[0] = window.config.host + list.custombilethum[0];
-							
-							
-							
-							list.size = 'cover';
-							//list.checked = false;
-						})
-						s.resourceList = data.list;
-						
+
+						s.getResourceByClassId();
 					}
 				}
 			});

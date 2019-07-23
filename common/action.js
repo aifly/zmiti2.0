@@ -334,8 +334,23 @@ let resourceActions = {
 	basicUpdload:{
 		desc:"基础上传",
 		action:'/index/upload/upload_file'
-	}
-
+	},
+	fileCopy:{
+		desc:'文件复制',
+		action:"3001314"
+	},
+	fileClip:{
+		desc:"文件剪切",
+		action:"3001315"
+	},
+	fileZip:{
+		desc:"文件打包",
+		action:'3001316'
+	},
+	getZipFileList:{
+		desc:'获取打包列表',
+		action:'3001317'
+	},
 };
 
 //天气预报
