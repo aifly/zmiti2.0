@@ -144,11 +144,12 @@
 							if(data.info.company_list.length >= 2){
 
 							}else{
-								window.localStorage.setItem('currnetCompanyId',data.info.company_list[0].companyid);
+								
 							}
-							window.localStorage.setItem('currnetCompanyId',data.info.company_list[0].companyid);
+							window.localStorage.setItem('currentCompanyId',data.info.company_list[0].companyid);
+
 							_this.$router.push({path:'/home'})
-							window.location.reload();
+							//window.location.reload();
 							_this.isLogined = true;
 
 							

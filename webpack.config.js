@@ -22,7 +22,7 @@ module.exports = {
 		// 输出文件名 name 为 entry 的 key 值，也可以加上 hash 值， 如：[name].[hash:8].js
 		filename: '[name].js',
 		// 构建生成的 js 在html中引用时的路径
-		//publicPath: '/'
+		publicPath: '/'
 	},
 
 	// 模块引用配置

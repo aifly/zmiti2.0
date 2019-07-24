@@ -39,7 +39,7 @@
 					   {{userinfo.username}}
 					</span>
 					<span class='zmiti-user-avatar'>
-						<span class='zmt_iconfont' v-html='userinfo.info.avatar||"&#xe6a4;"'>
+						<span class='zmt_iconfont' v-html='userinfo.info && userinfo.info.avatar||"&#xe6a4;"'>
 							
 						</span>
 						<ul>
@@ -174,16 +174,16 @@
 			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();
 			
 
-            this.userinfo = userinfo; 
-            if(this.$route.name !== 'login' && this.$route.name !== 'register' && !this.isAdmin){
-				
-               zmitiUtil.getProductList((arr)=>{
+			this.userinfo = userinfo; 
+			
+            obserable.on('getProduct',()=>{
+				zmitiUtil.getProductList((arr)=>{
 				   if(arr.getret === 0 ){
 					   this.productList = arr.list;
 				   }
 
                },this);
-            }
+			})
         },
         watch:{
             kw(val){

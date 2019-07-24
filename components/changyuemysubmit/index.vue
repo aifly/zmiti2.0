@@ -163,11 +163,22 @@
 						align:'center',
 					},
 					{
-						title:'稿件状态',
+						title:"提交时间",
+						key:'createtime',
+						align:'center'
+					},
+					{
+						title:'审核人',
 						key:'status',
-						align:'center',
 						render:(h,params)=>{
-							return h('div',{},manuscriptStatus[params.row.status]);
+
+							return h('div',(params.row.checkuserlist||[])['map']((c,i)=>{
+								return h('span',{
+									style:{
+										marginRight:'5px'
+									}
+								},c.realname);
+							}));
 						}
 					},
 					{
@@ -197,7 +208,6 @@
 											s.showDetail = true;
 											s.formUser = params.row;
 											s.showDetailPage = 1;
-										
                                         }
                                     }
                                 }, '编辑'),
@@ -266,6 +276,9 @@
 
 			var s = this;
 			var {condition} = this;
+			condition = Object.assign(condition,{
+				companyid:zmitiUtil.getCurrentCompanyId()
+			})
 			zmitiUtil.ajax({
 				remark:"getMySubmitList",
 				data:{

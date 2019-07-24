@@ -90,7 +90,7 @@ var zmitiUtil = {
 		})
 	},
 	getCurrentCompanyId(){
-		return window.localStorage.getItem('currnetCompanyId');
+		return window.localStorage.getItem('currentCompanyId');
 	},
 	getProductList(fn) { //
 		var companyid = this.getCurrentCompanyId();
