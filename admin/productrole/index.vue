@@ -159,11 +159,17 @@
 									openMask:(data)=>{
 										var s = this;
 										s.showDetail = true;
-										s.formUser = data;
-										data.startdate = formatDate(data.startdate);
-										data.enddate = formatDate(data.enddate);
+
+										var data1 = JSON.parse(JSON.stringify(data));
+										data.startdate = new Date(data.startdate)
+										data.enddate = new Date(data.enddate)
+										s.formUser = data;// JSON.parse(JSON.stringify(data));
+
+										console.log(s.formUser,'s.formUser')
+
+									
 										
-										s.showDetailPage = 1;
+										Vue.obserable.trigger({type:'toggleMask',data:true});
 									}
 								}
                             },"aaa")
@@ -220,7 +226,7 @@
 											var s = this;
 											s.showDetail = true;
 											s.formUser = params.row;
-											s.showDetailPage = 1;
+											Vue.obserable.trigger({type:'toggleMask',data:true});
 										
                                         }
                                     }
@@ -285,7 +291,7 @@
 
 			showDetail(val){
 				if(val){
-					this.showDetailPage = 1;
+					Vue.obserable.trigger({type:'toggleMask',data:true});
 				}else{
 					setTimeout(() => {
 						this.showDetailPage = -1;
@@ -431,7 +437,7 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
-				this.showDetailPage = 1;
+				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
 
 			delete(userid){
@@ -520,7 +526,8 @@
 			},
 			adminAction(){
 				var s = this;
-				var action = adminActions[this.formUser.powerid?'editProductPower':'addProductPower']['action'];
+				var remark = this.formUser.powerid?'editProductPower':'addProductPower';
+				var action = adminActions[remark]['action'];
 				
 
 
@@ -548,7 +555,7 @@
 				 }
 
 				zmitiUtil.adminAjax({
-					remark:'addProductPower',
+					remark,
 					data:{
 						action,
 						info

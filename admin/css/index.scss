@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import "./base.scss";
+
 .zmiti-tab-header {
 	width: 50px;
 	@include displayFlex(row);
@@ -12,13 +13,13 @@
 	z-index: 10;
 
 	&:before {
-	content: "";
-	@include pos(a);
-	width: 98%;
-	left: 1%;
-	height: 1px;
-	background: #ddd;
-	top: 54px;
+		content: "";
+		@include pos(a);
+		width: 98%;
+		left: 1%;
+		height: 1px;
+		background: #ddd;
+		top: 54px;
 	}
 	& > div {
 	&:nth-of-type(1) {

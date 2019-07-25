@@ -1,24 +1,14 @@
 <template>
-
-	<div class='zmiti-mask-ui lt-full' v-if='value>-1'>
-
-		<transition name='right'
-		 @after-leave="afterLeave"
-		>
-			<div v-if='showPannel'  class='zmiti-mask-right zmiti-scroll' :style="{height:viewH - 50+'px',width:width+'px'}">
-				<slot  name="mask-content"></slot>
-			</div>
-		</transition>
-
-		<div class='lt-full' @click='hidePannel'></div>
-	</div>
-	
+	<Drawer @on-visible-change='change' title="" placement="right" :width='500' :closable="false" v-model="showPannel">
+		<slot  name="mask-content"></slot>
+	</Drawer>
 </template>
 <style lang="scss" scoped>
 	@import './index.scss';
 </style>
 
 <script>
+	import Vue from 'vue';
 	export default {
 		props:{
 		 
@@ -37,18 +27,21 @@
 		},
 		watch:{
 			value(val){
+
 				this.showPannel = val>-1;
 			}
 		},
 		data(){
 			return{
+
 				viewH:window.innerHeight,
-				showPannel:true
+				showPannel:false
 
 			}		
 		},
 		methods: {
-
+			change(e){
+			},
 			hidePannel(){
 				this.showPannel = false;
 			},
@@ -60,7 +53,9 @@
 			
 		},
 		mounted(){
-			
+			Vue.obserable.on('toggleMask',(data)=>{
+				this.showPannel = data
+			})
 		}
 	}
 </script>

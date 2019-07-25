@@ -226,7 +226,7 @@
 											var s = this;
 											s.showDetail = true;
 											s.formCompany = params.row;
-											s.showDetailPage = 1;
+											Vue.obserable.trigger({type:'toggleMask',data:true});
                                         }
                                     }
                                 }, '编辑'),
@@ -308,7 +308,7 @@
 
 			showDetail(val){
 				if(val){
-					this.showDetailPage = 1;
+					Vue.obserable.trigger({type:'toggleMask',data:true});
 				}else{
 					setTimeout(() => {
 						this.showDetailPage = -1;
@@ -371,7 +371,7 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
-				this.showDetailPage = 1;
+				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
 
 			delete(companyid){

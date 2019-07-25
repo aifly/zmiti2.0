@@ -372,7 +372,7 @@
 		watch:{
 			showDetail(val){
 				if(val){
-					this.showDetailPage = 1;
+					Vue.obserable.trigger({type:'toggleMask',data:true});
 				}else{
 					setTimeout(() => {
 						this.showDetailPage = -1;
@@ -428,7 +428,7 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
-				this.showDetailPage = 1;
+				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
 
 			delGroup(id){

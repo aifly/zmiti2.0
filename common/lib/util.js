@@ -13,7 +13,7 @@ var zmitiUtil = {
 	companyAdminActions: zmitiActions.companyAdminActions,
 
 	dataToNumber(date){
-		return new Date(date).getTime() / 1000
+		return new Date(date).getTime() 
 	},
 
 	formatDate(inputTime,flag = false){

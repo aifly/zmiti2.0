@@ -264,7 +264,7 @@
 											s.showDetail = true;
 											s.formAdmin = params.row;
 											s.adminuserId = params.row.adminuserid;
-											s.showDetailPage = 1;
+											Vue.obserable.trigger({type:'toggleMask',data:true});
                                         }
                                     }
                                 }, '详情'),
@@ -343,11 +343,9 @@
 
 			showDetail(val){
 				if(val){
-					this.showDetailPage = 1;
+					Vue.obserable.trigger({type:'toggleMask',data:true});
 				}else{
-					setTimeout(() => {
-						this.showDetailPage = -1;
-					}, 310);
+					 
 				}
 			}
 			
@@ -404,7 +402,7 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
-				this.showDetailPage = 1;
+				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
 
 			delAdmin(adminuserid){

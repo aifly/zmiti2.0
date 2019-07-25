@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-user-main-ui">
+	<div class="zmiti-product-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
 				<div><span v-if='companyname'>{{companyname}} —— </span>产品管理</div>
@@ -13,37 +13,36 @@
 				<Button type='primary'>查询</Button>
 			</section>
 			
-			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
+			<div class='zmiti-product-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
 				<ul>
 					<li v-for='(data,i) of dataSrouce' :key="i">
-						<div>产品名称：{{data.productname}}</div>
-						<div>产品说明：{{data.introduce}}</div>
+						<div>{{data.productname}} <span class='zmt_iconfont' v-html='"&#xe64e;"'></span></div>
+						<div>{{data.introduce}}</div>
 						<div>
-							<div>创建时间：{{formatDate(data.createtime)}}</div>
+							<div>创建时间：{{formatDate(data.createtime).substr(0,10)}}</div>
 							<div>
-								<span @click='showEditPage(data)'>编辑</span>
 								<Poptip
 									:confirm="true"
 									title="确定要删除吗？"
 									@on-ok="deletes(data.productid)"
 									
 								>
-									<span>删除</span>
+									<span class='zmt_iconfont del' v-html="'&#xe616;'"></span>
 								</Poptip>
+								<span @click='showEditPage(data)' v-html='"&#xe680;"' class='zmt_iconfont'></span>
 							</div>
 						</div>
 					</li>
 				</ul>
 			</div>
-			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
 			<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
 				<section slot='mask-content' class='zmiti-add-form zmiti-scroll' >
 					<header class='zmiti-add-header'>
-						<img :src="imgs.back" alt=""  @click='showDetail = false' >
+						<img :src="imgs.back" alt=""   @click='showDetail = false' >
 						<span>产品信息</span>
 					</header>
-					<div class='zmiti-user-avatar' @click="showAvatarModal = true">
+					<div class='zmiti-product-avatar' @click="showAvatarModal = true">
 						<span class='zmt_iconfont' v-html='formObj.icon'></span>
 						<label>更换头像</label>
 					</div>
@@ -133,81 +132,7 @@
 				groupList:[],
 				companyList:[],
 				hideMenu:false,
-				columns:[
-					{
-						title:"产品名称",
-						key:'productname',
-						align:'center'
-						
-					},
-					{
-						title:"产品简称",
-						key:'introduce',
-						align:'center'
-						
-					},
-					{
-						title:'操作',
-						key:'action',
-						align:'center',
-						render:(h,params)=>{
-
-							return h('div', [
-                               
-                               
-								 h('span', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-										margin: '2px 10px',
-										border:'none',
-										fontSize: '12px',
-										cursor:'pointer',
-										color:'#06C'
-
-                                    },
-                                    on: {
-                                        click: () => {
-											var s = this;
-											s.showDetailPage = 1;
-
-											s.formObj = params.row; 
-                                        }
-                                    }
-                                }, '详情'),
-                                h('Poptip',{
-									props:{
-										confirm:true,
-										title:"确定要删除吗？"
-									},
-									on:{
-										'on-ok':()=>{
-											this.deletes(params.row.productid);
-										},
-										
-									}
-								},[
-									h('span', {
-										props: {
-											type: 'error',
-											size: 'small'
-										},
-										style:{
-											cursor:'pointer',
-											color:'#06C'
-										},
-										on: {
-											click: () => {
-											}
-										}
-									}, '删除')
-								])
-                            ]);
-						}
-					}
-				],
+				 
 				formObj:{
 					 
 				},
@@ -241,7 +166,10 @@
 
 			showDetail(val){
 				if(val){
-					this.showDetailPage = 1;
+					Vue.obserable.trigger({
+					type:'toggleMask',
+					data:true
+				});
 				}else{
 					setTimeout(() => {
 						this.showDetailPage = -1;
@@ -261,7 +189,7 @@
 		methods:{
 			showEditPage(item){
 				var s = this;
-				s.showDetailPage = 1;
+				Vue.obserable.trigger({type:'toggleMask',data:true});
 				s.formObj = item; 
 			},
 			closeMaskPage(){
@@ -294,7 +222,10 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
-				this.showDetailPage = 1;
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:true
+				});
 			},
 
 			deletes(productids){
