@@ -528,8 +528,6 @@
 				var s = this;
 				var remark = this.formUser.powerid?'editProductPower':'addProductPower';
 				var action = adminActions[remark]['action'];
-				
-
 
 				if(!this.formUser.startdate||!this.formUser.enddate){
 					return;
@@ -563,7 +561,7 @@
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
-							s.showDetail = false;
+							Vue.obserable.trigger({type:'toggleMask',data:false});
 							s.getDataList();
 						}
 					}
