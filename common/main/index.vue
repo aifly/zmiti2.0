@@ -29,7 +29,7 @@
 							<router-link to='/resourcelist'>资源库</router-link> 
 						</span>
 						<span>
-							信息发布
+							消息发布
 						</span>
 						<span>
 							<router-link to='/workorderlist'>工单处理</router-link> 
@@ -139,6 +139,11 @@
 						link:'/product',
 						icon:'&#xe64c;',
 						active:['product','productrole'] 
+					},{
+						name:"新闻公告管理",
+						link:'/news',
+						icon:'&#xe667;',
+						active:['news'] 
 					},{
 						name:"财务管理",
 						link:'/finance',

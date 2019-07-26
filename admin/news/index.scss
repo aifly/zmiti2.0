@@ -1,17 +1,13 @@
 ﻿@import "../css/base.scss";
 
 
+.zmiti-news-main-ui {
+  background: #f2f2f2;
+  box-sizing: border-box;
+  height: 100%;
+  width: 99%;
+  margin: 0 auto;
 
-.zmiti-user-main-ui {
-	background: #f2f2f2;
-	box-sizing: border-box;
-	height: 100%;
-	width: 99%;
-	margin: 0 auto;
-	
-	.zmiti-cy-tag{
-		color:red;
-	}
   .zmiti-avatar-list{
 	  @include displayFlex(row);
 	  span{
@@ -87,7 +83,7 @@
 	  
     }
 
-    .zmiti-user-main {
+    .zmiti-news-main {
       flex: 5;
 	  -webkit-flex: 5;
 	  width: 100%;
@@ -96,7 +92,7 @@
         @include transition(0.3s);
       }
 
-      .zmiti-user-table {
+      .zmiti-cnewstable {
         width: 98%;
         margin: 0 auto;
 
@@ -126,7 +122,7 @@
 	  }
   }
 
-.zmiti-add-form {
+@at-root.zmiti-add-form {
     flex: 1;
     -webkit-flex: 1;
 	width:500px;
@@ -180,7 +176,7 @@
 	}
 	
 
-	.zmiti-user-avatar{
+	.zmiti-conewsvatar{
 		background: rgba(51,144,255,.1);
 		@include br();
 		text-align: center;

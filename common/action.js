@@ -182,6 +182,25 @@ let companyActions = {//用户单位模块
 
 }
 
+let newsActions = {
+	addNews:{
+		desc:'添加新闻',
+		action:'1001910'
+	},
+	delNews: {
+		desc: '删除新闻',
+		action: '1001911'
+	},
+	editNews: {
+		desc: '修改新闻',
+		action: '1001912'
+	},
+	getNewsList: {
+		desc: '查询新闻列表',
+		action: '1001913'
+	}
+}
+
 let userActions = {
 
 	userLogin:{
@@ -295,6 +314,10 @@ let changYueAcions = {
 	getMyCheckList:{
 		desc:'获取我的审核列表',
 		action:'2001909'
+	},
+	checkManuscript:{
+		desc:'审核稿件',
+		action:'2001911'
 	}
 
 }
@@ -401,7 +424,8 @@ var zmitiActions =   /*#__PURE__*/{
 	weatherActions,
 	cityActions,
 	companyAdminActions,
-	changYueAcions
+	changYueAcions,
+	newsActions
 }
 
 export  default zmitiActions;

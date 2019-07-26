@@ -115,10 +115,7 @@
 							}
 							
 							_this.$Message.success('登录成功~');
-							window.location.hash = '#/admin';
-							
-							
-							window.location.reload();
+							_this.$router.push({path:'/home'})
 							_this.isLogined = true;
 							
 						}else{

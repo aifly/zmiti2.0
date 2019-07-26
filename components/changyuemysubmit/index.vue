@@ -170,14 +170,36 @@
 					{
 						title:'审核人',
 						key:'status',
+						width:220,
 						render:(h,params)=>{
-
+							  
 							return h('div',(params.row.checkuserlist||[])['map']((c,i)=>{
 								return h('span',{
 									style:{
 										marginRight:'5px'
+									},
+									on:{
+										click:()=>{
+											console.log(c);
+											this.$Modal.info({
+												title:c.realname + '的审核意见 —— ' + manuscriptStatus[c.status].name,
+												content:'<p>审核意见：</p>' + (c.suggestion || '暂无 ：('),
+												okText: '确定',
+												closable:true,
+												cancelText: '取消'
+
+											});
+										}
+									},
+									domProps:{
+										innerHTML:`
+											<label>${c.realname}</label>
+											<label title='${manuscriptStatus[c.status].name}' class='zmiti-cy-tag zmt_iconfont' style='color:${manuscriptStatus[c.status].color}'>
+												${manuscriptStatus[c.status].icon}
+											</label>
+										`
 									}
-								},c.realname);
+								});
 							}));
 						}
 					},
@@ -189,32 +211,12 @@
 						render:(h,params)=>{
 
 							return h('div', [
-								 h('span', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-										margin: '2px 10px',
-										border:'none',
-										fontSize: '12px',
-										cursor:'pointer',
-										color:'#06C'
-
-                                    },
-                                    on: {
-                                        click: () => {
-											var s = this;
-											s.showDetail = true;
-											s.formUser = params.row;
-											s.showDetailPage = 1;
-                                        }
-                                    }
-                                }, '编辑'),
                                 h('Poptip',{
 									props:{
 										confirm:true,
-										title:"确定要删除吗？"
+										title:"确定要删除吗？",
+										placement:'left'
+
 									},
 									on:{
 										'on-ok':()=>{

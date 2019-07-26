@@ -83,12 +83,26 @@ let defaultExtNames = {
 	other:'&#xe606;'
 
 }
-
 let manuscriptStatus = [
-	'待审核',
-	'审核通过',
-	'拒绝',
-	'暂缓'
+	{
+		name: '待审核',
+		icon:'&#xe6bc;',
+		color:"#3390ff"
+	},
+	{
+		name: '审核通过',
+		icon: '&#xe61b;',
+		color: "#00c0de"
+	},{
+		name: '拒绝',
+		icon: '&#xe61e;',
+		color: "#ff4664"
+	}, {
+		name: '暂缓',
+		icon:'&#xe61f;',
+		color: "#ffce01"
+	}
+
 ];
 
 

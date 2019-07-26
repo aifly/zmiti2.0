@@ -11,6 +11,7 @@ var zmitiUtil = {
 	cityActions: zmitiActions.cityActions,
 	changYueAcions: zmitiActions.changYueAcions,
 	companyAdminActions: zmitiActions.companyAdminActions,
+	newsActions: zmitiActions.newsActions,
 
 	dataToNumber(date){
 		return new Date(date).getTime() 

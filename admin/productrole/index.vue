@@ -165,10 +165,6 @@
 										data.enddate = new Date(data.enddate)
 										s.formUser = data;// JSON.parse(JSON.stringify(data));
 
-										console.log(s.formUser,'s.formUser')
-
-									
-										
 										Vue.obserable.trigger({type:'toggleMask',data:true});
 									}
 								}

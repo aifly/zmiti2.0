@@ -57,6 +57,7 @@ const router = new VueRouter({
 		{ path: '/resourcelist/:id?', name: 'resourcelist', component: (resolve) => require(['./common/resourcelist'], resolve) },
 		{ path: '/workorder/', name: 'workorder', component: (resolve) => require(['./admin/workorder'], resolve) },
 		{ path: '/weather/', name: 'weather', component: (resolve) => require(['./admin/weather'], resolve) },
+		{ path: '/news/', name: 'news', component: (resolve) => require(['./admin/news'], resolve) },
 		{
 			path: '/group/', name: 'group', component: (resolve) => require(['./common/group'], resolve), props: true, children: [
 				{ path: '/user/:companyid?', name: 'user', component: (resolve) => require(['./admin/user'], resolve) },
