@@ -40,7 +40,7 @@
 						</FormItem>
 						<FormItem label="新闻所属产品：">
 							<Select v-model="formObj.productids" multiple >
-								<Option v-for="item in productList" :value="item.productid" :key="item.productid">{{ item.productname }}</Option>
+								<Option :data='item.productid' v-for="item in productList" :value="item.productid" :key="item.productid">{{ item.productname }}</Option>
 							</Select>
 						</FormItem>
 						<FormItem label="点击量：">
@@ -184,9 +184,10 @@
                                     on: {
                                         click: () => {
 											var s = this;
-											s.showDetail = true;
 											s.formObj = params.row;
-											s.formObj.productids = s.formObj.productids.split(',')
+											
+											s.formObj.productids = s.formObj.productids.split(',').map(item=>item*1)
+											console.log(s.formObj.productids,'s.formObj.productids')
 											Vue.obserable.trigger({type:'toggleMask',data:true});
                                         }
                                     }
@@ -332,7 +333,13 @@
 						},
 						success(data){
 							if(data.getret === 0){
-								s.dataSource = data.list;	 
+								s.dataSource = data.list;
+								s.dataSource.forEach(item=>{
+									item.productids = item.productidslist.map(p=>{
+										return p.productid;
+									}).join(',');
+								})
+
 								resolve();
 							}
 						}
