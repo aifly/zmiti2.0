@@ -127,7 +127,9 @@
 
 							var p = data;
 							p.username =  _this.username;
-							window.localStorage.setItem('login',JSON.stringify(data));
+							
+
+							
 
 							if(_this.checked){
 								window.localStorage.setItem('zmiti_user_username',_this.username);
@@ -146,10 +148,20 @@
 							}else{
 								
 							}
-							window.localStorage.setItem('currentCompanyId',data.info.company_list[0].companyid);
+
+							window.localStorage.setItem('login',JSON.stringify(data));
+							window.localStorage.setItem('currentCompany',JSON.stringify(data.info.company_list[0]));
+
+							
 
 							_this.$router.push({path:'/home'})
-							//window.location.reload();
+							
+
+							setTimeout(() => {
+								window.location.reload();
+							}, 30);
+
+						
 							_this.isLogined = true;
 
 							

@@ -84,6 +84,14 @@
 						title:"稿件标题",
 						key:'doctitle',
 						align:'center',
+					},{
+						title:"提交人",
+						key:'realname',
+						align:'center',
+					},{
+						title:"提交时间",
+						key:'createtime',
+						align:'center',
 					},
 					{
 						title:'稿件状态',
@@ -98,18 +106,11 @@
 									},
 									on:{
 										click:()=>{
-											var c = params.row;
-
-											this.visible = true;
-											this.suggestion = c.suggestion;
-
-											this.formCheck = c;
-
+											
 										}
 									},
 									domProps:{
 										innerHTML:`
-											<label>${params.row.realname}</label>
 											<label title='${manuscriptStatus[params.row.status].name}' class='zmiti-cy-tag zmt_iconfont' style='color:${manuscriptStatus[params.row.status].color}'>
 												${manuscriptStatus[params.row.status].icon}
 											</label>
@@ -119,6 +120,41 @@
 							])
 						}
 					},
+					{
+						title:"操作",
+						key:'',
+						align:'center',
+						render:(h,params)=>{
+							return h('div',[
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"#3390ff"
+									},
+									on:{
+										click:()=>{
+											var c = params.row;
+											this.visible = true;
+											this.suggestion = c.suggestion;
+											this.formCheck = c;
+										}
+									}
+								},'审核'),
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"#3390ff",
+										marginLeft:'10px'
+									},
+									on:{
+										click:()=>{
+											this.getDetail(params.row.manuscriptid)
+										}
+									}
+								},'详情')
+							])
+						}
+					}
 					 
 				],
 				
@@ -158,6 +194,23 @@
 		},
 		
 		methods:{
+
+			getDetail(manuscriptid){
+				//manuscriptDetail
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'manuscriptDetail',
+					data:{
+						action:changYueAcions.manuscriptDetail.action,
+						condition:{
+							manuscriptid
+						}
+					},
+					success(data){
+						console.log(data);
+					}
+				})
+			},
 			checkManuscript(status){//审核稿件
 				var s = this;
 				zmitiUtil.ajax({
@@ -167,7 +220,7 @@
 						info:{
 							manuscriptid:s.formCheck.manuscriptid,
 							status,
-							suggestion:s.formCheck.suggestion,
+							suggestion:s.suggestion,
 						}
 					},
 					success(data){

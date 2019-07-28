@@ -12,6 +12,7 @@
 
 .sysbin-group-ui .symbin-tab-menu li {
   background: #d2d2d2;
+  border-top: 1px solid #D9DEE4;
   -webkit-user-select: none;
   cursor: pointer;
   line-height: 50px;

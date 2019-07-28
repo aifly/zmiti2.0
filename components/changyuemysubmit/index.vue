@@ -74,7 +74,7 @@
 						</Form>
 						
 						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='adminAction'>{{formUser.userid?'保存':'确定'}}</Button>
+							<Button size='large' type='primary' >{{formUser.userid?'保存':'确定'}}</Button>
 						</div>
 						<template v-if='formUser.userid && false'>
 							<header class='zmiti-add-header zmiti-safe-bar'>
@@ -220,7 +220,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delete(params.row.userid);
+											this.delete(params.row.manuscriptid);
 										},
 										
 									}
@@ -276,25 +276,9 @@
 		mounted(){
 			window.s = this;
 
-			var s = this;
-			var {condition} = this;
-			condition = Object.assign(condition,{
-				companyid:zmitiUtil.getCurrentCompanyId()
-			})
-			zmitiUtil.ajax({
-				remark:"getMySubmitList",
-				data:{
-					action:changYueAcions.getMySubmitList.action,
-					condition
-				},
-				success(data){
-					s.loading = false;
-					if(data.getret === 0){
+			this.getDataList();
 
-						s.dataSource = data.list;
-					}
-				}
-			})
+			
 			
 		},
 
@@ -444,13 +428,15 @@
 				this.showDetailPage = 1;
 			},
 
-			delete(userid){
+			delete(manuscriptids){
 				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'delUser',
+				zmitiUtil.ajax({
+					remark:'delManuscript',
 					data:{
-						action:companyActions.delUser.action,
-						userid
+						action:changYueAcions.delManuscript.action,
+						condition:{
+							manuscriptids
+						}
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
@@ -464,50 +450,26 @@
 			},
 			getDataList(){
 				var s = this;
-				if(typeof window.Promise !== 'function'){
-					console.log('当前浏览器不支持Promise');
-					return;
-				}
-				var companyid = this.$route.params.companyid;
-				this.condition.companyid = companyid;
-				var p = new Promise((resolve,reject)=>{
-					zmitiUtil.adminAjax({
-						remark:companyid ? "getUserListByCompanyId":"getUserList",
-						data:{//getUserListByCompanyId
-							action:companyActions[companyid ? "getUserListByCompanyId":"getUserList"].action,
-							condition:this.condition
-						},
-						success(data){
-							if(data.getret === 0){
-								s.dataSource = data.list;	 
-								resolve();
-							}
-						}
-					})
-				});
-			},
-			adminAction(){
-				var s = this;
-				var action = this.formUser.userid ? companyActions.editUser.action:companyActions.addUser.action;
-				var companyid = this.$route.params.companyid;
-				if(companyid){
-					this.formUser.companyid = companyid;
-				}
-				zmitiUtil.adminAjax({
-					remark:this.formUser.userid ?　'editUser':'addUser',
+				var {condition} = this;
+				condition = Object.assign(condition,{
+					companyid:zmitiUtil.getCurrentCompanyId().companyid
+				})
+				zmitiUtil.ajax({
+					remark:"getMySubmitList",
 					data:{
-						action,
-						info:this.formUser
+						action:changYueAcions.getMySubmitList.action,
+						condition
 					},
 					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						s.loading = false;
 						if(data.getret === 0){
-							s.showDetail = false;
-							s.getDataList();
+
+							s.dataSource = data.list;
 						}
 					}
 				})
 			},
+			
 		}
 	}
 </script>

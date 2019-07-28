@@ -214,7 +214,7 @@
   background: #373d41;
   width: 50px;
   position: absolute;
-  z-index: 15;
+  z-index: 18;
   overflow: hidden;
   -webkit-transition: width 0.2s 0.1s;
   transition: width 0.2s 0.1s;

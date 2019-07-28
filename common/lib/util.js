@@ -91,13 +91,21 @@ var zmitiUtil = {
 		})
 	},
 	getCurrentCompanyId(){
-		return window.localStorage.getItem('currentCompanyId');
+
+		try {
+			var company = JSON.parse(window.localStorage.getItem('currentCompany'))
+			return company;
+		}
+		catch (e) {
+			return {};
+		}
+
 	},
 	getProductList(fn) { //
 		var companyid = this.getCurrentCompanyId();
-		if (!companyid){
-			window.localStorage.clear();
-			window.location.hash = '/login';
+		if (!companyid || !companyid.companyid){
+			//window.localStorage.clear();
+			//window.location.hash = '/login';
 			return;
 		}
 		this.ajax({
@@ -181,10 +189,11 @@ var zmitiUtil = {
 		axios.post(window.config.baseUrl + '?name=' + (option.remark || '').toLowerCase(), JSON.stringify(opt)).then((dt) => {
 			var dt = dt.data;
 
-
+		
 			if (dt.getret === 0) {
 
 			}
+
 			else if (dt.getret === 9997 || dt.getret === 9996) {
 
 				window.localStorage[option.isAdmin ? 'adminlogin' : 'login'] = '';

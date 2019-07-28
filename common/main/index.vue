@@ -44,7 +44,7 @@
 						</span>
 						<ul>
 							<li class='zmiti-hover-username'>
-								{{userinfo.username}}
+								{{userinfo.username||'无'}}
 							</li>
 							<li class='zmiti-hover-tab'>
 								<div>基本信息</div>
@@ -119,7 +119,9 @@
                 viewH:document.documentElement.clientHeight,
                 tabIndex:0,
                 userinfo:{
-					info:{}
+					info:{
+
+					}
 				},
                 productList:[],
                 kw:"",
@@ -179,7 +181,9 @@
 			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();
 			
 
-			this.userinfo = userinfo; 
+			this.userinfo = userinfo||{info:{}}; 
+
+			console.log(this.userinfo,'this.userinfo')
 			
             obserable.on('getProduct',()=>{
 				zmitiUtil.getProductList((arr)=>{

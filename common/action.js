@@ -318,6 +318,14 @@ let changYueAcions = {
 	checkManuscript:{
 		desc:'审核稿件',
 		action:'2001911'
+	},
+	delManuscript:{
+		desc:'删除稿件',
+		action:'2001912'
+	},
+	manuscriptDetail:{
+		desc:"稿件详情",
+		action:"2001913"
 	}
 
 }
