@@ -1,0 +1,18 @@
+.zmiti-details-pane {
+  margin-bottom: 80px; }
+
+.zmiti-details-items {
+  display: flex;
+  -webkit-display: flex;
+  -moz-display: flex;
+  margin-bottom: 8px; }
+  .zmiti-details-items .zmiti-details-label {
+    width: 100px;
+    margin-right: 20px;
+    color: #333; }
+  .zmiti-details-items .zmiti-details-main {
+    flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1; }
+
+/*# sourceMappingURL=detail.css.map */
