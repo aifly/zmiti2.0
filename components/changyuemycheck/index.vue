@@ -27,12 +27,67 @@
 				<Button type="error" @click="checkManuscript(2)"  >拒绝</Button>
 				<Button type="default"  @click="checkManuscript(3)" >暂缓</Button>
 			</div>
-    </Modal>
+    	</Modal>
+
+    	<Modal v-model="modaldetail" fullscreen :title="'编号：'+detailData.manuscriptid">
+	        <div class="zmiti-details-pane" slot="">
+			    <div class="zmiti-details-items">
+			        <div class="zmiti-details-label"><div align="right">标题：</div></div>
+			        <div class="zmiti-details-main">
+			        	{{detailData.doctitle}}
+			        </div>
+			    </div>
+			    <div class="zmiti-details-items">
+			        <div class="zmiti-details-label"><div align="right">作者：</div></div>
+			        <div class="zmiti-details-main">
+			        	{{detailData.docauthor}}
+			        </div>
+			    </div>
+			    <div class="zmiti-details-items">
+			        <div class="zmiti-details-label"><div align="right">来自：</div></div>
+			        <div class="zmiti-details-main">
+			        	{{detailData.docfrom}}
+			        </div>
+			    </div>
+			    <div class="zmiti-details-items">
+			        <div class="zmiti-details-label"><div align="right">时间：</div></div>
+			        <div class="zmiti-details-main">
+			        	{{detailData.createtime | formatDate}}
+			        </div>
+			    </div>
+			    <div class="zmiti-details-items">
+			        <div class="zmiti-details-label"><div align="right">内容：</div></div>
+			        <div class="zmiti-details-main" v-html="detailData.content"></div>
+			    </div>
+			    <div class="zmiti-details-items">
+			        <div class="zmiti-details-label"><div align="right">评论：</div></div>
+			        <div class="zmiti-details-main" v-html="detailData.remark"></div>
+			    </div>
+			    
+	        </div>
+	        <div slot="footer">
+	        	<div style="background-color: #ffffff;">
+		        	<div class="zmiti-details-items">
+				        <div class="zmiti-details-label"><div align="right">审核意见：</div></div>
+				        <div class="zmiti-details-main">
+				        	<Input type='textarea' v-model="suggestion" placeholder="请输入你的审核意见" />
+				        </div>
+				    </div>
+					<Button type="primary"  @click="checkManuscript(1)" >通过</Button>
+					<Button type="error" @click="checkManuscript(2)"  >拒绝</Button>
+					<Button type="default"  @click="checkManuscript(3)" >暂缓</Button>
+				</div>
+			</div>
+	    </Modal>
+
 	</div>
 </template>
-
+<style type="text/css">
+.ivu-modal-footer{background-color: #ffffff;}
+</style>
 <style lang="scss" scoped>
 	@import './index.scss';
+	@import './detail.scss';	
 </style>
 <script>
 
@@ -167,7 +222,12 @@
 					page_index:0,
 					page_size:10,
 				},
-				userinfo:{}
+				userinfo:{},
+				modaldetail:false,
+				detailData:[],
+				detailStyle:{
+
+				}
 			}
 		},
 		components:{
@@ -198,6 +258,7 @@
 			getDetail(manuscriptid){
 				//manuscriptDetail
 				var s = this;
+				s.modaldetail=true;
 				zmitiUtil.ajax({
 					remark:'manuscriptDetail',
 					data:{
@@ -208,6 +269,9 @@
 					},
 					success(data){
 						console.log(data);
+						s.detailData=data.detail;
+						s.formCheck.manuscriptid=data.detail.manuscriptid;
+						//console.log(s.formCheck.manuscriptid,'s.formCheck.manuscriptid');
 					}
 				})
 			},
@@ -254,7 +318,24 @@
 			},
 			
 			 
-		}
+		},
+		filters: {
+	      formatDate: function (value) {
+	        let date = new Date(value*1000);
+	        let y = date.getFullYear();
+	        let MM = date.getMonth() + 1;
+	        MM = MM < 10 ? ('0' + MM) : MM;
+	        let d = date.getDate();
+	        d = d < 10 ? ('0' + d) : d;
+	        let h = date.getHours();
+	        h = h < 10 ? ('0' + h) : h;
+	        let m = date.getMinutes();
+	        m = m < 10 ? ('0' + m) : m;
+	        let s = date.getSeconds();
+	        s = s < 10 ? ('0' + s) : s;
+	        return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+	      }
+	    }
 	}
 </script>
  
