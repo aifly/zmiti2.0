@@ -140,7 +140,7 @@
 						name:"产品管理",
 						link:'/product',
 						icon:'&#xe64c;',
-						active:['product','productrole'] 
+						active:['product','productrole','adminchangyue','adminchangyuesetting','adminchangyuelog'] 
 					},{
 						name:"新闻公告管理",
 						link:'/news',

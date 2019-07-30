@@ -16,7 +16,11 @@
 			<div class='zmiti-product-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
 				<ul>
 					<li v-for='(data,i) of dataSrouce' :key="i">
-						<div>{{data.productname}} <span class='zmt_iconfont' v-html='"&#xe64e;"'></span></div>
+						<div>
+							<router-link :to='data.managerurl'>
+								{{data.productname}} <span class='zmt_iconfont' v-html='"&#xe64e;"'></span>
+							</router-link>
+						</div>
 						<div>{{data.introduce}}</div>
 						<div>
 							<div>创建时间：{{formatDate(data.createtime).substr(0,10)}}</div>

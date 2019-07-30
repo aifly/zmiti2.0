@@ -1,7 +1,7 @@
 ﻿@import "../css/base.scss";
 
 
-.zmiti-product-main-ui {
+.zmiti-cy-setting-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
@@ -83,90 +83,27 @@
 	  
     }
 
-    .zmiti-product-main {
-		flex: 5;
-		-webkit-flex: 5;
-		width: 100%;
-		a{
-			color:inherit;
-		}
-		& > div {
-			@include transition(0.3s);
-		}
+    .zmiti-user-main {
+      flex: 5;
+	  -webkit-flex: 5;
+	  width: 100%;
 
-      ul{
-		  @include displayFlex(row);
-		  flex-wrap: wrap;
-		  -webkit-flex-wrap: wrap;
-		  width: 98%;
-		  margin: 0 auto;
-		  li{
-			list-style: none;
-			width: 23%;
-			margin-right: 2%;
-			height: 140px;
-			border:1px solid #eee;
-			@include pos(r);
-			&::before{
-				content:'';
-				@include pos(a);
-				width: 100%;
-				height: 100%;
-				box-shadow: 0 0 13px rgba(0,0,0,.2);
-			}
-			font-size:14px;
-			@include displayFlex(column);
-			&>div{
-				&:nth-of-type(1){
-					height: 34px;
-					line-height: 34px;
-					background: #f2f2f2;
-					padding:0 10px;
-					font-size:14px;
-					@include pos(r);
-					font-weight: bold;
-					span{
-						@include pos(a);
-						right: 10px;
-						cursor: pointer;
-					}
-					
-				}
-				&:nth-of-type(3){
-					height: 34px;
-					line-height: 34px;
-					padding:0 10px;
-					@include pos(r);
-					@include displayFlex(row);
-					&:before{
-						content:'';
-						width: 96%;
-						@include pos(a);
-						height:1px;
-						background: #eee;
-						left: 2%;;
-					}
-					justify-content:space-between;
-					span{
-						cursor: pointer;
-						font-size:20px;
-						color:#3390ff;
-						&.del{
-							color:#f00;
-							font-size:24px;
-						}
-					}
-				}
-				&:nth-of-type(2){
-					flex:1;
-					-webkit-flex:1;
-					padding:10px;
-					
-				}
-			}
+      & > div {
+        @include transition(0.3s);
+      }
 
-		  }
-	  }
+      .zmiti-user-table {
+        width: 98%;
+        margin: 0 auto;
+
+        .ivu-table-wrapper {
+          //margin-top: 10px;
+        }
+
+        &.active {
+          ///width: 70%;
+        }
+      }
     }
   }
 
@@ -189,10 +126,9 @@
     flex: 1;
     -webkit-flex: 1;
 	width:500px;
-
 	overflow: auto;
 	position: absolute !important;
-	top: 0px;
+	top: 0;
 	right: 0;
 	z-index: 100;
 	
@@ -240,7 +176,7 @@
 	}
 	
 
-	.zmiti-product-avatar{
+	.zmiti-user-avatar{
 		background: rgba(51,144,255,.1);
 		@include br();
 		text-align: center;
@@ -309,14 +245,3 @@
 .ivu-radio-inner:after{
 	border-radius: 10px !important;
 } 
-
-
-@media all and (max-width:1400px){
-	.zmiti-product-main {
-		ul{
-			li{
-				width: 30% !important;
-			}
-		}
-	}
-}

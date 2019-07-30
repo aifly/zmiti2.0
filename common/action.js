@@ -97,6 +97,22 @@ let adminActions = {
 	editProductPower: {
 		desc: "修改产品授权",
 		action: '1000312'
+	},
+	addCMS:{
+		desc:"添加CMS",
+		action:'1001900'
+	},
+	delCMS:{
+		desc:'删除CMS',
+		action:'100191'
+	},
+	editCMS: {
+		desc: '编辑CMS',
+		action: '100192'
+	},
+	getCMSList:{
+		desc:'获取CMS列表',
+		action:'1001903'
 	}
 	
 }
