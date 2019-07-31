@@ -3,15 +3,15 @@
 		<Tab :title='menuObj.title' :tabs='tabs' :tabIndex='tabIndex'>
 			<div slot='zmiti-tab-menu'>
 				<ul class="symbin-tab-menu">
-					<li :key="i" @click.stop.prevent='tab1(i,tab.children)' v-for='(tab,i) in tabs' :class='{"active": !tab.children && (tab.link.substring(1) === $route.name && !tab.children),"level1":tab.children && !tab.status,"open":tab.status || (tab.children && tab.children.some(child => { return  child.link.substring(1) ===$route.name} )) }'>
+					<li @mouseover='mouseover' @mouseout='mouseout' :key="i" @click.stop.prevent='tab1(i,tab.children)' v-for='(tab,i) in tabs' :class='{"active": !tab.children && (tab.link.substring(1) === $route.name && !tab.children),"level1":tab.children && !tab.status,"open":tab.status || (tab.children && tab.children.some(child => { return  child.link.substring(1) ===$route.name} )) }'>
 						<div v-if='!(tab.children && tab.children.length>0)'>
-							<router-link :to="tab.link">{{tab.name}}</router-link>
+							<router-link  :to="tab.link">{{tab.name}}</router-link>
 						</div>
 						<div v-if='tab.children && tab.children.length>0'>
 							{{tab.name}}
 						</div>
 						<ol :style='{height:(tab.status?tab.children.length*50:0)+"px"}' v-if='tab.children' >
-							<li :key="k" @click.stop.prevent='tab2(i,k)' :class="{'active':($route.name === child.link.substring(1))}" v-for='(child,k) in tab.children'>
+							<li @mouseover='mouseover' @mouseout='mouseout' :key="k" @click.stop.prevent='tab2(i,k)' :class="{'active':($route.name === child.link.substring(1))}" v-for='(child,k) in tab.children'>
 								<div v-if='child.link'><router-link :to="child.link">{{child.name}}</router-link></div>
 								<div v-if='!child.link'>{{child.name}}</div>
 							</li>
@@ -26,12 +26,13 @@
 
 <script>
 	import './index.css';
-	import sysbinVerification from '../lib/verification';
-	import symbinUtil from '../lib/util';
+	import zmitiUtil from '../lib/util';
 	import Tab from '../tab/index';
 	import Vue from 'vue';
 	import menuObj from './menu';
-
+	var {isCompanyLeader } = zmitiUtil;
+	
+	
 	export default {
 		props:['isAdmin'],
 		data(){
@@ -59,6 +60,16 @@
 		mounted(){
 			var obserable = Vue.obserable;
 			this.changeGroup();
+
+			if(!isCompanyLeader(zmitiUtil)){//非单位管理员。
+				this.menuObj.tabs.forEach((menu,i)=>{
+					if(menu.link==='/changyuecompany'){
+						this.menuObj.tabs.splice(i,1);
+					}
+				});
+				
+				//this.menuObj.changyue_changyuemysubmit_changyuemycheck.tabs.pop();
+			}
 			
 			obserable.on('fillTabs',(data)=>{
 				this.tabs = data || [];
@@ -76,11 +87,21 @@
 		},
 
 		beforeCreate(){
-			var validate = sysbinVerification.validate(this);
 			//symbinUtil.clearCookie('login');
 
 		},
 		methods:{
+
+			mouseover(e){
+				if(e.target.nodeName==='A'){
+					e.target.classList.add('active')
+				}
+			},
+			mouseout(e){
+				if(e.target.nodeName==='A'){
+					e.target.classList.remove('active')
+				}
+			},
 
 			checkActive(tabs){
 				tabs.forEach((tab)=>{
@@ -93,6 +114,9 @@
 				})
 			},
 			changeGroup(){
+
+			
+			
 				Object.keys(menuObj).forEach((key,i)=>{
 					key.split('_').forEach((item,j)=>{
 						if(item === this.$route.name){

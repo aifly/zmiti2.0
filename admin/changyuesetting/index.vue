@@ -13,7 +13,7 @@
 			
 			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
 				<div class='zmiti-user-table' :class="{'active':showDetail}">
-					<Table  :data='dataSrouce' :columns='columns'></Table>
+					<Table  :loading='isLoading' :data='dataSrouce' :columns='columns'></Table>
 				</div>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
@@ -29,8 +29,11 @@
 						<h2 style="height:40px;"></h2>
 					
 						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
-							<FormItem label="用户名：">
-								<Input v-model="formObj.cmsname"  placeholder="用户名：" />
+							<FormItem label="CMS名称：">
+								<Input v-model="formObj.cmsname"  placeholder="CMS名称：" />
+							</FormItem>
+							<FormItem label="CMS简介：">
+								<Input v-model="formObj.content" type='textarea' placeholder="CMS简介：" />
 							</FormItem>
 							<FormItem label="版本号：">
 								<Input v-model="formObj.version" placeholder="版本号：" />
@@ -116,7 +119,7 @@
 				companyname:'',
 				roleList:[],
 				imgs:window.imgs,
-				isLoading:false,
+				isLoading:true,
 				showDetail:false,
 				showDetailPage:-1,
 				currentClassId:-1, 
@@ -153,7 +156,8 @@
 					},{
 						title:"创建时间",
 						key:'createtime',
-						align:'center'
+						align:'center',
+						width:160
 						
 					},{
 						title:"状态",
@@ -403,7 +407,11 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
-				Vue.obserable.trigger({type:'toggleMask',data:true});
+				this.closeMask(true)	
+			},
+
+			closeMask(flag = false){
+				Vue.obserable.trigger({type:'toggleMask',data:flag});
 			},
 
 			delete(cmsids){
@@ -419,6 +427,7 @@
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
+							s.closeMask()
 							
 							s.getDataList();
 							///s.dataSrouce = data.list;	 
@@ -442,6 +451,7 @@
 							condition:s.condition
 						},
 						success(data){
+							s.isLoading = false;
 							if(data.getret === 0){
 								s.dataSrouce = data.list;	 
 								resolve();
@@ -453,20 +463,29 @@
 			adminAction(){
 				var s = this;
 				var action = this.formObj.cmsid ? adminActions.editCMS.action: adminActions.addCMS.action;
-				var companyid = this.$route.params.companyid;
-				if(companyid){
-					this.formObj.companyid = companyid;
+				
+				var info = {
+					cmsname:s.formObj.cmsname,
+					version:s.formObj.version,
+					status:s.formObj.status,
+					content:s.formObj.content,
 				}
+
+				if(this.formObj.cmsid){
+					info.cmsid = this.formObj.cmsid;
+				}
+
 				zmitiUtil.adminAjax({
 					remark:this.formObj.cmsid ?　'editCMS':'addCMS',
 					data:{
 						action,
-						info:s.formObj
+						info
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							s.showDetail = false;
+							s.closeMask()
 							s.getDataList();
 						}
 					}

@@ -66,13 +66,17 @@ $color: #be0000;
 				}
 			}
 
-			&:hover{
+			a.active{
+				background: #F4F6F8;
+			}
+
+			/* &:hover{
 				background: #F4F6F8;
 				&>ol{
 					background: #e2e2e2;
 
 				}
-			}
+			} */
 			ol{
 				overflow: hidden;
 				height: 100%;

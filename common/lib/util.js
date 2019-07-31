@@ -105,6 +105,10 @@ var zmitiUtil = {
 		}
 
 	},
+	isCompanyLeader(_this){
+		
+		return _this.getCurrentCompanyId().islead;
+	},
 	getProductList(fn) { //
 		var companyid = this.getCurrentCompanyId();
 		if (!companyid || !companyid.companyid){

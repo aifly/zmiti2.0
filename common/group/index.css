@@ -18,6 +18,13 @@
   line-height: 50px;
   text-indent: 3em;
   position: relative;
+  /* &:hover{
+				background: #F4F6F8;
+				&>ol{
+					background: #e2e2e2;
+
+				}
+			} */
 }
 
 .sysbin-group-ui .symbin-tab-menu li a {
@@ -54,12 +61,8 @@
   border-bottom: 5px solid transparent;
 }
 
-.sysbin-group-ui .symbin-tab-menu li:hover {
+.sysbin-group-ui .symbin-tab-menu li a.active {
   background: #F4F6F8;
-}
-
-.sysbin-group-ui .symbin-tab-menu li:hover > ol {
-  background: #e2e2e2;
 }
 
 .sysbin-group-ui .symbin-tab-menu li ol {

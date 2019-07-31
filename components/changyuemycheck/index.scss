@@ -1,31 +1,25 @@
 ﻿@import "../css/base.scss";
 
 
-.zmiti-user-main-ui {
+.zmiti-mychecked-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
   width: 99%;
   margin: 0 auto;
 
-  .zmiti-avatar-list{
-	  @include displayFlex(row);
-	  span{
-		  font-size:40px;
-		  margin-right: 20px;
-		  cursor: pointer;
-		  &.active{
-			  color:#3390ff;
-		  }
-	  }
-  }
-
-  .ivu-table-wrapper {
-    border-bottom: none;
-    border-right: none;
-  }
-
-
+  
+	@at-root.zmiti-pager{
+		margin: 0px auto;
+		width: 98%;
+		padding: 10px 0;
+		background: #eee;
+		@include displayFlex(row);
+		justify-content: center;
+		-webkit-justify-content: center;
+		border:1px solid #dcdee2;
+		border-top: none;
+	}
   .zmiti-list-main {
     box-sizing: border-box;
 
@@ -83,7 +77,7 @@
 	  
     }
 
-    .zmiti-user-main {
+    .zmiti-mychecked-main {
       flex: 5;
 	  -webkit-flex: 5;
 	  width: 100%;
@@ -92,7 +86,7 @@
         @include transition(0.3s);
       }
 
-      .zmiti-user-table {
+      .zmiti-mychecked-table {
         width: 98%;
         margin: 0 auto;
 
@@ -176,7 +170,7 @@
 	}
 	
 
-	.zmiti-user-avatar{
+	.zmiti-mychecked-avatar{
 		background: rgba(51,144,255,.1);
 		@include br();
 		text-align: center;

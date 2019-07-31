@@ -66,6 +66,7 @@ const router = new VueRouter({
 			{ path: "/changyue/", name: "changyue", component: (resolve) => require(['./components/changyue'], resolve),props: true},
 			{ path: "/changyuemysubmit/", name: "changyuemysubmit", component: (resolve) => require(['./components/changyuemysubmit'], resolve),props: true},
 			{ path: "/changyuemycheck/", name: "changyuemycheck", component: (resolve) => require(['./components/changyuemycheck'], resolve),props: true},
+			{ path: "/changyuecompany/", name: "changyuecompany", component: (resolve) => require(['./components/changyuecompany'], resolve),props: true},
 			{ path: "/workorderlist/:id?", name: "workorderlist", component: (resolve) => require(['./components/workorderlist'], resolve),props: true},
 		]
 	},

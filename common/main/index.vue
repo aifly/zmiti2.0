@@ -70,7 +70,7 @@
                            <li class='zmiti-menu-title' v-if='!isAdmin'>
                                <div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
                             </li>
-                           <li  :to='"/myreport/"+item.productid' class='zmiti-text-overflow zmiti-menu-item' :key='i' v-for="(item,i) in productList" :name="item.productid">
+                           <li  class='zmiti-text-overflow zmiti-menu-item' :class='{"active":$route.name.indexOf(item.producturl.substring(1))>-1}' :key='i' v-for="(item,i) in productList" :name="item.productid">
 						  		 <div><router-link :to='item.producturl'><span class='zmt_iconfont' v-html='item.icon || "&#xe609;"'></span></router-link> </div>
                                 <div>
                                     <router-link  :to='item.producturl'> {{item.productname}} </router-link>

@@ -104,11 +104,11 @@ let adminActions = {
 	},
 	delCMS:{
 		desc:'删除CMS',
-		action:'100191'
+		action:'1001901'
 	},
 	editCMS: {
 		desc: '编辑CMS',
-		action: '100192'
+		action: '1001902'
 	},
 	getCMSList:{
 		desc:'获取CMS列表',

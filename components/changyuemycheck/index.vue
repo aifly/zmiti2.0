@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-user-main-ui">
+	<div class="zmiti-mychecked-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
 				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅</div>
@@ -10,12 +10,14 @@
 				用户编号 <input type="text">
 			</section>
 			
-			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<div class='zmiti-user-table' :class="{'active':showDetail}">
+			<div class='zmiti-mychecked-main zmiti-scroll ' :style="{height:viewH - 180+'px',overflow:'auto' }">
+				<div class='zmiti-mychecked-table' :class="{'active':showDetail}">
 					<Table :loading='loading'  :data='dataSource' :columns='columns'></Table>
 				</div>
+				 <div class='zmiti-pager'>
+					 <Page @on-change='change' :page-size='condition.page_size' :total="total" show-total />
+				 </div>
 			</div>
-			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
 			 
  
@@ -108,6 +110,7 @@
 				showAvatarModal:false,
 				visible:false,
 				companyname:'',
+				total:100,
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
@@ -220,7 +223,7 @@
 				},
 				condition:{
 					page_index:0,
-					page_size:10,
+					page_size:20,
 				},
 				userinfo:{},
 				modaldetail:false,
@@ -293,10 +296,14 @@
 						s.$Message[data.getret ===0 ?'success':'error'](data.msg);
 						if(data.getret === 0 ){
 							s.getMyCheckList();
-
 						}
 					}
 				})
+			},
+
+			change(e){
+				this.condition.page_index = e -1;
+				this.getMyCheckList();
 			},
 
 			getMyCheckList(){
@@ -312,6 +319,8 @@
 						s.loading = false;
 						if(data.getret === 0){
 							s.dataSource = data.list;
+							s.total = data.total;
+							
 						}
 					}
 				})
