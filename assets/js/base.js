@@ -50,6 +50,15 @@ var imgs = {
 	W45:'./assets/images/weather/W45.png',
 	W46:'./assets/images/weather/W46.png',
 
+	CHOME1:'./assets/images/cy-home1.png',
+	CHOME2:'./assets/images/cy-home2.png',
+	CHOME3:'./assets/images/cy-home3.png',
+	CHOME4:'./assets/images/cy-home4.png',
+	CHOME5:'./assets/images/cy-home5.png',
+	CHOME6:'./assets/images/cy-home6.png',
+	CHOME7:'./assets/images/cy-home7.png',
+	CHOME8:'./assets/images/cy-home8.png'
+
 };
 
 (function () {
