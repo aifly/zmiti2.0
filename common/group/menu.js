@@ -1,19 +1,30 @@
-import { changyue_changyuemysubmit_changyuemycheck_changyuecompany} from './usermenu';
-import {
-	user_company,
-	basicconfig_admin_rolegroup_setrole_pv_form,
-	workorder_workorderlist,
-	adminchangyue_adminchangyuesetting_adminchangyuelog,
-	product_productrole
-} from './adminmenu';
+import zmitiUtil from '../lib/util';
 
-var menuObj = {
-	user_company,
-	basicconfig_admin_rolegroup_setrole_pv_form,
-	workorder_workorderlist,
-	adminchangyue_adminchangyuesetting_adminchangyuelog,
-	product_productrole,
-	changyue_changyuemysubmit_changyuemycheck_changyuecompany
-};
+if (zmitiUtil.getCurrentCompanyId() && zmitiUtil.getCurrentCompanyId().companyid){
+	var { changyue, company } = require('./usermenu');
+	var menuObj = {
+		changyue,
+		company
+	};
+}else{
+	
+	var { user_company,
+		basicconfig_admin_rolegroup_setrole_pv_form,
+		workorder_workorderlist,
+		adminchangyue_adminchangyuesetting_adminchangyuelog,
+		product_productrole} = require('./adminmenu');
+	var menuObj = {
+		user_company,
+		basicconfig_admin_rolegroup_setrole_pv_form,
+		workorder_workorderlist,
+		adminchangyue_adminchangyuesetting_adminchangyuelog,
+		product_productrole,
+	};
+}
+
+
+
+
+
 
 export default menuObj;

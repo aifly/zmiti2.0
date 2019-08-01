@@ -30,13 +30,21 @@
 					<img draggable="false" :src="imgs.brower" alt="">
 				</div>
 			</div>
-
-
 			<div class='zmiti-jigsaw' ref='jigsaw' v-show='showJigsaw'>
 
 			</div>
 			
 		</section>
+
+		<div class='zmiti-choose-company' v-if='company_list.length>1'>
+			<div>
+				<h1>请选择单位</h1>
+				<ul>
+					<li @click='chooseCompany(company)' v-for='(company,i) in company_list' :key="i">{{company.companyname}}</li>
+					
+				</ul>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -68,6 +76,7 @@
 				isNotChrome:false,
 				showError:false,
 				errorMsg:'',
+				company_list:[],
 				viewH:document.documentElement.clientHeight
 			}
 		},
@@ -79,6 +88,15 @@
 		},
 		
 		methods:{
+
+			chooseCompany(company){
+				var _this = this;
+				window.localStorage.setItem('currentCompany',JSON.stringify(company));
+				_this.$router.push({path:'/home'})
+				setTimeout(() => {
+					window.location.reload();
+				}, 200);
+			},
 			toastError(msg =  '用户名不能为空'){
 				this.loginError = msg;
  				setTimeout(()=>{
@@ -139,30 +157,22 @@
 								window.localStorage.setItem('zmiti_user_password','');
 							}
 							
-							_this.$Message.success('登录成功~');
-							
-
-							
-							if(data.info.company_list.length >= 2){
-
-							}else{
-								
-							}
-
 							window.localStorage.setItem('login',JSON.stringify(data));
 							window.localStorage.setItem('currentCompany',JSON.stringify(data.info.company_list[0]));
 
+							if(data.info.company_list.length>1){
+								_this.company_list = data.info.company_list;
+								//window.localStorage.setItem('currentCompany',JSON.stringify(data.info.company_list[0]));
+							}else{
+								_this.$router.push({path:'/home'})
+								setTimeout(() => {
+									window.location.reload();
+								}, 30);
+								_this.isLogined = true;
+							}
+
 							
 
-							_this.$router.push({path:'/home'})
-							
-
-							setTimeout(() => {
-								window.location.reload();
-							}, 30);
-
-						
-							_this.isLogined = true;
 
 							
 						}else{
@@ -180,6 +190,7 @@
 					this.username = username;
 					this.password = password;
 					this.checked = true;
+					this.login();
 				}
 			}
 		
@@ -199,6 +210,8 @@
 					this.showJigsaw = false;
 				}.bind(this));
 			});
+
+			
 
 		}
 	}

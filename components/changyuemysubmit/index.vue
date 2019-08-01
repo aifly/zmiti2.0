@@ -4,6 +4,7 @@
 			<header class="zmiti-tab-header">
 				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅</div>
 				<div>
+					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
 				</div>
 			</header>
 			<section class='zmiti-list-where'>
@@ -11,12 +12,7 @@
 			</section>
 			
 			<div class='zmiti-submit-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<div class='zmiti-submit-table' :class="{'active':showDetail}">
-					<Table :loading='loading' :data='dataSource' :columns='columns'></Table>
-				</div>
-				<div class='zmiti-pager'>
-					 <Page @on-change='change' :page-size='condition.page_size' :total="total" show-total />
-				 </div>
+				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total"></ZmitiTable>
 			</div>
 		</div>
 			 
@@ -31,8 +27,9 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import ZmitiMask from '../../common/mask/';
+	import ZmitiTable from '../../common/table';
 
-	var {companyActions,zmitiActions,changYueAcions} = zmitiUtil;
+	var {companyActions,zmitiActions,changYueAcions,formatDate} = zmitiUtil;
 
 	import {manuscriptStatus} from '../../common/config';
 
@@ -89,7 +86,10 @@
 					{
 						title:"提交时间",
 						key:'createtime',
-						align:'center'
+						align:'center',
+						render:(h,params)=>{
+							return h('div',{},formatDate(params.row.createtime));
+						}
 					},
 					{
 						title:'审核人',
@@ -188,7 +188,8 @@
 			}
 		},
 		components:{
-			ZmitiMask
+			ZmitiMask,
+			ZmitiTable
 		},
 
 		beforeCreate(){
@@ -326,6 +327,7 @@
 			},
 			getDataList(){
 				var s = this;
+				s.loading = true;
 				var {condition} = this;
 				condition = Object.assign(condition,{
 					companyid:zmitiUtil.getCurrentCompanyId().companyid

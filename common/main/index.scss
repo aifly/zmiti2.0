@@ -88,7 +88,7 @@ $primary-color: #00c1de;
 
 			 &.zmiti-user-info{
 				 @include displayFlex(row);
-				 min-width: 300px;
+				 min-width: 340px;
 				 color:#fff;
 				 @include pos(r);
 				 -webkit-justify-content:space-between;

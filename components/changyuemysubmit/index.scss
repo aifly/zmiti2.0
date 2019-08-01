@@ -10,18 +10,7 @@
 	margin: 0 auto;
 
 	  
-	@at-root.zmiti-pager{
-		margin: 0px auto;
-		width: 98%;
-		padding: 10px 0;
-		background: #eee;
-		@include displayFlex(row);
-		justify-content: center;
-		-webkit-justify-content: center;
-		border:1px solid #dcdee2;
-		border-top: none;
-		
-	}
+
 	
 	.zmiti-cy-tag{
 		color:red;

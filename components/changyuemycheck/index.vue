@@ -4,6 +4,7 @@
 			<header class="zmiti-tab-header">
 				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅</div>
 				<div>
+					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
 				</div>
 			</header>
 			<section class='zmiti-list-where'>
@@ -11,12 +12,7 @@
 			</section>
 			
 			<div class='zmiti-mychecked-main zmiti-scroll ' :style="{height:viewH - 180+'px',overflow:'auto' }">
-				<div class='zmiti-mychecked-table' :class="{'active':showDetail}">
-					<Table :loading='loading'  :data='dataSource' :columns='columns'></Table>
-				</div>
-				 <div class='zmiti-pager'>
-					 <Page @on-change='change' :page-size='condition.page_size' :total="total" show-total />
-				 </div>
+				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total"></ZmitiTable>
 			</div>
 		</div>
 			 
@@ -97,6 +93,7 @@
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
+	import ZmitiTable from '../../common/table/';
 	var {companyActions,zmitiActions,changYueAcions} = zmitiUtil;
 	import {manuscriptStatus} from '../../common/config';
 	export default {
@@ -110,7 +107,7 @@
 				showAvatarModal:false,
 				visible:false,
 				companyname:'',
-				total:100,
+				total:0,
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
@@ -235,7 +232,8 @@
 		},
 		components:{
 			Avatar,
-			ZmitiMask
+			ZmitiMask,
+			ZmitiTable
 		},
 
 		beforeCreate(){
@@ -247,7 +245,7 @@
 		mounted(){
 			window.s = this;
 
-			this.getMyCheckList();
+			this.getDataList();
 			
 		},
 
@@ -295,7 +293,7 @@
 						s.suggestion = '';
 						s.$Message[data.getret ===0 ?'success':'error'](data.msg);
 						if(data.getret === 0 ){
-							s.getMyCheckList();
+							s.getDataList();
 						}
 					}
 				})
@@ -303,11 +301,12 @@
 
 			change(e){
 				this.condition.page_index = e -1;
-				this.getMyCheckList();
+				this.getDataList();
 			},
 
-			getMyCheckList(){
+			getDataList(){
 				var s = this;
+				s.loading = true;
 				var {condition} = this;
 				zmitiUtil.ajax({
 					remark:"getMyCheckList",

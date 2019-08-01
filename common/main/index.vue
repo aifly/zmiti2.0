@@ -10,10 +10,17 @@
                </div>
                <div>
                   <div v-if='isAdmin'>管理端控制平台</div>
-                  <div v-else>单位端控制平台</div>
+                  <div v-else>
+					  <span>单位端控制平台</span>
+					  <span style='margin:0 10px 0 20px'>当前单位： {{currentComapny.companyname}}</span>
+					  <router-link style='font-size:12px;cursor:pointer;' to='/login' v-if='userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
+				  </div>
                </div>
                <div class="zmiti-user-info">
 				    <template v-if='!isAdmin'>
+						<span>
+							<router-link to='/user'>单位管理</router-link> 
+						</span>
 						<span>
 							<router-link to='/resourcelist'>资源库</router-link> 
 						</span>
@@ -70,7 +77,7 @@
                            <li class='zmiti-menu-title' v-if='!isAdmin'>
                                <div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
                             </li>
-                           <li  class='zmiti-text-overflow zmiti-menu-item' :class='{"active":$route.name.indexOf(item.producturl.substring(1))>-1}' :key='i' v-for="(item,i) in productList" :name="item.productid">
+                           <li @click='mouseout' class='zmiti-text-overflow zmiti-menu-item' :class='{"active":$route.name.indexOf(item.producturl.substring(1))>-1}' :key='i' v-for="(item,i) in productList" :name="item.productid">
 						  		 <div><router-link :to='item.producturl'><span class='zmt_iconfont' v-html='item.icon || "&#xe609;"'></span></router-link> </div>
                                 <div>
                                     <router-link  :to='item.producturl'> {{item.productname}} </router-link>
@@ -123,6 +130,7 @@
 
 					}
 				},
+				currentComapny:zmitiUtil.getCurrentCompanyId(),
                 productList:[],
                 kw:"",
                 topMenu:[
@@ -181,9 +189,7 @@
 			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();
 			
 
-			this.userinfo = userinfo||{info:{}}; 
-
-			console.log(this.userinfo,'this.userinfo')
+			this.userinfo = userinfo||{info:{}};  
 			
             obserable.on('getProduct',()=>{
 				zmitiUtil.getProductList((arr)=>{
@@ -213,7 +219,7 @@
             logout(){
                 var s = this;
                 
-				window.localStorage.setItem(this.isAdmin?'adminlogin':'login','');
+				window.localStorage.clear();
 				window.location.hash = '#/login';
             },
             tab(index){

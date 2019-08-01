@@ -1,6 +1,10 @@
 
 var user_company = {
 	title: '用户单位',
+	keys:[
+		'user',
+		'company'
+	],
 	tabs: [
 		{
 			name: '用户单位',
@@ -23,6 +27,15 @@ var user_company = {
 
 var basicconfig_admin_rolegroup_setrole_pv_form = {
 	title: "系统管理",
+	keys:[
+		'basicconfig',
+		'admin',
+		'role',
+		'rolegroup',
+		'setrole',
+		'pv',
+		'form'
+	],
 	tabs: [
 		{
 			name: '基础配置',
@@ -62,6 +75,10 @@ var basicconfig_admin_rolegroup_setrole_pv_form = {
 
 let workorder_workorderlist = {
 	title: "工单管理",
+	keys:[
+		'workorder',
+		'workorderlist'
+	],
 	tabs: [
 		{
 			name: '提交工单',
@@ -75,6 +92,7 @@ let workorder_workorderlist = {
 
 let adminchangyue_adminchangyuesetting_adminchangyuelog = {
 	title: '畅阅',
+	keys: ['adminchangyue','adminchangyuesetting','adminchangyuelog'],
 	tabs: [
 		{
 			name: "首页",
@@ -91,6 +109,7 @@ let adminchangyue_adminchangyuesetting_adminchangyuelog = {
 
 let product_productrole = {
 	title: "产品管理",
+	keys: ['product','productrole'],
 	tabs: [
 		{
 			name: "产品列表",

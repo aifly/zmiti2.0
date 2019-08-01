@@ -14,6 +14,32 @@ img {
 li{
 	list-style: none;
 }
+
+.zmiti-user-table {
+	width: 98%;
+	margin: 0 auto;
+
+	.ivu-table-wrapper {
+		//margin-top: 10px;
+	}
+
+	&.active {
+		///width: 70%;
+	}
+	}
+
+@at-root.zmiti-pager{
+		margin: 0px auto;
+		width: 98%;
+		padding: 10px 0;
+		background: #eee;
+		@include displayFlex(row);
+		justify-content: center;
+		-webkit-justify-content: center;
+		border:1px solid #dcdee2;
+		border-top: none;
+		
+	}
  header.zmiti-add-header {
       line-height: 40px;
       height: 40px;

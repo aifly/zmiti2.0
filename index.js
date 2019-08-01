@@ -33,7 +33,7 @@ const router = new VueRouter({
   routes: [
     //{path: '*', name: 'error', component: FError },
     {
-		path: "/login",
+		path: "/login/",
 		name: "login",
 		component: (resolve) => {
 			  require(['./components/login'], resolve)
@@ -67,6 +67,11 @@ const router = new VueRouter({
 			{ path: "/changyuemysubmit/", name: "changyuemysubmit", component: (resolve) => require(['./components/changyuemysubmit'], resolve),props: true},
 			{ path: "/changyuemycheck/", name: "changyuemycheck", component: (resolve) => require(['./components/changyuemycheck'], resolve),props: true},
 			{ path: "/changyuecompany/", name: "changyuecompany", component: (resolve) => require(['./components/changyuecompany'], resolve),props: true},
+			{ path: "/changyuedepartment/", name: "changyuedepartment", component: (resolve) => require(['./components/changyuedepartment'], resolve),props: true},
+			{ path: "/user", name: "user", component: (resolve) => require(['./components/user'], resolve),props: true},
+			{ path: "/usercheck", name: "usercheck", component: (resolve) => require(['./components/usercheck'], resolve),props: true},
+			{ path: "/checkproduct", name: "checkproduct", component: (resolve) => require(['./components/checkproduct'], resolve),props: true},
+			{ path: "/uncheckproduct", name: "uncheckproduct", component: (resolve) => require(['./components/uncheckproduct'], resolve),props: true},
 			{ path: "/workorderlist/:id?", name: "workorderlist", component: (resolve) => require(['./components/workorderlist'], resolve),props: true},
 		]
 	},

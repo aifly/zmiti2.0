@@ -121,7 +121,7 @@ var zmitiUtil = {
 			data: {
 				action: zmitiActions.userActions.getProductList.action,
 				condition: {
-					companyid,
+					companyid: companyid.companyid,
 					page_index: 0,
 					page_size: 20,
 				}

@@ -115,17 +115,31 @@
 			},
 			changeGroup(){
 
-			
-			
-				Object.keys(menuObj).forEach((key,i)=>{
-					key.split('_').forEach((item,j)=>{
-						if(item === this.$route.name){
-							this.menuObj = menuObj[key];
-							this.tabs = menuObj[key].tabs;
+				for(var menu in menuObj){
+					
+					menuObj[menu].keys.forEach((key,i)=>{
+						if(key === this.$route.name){
+							this.menuObj = menuObj[menu];
+							this.tabs = this.menuObj.tabs;
 							this.checkActive(this.tabs);
 						}
 					})
-				})
+				}
+				return;
+				/* Object.entries(menuObj).forEach((key,i)=>{
+
+					console.log(key,' -------------------- ');
+					if(key&&key.keys){
+						key.keys.forEach((item,j)=>{
+							if(item === this.$route.name){
+								this.menuObj = menuObj[key];
+								console.log(menuObj)
+								this.tabs = menuObj.tabs;
+								this.checkActive(this.tabs);
+							}
+						})
+					}
+				}) */
 			},
 
 			tab1(index,level){

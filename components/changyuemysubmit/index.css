@@ -11,20 +11,6 @@
   margin: 0 auto;
 }
 
-.zmiti-pager {
-  margin: 0px auto;
-  width: 98%;
-  padding: 10px 0;
-  background: #eee;
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: row;
-  justify-content: center;
-  -webkit-justify-content: center;
-  border: 1px solid #dcdee2;
-  border-top: none;
-}
-
 .zmiti-submit-main-ui .zmiti-cy-tag {
   color: red;
 }
