@@ -518,7 +518,7 @@ export default {
 		getResourceByClassId(){
 			var {isAdmin,$Message} = this;
 			var s = this; 
-			var userinfo = zmitiUtil.getAdminUserInfo();
+			var userinfo = zmitiUtil[isAdmin? 'getAdminUserInfo':'getUserInfo']();
 			
 			var condition = Object.assign(this.resourceCondition,{
 				fileclassid:s.currentClassId,
@@ -848,7 +848,7 @@ export default {
 		getDefaultCate(){//获取默认分类。
 			var {isAdmin,condition} = this;
 			var s = this;
-			var cdn = Object.assign(condition,{userid:zmitiUtil.getAdminUserInfo().ui.userid});
+			var cdn = Object.assign(condition,{userid:zmitiUtil[isAdmin?'getAdminUserInfo':'getUserInfo']().ui.userid});
 			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
 				remark:'getResourceCateList',
 				_ui:{

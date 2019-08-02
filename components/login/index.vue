@@ -23,7 +23,7 @@
 						<label><Checkbox v-model="checked">记住密码</Checkbox></label>
 					</div>
 					<div class='zmiti-login-btn' v-press>
-						<div @click="login">登  录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
+						<div @click="login" ref='login'>登  录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
 					</div>
 				</div>
 				<div class='zmiti-browner-tip' v-if='isNotChrome'>
@@ -190,7 +190,10 @@
 					this.username = username;
 					this.password = password;
 					this.checked = true;
-					this.login();
+					
+				}
+				if(zmitiUtil.getUserInfo().info){
+					this.company_list = zmitiUtil.getUserInfo().info.company_list;
 				}
 			}
 		

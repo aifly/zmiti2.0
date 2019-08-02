@@ -9,6 +9,10 @@ li{
   background: #fff;
   margin: 0.5% auto;
   @include displayFlex(column);
+
+  @at-root.zmiti-add-header{
+	  background: none;
+  }
   .zmiti-resourcelist-header {
     width: 100%;
     height: 50px;
@@ -456,7 +460,7 @@ li{
   }
 
 
-  .zmiti-detail-C{
+  @at-root.zmiti-detail-C{
 	 width: 96%;
 	 margin: 0 auto;
 	 
@@ -503,6 +507,7 @@ li{
 	 .zmiti-detail-item{
 		 width: 90%;
 		 margin: 10px auto;
+		 
 		 
 		
 		 @include displayFlex(row);

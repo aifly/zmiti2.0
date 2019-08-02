@@ -37,10 +37,14 @@ let changyue = {
 
 let company = {
 	title:"单位管理",
-	keys: ['user', 'usercheck', 'checkproduct','uncheckproduct'],
+	keys: ['companyinfo', 'user', 'usercheck', 'checkproduct','order','consume'],
 	tabs:[
 		{
-			name:'人员管理',
+			name:'概览',
+			link:"/companyinfo"
+		},
+		{
+			name:'单位人员管理',
 			link:'',
 			children:[
 				{
@@ -54,15 +58,20 @@ let company = {
 
 		},
 		{
-			name:'单位授权',
+			name:'单位信息管理',
 			link:"",
 			children:[
 				{
-					name:'已授权产品',
+					name:'授权管理',
 					link:'/checkproduct'
-				},{
-					name:'未授权产品',
-					link:'/uncheckproduct'
+				},
+				{
+					name: '订单管理',
+					link: '/order'
+				},
+				{
+					name: '消费管理',
+					link: '/consume'
 				}
 			]
 		}

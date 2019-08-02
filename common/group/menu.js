@@ -1,11 +1,13 @@
 import zmitiUtil from '../lib/util';
 
-if (zmitiUtil.getCurrentCompanyId() && zmitiUtil.getCurrentCompanyId().companyid){
+
+if (!window.isAdmin){
 	var { changyue, company } = require('./usermenu');
 	var menuObj = {
 		changyue,
 		company
 	};
+
 }else{
 	
 	var { user_company,
@@ -13,6 +15,7 @@ if (zmitiUtil.getCurrentCompanyId() && zmitiUtil.getCurrentCompanyId().companyid
 		workorder_workorderlist,
 		adminchangyue_adminchangyuesetting_adminchangyuelog,
 		product_productrole} = require('./adminmenu');
+
 	var menuObj = {
 		user_company,
 		basicconfig_admin_rolegroup_setrole_pv_form,

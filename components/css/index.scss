@@ -27,7 +27,13 @@ li{
 		///width: 70%;
 	}
 	}
-
+@at-root.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
 @at-root.zmiti-pager{
 		margin: 0px auto;
 		width: 98%;

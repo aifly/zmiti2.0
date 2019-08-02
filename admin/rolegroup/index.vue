@@ -23,7 +23,7 @@
 					<transition name='detail'>
 						<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
 							<header class='zmiti-add-header'>
-								<img :src="imgs.back" alt=""  @click='showDetail = false' >
+								<img :src="imgs.back" alt=""  @click='closeMaskPage' >
 								<span>基础信息</span>
 							</header>
 							<h2 style='height:50px;'></h2>
@@ -384,7 +384,10 @@
 		
 		methods:{
 			closeMaskPage(){
-				this.showDetailPage = -1;
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:false
+				})
 			},
 			toggleAction(tag){
 				var {actions} = this.formRoleGroup;

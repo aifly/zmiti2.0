@@ -11,7 +11,7 @@
                <div>
                   <div v-if='isAdmin'>管理端控制平台</div>
                   <div v-else>
-					  <span>单位端控制平台</span>
+					  <span><router-link to='/home'>单位端控制平台</router-link></span>
 					  <span style='margin:0 10px 0 20px'>当前单位： {{currentComapny.companyname}}</span>
 					  <router-link style='font-size:12px;cursor:pointer;' to='/login' v-if='userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
 				  </div>

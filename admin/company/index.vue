@@ -24,7 +24,7 @@
 			<div slot='mask-content' name='detail'>
 				<section class='zmiti-add-form zmiti-scroll'  >
 					<header class='zmiti-add-header'>
-						<img :src="imgs.back" alt=""  @click='showDetail = false' >
+						<img :src="imgs.back" alt=""  @click='closeMaskPage' >
 						<span>基础信息</span>
 					</header>
 					<div class='zmiti-company-avatar' @click="showAvatarModal = true">
@@ -344,7 +344,10 @@
 				});
 			},
 			closeMaskPage(){
-				this.showDetailPage = -1;
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:false
+				})
 			},
 			getAvatar(avatar){
 				this.formCompany.avatar = avatar;

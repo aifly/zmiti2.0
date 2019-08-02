@@ -27,37 +27,42 @@
 				<aside class='zmiti-company-product'>
 					<div class='zmiti-company'>
 						<header>
-							<div @click='currentCompanyIndex = i' :class="{'active':currentCompanyIndex === i}" v-for='(company,i) in companyList' :key="i">
+							<div v-show='false' @click='currentCompanyIndex = i' :class="{'active':currentCompanyIndex === i}" v-for='(company,i) in companyList' :key="i">
 								<img :src='company.logourl' alt="">
 								<span>{{company.companyname}}</span>
+							</div>
+
+							<div class='active'>
+								<span>{{companyInfo.companyname}}</span>
+								 <router-link style='font-size:12px;cursor:pointer;color:#333;top:4px;position:relative;' to='/login' v-if='userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
 							</div>
 						</header>
 						<div class='zmiti-companyinfo'>
 							<aside>
 								<div class='zmiti-company-item'>
-									<label>创建时间：</label><span>{{companyList[currentCompanyIndex].createtime}}</span>
-									<label>单位电话：</label><span>{{companyList[currentCompanyIndex].companyphone}}</span>
+									<label>创建时间：</label><span>{{companyInfo.createtime}}</span>
+									<label>单位电话：</label><span>{{companyInfo.companyphone}}</span>
 								</div>
 								<div class='zmiti-company-item'>
-									<label>单位地址：</label><span>{{companyList[currentCompanyIndex].companyaddress}}</span>
+									<label>单位地址：</label><span>{{companyInfo.companyaddress}}</span>
 								</div>
 								<div class='zmiti-company-item'>
-									<label>单位税号：</label><span>{{companyList[currentCompanyIndex].companycode}}</span>
+									<label>单位税号：</label><span>{{companyInfo.companycode}}</span>
 								</div>
 								<div class='zmiti-company-item'>
-									<label>开户银行：</label><span>{{companyList[currentCompanyIndex].bank}}</span>
+									<label>开户银行：</label><span>{{companyInfo.bank}}</span>
 								</div>
 								<div class='zmiti-company-file'>
 									<div>
-										<div class='zmiti-company-img' :style="{background:'url('+companyList[currentCompanyIndex].businesslicensepath+') no-repeat center center',backgroundSize:'cover'}">
-											<img v-if='companyList[currentCompanyIndex].businesslicensepath' v-show='false' :src="companyList[currentCompanyIndex].businesslicensepath" alt="">
+										<div class='zmiti-company-img' :style="{background:companyInfo.businesslicensepath?'url('+companyInfo.businesslicensepath+') no-repeat center center':'none',backgroundSize:'cover'}">
+											<img v-if='companyInfo.businesslicensepath' v-show='false' :src="companyInfo.businesslicensepath" alt="">
 											<span v-else>暂无</span>
 										</div>
 										单位营业执照
 									</div>
 									<div>
-										<div class='zmiti-company-img' :style="{background:'url('+companyList[currentCompanyIndex].contract+') no-repeat center center',backgroundSize:'cover'}">
-											<img v-if='companyList[currentCompanyIndex].contract' v-show='false' :src="companyList[currentCompanyIndex].contract" alt="">
+										<div class='zmiti-company-img' :style="{background:companyInfo.contract?'url('+companyInfo.contract+') no-repeat center center':'none',backgroundSize:'cover'}">
+											<img v-if='companyInfo.contract' v-show='false' :src="companyInfo.contract" alt="">
 											<span v-else>暂无</span>
 										</div>
 										单位合同扫描件
@@ -72,7 +77,7 @@
 										<div>电话</div>
 										<div>邮箱</div>
 									</li>
-									<li v-for='(user,i) in companyList[currentCompanyIndex].users' :key="i">
+									<li v-for='(user,i) in companyInfo.users' :key="i">
 										<div class='zmt_iconfont' v-html='user.avatar'></div>
 										<div>{{user.username}}</div>
 										<div>{{user.usermobile}}</div>
@@ -91,8 +96,9 @@
 						<header>我的产品</header>
 						<ul class='zmiti-scroll'>
 							<li v-for='(p,i) in myProductList' :key="i">
-								<span class='zmt_iconfont' v-html='p.avatar'></span>
+								<span class='zmt_iconfont' v-html='p.icon'></span>
 								<span>{{p.productname}}</span>
+								<span v-if='p.isChecked'><Icon style="color:green;font-size:30px;" type="ios-checkmark" /></span>
 							</li>
 						</ul>
 					</div>
@@ -145,10 +151,12 @@
 				imgs:window.imgs,
 				userinfo:{
 					username:'一位巨蟹',
-					avatar:window.imgs.zmiti1
+					avatar:window.imgs.zmiti1,
+					info:{}
 				},
 				currentCompanyIndex:0,
 				weatherData:{},
+				companyInfo:{},
 				productNews:[
 					{
 						title:'5月21日大数据总线（DataHub）升级通知',
@@ -188,32 +196,7 @@
 					}
 				],
 				myProductList:[
-					
-					{
-						productname:'评分系统',
-						avatar:'&#xe6a5;',
-					},{
-						productname:'评分系统',
-						avatar:'&#xe6a5;',
-					},{
-						productname:'评分系统',
-						avatar:'&#xe6a5;',
-					},{
-						productname:'评分系统',
-						avatar:'&#xe6a5;',
-					},{
-						productname:'评分系统',
-						avatar:'&#xe6a5;',
-					},{
-						productname:'评分系统',
-						avatar:'&#xe6a5;',
-					},{
-						productname:'评分系统',
-						avatar:'&#xe6a5;',
-					},{
-						productname:'评分系统',
-						avatar:'&#xe6a5;',
-					}
+
 				],
 				companyList:[
 					{
@@ -308,12 +291,18 @@
 						]
 					}
 				],
+				condition:{
+					page_index:0,
+					page_size:20
+				},
 				date:"",
 				weatherObj:{
 					briefcondition:"",
 					aqi:'',
 					
-				}
+				},
+				checkedProductList:[],
+				tasks:[]
 			}
 		},
 		components:{
@@ -346,6 +335,20 @@
 
 			this.getWeatherData();
 
+			this.getCompanyInfo();
+			this.getAllProductList();
+			this.getCheckedProduct();
+
+			Promise.all(this.tasks).then(()=>{
+				this.myProductList.forEach((my,i)=>{
+					this.checkedProductList.forEach(ch=>{
+						if(ch.productid === my.productid){
+							my.isChecked = true;
+						}
+					})
+				})
+				console.log(this.myProductList,this.checkedProductList)
+			})
 
 			/*  zmitiUtil.ajax({
 				 remark:'getDepartmentList',
@@ -368,7 +371,73 @@
 		},
 		
 		methods:{
- 
+
+
+			getCheckedProduct(){
+				var p1 = new Promise((resolve,reject)=>{
+					
+					zmitiUtil.getProductList((arr)=>{
+						if(arr.getret === 0 ){
+							this.checkedProductList = arr.list;
+					    }
+						resolve();
+				   },this);
+				})
+				this.tasks.push(p1);
+			},
+
+			getAllProductList(){
+				var p2 =  new Promise((resolve,reject)=>{
+
+						var companyid = zmitiUtil.getCurrentCompanyId().companyid;
+						var s = this;
+						var {condition} = this;
+						this.loading = true;
+						zmitiUtil.ajax({
+							remark:"getAllProductList",
+							data:{
+								action:userActions.getAllProductList.action,
+								condition
+							},
+							error(){
+								s.loading = false;
+								reject();
+							} ,
+							success(data){
+								s.loading = false;
+
+								if(data.getret === 0){
+									s.myProductList = data.list;
+								}
+								resolve();
+							}
+						})
+				});
+				this.tasks.push(p2)
+			},
+			getCompanyInfo(){
+				var companyid = zmitiUtil.getCurrentCompanyId().companyid;
+				var s = this;
+				this.loading = true;
+				zmitiUtil.ajax({
+					remark:"getCompanyInfo",
+					data:{
+						action:userActions.getCompanyInfo.action,
+						companyid
+					},
+					error(){
+						s.loading = false;
+					} ,
+					success(data){
+						s.loading = false;
+						s.companyInfo = data.info;
+						if(data.getret === 0){
+						
+						}
+					}
+				})
+
+			},
 			getWeatherData(){
 				zmitiUtil.ajax({
 					remark:'getWeatherData',

@@ -15,13 +15,12 @@
 					<Table @on-expand='expand'  :data='dataSource' :columns='columns'></Table>
 				</div>
 			</div>
-			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
 			<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
 				<div slot='mask-content' name='detail'>
 					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
 						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt=""  @click='showDetail = false' >
+							<img :src="imgs.back" alt=""  @click='closeMaskPage' >
 							<span>{{formUser.powerid?'编辑授权':"添加授权"}}</span>
 						</header>
 						<div class='zmiti-user-avatar' style='opacity:0' >
@@ -314,7 +313,10 @@
 			},
 
 			closeMaskPage(){
-				this.showDetailPage = -1;
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:false
+				})
 			},
 			handleChange2(ids,index,companyids){
 				var s = this;

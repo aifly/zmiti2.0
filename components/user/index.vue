@@ -2,7 +2,7 @@
 	<div class="zmiti-submit-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅</div>
+				<div><span v-if='companyname'>{{companyname}} —— </span>用户列表</div>
 				<div>
 					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
 				</div>
@@ -15,6 +15,37 @@
 				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total"></ZmitiTable>
 			</div>
 		</div>
+
+		<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
+			<div slot='mask-content'>
+				<transition name='detail'>
+					<section class='zmiti-add-form zmiti-scroll' >
+						<header class='zmiti-add-header'>
+							<img :src="imgs.back" alt=""  @click='showDetail = false' >
+							<span>基础信息</span>
+						</header>
+						<h2 style="height:40px;"></h2>
+						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
+							<FormItem label="用户名：">
+								<Input v-model="formObj.adminusername" placeholder="用户名：" />
+							</FormItem>
+						
+							<FormItem label="状态：">
+								<RadioGroup v-model="formObj.status">
+									<Radio :value='1' :label="1">正常</Radio>
+									<Radio :value='0' :label="0">禁用</Radio>
+								</RadioGroup>
+							</FormItem>
+						</Form>
+						
+						<div class='zmiti-add-form-item zmiti-add-btns'>
+							<Button size='large' type='primary' @click='adminAction'>确定</Button>
+						</div>
+					 
+					</section>
+				</transition>
+			</div>
+		</ZmitiMask>
 			 
 	</div>
 </template>
@@ -29,7 +60,7 @@
 	import ZmitiMask from '../../common/mask/';
 	import ZmitiTable from '../../common/table/';
 
-	var {companyActions,zmitiActions,changYueAcions} = zmitiUtil;
+	var {companyActions,userActions,formatDate} = zmitiUtil;
 
 	import {manuscriptStatus} from '../../common/config';
 
@@ -44,8 +75,9 @@
 				
 				targetKeys:[],
 				showAvatarModal:false,
+
+				companyname:zmitiUtil.getCurrentCompanyId().companyname,
 				
-				companyname:'',
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
@@ -56,7 +88,7 @@
 				adminuserId:'',
 				loading:true,
 				currentUserid:'',
-				formUser:{
+				formObj:{
 					isover:0,
 					usersign:1,
 					usertypesign:1,
@@ -74,55 +106,47 @@
 				unJoinedCompany:[],
 				columns:[
 					{
-						title:"稿件编号",
-						key:'manuscriptid',
+						title:"用户名",
+						key:'username',
 						align:'center',
+						render:(h,params)=> {
+							return h('div',{},params.row.user.username);
+						},
 					},
 					{
-						title:"稿件标题",
-						key:'doctitle',
+						title:"真实姓名",
+						key:'realname',
 						align:'center',
+						render:(h,params)=> {
+							return h('div',{},params.row.user.realname);
+						},
 					},
 					{
-						title:"提交时间",
+						title:"加入时间",
+						key:'joindate',
+						align:'center',
+						width:160,
+						render:(h,params)=> {
+							return h('div',{},formatDate(params.row.joindate));
+						},
+					},
+					{
+						title:"用户状态",
 						key:'createtime',
-						align:'center'
+						align:'center',
+						
+						render:(h,params)=> {
+							return h('div',{},params.row.user.status === 1 ?'正常':params.row.user.status === 0 ? '已禁用':"已删除");
+						},
 					},
-					{
-						title:'审核人',
-						key:'status',
-						width:220,
-						render:(h,params)=>{
-							  
-							return h('div',(params.row.checkuserlist||[])['map']((c,i)=>{
-								return h('span',{
-									style:{
-										marginRight:'5px'
-									},
-									on:{
-										click:()=>{
-											console.log(c);
-											this.$Modal.info({
-												title:c.realname + '的审核意见 —— ' + manuscriptStatus[c.status].name,
-												content:'<p>审核意见：</p>' + (c.suggestion || '暂无 ：('),
-												okText: '确定',
-												closable:true,
-												cancelText: '取消'
-
-											});
-										}
-									},
-									domProps:{
-										innerHTML:`
-											<label>${c.realname}</label>
-											<label title='${manuscriptStatus[c.status].name}' class='zmiti-cy-tag zmt_iconfont' style='color:${manuscriptStatus[c.status].color}'>
-												${manuscriptStatus[c.status].icon}
-											</label>
-										`
-									}
-								});
-							}));
-						}
+					 {
+						width:120,
+						title:"是否单位管理员",
+						key:'islead',
+						align:'center',
+						render:(h,params)=> {
+							return h('div',{},params.row.islead === 1 ?'是':"否");
+						},
 					},
 					{
 						title:'操作',
@@ -132,6 +156,18 @@
 						render:(h,params)=>{
 
 							return h('div', [
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"#3390ff",
+										marginRight:'10px'
+									},
+									on:{
+										click:()=>{
+											Vue.obserable.trigger({type:'toggleMask',data:true});
+										}
+									}
+								},'详情'),
                                 h('Poptip',{
 									props:{
 										confirm:true,
@@ -139,9 +175,10 @@
 										placement:'left'
 
 									},
+									
 									on:{
 										'on-ok':()=>{
-											this.delete(params.row.manuscriptid);
+											this.delete(params.row.ucid);
 										},
 										
 									}
@@ -153,7 +190,7 @@
 										},
 										style:{
 											cursor:'pointer',
-											color:'#06C'
+											color:"#3390ff",
 										},
 										on: {
 											click: () => {
@@ -168,7 +205,7 @@
 					}
 				],
 				
-				formUser:{
+				formObj:{
 					pdfurl:'',
 					longitude :'116.585856',
 					latitude :'40.364989'
@@ -279,7 +316,7 @@
 			 
 			 
 			checkUser(){
-				var username = this.formUser.username;
+				var username = this.formObj.username;
 				var {$Message} = this;
 				zmitiUtil.adminAjax({
 					remark:'checkUserName',
@@ -293,25 +330,22 @@
 				})
 			},
 			getAvatar(avatar){
-				this.formUser.avatar = avatar;
+				this.formObj.avatar = avatar;
 			},
 		 
 			 
 
-			delete(manuscriptids){
+			delete(ucid){
 				var s = this;
 				zmitiUtil.ajax({
-					remark:'delManuscript',
+					remark:'delCompanyUser',
 					data:{
-						action:changYueAcions.delManuscript.action,
-						condition:{
-							manuscriptids
-						}
+						action:userActions.delCompanyUser.action,
+						ucid
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
-							
 							s.getDataList();
 							///s.dataSource = data.list;	 
 						}
@@ -330,11 +364,14 @@
 					companyid:zmitiUtil.getCurrentCompanyId().companyid
 				})
 				zmitiUtil.ajax({
-					remark:"getMySubmitList",
+					remark:"getCompanyUserList",
 					data:{
-						action:changYueAcions.getMySubmitList.action,
+						action:userActions.getCompanyUserList.action,
 						condition
 					},
+					error(){
+						s.loading = false;
+					} ,
 					success(data){
 						s.loading = false;
 						if(data.getret === 0){
@@ -344,7 +381,25 @@
 					}
 				})
 			},
-			
+			adminAction(){
+				var s = this;
+				var action = this.adminuserId ? zmitiActions.editAdminUser.action:zmitiActions.addAdminUser.action;
+				
+				zmitiUtil.adminAjax({
+					remark:this.adminuserId ?　'editAdminUser':'addAdminUser',
+					data:{
+						action,
+						info:this.formAdmin
+					},
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							s.showDetail = false;
+							s.getAdminList();
+						}
+					}
+				})
+			},
 		}
 	}
 </script>

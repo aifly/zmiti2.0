@@ -22,7 +22,7 @@
 				<div slot='mask-content' name='detail'>
 					<section class='zmiti-add-form zmiti-scroll' v-if='showDetail' >
 						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt=""  @click='showDetail = false' >
+							<img :src="imgs.back" alt=""  @click='closeMaskPage' >
 							<span>基础信息</span>
 						</header>
 						<div class='zmiti-user-avatar' @click="showAvatarModal = true">
@@ -344,7 +344,10 @@
 		methods:{
 
 			closeMaskPage(){
-				this.showDetailPage = -1;
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:false
+				})
 			},
 			handleChange2(ids,index,companyids){
 				var s = this;
@@ -463,7 +466,10 @@
 					isover:0,
 					avatar:'&#xe6a4;'
 				};
-				this.showDetailPage = 1;
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:true
+				})
 			},
 
 			delete(userid){

@@ -2,7 +2,7 @@
 	<div class="zmiti-submit-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅</div>
+				<div><span v-if='companyname'>{{companyname}} —— </span>用户审核</div>
 				<div>
 					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
 				</div>
@@ -40,12 +40,11 @@
 		name:'zmitiindex',
 		data(){
 			return{
-
 				
 				targetKeys:[],
 				showAvatarModal:false,
 				
-				companyname:'',
+				companyname:zmitiUtil.getCurrentCompanyId().companyname,
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,

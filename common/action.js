@@ -193,7 +193,8 @@ let companyActions = {//用户单位模块
 	changeCompanyAdmin:{
 		desc:'单位变更管理员',
 		action:'1000709'
-	}
+	},
+	
 	
 
 }
@@ -267,7 +268,42 @@ let userActions = {
 		desc:"用户评价工单",
 		action:"2001008"
 	},
-	
+	getCompanyUserList: {
+		desc: "获取公司用户列表",
+		action:"2000106"
+	},
+	addCompanyUser:{
+		desc:"添加公司会员",
+		action:'2000107'
+	},
+	editCompanyUser:{
+		desc:"修改公司会员状态",
+		action:"2000108"
+	},
+	delCompanyUser:{
+		desc:"删除公司会员",
+		action:'2000109'
+	},
+	getCompanyInfo:{
+		desc:'查看公司详细',
+		action:'2000110'
+	},
+	editCompanyInfo:{
+		desc:"修改公司信息",
+		action:"2000111"
+	},
+	getAllProductList:{
+		desc:'用户获取所有的产品列表',
+		action:"2001007"
+	},
+	getRoleList:{
+		desc: '获取用户产品权限列表',
+		action:"2001100"
+	},
+	modifyUserRole:{
+		desc:"用户产品权限修改",
+		action:"2001102"
+	}
 };
 
 let companyAdminActions = {
@@ -305,7 +341,8 @@ let companyAdminActions = {
 	getDepartmentList:{
 		desc:"单位管理员获取部门列表",
 		action:'2001907'
-	}
+	},
+	getUserList:{}
 }
 
 

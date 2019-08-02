@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import "./base.scss";
 
+
 .zmiti-tab-header {
 	width: 50px;
 	@include displayFlex(row);
@@ -125,3 +126,4 @@ img{
 	}
 
 }
+

@@ -32,19 +32,25 @@ Vue.obserable = obserable;
 const router = new VueRouter({
   routes: [
     //{path: '*', name: 'error', component: FError },
-    {
-		path: "/login/",
-		name: "login",
-		component: (resolve) => {
-			  require(['./components/login'], resolve)
+		{
+			path: "/login/",
+			name: "login",
+			component: (resolve) => {
+				require(['./components/login'], resolve)
+			},
+
+		}, {
+			path: "/resourcelist/",
+			name: "resourcelist",
+			component: (resolve) => {
+				require(['./components/resourcelist'], resolve)
+			},
+
 		},
-		
-    },
     {
 		path: "/",
 		name: "login",
 		component: (resolve) => {
-			console.log(resolve);
 			require(['./components/login'], resolve)
 		}
 	},
@@ -71,7 +77,9 @@ const router = new VueRouter({
 			{ path: "/user", name: "user", component: (resolve) => require(['./components/user'], resolve),props: true},
 			{ path: "/usercheck", name: "usercheck", component: (resolve) => require(['./components/usercheck'], resolve),props: true},
 			{ path: "/checkproduct", name: "checkproduct", component: (resolve) => require(['./components/checkproduct'], resolve),props: true},
-			{ path: "/uncheckproduct", name: "uncheckproduct", component: (resolve) => require(['./components/uncheckproduct'], resolve),props: true},
+			{ path: "/order", name: "order", component: (resolve) => require(['./components/order'], resolve),props: true},
+			{ path: "/companyinfo", name: "companyinfo", component: (resolve) => require(['./components/companyinfo'], resolve),props: true},
+			{ path: "/consume", name: "consume", component: (resolve) => require(['./components/consume'], resolve),props: true},
 			{ path: "/workorderlist/:id?", name: "workorderlist", component: (resolve) => require(['./components/workorderlist'], resolve),props: true},
 		]
 	},

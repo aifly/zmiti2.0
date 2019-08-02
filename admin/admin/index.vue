@@ -23,7 +23,7 @@
 				<transition name='detail'>
 					<section class='zmiti-add-form zmiti-scroll' >
 						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt=""  @click='showDetail = false' >
+							<img :src="imgs.back" alt=""  @click='closeMaskPage' >
 							<span>基础信息</span>
 						</header>
 						<div class='zmiti-admin-avatar' @click="showAvatarModal = true">
@@ -357,7 +357,10 @@
 				return false;
 			},
 			closeMaskPage(){
-				this.showDetailPage = -1;
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:false
+				})
 			},
 			getWeatherData(){
 				zmitiUtil.adminAjax({
