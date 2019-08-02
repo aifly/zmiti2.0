@@ -104,10 +104,14 @@ var zmitiUtil = {
 			return {};
 		}
 
+		return {};
+
 	},
 	isCompanyLeader(_this){
-		
-		return _this.getCurrentCompanyId().islead;
+		if(!window.isAdmin){
+			return _this.getCurrentCompanyId().islead;
+		}
+		return 0;
 	},
 	getProductList(fn) { //
 		var companyid = this.getCurrentCompanyId();
