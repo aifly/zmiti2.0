@@ -192,8 +192,9 @@
 					this.checked = true;
 					
 				}
-				if(zmitiUtil.getUserInfo().info){
-					this.company_list = zmitiUtil.getUserInfo().info.company_list;
+				
+				if(zmitiUtil.getUserInfo() && zmitiUtil.getUserInfo().info){
+					this.company_list = zmitiUtil.getUserInfo().info.company_list||[];
 				}
 			}
 		

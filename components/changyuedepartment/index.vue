@@ -50,8 +50,8 @@
 		<Modal title='加入单位' v-model="visible">
 			<div>
 				 <Transfer
-					:data="unJoinedCompany"
-					:titles="['单位列表','当前加入的单位']"
+					:data="unJoinedDepartment"
+					:titles="['用户列表','当前部门下的用户']"
 					:target-keys="targetKeys"
 					filterable
 					:filter-method="filterMethod"
@@ -74,7 +74,7 @@
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
 	import ZmitiTable from '../../common/table'
-	var {companyActions,zmitiActions,companyAdminActions,formatDate} = zmitiUtil;
+	var {companyActions,zmitiActions,companyAdminActions,formatDate,userActions} = zmitiUtil;
 
 	export default {
 		props:['obserable'],
@@ -116,9 +116,9 @@
 				viewW:window.innerWidth,
 				dataSource:[],
 				groupList:[],
-				companyList:[],
+				departmentList:[],
 				hideMenu:false,
-				unJoinedCompany:[],
+				unJoinedDepartment:[],
 				columns:[
 					{
 						title:"部门编号",
@@ -155,6 +155,30 @@
 						render:(h,params)=>{
 
 							return h('div', [
+
+
+								h('span', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+										margin: '2px 10px',
+										border:'none',
+										fontSize: '12px',
+										cursor:'pointer',
+										color:'#06C'
+
+                                    },
+                                    on: {
+                                        click: () => {
+											this.visible = true;
+											
+											this.getJoinedDepartment(params.row.departmentid);
+											this.currentDepartmentId = params.row.departmentid;
+                                        }
+                                    }
+								}, '用户管理'),
                                
                                 
 								 h('span', {
@@ -245,6 +269,7 @@
 		mounted(){
 			window.s = this;
 			this.getDataList();
+			
 		},
 
 		watch:{
@@ -271,77 +296,84 @@
 			closeMaskPage(){
 				this.showDetailPage = -1;
 			},
-			handleChange2(ids,index,companyids){
+			handleChange2(ids,index,userids){
 				var s = this;
-				companyids.forEach((companyid,i)=>{
-					zmitiUtil.adminAjax({
-						remark:index === 'left'?"exitCompany":"joinCompany",
+
+				var key = index === 'left' ? 'condition':'info';
+					zmitiUtil.ajax({
+						remark:index === 'left'?"delDepartmentUser":"addDepartmentUser",
 						data:{
-							action:companyActions[index === 'left'?"exitCompany":"joinCompany"].action,
-							userid:s.currentUserid,
-							companyid
+							action:userActions[index === 'left'?"delDepartmentUser":"addDepartmentUser"].action,
+							[key]:{
+								companyid:zmitiUtil.getCurrentCompanyId().companyid,
+								productid:s.$route.params.id ,
+								departmentid:s.currentDepartmentId,
+								userids:userids.join(','),
+							},
 						},
 						success(data){
 							s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg);
-							s.getJoinedCompany();
+							s.getJoinedDepartment(s.currentDepartmentId);
 						}
 					});
-				})
-
 			},
 			filterMethod (data, query) {
                 return data.label.indexOf(query) > -1;
             },
-			getJoinedCompany(){
+			getJoinedDepartment(departmentid){
 				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'getJoinedCompany',
+				zmitiUtil.ajax({
+					remark:'getDepartmentUserList',
 					data:{
-						action:companyActions.getJoinedCompany.action,
+						action:userActions.getDepartmentUserList.action,
 						condition:{
-							userid:s.currentUserid,
 							page_index:0,
-							page_size:20,
+							page_size:100,
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid:s.$route.params.id ,
+							departmentid
+
 						}
 					},
 					success(data){
 						if(data.getret === 0){
 							s.targetKeys = [];
 							data.list.forEach(dt=>{
-								s.targetKeys .push(dt.companyid)
+								s.targetKeys.push(dt.userid)
 							})
 						}
 					}
 				});
 			},
 			 
-			getCompanyList(){
+			getAllUserList(){
 				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'getCompanyList',
+
+
+				zmitiUtil.ajax({
+					remark:'getAllCompanyUserList',
 					data:{
-						action:companyActions.getCompanyList.action,
+						action:userActions.getAllCompanyUserList.action,
 						condition:{
 							page_index:0,
-							page_size:100
+							page_size:100,
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid:s.$route.params.id ,
 						}
 					},
 					success(data){
 						if(data.getret === 0){
-							s.companyList = data.list;
-							s.unJoinedCompany = [];
-							s.companyList.forEach(dt=>{
-								if(dt.companyid === s.$route.params.companyid){
-									s.companyname = dt.companyname;
-								}
-								s.unJoinedCompany .push({
-									key : dt.companyid,
-									label:dt.companyname,
-									description:dt.companyname,
+							s.departmentList = data.list;
+							s.unJoinedDepartment = [];
+							s.departmentList.forEach(dt=>{
+								s.unJoinedDepartment.push({
+									key : dt.userid,
+									label:dt.realname,
+									description:dt.realname,
 								})
 
 							})
-							console.log(s.companyList);
+							
 						}
 					}
 				})
@@ -364,22 +396,7 @@
 			getAvatar(avatar){
 				this.formObj.avatar = avatar;
 			},
-			initPassword(){//初始化密码
-				var {$Message} = this;
-				zmitiUtil.adminAjax({
-					data:{
-						action:companyActions.modifyAdminPassword.action,
-						adminuserid:this.formObj.adminuserid,
-						adminpwd:window.config.defaultPass
-					},
-					success(data){
-						$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							
-						}
-					}
-				});
-			},
+		 
 			addAdmin(){
 
 				this.showDetail = true;
@@ -412,6 +429,7 @@
 					}
 				})
 			},
+
 			getDataList(){
 				var s = this;
 				this.loading = true;
@@ -421,23 +439,52 @@
 				}
 				var companyid = zmitiUtil.getCurrentCompanyId().companyid;
 				this.condition.companyid = companyid;
-				var p = new Promise((resolve,reject)=>{
-					zmitiUtil.ajax({
-						remark:'getDepartmentList',
-						data:{
-							action:companyAdminActions.getDepartmentList.action,
-							condition:this.condition
-						},
-						success(data){
-							s.loading = false
-							if(data.getret === 0){
-								s.dataSource = data.list;	 
-								s.total = data.total||data.list.length;
-								resolve();
-							}
+
+
+				var t = setInterval(() => {
+					var productid =  this.$route.params.id ;
+					
+					if(Vue.productList){
+						clearInterval(t);
+
+						if(!productid){
+
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
+								}
+							})
+							
 						}
-					})
-				});
+						this.getAllUserList();
+						var {condition} = this;
+						condition = Object.assign(condition,{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid
+						});
+						this.$router.push({path:'/changyuedepartment/'+productid});
+						var p = new Promise((resolve,reject)=>{
+							zmitiUtil.ajax({
+								remark:'getDepartmentList',
+								data:{
+									action:companyAdminActions.getDepartmentList.action,
+									condition:this.condition
+								},
+								success(data){
+									s.loading = false
+									if(data.getret === 0){
+										s.dataSource = data.list;
+										s.total = data.total||data.list.length;
+										resolve();
+									}
+								}
+							})
+						});
+					}
+				}, 100);
+
+
+				
 			},
 			adminAction(){
 				var s = this;

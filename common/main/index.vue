@@ -12,8 +12,8 @@
                   <div v-if='isAdmin'>管理端控制平台</div>
                   <div v-else>
 					  <span><router-link to='/home'>单位端控制平台</router-link></span>
-					  <span style='margin:0 10px 0 20px'>当前单位： {{currentComapny.companyname}}</span>
-					  <router-link style='font-size:12px;cursor:pointer;' to='/login' v-if='userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
+					  <span style='margin:0 10px 0 20px' v-if='currentComapny'>当前单位： {{currentComapny.companyname}}</span>
+					  <router-link style='font-size:12px;cursor:pointer;' to='/login' v-if='userinfo.info&&userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
 				  </div>
                </div>
                <div class="zmiti-user-info">
@@ -115,7 +115,6 @@
     import Vue from 'vue';
     import zmitiUtil from '../lib/util';
     
-
 	export default {
 		props:['isAdmin'],
 		name:'zmitiindex',
@@ -184,21 +183,35 @@
 		mounted(){
            ///this.menus = this.defaultMenu.concat([]);
 			var obserable = Vue.obserable;
+
+
 			
 			
 			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();
 			
-
 			this.userinfo = userinfo||{info:{}};  
 			
+			var s = this;
+			
             obserable.on('getProduct',()=>{
-				zmitiUtil.getProductList((arr)=>{
-				   if(arr.getret === 0 ){
-					   this.productList = arr.list;
-				   }
+				if(!window.isAdmin && s.$route.name !=='login' && s.$route.name !=='register'){
+					 
+					zmitiUtil.getProductList((arr)=>{
+					   if(arr.getret === 0 ){
+						   s.productList = arr.list;
+						   Vue.productList = s.productList;
+					   }
+				   },s);
+				}
+			});
 
-               },this);
-			})
+
+			
+			setTimeout(() => {
+				obserable.trigger({
+					type:'getProduct'
+				})
+			}, 100);
         },
         watch:{
             kw(val){

@@ -18,12 +18,8 @@
 </style>
 <script>
 	
-	import sysbinVerification from '../lib/verification';
-	import symbinUtil from '../lib/util';
-
 	export default {
 		props:['title','tabs','tabIndex'],
-		name:'zmitiindex',
 		data(){
 			return{
 				theme2:"light",
@@ -37,7 +33,6 @@
 		},
 
 		beforeCreate(){
-			var validate = sysbinVerification.validate(this);
 			//symbinUtil.clearCookie('login');
 
 		},

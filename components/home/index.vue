@@ -11,15 +11,15 @@
 				</div>
 				<div class='zmiti-weather-ui'>
 					<div>
-						<span>城市：</span><span>{{weatherObj.aqi.cityName}}</span>
+						<div>
+							<span>{{weatherObj.aqi.cityName}}</span>
+						</div>
+						<div>
+							<span>{{weatherObj.briefcondition.temp}}度</span>
+						</div>
 					</div>
 					<div>
-						<span>温度：</span><span>{{weatherObj.briefcondition.temp}}度</span>
-					</div>
-					<div>
-						<span>天气：</span>
 						<img :src='imgs["W"+weatherObj.briefcondition.icon]' alt="">
-						<span>{{weatherObj.briefcondition.condition}}</span>
 					</div>
 				</div>
 			</header>

@@ -10,7 +10,7 @@ let changyue = {
 	],
 	tabs: [
 		{
-			name: "首页",
+			name: "概述",
 			link: '/changyue'
 		}, {
 			name: "我的提交",
@@ -19,21 +19,36 @@ let changyue = {
 			name: '我的审核',
 			link: '/changyuemycheck'
 		},{
-			name:"单位管理",
+			name:"产品设置",
 			link:'/changyuecompany',
 			children:[
 				{
 					name:'部门管理',
 					link:'/changyuedepartment'
 				},
-				{
-					name: '人员管理',
-					link: '/user'
-				}
+				
 			]
 		}
 	]
 }
+
+let workorder_workorderlist = {
+	title: "工单管理",
+	keys:[
+		'workorder',
+		'workorderlist'
+	],
+	tabs: [
+		{
+			name: '提交工单',
+			link: '/workorder'
+		}, {
+			name: '工单列表',
+			link: '/workorderlist'
+		}
+	]
+};
+
 
 let company = {
 	title:"单位管理",
@@ -80,5 +95,6 @@ let company = {
 
 export {
 	changyue,
-	company
+	company,
+	workorder_workorderlist
 }

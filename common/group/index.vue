@@ -27,9 +27,10 @@
 <script>
 	import './index.css';
 	import zmitiUtil from '../lib/util';
-	import Tab from '../tab/index';
 	import Vue from 'vue';
+	import Tab from '../tab';
 	import menuObj from './menu';
+	Vue.component('Tab',require("../tab").default);
 	var {isCompanyLeader } = zmitiUtil;
 	
 	

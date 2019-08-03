@@ -303,7 +303,24 @@ let userActions = {
 	modifyUserRole:{
 		desc:"用户产品权限修改",
 		action:"2001102"
+	},
+	getDepartmentUserList:{
+		desc:'获取部门用户列表',
+		action:"2001916"
+	},
+	addDepartmentUser:{
+		desc:'部门下新增用户',
+		action:'2001917'
+	},
+	delDepartmentUser:{
+		desc:'删除下新增用户',
+		action:'2001918'
+	},
+	getAllCompanyUserList:{
+		desc:'获取公司下所有用户列表',
+		action:'2001919'
 	}
+
 };
 
 let companyAdminActions = {

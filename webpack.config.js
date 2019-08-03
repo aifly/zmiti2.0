@@ -36,13 +36,13 @@ module.exports = {
 			//'@': resolve('src'),
 		}
 	},
-	 
 
 
 	// 模块加载配置
 	module: {
 		// 指定 不同的模块使用不同的加载器处理
 		// 以 .css 结尾的文件，使用 css-loader 解析css模块，使用 style-loader 将生成的 css 内容以标签的形式添加到 HTML 文档中
+		noParse: [/ali-oss/],
 		rules: [{
 			test: /\.vue$/,
 			use: [{
@@ -87,7 +87,13 @@ module.exports = {
 		{
 			test: /\.js$/,
 			exclude: /node_modules/,
-			loader: 'babel-loader'
+			loader: 'babel-loader',
+			options:{
+				'babelrc':false,
+				"plugins": [
+					"dynamic-import-webpack"
+				]
+			}
 		}, {
 			test: /\.(eot|svg|ttf|woff|woff2|png)\w*/,
 			loader: 'file-loader'
@@ -98,7 +104,6 @@ module.exports = {
 	// 插件
 	plugins: [
 		///new WebpackDeepScopeAnalysisPlugin(),
-		
 		///new VueLoaderPlugin(),
 
         /*new HtmlWebpackPlugin({

@@ -308,21 +308,49 @@
 				var s = this;
 				s.loading = true;
 				var {condition} = this;
-				zmitiUtil.ajax({
-					remark:"getMyCheckList",
-					data:{
-						action:changYueAcions.getMyCheckList.action,
-						condition
-					},
-					success(data){
-						s.loading = false;
-						if(data.getret === 0){
-							s.dataSource = data.list;
-							s.total = data.total;
+
+				var t = setInterval(() => {
+					var productid =  this.$route.params.id ;
+					if(Vue.productList){
+						clearInterval(t);
+
+						if(!productid){
+
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
+								}
+							})
 							
 						}
+						this.$router.push({path:'/changyuemycheck/'+productid});
+						clearInterval(t);
+						var {condition} = this;
+						condition = Object.assign(condition,{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid
+						})
+						zmitiUtil.ajax({
+							remark:"getMyCheckList",
+							data:{
+								action:changYueAcions.getMyCheckList.action,
+								condition
+							},
+							success(data){
+								s.loading = false;
+								if(data.getret === 0){
+									s.dataSource = data.list;
+									s.total = data.total;
+									
+								}
+							}
+						})
 					}
-				})
+				}, 100);
+
+
+
+			
 			},
 			
 			 

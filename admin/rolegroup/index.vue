@@ -483,11 +483,7 @@
  
 			getGroupList(){
 				var s = this;
-				if(typeof window.Promise !== 'function'){
-					this.help();
-					console.log('当前浏览器不支持Promise');
-					return;
-				}
+				
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.adminAjax({
 						remark:'getGroupList',

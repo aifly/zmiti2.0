@@ -65,7 +65,9 @@ var zmitiUtil = {
 			loginObj = JSON.parse(localStorage.getItem(key));
 		} catch (error) {
 			//window.location.reload();
+			return {};
 			window.location.hash = 'login';
+
 			if (window.location.hash != '#/login') {
 				//window.location.reload();
 			}
@@ -120,20 +122,34 @@ var zmitiUtil = {
 			//window.location.hash = '/login';
 			return;
 		}
-		this.ajax({
-			remark: 'getProductList',
-			data: {
-				action: zmitiActions.userActions.getProductList.action,
-				condition: {
-					companyid: companyid.companyid,
-					page_index: 0,
-					page_size: 20,
+		this.productList = this.productList || [];
+		var s = this;
+		if(this.productList.length>0){
+			fn &&fn({
+				getret:0,
+				msg:'',
+				list:this.productList
+			})
+		}else{
+
+			this.ajax({
+				remark: 'getProductList',
+				data: {
+					action: zmitiActions.userActions.getProductList.action,
+					condition: {
+						companyid: companyid.companyid,
+						page_index: 0,
+						page_size: 20,
+					}
+				},
+				success(data) {
+					fn && fn(data);
+					if(data.getret === 0){
+						s.productList = data.list;
+					}
 				}
-			},
-			success(data) {
-				fn && fn(data);
-			}
-		})
+			})
+		}
 
 	},
 

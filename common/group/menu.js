@@ -2,10 +2,11 @@ import zmitiUtil from '../lib/util';
 
 
 if (!window.isAdmin){
-	var { changyue, company } = require('./usermenu');
+	var { changyue, company ,workorder_workorderlist} = require('./usermenu');
 	var menuObj = {
 		changyue,
-		company
+		company,
+		workorder_workorderlist
 	};
 
 }else{

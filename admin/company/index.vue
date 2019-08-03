@@ -164,7 +164,7 @@
 						key:'isover',
 						align:'center',
 						render:(h,params)=>{
-							return h('div',{},params.row.isover === 1 ? '正常使用' : params.row.isover === 0 ? '已禁用':'已删除');
+							return h('div',{},params.row.status === 1 ? '正常使用' : params.row.status === 0 ? '已禁用':'已删除');
 						}
 					},
 					{
@@ -322,10 +322,7 @@
 		methods:{
 			getUserList(){
 				var s = this;
-				if(typeof window.Promise !== 'function'){
-					console.log('当前浏览器不支持Promise');
-					return;
-				}
+				
 				var companyid = this.$route.params.companyid;
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.adminAjax({
@@ -398,10 +395,7 @@
 			},
 			getCompanyList(){
 				var s = this;
-				if(typeof window.Promise !== 'function'){
-					console.log('当前浏览器不支持Promise');
-					return;
-				}
+				
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.adminAjax({
 						remark:'getCompanyList',

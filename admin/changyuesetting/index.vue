@@ -13,7 +13,7 @@
 			
 			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
 				<div class='zmiti-user-table' :class="{'active':showDetail}">
-					<Table  :loading='isLoading' :data='dataSrouce' :columns='columns'></Table>
+					<Table   :loading='isLoading' :data='dataSrouce' :columns='columns'></Table>
 				</div>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
@@ -437,10 +437,7 @@
 			},
 			getDataList(){
 				var s = this;
-				if(typeof window.Promise !== 'function'){
-					console.log('当前浏览器不支持Promise');
-					return;
-				}
+		
 				var companyid = this.$route.params.companyid;
 				this.condition.companyid = companyid;
 				var p = new Promise((resolve,reject)=>{

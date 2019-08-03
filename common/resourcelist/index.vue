@@ -270,8 +270,7 @@ import zmitiUtil from '../lib/util';
 import {defaultClass,defaultExtNames} from '../config';
 import IScroll from 'iscroll';
 import ZmitiMask from '../mask';
-import Transfer from '../transfer';
-
+import Transfer from '../transfer'
 
 let {resourceActions,formatDate} = zmitiUtil;
 export default {

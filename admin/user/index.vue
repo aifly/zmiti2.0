@@ -36,9 +36,9 @@
 							<FormItem label="姓名：">
 								<Input v-model="formUser.realname" placeholder="姓名：" />
 							</FormItem>
-							<FormItem label="密码：">
+							<!-- <FormItem label="密码：">
 								<Input v-model="formUser.userpwd" type="password" placeholder="密码：" />
-							</FormItem>
+							</FormItem> -->
 							<FormItem label="所在单位：" v-if='!$route.params.companyid'>
 								<Select v-model="formUser.companyid">
 									<Option v-for="item in companyList" :value="item.companyid" :key="item.companyid">{{ item.companyname }}</Option>
@@ -52,15 +52,15 @@
 								<Input v-model="formUser.usermobile" placeholder="手机号：" />
 							</FormItem>
 							
-							<FormItem label="用户类型：">
+						<!-- 	<FormItem label="用户类型：">
 								<RadioGroup v-model="formUser.usertypesign">
 									<Radio :value='1' :label="1">普通用户</Radio>
 									<Radio :value='2' :label="2">公司管理员</Radio>
 								</RadioGroup>
-							</FormItem>
+							</FormItem> -->
 
 							<FormItem label="状态：">
-								<RadioGroup v-model="formUser.isover">
+								<RadioGroup v-model="formUser.status">
 									<Radio :value='1' :label="1">正常使用</Radio>
 									<Radio :value='0' :label="0">禁用</Radio>
 								</RadioGroup>
@@ -196,7 +196,7 @@
 						key:'isover',
 						align:'center',
 						render:(h,params)=>{
-							return h('div',{},params.row.isover === 1 ? '正常使用' : params.row.isover === 0 ? '已禁用':'已删除');
+							return h('div',{},params.row.status === 1 ? '正常使用' : params.row.status === 0 ? '已禁用':'已删除');
 						}
 					},
 					{
@@ -246,7 +246,10 @@
 											var s = this;
 											s.showDetail = true;
 											s.formUser = params.row;
-											s.showDetailPage = 1;
+											Vue.obserable.trigger({
+												type:'toggleMask',
+												data:true
+											})
 										
                                         }
                                     }
@@ -492,10 +495,6 @@
 			},
 			getDataList(){
 				var s = this;
-				if(typeof window.Promise !== 'function'){
-					console.log('当前浏览器不支持Promise');
-					return;
-				}
 				var companyid = this.$route.params.companyid;
 				this.condition.companyid = companyid;
 				var p = new Promise((resolve,reject)=>{

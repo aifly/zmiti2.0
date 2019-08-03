@@ -485,10 +485,10 @@
 			},
 			getDataList(){
 				var s = this;
-				if(typeof window.Promise !== 'function'){
+				/* if(typeof window.Promise !== 'function'){
 					console.log('当前浏览器不支持Promise');
 					return;
-				}
+				} */
 				var companyid = this.$route.params.companyid;
 				this.condition.companyid = companyid;
 				var p = new Promise((resolve,reject)=>{
