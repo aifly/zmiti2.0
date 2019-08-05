@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
     background-color: #fff;
     border-color: #bf1616;
@@ -14,5 +15,127 @@
     max-width: 100%; }
   .zmiti-changye-main-ui .zmiti-scroll {
     overflow: auto; }
+  .zmiti-changye-main-ui .zmiti-changye-main {
+    padding: 0 20px 0 25px; }
+    .zmiti-changye-main-ui .zmiti-changye-main .pannel-title {
+      font-family: '黑体';
+      color: #4a4a4a; }
+  .zmiti-changye-main-ui .changyue-item1 {
+    display: flex;
+    -webkit-display: flex;
+    -moz-display: flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row; }
+    .zmiti-changye-main-ui .changyue-item1 .pannel-txt {
+      width: 60%; }
+      .zmiti-changye-main-ui .changyue-item1 .pannel-txt .img2 {
+        max-width: 600px; }
+    .zmiti-changye-main-ui .changyue-item1 .item-inner {
+      height: 100%;
+      align-items: left;
+      justify-content: center;
+      display: flex;
+      -webkit-display: flex;
+      -moz-display: flex;
+      flex-direction: column;
+      -webkit-flex-direction: column;
+      -moz-flex-direction: column; }
+    .zmiti-changye-main-ui .changyue-item1 .pannel-img {
+      flex: 1;
+      -webkit-flex: 1;
+      -moz-flex: 1;
+      position: relative;
+      overflow: hidden; }
+      .zmiti-changye-main-ui .changyue-item1 .pannel-img img {
+        max-width: 100%;
+        float: right; }
+    .zmiti-changye-main-ui .changyue-item1 .pannel-title {
+      font-size: 48px;
+      position: relative; }
+      .zmiti-changye-main-ui .changyue-item1 .pannel-title::before {
+        position: absolute;
+        content: '';
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: #3390ff;
+        border-radius: 3px;
+        -webkit-border-radius: 3px; }
+    .zmiti-changye-main-ui .changyue-item1 .pannel-smmary {
+      font-size: 32px; }
+    .zmiti-changye-main-ui .changyue-item1 .pannel-btns {
+      margin-top: 15px; }
+      .zmiti-changye-main-ui .changyue-item1 .pannel-btns button {
+        margin-right: 20px;
+        font-size: 20px;
+        width: 150px; }
+      .zmiti-changye-main-ui .changyue-item1 .pannel-btns .ivu-btn-success {
+        background-color: #00b858; }
+      .zmiti-changye-main-ui .changyue-item1 .pannel-btns .ivu-btn-info {
+        background-color: #3390ff; }
+  .zmiti-changye-main-ui .changyue-item2 .item-inner {
+    display: flex;
+    -webkit-display: flex;
+    -moz-display: flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row; }
+    .zmiti-changye-main-ui .changyue-item2 .item-inner .pannel-img2 {
+      width: 30%; }
+    .zmiti-changye-main-ui .changyue-item2 .item-inner .pannel-img3 {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center; }
+  .zmiti-changye-main-ui .changyue-item2 .pannel-smmary {
+    font-size: 48px; }
+  .zmiti-changye-main-ui .changyue-item3 {
+    padding: 45px 0; }
+    .zmiti-changye-main-ui .changyue-item3 .item-inner {
+      display: flex;
+      -webkit-display: flex;
+      -moz-display: flex;
+      flex-direction: row;
+      -webkit-flex-direction: row;
+      -moz-flex-direction: row; }
+      .zmiti-changye-main-ui .changyue-item3 .item-inner .pannel-img1 {
+        margin-left: auto; }
+        .zmiti-changye-main-ui .changyue-item3 .item-inner .pannel-img1 .img-inner {
+          padding: 10px 0 0 0;
+          text-align: center; }
+  .zmiti-changye-main-ui .changyue-item4 .item-inner {
+    display: flex;
+    -webkit-display: flex;
+    -moz-display: flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row; }
+    .zmiti-changye-main-ui .changyue-item4 .item-inner .pannel-img1 img {
+      display: block; }
+    .zmiti-changye-main-ui .changyue-item4 .item-inner .pannel-img2 {
+      display: flex;
+      -webkit-display: flex;
+      -moz-display: flex;
+      flex-direction: row;
+      -webkit-flex-direction: row;
+      -moz-flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      max-width: 420px; }
+      .zmiti-changye-main-ui .changyue-item4 .item-inner .pannel-img2 img {
+        margin-bottom: 45px; }
+    .zmiti-changye-main-ui .changyue-item4 .item-inner .pannel-img3 {
+      margin-left: auto; }
+      .zmiti-changye-main-ui .changyue-item4 .item-inner .pannel-img3 .img-inner {
+        height: 100%;
+        display: flex;
+        -webkit-display: flex;
+        -moz-display: flex;
+        flex-direction: row;
+        -webkit-flex-direction: row;
+        -moz-flex-direction: row;
+        align-items: center;
+        justify-content: center; }
 
 /*# sourceMappingURL=index.css.map */

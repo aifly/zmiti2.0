@@ -49,15 +49,24 @@ var imgs = {
 	W44:'./assets/images/weather/W44.png',
 	W45:'./assets/images/weather/W45.png',
 	W46:'./assets/images/weather/W46.png',
-
-	CHOME1:'./assets/images/cy-home1.png',
-	CHOME2:'./assets/images/cy-home2.png',
-	CHOME3:'./assets/images/cy-home3.png',
-	CHOME4:'./assets/images/cy-home4.png',
-	CHOME5:'./assets/images/cy-home5.png',
-	CHOME6:'./assets/images/cy-home6.png',
-	CHOME7:'./assets/images/cy-home7.png',
-	CHOME8:'./assets/images/cy-home8.png'
+	CLIENT1:'./assets/images/client/view-a0.png',
+	CLIENT2:'./assets/images/client/view-a1.png',
+	CLIENT3:'./assets/images/client/view-a2.png',
+	CLIENT4:'./assets/images/client/view-a3.png',
+	CLIENT5:'./assets/images/client/view-b1.png',
+	CLIENT6:'./assets/images/client/view-b2.png',
+	CLIENT7:'./assets/images/client/view-b3.png',
+	CLIENT8:'./assets/images/client/view-b4.png',
+	CLIENT9:'./assets/images/client/view-c1.png',
+	CLIENT10:'./assets/images/client/view-c2.png',
+	CLIENT11:'./assets/images/client/view-c3.png',
+	CLIENT12:'./assets/images/client/view-t1.png',
+	CLIENT13:'./assets/images/client/view-t2.png',
+	CLIENT14:'./assets/images/client/cy-home2.png',
+	CLIENT15:'./assets/images/client/view-a4.png',
+	CLIENT16:'./assets/images/client/cy-home1.png',
+	CLIENT17:'./assets/images/client/cy-home8.png',
+	CLIENT18:'./assets/images/client/cy-home7.png'
 
 };
 

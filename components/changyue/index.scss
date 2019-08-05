@@ -1,6 +1,22 @@
 ﻿@import "../css/base.scss";
 
-
+@mixin displayflex ($k:row) {
+  display: flex;
+  -webkit-display:flex;
+  -moz-display:flex;
+  flex-direction: $k;
+  -webkit-flex-direction: $k;
+  -moz-flex-direction: $k;
+}
+@mixin flex ($k:1){
+  flex:$k;
+  -webkit-flex:$k;
+  -moz-flex:$k;
+}
+@mixin center ($k:center) {
+  align-items: $k;
+  justify-content: center;
+}
 .zmiti-changye-main-ui {
   background: #ffffff;
   box-sizing: border-box;
@@ -13,5 +29,122 @@
   }
   .zmiti-scroll {
   	overflow: auto;
+  }
+  .zmiti-changye-main{
+    padding:0 20px 0 25px;
+     .pannel-title{
+      font-family: '黑体';
+      color: #4a4a4a;
+    }
+  }
+  .changyue-item1{
+    @include displayflex();
+    .pannel-txt{
+      width:60%;
+      .img2{
+        max-width:600px;
+      }
+    }
+    .item-inner{
+      height: 100%;
+      @include center(left);
+      @include displayflex(column);
+    }
+    .pannel-img{
+       @include flex(1);
+       position:relative;
+       overflow: hidden;
+       img{
+        max-width: 100%;
+        float: right;
+       }
+    }
+    .pannel-title{
+      font-size: 48px;
+      position: relative;
+      &::before{
+        position: absolute;
+        content: '';
+        bottom: 0;
+        left:0;
+        width: 50px;
+        height: 3px;
+        background-color:#3390ff;
+        border-radius:3px;
+        -webkit-border-radius:3px;
+      }
+    }
+    .pannel-smmary{
+      font-size: 32px;
+    }
+    .pannel-btns{
+      margin-top: 15px;
+      button{
+        margin-right: 20px;
+        font-size: 20px;
+        width:150px;
+      }
+      .ivu-btn-success{
+        background-color:#00b858;
+      }
+      .ivu-btn-info{
+        background-color:#3390ff;
+      }
+    }
+  }
+  .changyue-item2{
+    .item-inner{
+      @include displayflex();
+      .pannel-img2{
+        width:30%;
+      }
+      .pannel-img3{
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+    }
+    .pannel-smmary{
+      font-size: 48px;
+    }
+  }
+  .changyue-item3{
+    padding:45px 0;
+    .item-inner{
+      @include displayflex();
+      .pannel-img1{
+        margin-left: auto;
+        .img-inner{
+          padding:10px 0 0 0;
+          text-align: center;
+        }
+      }
+    }
+  }
+  .changyue-item4{
+    .item-inner{
+      @include displayflex();
+      .pannel-img1{
+        img{
+          display: block;
+        }
+      }
+      .pannel-img2{
+        @include displayflex();
+        @include center();
+        max-width: 420px;
+        img{
+          margin-bottom: 45px;
+        }
+      }
+      .pannel-img3{
+        margin-left: auto;
+        .img-inner{
+          height: 100%;
+          @include displayflex();
+          @include center();
+        }
+      }
+    }
   }
 }
