@@ -93,10 +93,16 @@
     }
   }
   .changyue-item2{
+    .item-icon{
+      padding: 50px 0 50px 40px;
+    }
     .item-inner{
       @include displayflex();
+      .pannel-img1{
+        margin:0 0 0 80px;
+      }
       .pannel-img2{
-        width:30%;
+        max-width: 440px;
       }
       .pannel-img3{
         margin-left: auto;
@@ -132,7 +138,7 @@
       .pannel-img2{
         @include displayflex();
         @include center();
-        max-width: 420px;
+        max-width: 580px;
         img{
           margin-bottom: 45px;
         }

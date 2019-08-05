@@ -75,6 +75,8 @@
         background-color: #00b858; }
       .zmiti-changye-main-ui .changyue-item1 .pannel-btns .ivu-btn-info {
         background-color: #3390ff; }
+  .zmiti-changye-main-ui .changyue-item2 .item-icon {
+    padding: 50px 0 50px 40px; }
   .zmiti-changye-main-ui .changyue-item2 .item-inner {
     display: flex;
     -webkit-display: flex;
@@ -82,8 +84,10 @@
     flex-direction: row;
     -webkit-flex-direction: row;
     -moz-flex-direction: row; }
+    .zmiti-changye-main-ui .changyue-item2 .item-inner .pannel-img1 {
+      margin: 0 0 0 80px; }
     .zmiti-changye-main-ui .changyue-item2 .item-inner .pannel-img2 {
-      width: 30%; }
+      max-width: 440px; }
     .zmiti-changye-main-ui .changyue-item2 .item-inner .pannel-img3 {
       margin-left: auto;
       margin-right: auto;
@@ -122,7 +126,7 @@
       -moz-flex-direction: row;
       align-items: center;
       justify-content: center;
-      max-width: 420px; }
+      max-width: 580px; }
       .zmiti-changye-main-ui .changyue-item4 .item-inner .pannel-img2 img {
         margin-bottom: 45px; }
     .zmiti-changye-main-ui .changyue-item4 .item-inner .pannel-img3 {

@@ -19,6 +19,9 @@
 					</div>					
 				</div>
 				<div class="changyue-item2">
+					<div class="item-icon">
+						<img :src='imgs["CLIENT"+1]'>
+					</div>
 					<div class="item-inner">
 						<div class="pannel-img1">
 							<img :src='imgs["CLIENT"+2]'>
@@ -34,7 +37,7 @@
 				<div class="changyue-item3">
 					<div class="item-inner">
 						<div class="pannel-img1">
-							<img :src='imgs["CLIENT"+6]'>
+							<img :src='imgs["CLIENT"+19]'>
 							<div class="img-inner">
 								<img :src='imgs["CLIENT"+8]'>
 							</div>
@@ -52,7 +55,7 @@
 						</div>
 						<div class="pannel-img3">
 							<div class="img-inner">
-								<img :src='imgs["CLIENT"+15]'>
+								<img :src='imgs["CLIENT"+18]'>
 							</div>							
 						</div>
 					</div>
