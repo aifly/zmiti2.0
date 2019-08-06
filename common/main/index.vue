@@ -96,7 +96,7 @@
 
                 <div style="width:50px;height:100%;"></div>
                 
-                <Layout class='zmiti-main-page'>
+                <Layout class='zmiti-main-page' :style="{height:viewH - 50+'px'}">
                    <router-view></router-view>
                 </Layout>
             </Layout>

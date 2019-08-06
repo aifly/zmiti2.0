@@ -256,6 +256,10 @@ let userActions = {
 		desc:"获取用户工单列表",
 		action:'2001006'
 	},
+	userApplyJoinCompany:{
+		desc:"用户申请加入单位",
+		action:"2000102"
+	},
 	getProductList:{
 		desc:"获取产品列表",
 		action:'2001009'
@@ -263,6 +267,10 @@ let userActions = {
 	replayWorkOrder: {
 		desc: "用户回复工单",
 		action: '2001005'
+	},
+	searchCompanyList: {
+		desc: "搜索单位",
+		action: '2000104'
 	},
 	evaluateWorkOrder:{
 		desc:"用户评价工单",

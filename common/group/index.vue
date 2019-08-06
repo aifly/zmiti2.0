@@ -31,7 +31,6 @@
 	import Tab from '../tab';
 	import menuObj from './menu';
 	Vue.component('Tab',require("../tab").default);
-	var {isCompanyLeader } = zmitiUtil;
 	
 	
 	export default {
@@ -62,7 +61,7 @@
 			var obserable = Vue.obserable;
 			this.changeGroup();
 
-			if(!isCompanyLeader(zmitiUtil)){//非单位管理员。
+			if(!zmitiUtil.isCompanyLeader()){//非单位管理员。
 				this.menuObj.tabs.forEach((menu,i)=>{
 					if(menu.link==='/changyuecompany'){
 						this.menuObj.tabs.splice(i,1);

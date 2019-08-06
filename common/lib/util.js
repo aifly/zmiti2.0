@@ -100,18 +100,15 @@ var zmitiUtil = {
 
 		try {
 			var company = JSON.parse(window.localStorage.getItem('currentCompany'))
-			return company;
+			return company ||{};
 		}
 		catch (e) {
 			return {};
 		}
-
-		return {};
-
 	},
-	isCompanyLeader(_this){
+	isCompanyLeader(){
 		if(!window.isAdmin){
-			return _this.getCurrentCompanyId().islead;
+			return this.getCurrentCompanyId().islead;
 		}
 		return 0;
 	},

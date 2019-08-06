@@ -244,6 +244,7 @@
 		},
 		mounted(){
 			window.s = this;
+			
 
 			this.getDataList();
 			

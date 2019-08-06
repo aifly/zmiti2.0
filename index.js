@@ -101,6 +101,10 @@ router.afterEach((to, from) => {
 	if (to.name === 'login' || to.name === 'register'){
 		return;
 	}
+	var userinfo = zmitiUtil.getUserInfo();
+	if (!userinfo) {
+		this.$router.push({ path: '/login' })
+	}
 	
 })
 

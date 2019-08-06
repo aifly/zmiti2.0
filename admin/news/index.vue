@@ -29,6 +29,13 @@
 					</header>
 					<h2 style="height:30px;"></h2>
 					<Form class='zmiti-add-form-C' :model="formObj" :label-width="120">
+						<FormItem label="新闻分类：">
+							<RadioGroup v-model="formObj.newstype">
+								<Radio :value='0' :label="0">新闻</Radio>
+								<Radio :value='-1' :label="-1">公告</Radio>
+								<Radio :value='1' :label="1">产品更新说明</Radio>
+							</RadioGroup>
+						</FormItem>
 						<FormItem label="新闻标题：">
 							<Input v-model="formObj.title" placeholder="新闻标题：" />
 						</FormItem>
@@ -46,13 +53,7 @@
 						<FormItem label="点击量：">
 							<InputNumber v-model="formObj.views" placeholder="点击量：" />
 						</FormItem>
-						<FormItem label="新闻分类：">
-							<RadioGroup v-model="formObj.newstype">
-								<Radio :value='-1' :label="-1">公告</Radio>
-								<Radio :value='0' :label="0">新闻</Radio>
-								<Radio :value='1' :label="1">产品更新说明</Radio>
-							</RadioGroup>
-						</FormItem>
+						
 						<FormItem label="状态：">
 							<RadioGroup v-model="formObj.status">
 								<Radio :value='0' :label="0">禁用</Radio>
@@ -110,6 +111,7 @@
 				currentUserid:'',
 				formObj:{
 					isover:0,
+					newstype:0,
 					avatar:'&#xe6a4;'
 				},
 				address:'',
@@ -127,13 +129,6 @@
 						title:"新闻标题",
 						key:'title',
 						align:'center',
-					},
-					{
-						title:"新闻内容",
-						key:'content',
-						align:'center',
-						width:200
-						
 					},{
 						title:"新闻类型",
 						key:'newstype',
@@ -295,7 +290,7 @@
 				this.showDetail = true;
 				this.adminuserId = '';
 				this.formObj = {
-					
+					newstype:0
 				};
 				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},

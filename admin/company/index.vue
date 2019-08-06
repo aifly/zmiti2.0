@@ -175,23 +175,6 @@
 						render:(h,params)=>{
 
 							return h('div', [
-                               
-                                h('span', {
-                                  
-                                    style: {
-										border:'none',
-										fontSize: '12px',
-										cursor:'pointer',
-										color:'#06C'
-										
-                                    },
-                                    on: {
-                                        click: () => {
-											
-										 
-                                        }
-                                    }
-								}, '权限'),
 								h('span', {
                                   
                                     style: {
@@ -431,6 +414,7 @@
 						if(data.getret === 0){
 							s.showDetail = false;
 							s.getCompanyList();
+							Vue.obserable.trigger({type:'toggleMask',data:false});
 						}
 					}
 				})

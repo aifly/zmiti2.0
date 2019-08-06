@@ -2,7 +2,10 @@
 	<div class="zmiti-user-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div><span v-if='companyname'>{{companyname}} —— </span>用户管理</div>
+				<div>
+					<span v-if='companyname'>{{companyname}} —— 人员管理</span>
+					<span v-else>用户管理</span>
+				</div>
 				<div>
 					<Button type="primary" @click="addAdmin">新增用户</Button>
 				</div>
@@ -99,7 +102,7 @@
 				</div>
 			</ZmitiMask>
 
-		<Modal title='加入单位' v-model="visible">
+		<Modal title='加入单位' v-model="visible" width='457'>
 			<div>
 				 <Transfer
 					:data="unJoinedCompany"
@@ -165,6 +168,7 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				dataSrouce:[],
+				currentCompany:{},
 				groupList:[],
 				companyList:[],
 				hideMenu:false,
@@ -184,7 +188,8 @@
 					},{
 						title:"邮箱",
 						key:'useremail',
-						align:'center'
+						align:'center',
+						width:180
 						
 					},{
 						title:"手机",
@@ -395,7 +400,6 @@
 					}
 				});
 			},
-			 
 			getCompanyList(){
 				var s = this;
 				zmitiUtil.adminAjax({
@@ -404,7 +408,8 @@
 						action:companyActions.getCompanyList.action,
 						condition:{
 							page_index:0,
-							page_size:100
+							page_size:100,
+							
 						}
 					},
 					success(data){
@@ -412,7 +417,7 @@
 							s.companyList = data.list;
 							s.unJoinedCompany = [];
 							s.companyList.forEach(dt=>{
-								if(dt.companyid === s.$route.params.companyid){
+								if(dt.companyid === s.$route.params.companyid*1){
 									s.companyname = dt.companyname;
 								}
 								s.unJoinedCompany .push({
@@ -422,7 +427,6 @@
 								})
 
 							})
-							console.log(s.companyList);
 						}
 					}
 				})

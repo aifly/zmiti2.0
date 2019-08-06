@@ -5,7 +5,10 @@
 				<div class='zmiti-user-info'>
 					<h2>
 						<img :src="imgs.zmiti1" alt="">
-						<span>{{userinfo.username}}</span>
+						<span>{{userinfo.username}} </span>
+						<span style="color:#f00;font-size:14px" v-if='!companyInfo.companyname'>您当前没有加入任何单位，请
+							<a href='javascript:void(0)' @click="visiable = true" style="color:#00f;font-size:20px">选择一个单位</a>
+						</span>
 					</h2>
 					<div>{{date}}</div>
 				</div>
@@ -127,6 +130,13 @@
 				</aside>
 			</section>
 		</div>
+		<Modal title='选择单位' v-model="visiable" @on-ok='joinCompany' :loading="loadingCompanyModal">
+			<ul class='zmiti-choose-company-list'>
+				<li v-for="(com,i) in allCompanyList" :key="i" @click="currentChooseCompany = com" :class="{'active':com.companyid === currentChooseCompany.companyid}">
+					{{com.companyname}}
+				</li>
+			</ul>
+		</Modal>
 	</div>
 </template>
 
@@ -147,13 +157,16 @@
 		name:'zmitiindex',
 		data(){
 			return{
-				
+				currentChooseCompany:{},
+				visiable:false,
+				loadingCompanyModal:true,
 				imgs:window.imgs,
 				userinfo:{
 					username:'一位巨蟹',
 					avatar:window.imgs.zmiti1,
 					info:{}
 				},
+				allCompanyList:[],
 				currentCompanyIndex:0,
 				weatherData:{},
 				companyInfo:{},
@@ -372,6 +385,27 @@
 		
 		methods:{
 
+			joinCompany(){
+				var s = this;
+				if(!s.currentChooseCompany.companyid){
+					s.$Message['error']('请选择一个单位');
+					return;
+				}
+				zmitiUtil.ajax({
+					remark:'userApplyJoinCompany',
+					data:{
+						action:userActions.userApplyJoinCompany.action,
+						companyid:s.currentChooseCompany.companyid
+					},
+					success(data){
+						s.loadingCompanyModal = false;
+						data.getret === 0 &&(s.visible = false);
+
+						s.$Message[data.getret === 0 ?  'success':'error'](data.msg);						
+					}
+				})
+			},
+
 
 			getCheckedProduct(){
 				var p1 = new Promise((resolve,reject)=>{
@@ -384,6 +418,26 @@
 				   },this);
 				})
 				this.tasks.push(p1);
+			},
+
+
+			getCompanyList(){
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'getCompanyUserList',
+					data:{
+						action:userActions.searchCompanyList.action,
+						condition:{
+							page_index:0,
+							page_size:20,
+						}
+					},
+					success(data){
+						if(data.getret ===0 ){
+							s.allCompanyList = data.list;
+						}
+					}
+				})
 			},
 
 			getAllProductList(){
@@ -418,6 +472,10 @@
 			getCompanyInfo(){
 				var companyid = zmitiUtil.getCurrentCompanyId().companyid;
 				var s = this;
+				if(!companyid){
+					this.getCompanyList();
+					return;
+				}
 				this.loading = true;
 				zmitiUtil.ajax({
 					remark:"getCompanyInfo",
@@ -430,8 +488,9 @@
 					} ,
 					success(data){
 						s.loading = false;
-						s.companyInfo = data.info;
+						console.log(data,'data');
 						if(data.getret === 0){
+							s.companyInfo = data.info;
 						
 						}
 					}

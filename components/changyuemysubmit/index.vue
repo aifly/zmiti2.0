@@ -200,7 +200,11 @@
 		},
 		mounted(){
 			window.s = this;
+			var userinfo = zmitiUtil.getUserInfo();
+			if(!userinfo){
+				this.$router.push({path:'/login'})
 
+			}
 			this.getDataList();
 
 			
@@ -328,6 +332,7 @@
 			getDataList(){
 				var s = this;
 				s.loading = true;
+
 				var t = setInterval(() => {
 						var productid =  this.$route.params.id ;
 					if(Vue.productList){

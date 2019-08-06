@@ -47,7 +47,7 @@
 				</div>
 			</ZmitiMask>
 
-		<Modal title='加入单位' v-model="visible">
+		<Modal title='加入单位' v-model="visible" width='457'>
 			<div>
 				 <Transfer
 					:data="unJoinedDepartment"
@@ -346,10 +346,8 @@
 				});
 			},
 			 
-			getAllUserList(){
+			getAllUserList(productid){
 				var s = this;
-
-
 				zmitiUtil.ajax({
 					remark:'getAllCompanyUserList',
 					data:{
@@ -358,7 +356,7 @@
 							page_index:0,
 							page_size:100,
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
-							productid:s.$route.params.id ,
+							productid:productid||s.$route.params.id ,
 						}
 					},
 					success(data){
@@ -456,7 +454,7 @@
 							})
 							
 						}
-						this.getAllUserList();
+						this.getAllUserList(productid);
 						var {condition} = this;
 						condition = Object.assign(condition,{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,

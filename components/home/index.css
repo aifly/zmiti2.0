@@ -334,3 +334,30 @@
   margin-top: 8px;
   line-height: 20px;
 }
+
+.zmiti-choose-company-list {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.zmiti-choose-company-list li {
+  margin: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  background: #ddd;
+  padding: 0 10px;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.zmiti-choose-company-list li.active {
+  background: #3390ff;
+  color: #fff;
+}
+
+.zmiti-choose-company-list li:hover {
+  background: #3390ff;
+  color: #fff;
+}

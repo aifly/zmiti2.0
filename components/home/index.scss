@@ -301,3 +301,24 @@ $color: #be0000;
 		}
 	}
 }
+.zmiti-choose-company-list{
+	@include displayFlex(row);
+	li{
+		margin: 0 10px;
+		height: 30px;
+		line-height: 30px;
+		background: #ddd;
+		padding: 0 10px;
+		cursor: pointer;
+		@include transition(.2s);
+		&.active{
+			background: #3390ff;
+			color:#fff;
+		}
+		&:hover{
+
+			background: #3390ff;
+			color:#fff;
+		}
+	}
+}
