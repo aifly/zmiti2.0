@@ -3,7 +3,7 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
-.zmiti-workorder-main-ui {
+.zmiti-submit-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
@@ -11,28 +11,46 @@
   margin: 0 auto;
 }
 
-.zmiti-workorder-main-ui .zmiti-avatar-list {
+.zmiti-pager {
+  margin: 0px auto;
+  width: 98%;
+  padding: 10px 0;
+  background: #eee;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: center;
+  -webkit-justify-content: center;
+  border: 1px solid #dcdee2;
+  border-top: none;
+}
+
+.zmiti-submit-main-ui .zmiti-cy-tag {
+  color: red;
+}
+
+.zmiti-submit-main-ui .zmiti-avatar-list {
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
 }
 
-.zmiti-workorder-main-ui .zmiti-avatar-list span {
+.zmiti-submit-main-ui .zmiti-avatar-list span {
   font-size: 40px;
   margin-right: 20px;
   cursor: pointer;
 }
 
-.zmiti-workorder-main-ui .zmiti-avatar-list span.active {
+.zmiti-submit-main-ui .zmiti-avatar-list span.active {
   color: #3390ff;
 }
 
-.zmiti-workorder-main-ui .ivu-table-wrapper {
+.zmiti-submit-main-ui .ivu-table-wrapper {
   border-bottom: none;
   border-right: none;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main {
+.zmiti-submit-main-ui .zmiti-list-main {
   box-sizing: border-box;
   background: #fff;
   margin: 0 auto;
@@ -45,7 +63,7 @@
   flex-flow: column;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main:before {
+.zmiti-submit-main-ui .zmiti-list-main:before {
   content: "";
   position: absolute;
   width: 100%;
@@ -55,18 +73,18 @@
   box-shadow: 0 0 0 1px #ccc;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main .zmiti-add-form-close {
+.zmiti-submit-main-ui .zmiti-list-main .zmiti-add-form-close {
   z-index: 100;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main > div {
+.zmiti-submit-main-ui .zmiti-list-main > div {
   margin: 10px auto 10px;
   position: relative;
   flex: 1;
   -webkit-flex: 1;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main > div .zmiti-meet-form {
+.zmiti-submit-main-ui .zmiti-list-main > div .zmiti-meet-form {
   width: 100%;
   margin: 0px auto;
   padding: 20px 40px;
@@ -74,7 +92,7 @@
   overflow: auto;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main .zmiti-list-where {
+.zmiti-submit-main-ui .zmiti-list-main .zmiti-list-where {
   width: 98%;
   margin: 10px auto 0;
   height: 40px;
@@ -82,38 +100,36 @@
   font-size: 14px;
   position: relative;
   z-index: 10;
-  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main .zmiti-list-where input {
+.zmiti-submit-main-ui .zmiti-list-main .zmiti-list-where input {
   height: 30px;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main .zmiti-workorder-main {
+.zmiti-submit-main-ui .zmiti-list-main .zmiti-submit-main {
   flex: 5;
   -webkit-flex: 5;
   width: 100%;
-  overflow: auto;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main .zmiti-workorder-main > div {
+.zmiti-submit-main-ui .zmiti-list-main .zmiti-submit-main > div {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.zmiti-workorder-main-ui .zmiti-list-main .zmiti-workorder-main .zmiti-workorder-table {
+.zmiti-submit-main-ui .zmiti-list-main .zmiti-submit-main .zmiti-submit-table {
   width: 98%;
   margin: 0 auto;
 }
 
-.zmiti-workorder-main-ui .lt-full {
+.zmiti-submit-main-ui .lt-full {
   position: fixed !important;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1001;
   overflow: hidden;
 }
 
-.zmiti-workorder-main-ui .lt-full .zmiti-left-pannel {
+.zmiti-submit-main-ui .lt-full .zmiti-left-pannel {
   position: absolute;
   width: 100%;
   height: 100px;
@@ -122,7 +138,7 @@
   z-index: 10;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form {
+.zmiti-submit-main-ui .zmiti-add-form {
   flex: 1;
   -webkit-flex: 1;
   width: 500px;
@@ -138,7 +154,7 @@
   background: #f9f9f9;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-safe-content {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-safe-content {
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
@@ -151,35 +167,35 @@
   padding: 10px 0;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(1) {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(1) {
   text-align: center;
   width: 120px;
   font-weight: bold;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(2) {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(2) {
   flex: 1;
   -webkit-flex: 1;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(3) {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-safe-content > div:nth-of-type(3) {
   width: 80px;
   cursor: pointer;
   text-align: center;
   color: #0066cc;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form.detail-enter-active, .zmiti-workorder-main-ui .zmiti-add-form.detail-leave-active {
+.zmiti-submit-main-ui .zmiti-add-form.detail-enter-active, .zmiti-submit-main-ui .zmiti-add-form.detail-leave-active {
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form.detail-enter, .zmiti-workorder-main-ui .zmiti-add-form.detail-leave-to {
+.zmiti-submit-main-ui .zmiti-add-form.detail-enter, .zmiti-submit-main-ui .zmiti-add-form.detail-leave-to {
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-workorder-avatar {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-submit-avatar {
   background: rgba(51, 144, 255, 0.1);
   border-radius: 50%;
   text-align: center;
@@ -191,7 +207,7 @@
   position: relative;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-workorder-avatar label {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-submit-avatar label {
   position: absolute;
   bottom: -50px;
   font-size: 12px;
@@ -200,33 +216,33 @@
   left: 0;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-workorder-avatar span {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-submit-avatar span {
   font-size: 40px;
   color: rgba(51, 144, 255, 0.8);
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-add-form-C {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-add-form-C {
   margin: 10px auto 2px;
   width: 90%;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-add-form-item {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-add-form-item {
   line-height: 50px;
   height: 50px;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
   text-align: center;
   position: relative;
   z-index: 10;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
   margin: 0 20px;
   padding: 2px 20px;
 }
 
-.zmiti-workorder-main-ui .zmiti-add-form .zmiti-add-form-item input {
+.zmiti-submit-main-ui .zmiti-add-form .zmiti-add-form-item input {
   padding-left: 6px;
   height: 32px;
   width: 70%;

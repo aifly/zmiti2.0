@@ -14,9 +14,19 @@
 			</section>
 			
 			<div class='zmiti-news-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<div class='zmiti-news-table' style='padding:0 10px;' :class="{'active':showDetail}">
-					<Table  :data='dataSource' :columns='columns'></Table>
-				</div>
+				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
+					<div slot='table-btns' style="display:inline-block">
+						<Poptip
+							confirm
+							title="确定要删除吗?"
+							@on-ok='selectionDelete'
+							>
+							<Button type='error' size='small'>删除</Button>
+							
+						</Poptip>
+						<Button size='small' type='warning'>禁用</Button>
+					</div>
+				</ZmitiTable>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
@@ -93,10 +103,14 @@
 	import VueQuillEditor from 'vue-quill-editor';
 	var {companyActions,newsActions,adminActions } = zmitiUtil;
 	import ZmitiMask from '../../common/mask/';
+<<<<<<< HEAD
 /*	import 'quill/dist/quill.core.css';
 	import 'quill/dist/quill.snow.css';
 	import 'quill/dist/quill.bubble.css';*/
 	Vue.use(VueQuillEditor)
+=======
+	import ZmitiTable from '../../common/table';
+>>>>>>> 2a90377c333555eb5a9a1a73ce7a7d5a83cd537e
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -246,7 +260,7 @@
 						}
 					}
 				],
-				
+				loading:true,
 				formcompany:{
 					pdfurl:'',
 					longitude :'116.585856',
@@ -266,11 +280,13 @@
 					page_size:10,
 				},
 				userList:[],
-				userinfo:{}
+				userinfo:{},
+				total:0
 			}
 		},
 		components:{
-			ZmitiMask
+			ZmitiMask,
+			ZmitiTable
 		},
 
 		beforeCreate(){
@@ -302,6 +318,24 @@
 		},
 		
 		methods:{
+
+			change(){
+				
+			},
+			getSelection(data){
+				this.selectList = data;
+			},
+			selectionDelete(){
+				if(this.selectList.length<=0){
+					this.$Message.error({content:'您还未选择任何要删除的项',duration:5});
+					return;
+				}
+				var newsids = this.selectList.map(item=>{
+					return item.newsid;
+				}).join(',');
+				
+				this.delete(newsids);
+			},
 		 
 			closeMaskPage(){
 				Vue.obserable.trigger({
@@ -328,7 +362,6 @@
 						info:{
 							newsids
 						}
-						
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
@@ -351,8 +384,10 @@
 							condition:this.condition
 						},
 						success(data){
+							s.loading = false;
 							if(data.getret === 0){
 								s.dataSource = data.list;
+								s.total = data.total || data.list.length;
 								s.dataSource.forEach(item=>{
 									item.productids = item.productidslist.map(p=>{
 										return p.productid;
@@ -391,14 +426,14 @@
 				var id = this.formObj.newsid;
 				var action =  id ? newsActions.editNews.action:newsActions.addNews.action;
 				
-				var {newsid,title,content,newstype,productids} = this.formObj;
+				var {newsid,title,content,newstype,productids,status} = this.formObj;
 				var productids = productids.join(',');
 				zmitiUtil.adminAjax({
 					remark:id ?　'editNews':'addNews',
 					data:{
 						action,
 						info:{
-							newsid,title,content,newstype,productids
+							newsid,title,content,newstype,productids,status
 						}
 					},
 					success(data){

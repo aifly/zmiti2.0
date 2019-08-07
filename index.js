@@ -21,6 +21,7 @@ import usercheck from './components/usercheck';
 import checkproduct from './components/checkproduct';
 import order from './components/order';
 import companyinfo from './components/companyinfo';
+import companydetail from './components/companydetail';
 import consume from './components/consume';
 import workorderlist from './components/workorderlist';
 
@@ -84,6 +85,7 @@ const router = new VueRouter({
 			{ path: "/checkproduct/:id?", name: "checkproduct", component: checkproduct},
 			{ path: "/order", name: "order", component: order},
 			{ path: "/companyinfo", name: "companyinfo", component:companyinfo},
+			{ path: "/companydetail", name: "companydetail", component: companydetail},
 			{ path: "/consume", name: "consume", component: consume},
 			{ path: "/workorderlist/:id?", name: "workorderlist", component:workorderlist},
 		]

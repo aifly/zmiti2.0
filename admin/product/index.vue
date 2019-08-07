@@ -17,7 +17,7 @@
 				<ul>
 					<li v-for='(data,i) of dataSrouce' :key="i">
 						<div>
-							<router-link :to='data.managerurl'>
+							<router-link :to='data.managerurl+"/"+data.productid'>
 								{{data.productname}} <span class='zmt_iconfont' v-html='"&#xe64e;"'></span>
 							</router-link>
 						</div>

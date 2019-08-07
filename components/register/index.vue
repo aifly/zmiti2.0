@@ -25,7 +25,8 @@
 								<Input v-model="formUser.realname" placeholder="真实姓名：" />
 							</FormItem>
 							<FormItem label="密码：" prop='password'>
-								<Input type='password' v-model="formUser.password" placeholder="密码：" />
+								<Input type='password'   autocomplete="off" v-model="formUser.password" placeholder="密码：" />
+								<Input type='text' class='zmiti-password-input'   autocomplete="off" v-model="formUser.password" placeholder="密码：" />
 							</FormItem>
 							<FormItem label="确认密码：" v-if='false'>
 								<Input type='password' v-model="formUser.repassword" placeholder="确认密码：" />

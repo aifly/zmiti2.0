@@ -3,6 +3,33 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
+.zmiti-user-table {
+  width: 98%;
+  margin: 0 auto;
+}
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.zmiti-pager {
+  margin: 0px auto;
+  width: 98%;
+  padding: 10px 0;
+  background: #eee;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: center;
+  -webkit-justify-content: center;
+  border: 1px solid #dcdee2;
+  border-top: none;
+}
+
 .zmiti-tab-header {
   width: 50px;
   display: flex;

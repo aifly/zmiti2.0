@@ -12,7 +12,19 @@
 			</section>
 			
 			<div class='zmiti-submit-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total"></ZmitiTable>
+				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
+					<div slot='table-btns' style="display:inline-block">
+						<Poptip
+							confirm
+							title="确定要删除吗?"
+							@on-ok='selectionDelete'
+							>
+							<Button type='error' size='small'>删除</Button>
+							
+						</Poptip>
+						<Button size='small' type='warning'>禁用</Button>
+					</div>
+				</ZmitiTable>
 			</div>
 		</div>
 			 
@@ -236,6 +248,20 @@
 			change(e){
 				this.condition.page_index = e -1;
 				this.getMyCheckList();
+			},
+			getSelection(data){
+				this.selectList = data;
+			},
+			selectionDelete(){
+				if(this.selectList.length<=0){
+					this.$Message.error({content:'您还未选择任何要删除的项',duration:5});
+					return;
+				}
+				var manuscriptids = this.selectList.map(item=>{
+					return item.manuscriptid;
+				}).join(',');
+				
+				this.delete(manuscriptids);
 			},
 			closeMaskPage(){
 				this.showDetailPage = -1;
