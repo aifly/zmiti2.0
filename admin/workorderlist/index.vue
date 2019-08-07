@@ -12,9 +12,19 @@
 				</section>
 				
 				<div class='zmiti-workorder-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-					<div class='zmiti-workorder-table' :class="{'active':showDetail}">
-						<Table  :data='dataSource' :columns='columns'></Table>
+					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
+					<div slot='table-btns' style="display:inline-block">
+						<Poptip
+							confirm
+							title="确定要删除吗?"
+							@on-ok='selectionDelete'
+							>
+							<Button type='error' size='small'>删除</Button>
+							
+						</Poptip>
+						<Button size='small' type='warning'>禁用</Button>
 					</div>
+				</ZmitiTable>
 				</div>
 
 			</section>
@@ -35,6 +45,7 @@
 	import zmitiUtil from '../../common/lib/util';
 	import WorkOrderDetail from '../../common/workorderdetail';
 	import {orderStatus,workOrderType} from '../../common/config';
+	import ZmitiTable from '../../common/table'
 	var adminActions = zmitiUtil.adminActions;
 	
 	export default {
@@ -42,6 +53,8 @@
 		name:'zmitiindex',
 		data(){
 			return{
+
+				loading:true,
 
 				tabIndex:[0,-1],
 				showAvatarModal:false,
@@ -159,6 +172,7 @@
 				directoryList:{
 
 				},
+				total:0,
 				condition:{
 					page_index:0,
 					page_size:10,
@@ -167,7 +181,8 @@
 			}
 		},
 		components:{
-			WorkOrderDetail
+			WorkOrderDetail,
+			ZmitiTable
 		},
 
 		beforeCreate(){
@@ -199,6 +214,23 @@
 		
 		methods:{
 			formatDate:zmitiUtil.formatDate,
+			change(e){
+				this.condition.page_index = e -1;
+				this.getDataList();
+			},
+			getSelection(data){
+				this.selectList = data;
+			},
+			selectionDelete(){
+				if(this.selectList.length<=0){
+					this.$Message.error({content:'您还未选择任何要删除的项',duration:5});
+					return;
+				}
+				var departmentids = this.selectList.map(item=>{
+					return item.departmentid;
+				}).join(',');
+				this.delete(departmentids);
+			},
 			getAvatar(avatar){
 				this.formCompany.avatar = avatar;
 			},
@@ -240,8 +272,10 @@
 							condition:this.condition
 						},
 						success(data){
+							s.loading = false;
 							if(data.getret === 0){
-								s.dataSource = data.list;	 
+								s.dataSource = data.list;	
+								s.total = data.tatal||data.list.length; 
 								resolve();
 							}
 						}

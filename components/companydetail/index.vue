@@ -2,7 +2,7 @@
 	<div class="zmiti-submit-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div><span v-if='companyname'>{{companyname}} —— </span>单位授权</div>
+				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅</div>
 				<div>
 					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
 				</div>

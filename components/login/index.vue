@@ -8,18 +8,19 @@
 					<div :class="{'active':userFocus}">
 						<label>
 							<img :src="imgs.loginPerson" alt="">
-							<input @focus='userFocus = true' @blur='userFocus = false' type="text" v-model="username" placeholder="请输入账号">
+							<input @focus='userFocus = true;errMsg = ""' @blur='userFocus = false' type="text" v-model="username" placeholder="请输入账号">
 						</label>
 						<div class='zmiti-login-error' v-if='loginError'>{{loginError}}</div>
 					</div>
 					<div :class="{'active':passFocus}">
 						<label>
 							<img :src="imgs.loginLock" alt="">
-							<input  @focus='passFocus = true' @blur='passFocus = false'  @keydown.13='login' type="password" v-model="password" placeholder="请输入密码">
+							<input  @focus='passFocus = true;errMsg = ""' @blur='passFocus = false'  @keydown.13='login' type="password" v-model="password" placeholder="请输入密码">
 						</label>
 					</div>
 					<div class='zmiti-remember-pass'>
 						<label><router-link to='register'>用户注册</router-link></label>
+						<label v-if='errMsg' style="color:#f00;font-weight:bold;">{{errMsg}}</label>
 						<label><Checkbox v-model="checked">记住密码</Checkbox></label>
 					</div>
 					<div class='zmiti-login-btn' v-press>
@@ -67,6 +68,7 @@
 				username:'',
 				userFocus:false,
 				passFocus:false,
+				errMsg :"",
 				password:'',
 				loginError:'',
 				checked:false,
@@ -172,11 +174,9 @@
 							}
 
 							
-
-
-							
 						}else{
-							_this.$Message.error(data.msg);
+							_this.errMsg = data.msg;
+							//_this.$Message.error(data.msg);
 						}
 					}
 				})

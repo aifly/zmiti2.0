@@ -113,6 +113,10 @@ let adminActions = {
 	getCMSList:{
 		desc:'获取CMS列表',
 		action:'1001903'
+	},
+	getCompanyByProduct:{
+		desc:'获取使用产品的单位列表',
+		action:'1000304'
 	}
 	
 }

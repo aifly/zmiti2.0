@@ -363,6 +363,7 @@
 				console.log(this.myProductList,this.checkedProductList)
 			})
 
+
 			/*  zmitiUtil.ajax({
 				 remark:'getDepartmentList',
 				 data:{

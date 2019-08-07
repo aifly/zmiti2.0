@@ -1,6 +1,36 @@
 @charset "utf-8";
 @import "./base.scss";
 
+.zmiti-user-table {
+	width: 98%;
+	margin: 0 auto;
+
+	.ivu-table-wrapper {
+		//margin-top: 10px;
+	}
+
+	&.active {
+		///width: 70%;
+	}
+	}
+@at-root.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+@at-root.zmiti-pager{
+	margin: 0px auto;
+	width: 98%;
+	padding: 10px 0;
+	background: #eee;
+	@include displayFlex(row);
+	justify-content: center;
+	-webkit-justify-content: center;
+	border:1px solid #dcdee2;
+	border-top: none;
+}
 
 .zmiti-tab-header {
 	width: 50px;

@@ -4,6 +4,7 @@
 			<header class="zmiti-tab-header">
 				<div><span v-if='companyname'>{{companyname}} —— </span>用户列表</div>
 				<div>
+					<Button :loading='loading' @click="getDataList()" type="primary">添加用户</Button>
 					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
 				</div>
 			</header>

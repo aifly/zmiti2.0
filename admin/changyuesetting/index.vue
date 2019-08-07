@@ -12,9 +12,19 @@
 			</section>
 			
 			<div class='zmiti-user-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<div class='zmiti-user-table' :class="{'active':showDetail}">
-					<Table   :loading='isLoading' :data='dataSrouce' :columns='columns'></Table>
-				</div>
+				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
+					<div slot='table-btns' style="display:inline-block">
+						<Poptip
+							confirm
+							title="确定要删除吗?"
+							@on-ok='selectionDelete'
+							>
+							<Button type='error' size='small'>删除</Button>
+							
+						</Poptip>
+						<Button size='small' type='warning'>禁用</Button>
+					</div>
+				</ZmitiTable>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
@@ -71,20 +81,6 @@
 				</div>
 			</ZmitiMask>
 
-		<Modal title='加入单位' v-model="visible">
-			<div>
-				 <Transfer
-					:data="unJoinedCompany"
-					:titles="['单位列表','当前加入的单位']"
-					:target-keys="targetKeys"
-					filterable
-					:filter-method="filterMethod"
-					@on-change="handleChange2">
-				</Transfer>
-			</div>
-		</Modal>
- 
-		<Avatar v-model="showAvatarModal" :avatar='formObj.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
@@ -95,8 +91,8 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
+	import ZmitiTable from '../../common/table';
 	var {companyActions,adminActions} = zmitiUtil;
 
 	export default {
@@ -104,11 +100,10 @@
 		name:'zmitiindex',
 		data(){
 			return{
-
-				
 				targetKeys:[],
 				showAvatarModal:false,
 				visible:false,
+				loading:true,
 				avatarList:[
 					'&#xe6a5;',
 					'&#xe6a4;',
@@ -136,7 +131,7 @@
 				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
-				dataSrouce:[],
+				dataSource:[],
 				groupList:[],
 				companyList:[],
 				hideMenu:false,
@@ -242,16 +237,18 @@
 				directoryList:{
 
 				},
+				total:0,
 				condition:{
 					page_index:0,
 					page_size:10,
 				},
-				userinfo:{}
+				userinfo:{},
+				selectList:[]
 			}
 		},
 		components:{
-			Avatar,
-			ZmitiMask
+			ZmitiMask,
+			ZmitiTable
 		},
 
 		beforeCreate(){
@@ -289,6 +286,23 @@
 		},
 		
 		methods:{
+			change(){
+				
+			},
+			getSelection(data){
+				this.selectList = data;
+			},
+			selectionDelete(){
+				if(this.selectList.length<=0){
+					this.$Message.error({content:'您还未选择任何要删除的项',duration:5});
+					return;
+				}
+				var cmsids = this.selectList.map(item=>{
+					return item.cmsid;
+				}).join(',');
+				
+				this.delete(cmsids);
+			},
 
 			addAdmin(){
 				this.showDetail = true;
@@ -303,104 +317,7 @@
 			closeMaskPage(){
 				this.showDetailPage = -1;
 			},
-			handleChange2(ids,index,companyids){
-				var s = this;
-				companyids.forEach((companyid,i)=>{
-					zmitiUtil.adminAjax({
-						remark:index === 'left'?"exitCompany":"joinCompany",
-						data:{
-							action:companyActions[index === 'left'?"exitCompany":"joinCompany"].action,
-							userid:s.currentUserid,
-							companyid
-						},
-						success(data){
-							s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg);
-							s.getJoinedCompany();
-						}
-					});
-				})
-
-			},
-			filterMethod (data, query) {
-                return data.label.indexOf(query) > -1;
-            },
-			getJoinedCompany(){
-				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'getJoinedCompany',
-					data:{
-						action:companyActions.getJoinedCompany.action,
-						condition:{
-							userid:s.currentUserid,
-							page_index:0,
-							page_size:20,
-						}
-					},
-					success(data){
-						if(data.getret === 0){
-							s.targetKeys = [];
-							data.list.forEach(dt=>{
-								s.targetKeys .push(dt.companyid)
-							})
-						}
-					}
-				});
-			},
-			 
-			getCompanyList(){
-				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'getCompanyList',
-					data:{
-						action:companyActions.getCompanyList.action,
-						condition:{
-							page_index:0,
-							page_size:100
-						}
-					},
-					success(data){
-						if(data.getret === 0){
-							s.companyList = data.list;
-							s.unJoinedCompany = [];
-							s.companyList.forEach(dt=>{
-								if(dt.companyid === s.$route.params.companyid){
-									s.companyname = dt.companyname;
-								}
-								s.unJoinedCompany .push({
-									key : dt.companyid,
-									label:dt.companyname,
-									description:dt.companyname,
-								})
-
-							})
-							console.log(s.companyList);
-						}
-					}
-				})
-				
-			},
-		
-			getAvatar(avatar){
-				this.formObj.avatar = avatar;
-			},
-			initPassword(){//初始化密码
-				var {$Message} = this;
-				zmitiUtil.adminAjax({
-					data:{
-						action:companyActions.modifyAdminPassword.action,
-						adminuserid:this.formObj.adminuserid,
-						adminpwd:window.config.defaultPass
-					},
-					success(data){
-						$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							
-						}
-					}
-				});
-			},
 			addAdmin(){
-
 				this.showDetail = true;
 				this.adminuserId = '';
 				this.formObj = {
@@ -414,6 +331,7 @@
 				Vue.obserable.trigger({type:'toggleMask',data:flag});
 			},
 
+			
 			delete(cmsids){
 				var s = this;
 				zmitiUtil.adminAjax({
@@ -430,7 +348,7 @@
 							s.closeMask()
 							
 							s.getDataList();
-							///s.dataSrouce = data.list;	 
+							///s.dataSource = data.list;	 
 						}
 					}
 				})
@@ -448,9 +366,10 @@
 							condition:s.condition
 						},
 						success(data){
-							s.isLoading = false;
+							s.loading = false;
 							if(data.getret === 0){
-								s.dataSrouce = data.list;	 
+								s.dataSource = data.list;
+								s.total = data.total||data.list.length;
 								resolve();
 							}
 						}

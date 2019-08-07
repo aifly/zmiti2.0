@@ -1,13 +1,31 @@
 ﻿@import "../css/base.scss";
 
 
-.zmiti-workorder-main-ui {
-  background: #f2f2f2;
-  box-sizing: border-box;
-  height: 100%;
-  width: 99%;
-  margin: 0 auto;
 
+.zmiti-submit-main-ui {
+	background: #f2f2f2;
+	box-sizing: border-box;
+	height: 100%;
+	width: 99%;
+	margin: 0 auto;
+
+	  
+	@at-root.zmiti-pager{
+		margin: 0px auto;
+		width: 98%;
+		padding: 10px 0;
+		background: #eee;
+		@include displayFlex(row);
+		justify-content: center;
+		-webkit-justify-content: center;
+		border:1px solid #dcdee2;
+		border-top: none;
+		
+	}
+	
+	.zmiti-cy-tag{
+		color:red;
+	}
   .zmiti-avatar-list{
 	  @include displayFlex(row);
 	  span{
@@ -77,23 +95,22 @@
 	  font-size:14px;
 	  @include pos(r);
 	  z-index: 10;
-	  border: 1px solid rgba(0,0,0,.1);
 	  input{
 		  height: 30px;
 	  }
 	  
     }
 
-    .zmiti-workorder-main {
+    .zmiti-submit-main {
       flex: 5;
 	  -webkit-flex: 5;
 	  width: 100%;
-	  overflow: auto;
+
       & > div {
         @include transition(0.3s);
       }
 
-      .zmiti-workorder-table {
+      .zmiti-submit-table {
         width: 98%;
         margin: 0 auto;
 
@@ -177,7 +194,7 @@
 	}
 	
 
-	.zmiti-workorder-avatar{
+	.zmiti-submit-avatar{
 		background: rgba(51,144,255,.1);
 		@include br();
 		text-align: center;

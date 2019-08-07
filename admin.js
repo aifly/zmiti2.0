@@ -109,7 +109,7 @@ const router = new VueRouter({
 		 {
 			path: '/group/', name: 'group', component: group, children: [
 				{ path: '/user/:companyid?', name: 'user', component:user  },
-				{ path: '/adminchangyue/', name: 'adminchangyue', component:changyue  },
+				{ path: '/adminchangyue/:id?', name: 'adminchangyue', component:changyue  },
 				{ path: '/adminchangyuesetting', name: 'adminchangyuesetting', component: changyuesetting },
 				{ path: '/adminchangyuelog', name: 'adminchangyuelog', component:  changyuelog},
 				{ path: '/company/', name: 'company', component: company },

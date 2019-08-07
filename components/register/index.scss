@@ -64,7 +64,20 @@ $color: #373d41;
           outline: none;
         }
       }
-    }
+	}
+	
+
+
+  }
+
+  .zmiti-password-input{
+	  @include pos(a);
+	  top: 0;
+	  opacity:0;
+	  input{
+		color:#fff;
+	  }
+	 
   }
   & > header {
     height: 64px;
