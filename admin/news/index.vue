@@ -40,7 +40,15 @@
 							<Input v-model="formObj.title" placeholder="新闻标题：" />
 						</FormItem>
 						<FormItem label="新闻内容：">
-							<Input v-model="formObj.content" type='textarea' placeholder="新闻内容：" />
+							<!-- <Input v-model="formObj.content" type='textarea' placeholder="新闻内容：" /> -->
+							<quill-editor 
+							v-model="formObj.content" 
+							ref="myQuillEditor" 
+							aria-placeholder="123"
+							:options="editorOption" 
+							@blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+							@change="onEditorChange($event)">
+							</quill-editor>
 						</FormItem>
 						<FormItem label="发布者：">
 							<Input v-model="formObj.author" placeholder="发布者：" />
@@ -82,9 +90,13 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	
+	import VueQuillEditor from 'vue-quill-editor';
 	var {companyActions,newsActions,adminActions } = zmitiUtil;
 	import ZmitiMask from '../../common/mask/';
+/*	import 'quill/dist/quill.core.css';
+	import 'quill/dist/quill.snow.css';
+	import 'quill/dist/quill.bubble.css';*/
+	Vue.use(VueQuillEditor)
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -101,6 +113,18 @@
 					'&#xe6a2;',
 					'&#xe6a0;'
 				],
+				editorOption:{
+					modules:{
+                        toolbar:[
+						  ['bold', 'italic', 'underline','code', 'strike','color','link'],        // toggled buttons
+						  [{size:['small',false,'large','huge','12']}],//'12','14',false,'16','18','20','22','24'
+						  [{ 'color': [] }],
+						  [{ 'align': [] }],
+						  [{list:'ordered'},{list:'bullet'}],
+                          ['code-block','image','video','clean']
+                        ]
+                    }
+				},
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
@@ -386,6 +410,12 @@
 					}
 				})
 			},
+			onEditorBlur(){//失去焦点事件
+            },
+            onEditorFocus(){//获得焦点事件
+            },
+            onEditorChange(){//内容改变事件
+            }
 		}
 	}
 </script>
