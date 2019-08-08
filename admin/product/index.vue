@@ -21,7 +21,7 @@
 								{{data.productname}} <span class='zmt_iconfont' v-html='"&#xe64e;"'></span>
 							</router-link>
 						</div>
-						<div>{{data.introduce}}</div>
+						<div v-html="data.introduce"></div>
 						<div>
 							<div>创建时间：{{formatDate(data.createtime).substr(0,10)}}</div>
 							<div>
@@ -43,7 +43,7 @@
 			<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
 				<section slot='mask-content' class='zmiti-add-form zmiti-scroll' >
 					<header class='zmiti-add-header'>
-						<img :src="imgs.back" alt=""   @click='showDetail = false' >
+						<img :src="imgs.back" alt=""   @click='closeMaskPage'>
 						<span>产品信息</span>
 					</header>
 					<div class='zmiti-product-avatar' @click="showAvatarModal = true">
@@ -55,7 +55,14 @@
 							<Input v-model="formObj.productname"  placeholder="产品名：" />
 						</FormItem>
 						<FormItem label="产品介绍：">
-							<Input v-model="formObj.introduce" placeholder="产品介绍：" />
+							<quill-editor 
+							v-model="formObj.introduce" 
+							ref="myQuillEditor" 
+							aria-placeholder="123"
+							:options="editorOption" 
+							@blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+							@change="onEditorChange($event)">
+							</quill-editor>
 						</FormItem>
 						<FormItem label="用户端链接：">
 							<Input v-model="formObj.producturl" placeholder="用户端链接：" />
@@ -82,7 +89,9 @@
 		<Avatar v-model="showAvatarModal" :avatar='formObj.icon' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
-
+<style type="text/css">
+.ql-editor{height:200px;}
+</style>
 <style lang="scss" scoped>
 	@import './index.scss';
 </style>
@@ -92,9 +101,9 @@
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask';
-
+	import VueQuillEditor from 'vue-quill-editor';
 	var {adminActions,companyActions,formatDate } = zmitiUtil;
-
+	Vue.use(VueQuillEditor)
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -145,7 +154,14 @@
 					page_index:0,
 					page_size:10,
 				},
-				userinfo:{}
+				userinfo:{},
+				editorOption:{
+					modules:{
+                        toolbar:[
+						  ['link']
+                        ]
+                    }
+				},
 			}
 		},
 		components:{
@@ -198,6 +214,10 @@
 			},
 			closeMaskPage(){
 				this.showDetailPage = -1;
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:false
+				})
 			},
 			 
 			getAvatar(avatar){
@@ -290,6 +310,12 @@
 					}
 				})
 			},
+			onEditorBlur(){//失去焦点事件
+            },
+            onEditorFocus(){//获得焦点事件
+            },
+            onEditorChange(){//内容改变事件
+            }
 		}
 	}
 </script>
