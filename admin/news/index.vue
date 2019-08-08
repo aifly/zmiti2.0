@@ -146,7 +146,7 @@
 						title:'操作',
 						key:'action',
 						align:'center',
-						width:200,
+						width:150,
 						render:(h,params)=>{
 
 							return h('div', [
