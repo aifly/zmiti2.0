@@ -92,7 +92,9 @@
  
 	</div>
 </template>
-
+<style type="text/css">
+.ql-editor{height:200px;}
+</style>
 <style lang="scss" scoped>
 	@import './index.scss';
 </style>
@@ -124,7 +126,7 @@
 				editorOption:{
 					modules:{
                         toolbar:[
-						  ['bold', 'strike','color','link'],        // toggled buttons
+						  ['bold', 'link'],        // toggled buttons
 						  [{ 'color': [] }],
 						  [{ 'align': [] }],
                           ['clean']
