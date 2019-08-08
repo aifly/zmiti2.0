@@ -145,13 +145,23 @@
 
 		},
 		created(){
-			this.newsid=this.$route.params.newsid;
+			this.newsid=this.$route.params.newsid;			
 		},
 		mounted(){
 			window.s = this;
-			this.userinfo = zmitiUtil.getAdminUserInfo();
-			this.getDataList();
+			this.userinfo = zmitiUtil.getAdminUserInfo();			
 			this.getProductList();
+			//console.log(this.newsid,'this.newsid');
+			if(this.newsid==undefined){ 
+				this.formObj = {
+					newstype:0
+				};
+				//console.log('现在是新增')
+			}else{
+				//console.log('现在是编辑');
+				this.getDataList();
+			}
+
 		},
 		methods:{
 			addAdmin(){
@@ -184,7 +194,6 @@
 									s.formObj.productids.push(item.productid);
 								})
 								//console.log(s.formObj,'s.formObj');
-								resolve();
 							}
 						}
 					})
@@ -206,7 +215,7 @@
 					success(data){
 						if(data.getret === 0){
 							s.productList = data.list;	 
-							console.log(s.productList,'s.productList');
+							//console.log(s.productList,'s.productList');
 						}
 					}
 				})

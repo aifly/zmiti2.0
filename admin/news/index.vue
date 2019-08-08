@@ -28,67 +28,9 @@
 					</div>
 				</ZmitiTable>
 			</div>
-			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
+
 		</div>
-		<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
-			<div slot='mask-content' name='detail'>
-				<section class='zmiti-add-form zmiti-scroll'  >
-					<header class='zmiti-add-header'>
-						<img :src="imgs.back" alt=""  @click='closeMaskPage' >
-						<span>基础信息</span>
-					</header>
-					<h2 style="height:30px;"></h2>
-					<Form class='zmiti-add-form-C' :model="formObj" :label-width="120">
-						<FormItem label="新闻分类：">
-							<RadioGroup v-model="formObj.newstype">
-								<Radio :value='0' :label="0">新闻</Radio>
-								<Radio :value='-1' :label="-1">公告</Radio>
-								<Radio :value='1' :label="1">产品更新说明</Radio>
-							</RadioGroup>
-						</FormItem>
-						<FormItem label="新闻标题：">
-							<Input v-model="formObj.title" placeholder="新闻标题：" />
-						</FormItem>
-						<FormItem label="新闻内容：">
-							<!-- <Input v-model="formObj.content" type='textarea' placeholder="新闻内容：" /> -->
-							<quill-editor 
-							v-model="formObj.content" 
-							ref="myQuillEditor" 
-							aria-placeholder="123"
-							:options="editorOption" 
-							@blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
-							@change="onEditorChange($event)">
-							</quill-editor>
-						</FormItem>
-						<FormItem label="发布者：">
-							<Input v-model="formObj.author" placeholder="发布者：" />
-						</FormItem>
-						<FormItem label="新闻所属产品：">
-							<Select v-model="formObj.productids" multiple >
-								<Option :data='item.productid' v-for="item in productList" :value="item.productid" :key="item.productid">{{ item.productname }}</Option>
-							</Select>
-						</FormItem>
-						<FormItem label="点击量：">
-							<InputNumber v-model="formObj.views" placeholder="点击量：" />
-						</FormItem>
-						
-						<FormItem label="状态：">
-							<RadioGroup v-model="formObj.status">
-								<Radio :value='0' :label="0">禁用</Radio>
-								<Radio :value='1' :label="1">待发</Radio>
-								<Radio :value='2' :label="2">发布</Radio>
-							</RadioGroup>
-						</FormItem>
-						 
-					</Form>
-					
-					<div class='zmiti-add-form-item zmiti-add-btns'>
-						<Button size='large' type='primary' @click='adminAction'>{{formObj.newsid?'保存':'确定'}}</Button>
-					</div>
-					
-				</section>
-			</div>
-		</ZmitiMask>
+
  
 	</div>
 </template>
@@ -96,13 +38,9 @@
 	@import './index.scss';
 </style>
 <script>
-
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import VueQuillEditor from 'vue-quill-editor';
 	var {companyActions,newsActions,adminActions } = zmitiUtil;
-	import ZmitiMask from '../../common/mask/';
-	Vue.use(VueQuillEditor)
 	import ZmitiTable from '../../common/table';
 	export default {
 		props:['obserable'],
@@ -274,7 +212,6 @@
 			}
 		},
 		components:{
-			ZmitiMask,
 			ZmitiTable
 		},
 
@@ -288,22 +225,9 @@
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getDataList();
-			this.getProductList();
 		},
 
-		watch:{
-			
-
-			showDetail(val){
-				if(val){
-					Vue.obserable.trigger({type:'toggleMask',data:true});
-				}else{
-					setTimeout(() => {
-						this.showDetailPage = -1;
-					}, 310);
-				}
-			}
-			
+		watch:{			
 		},
 		
 		methods:{
@@ -333,14 +257,6 @@
 				})
 			},
 			
-			addAdmin(){
-				this.showDetail = true;
-				this.adminuserId = '';
-				this.formObj = {
-					newstype:0
-				};
-				Vue.obserable.trigger({type:'toggleMask',data:true});
-			},
 
 			delete(newsids){
 				var s = this;
@@ -377,63 +293,14 @@
 							if(data.getret === 0){
 								s.dataSource = data.list;
 								s.total = data.total || data.list.length;
-								s.dataSource.forEach(item=>{
-									item.productids = item.productidslist.map(p=>{
-										return p.productid;
-									}).join(',');
-								})
-
 								resolve();
 							}
 						}
 					})
 				}); 
 				
-			},
+			},			 
 
-			getProductList(){
-
-				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'getProductList',
-					data:{
-						action:adminActions.getProductList.action,
-						condition:this.condition
-					},
-					success(data){
-						if(data.getret === 0){
-							s.productList = data.list;	 
-							//console.log(s.productList,'s.productList')
-						}
-					}
-				})
-			},
-		
-			 
-			adminAction(){
-				var s = this;
-				var id = this.formObj.newsid;
-				var action =  id ? newsActions.editNews.action:newsActions.addNews.action;
-				
-				var {newsid,title,content,newstype,productids,status} = this.formObj;
-				var productids = productids.join(',');
-				zmitiUtil.adminAjax({
-					remark:id ?　'editNews':'addNews',
-					data:{
-						action,
-						info:{
-							newsid,title,content,newstype,productids,status
-						}
-					},
-					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							Vue.obserable.trigger({type:'toggleMask',data:false});
-							s.getDataList();
-						}
-					}
-				})
-			},
 			onEditorBlur(){//失去焦点事件
             },
             onEditorFocus(){//获得焦点事件
