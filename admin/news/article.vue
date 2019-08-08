@@ -4,7 +4,7 @@
 			<header class="zmiti-tab-header">
 				<div>新闻管理</div>
 				<div>
-					<Button type="primary"><router-link :to="{name:'news'}">新闻</router-link></Button>
+					<Button type="default"><router-link :to="{name:'news'}">返回</router-link></Button>
 					
 				</div>
 			</header>
@@ -62,8 +62,7 @@
 	</div>
 </template>
 <style type="text/css">
-	.ivu-btn-primary a{color: #ffffff;}
-	.ql-editor{height:200px;}
+.ql-editor{height:200px;}
 </style>
 <style lang="scss" scoped>
 	@import './index.scss';
@@ -180,8 +179,11 @@
 							s.loading = false;
 							if(data.getret === 0){
 								s.formObj = data.list[0];
-								console.log(s.formObj,'s.formObj')
-
+								s.formObj.productids=[];
+								data.list[0].productidslist.map((item,index)=>{
+									s.formObj.productids.push(item.productid);
+								})
+								//console.log(s.formObj,'s.formObj');
 								resolve();
 							}
 						}
@@ -204,7 +206,7 @@
 					success(data){
 						if(data.getret === 0){
 							s.productList = data.list;	 
-							
+							console.log(s.productList,'s.productList');
 						}
 					}
 				})
@@ -240,9 +242,14 @@
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							s.getDataList();
-						}
+						setTimeout(() => {
+							s.formObj={
+								isover:0,
+								newstype:0,
+								avatar:'&#xe6a4;'
+							}
+							s.$router.push({name:'news'});
+						}, 2000);						
 					}
 				})
 			},

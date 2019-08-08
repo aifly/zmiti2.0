@@ -175,4 +175,10 @@
 .ivu-radio-inner:after {
   border-radius: 10px !important; }
 
+.ivu-btn a {
+  color: #333; }
+
+.ivu-btn-primary a {
+  color: #ffffff; }
+
 /*# sourceMappingURL=index.css.map */

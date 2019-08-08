@@ -4,7 +4,7 @@
 			<header class="zmiti-tab-header">
 				<div>新闻管理</div>
 				<div>
-					<Button type="primary" @click="addAdmin">新增新闻</Button>
+					<Button type="primary"><router-link :to="{name:'article'}">新增新闻</router-link></Button>
 				</div>
 			</header>
 			<section class='zmiti-list-where'>
@@ -209,7 +209,7 @@
                                         click: () => {
 											var s = this;
 											s.formObj = params.row;
-											console.log(s.formObj,'s.formObj');
+											//console.log(s.formObj,'s.formObj');
 											this.$router.push({name:'article',params:{newsid:params.row.newsid}});
                                         }
                                     }
@@ -403,7 +403,7 @@
 					success(data){
 						if(data.getret === 0){
 							s.productList = data.list;	 
-							console.log(s.productList,'s.productList')
+							//console.log(s.productList,'s.productList')
 						}
 					}
 				})
