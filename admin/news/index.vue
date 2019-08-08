@@ -103,14 +103,8 @@
 	import VueQuillEditor from 'vue-quill-editor';
 	var {companyActions,newsActions,adminActions } = zmitiUtil;
 	import ZmitiMask from '../../common/mask/';
-<<<<<<< HEAD
-/*	import 'quill/dist/quill.core.css';
-	import 'quill/dist/quill.snow.css';
-	import 'quill/dist/quill.bubble.css';*/
 	Vue.use(VueQuillEditor)
-=======
 	import ZmitiTable from '../../common/table';
->>>>>>> 2a90377c333555eb5a9a1a73ce7a7d5a83cd537e
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -130,12 +124,10 @@
 				editorOption:{
 					modules:{
                         toolbar:[
-						  ['bold', 'italic', 'underline','code', 'strike','color','link'],        // toggled buttons
-						  [{size:['small',false,'large','huge','12']}],//'12','14',false,'16','18','20','22','24'
+						  ['bold', 'strike','color','link'],        // toggled buttons
 						  [{ 'color': [] }],
 						  [{ 'align': [] }],
-						  [{list:'ordered'},{list:'bullet'}],
-                          ['code-block','image','video','clean']
+                          ['clean']
                         ]
                     }
 				},

@@ -31,6 +31,7 @@ import Home from './admin/home';
 
 
 import './admin/css/index.css';
+import './admin/css/quill.css';
 import './components/css/theme.less'
 ///import 'iview/dist/styles/iview.css';
 
