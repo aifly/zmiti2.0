@@ -224,7 +224,7 @@
 				var id = this.formObj.newsid;
 				var action =  id ? newsActions.editNews.action:newsActions.addNews.action;
 				
-				var {newsid,title,content,newstype,productids,status} = this.formObj;
+				var {newsid,title,content,newstype,productids,views,status} = this.formObj;
 				var productids = productids.join(',');
 				var params={
 					newsid,
@@ -232,6 +232,7 @@
 					content,
 					newstype,
 					productids,
+					views,
 					status
 				}
 				console.log(params,'params')
@@ -245,6 +246,7 @@
 							content,
 							newstype,
 							productids,
+							views,
 							status
 						}
 					},

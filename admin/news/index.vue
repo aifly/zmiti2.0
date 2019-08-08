@@ -93,6 +93,12 @@
 				
 				columns:[
 					{
+						title:"编号",
+						key:"newsid",
+						align:"center",
+						width:100
+					},
+					{
 						title:"新闻标题",
 						key:'title',
 						align:'center',
@@ -100,6 +106,7 @@
 						title:"新闻类型",
 						key:'newstype',
 						align:'center',
+						width:100,
 						render:(h,params)=>{
 							var type = ['公告','新闻','产品更新说明']
 							return h('div',{
@@ -110,16 +117,30 @@
 						title:"发布者",
 						key:'author',
 						align:'center',
-						width:200
+						width:100
 						
+					},{
+						title:"发布时间",
+						key:"createtime",
+						align:"center",
+						width:150,
+						render:(h,params)=>{
+							return h('div',{},this.formatDate(params.row.createtime))
+						}
 					},{
 						title:"状态",
 						key:'isover',
 						align:'center',
+						width:80,
 						render:(h,params)=>{
 							var arr = ['禁用','待发','发布'];
 							return h('div',{},arr[params.row.status]);
 						}
+					},{
+						title:"点击量",
+						key:"views",
+						align:"center",
+						width:150
 					},
 					{
 						title:'操作',
@@ -306,7 +327,22 @@
             onEditorFocus(){//获得焦点事件
             },
             onEditorChange(){//内容改变事件
-            }
+            },
+			formatDate: function (value) {
+				let date = new Date(value*1000);
+				let y = date.getFullYear();
+				let MM = date.getMonth() + 1;
+				MM = MM < 10 ? ('0' + MM) : MM;
+				let d = date.getDate();
+				d = d < 10 ? ('0' + d) : d;
+				let h = date.getHours();
+				h = h < 10 ? ('0' + h) : h;
+				let m = date.getMinutes();
+				m = m < 10 ? ('0' + m) : m;
+				let s = date.getSeconds();
+				s = s < 10 ? ('0' + s) : s;
+				return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+			}
 		}
 	}
 </script>
