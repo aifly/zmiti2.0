@@ -4,7 +4,7 @@
 			<header class="zmiti-tab-header">
 				<div>新闻管理</div>
 				<div>
-					<Button type="primary"><router-link :to="{name:'article'}">新增新闻</router-link></Button>
+					<router-link :to="{name:'article'}"><Button type="primary">新增新闻</Button></router-link>
 				</div>
 			</header>
 			<section class='zmiti-list-where'>

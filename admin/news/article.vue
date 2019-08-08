@@ -4,8 +4,7 @@
 			<header class="zmiti-tab-header">
 				<div>新闻管理</div>
 				<div>
-					<Button type="default"><router-link :to="{name:'news'}">返回</router-link></Button>
-					
+					<router-link :to="{name:'news'}"><Button type="default">返回</Button></router-link>					
 				</div>
 			</header>
 			
