@@ -58,6 +58,7 @@ import resourcelist from './admin/resourcelist';
 import workorderlist from './admin/workorderlist';
 import workorder from './admin/workorder';
 import news from './admin/news';
+import article from './admin/news/article';
 import group from './common/group';
 import user from './admin/user';
 import changyuelog from './admin/changyuelog';
@@ -107,6 +108,7 @@ const router = new VueRouter({
 		
 		{ path: '/workorder/', name: 'workorder', component:  workorder},
 		{ path: '/news/', name: 'news', component: news},
+		{ path: '/news/article/:newsid?', name: 'article', component: article},
 		 {
 			path: '/group/', name: 'group', component: group, children: [
 				{ path: '/user/:companyid?', name: 'user', component:user  },

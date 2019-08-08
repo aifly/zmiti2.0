@@ -92,9 +92,6 @@
  
 	</div>
 </template>
-<style type="text/css">
-.ql-editor{height:200px;}
-</style>
 <style lang="scss" scoped>
 	@import './index.scss';
 </style>
@@ -212,10 +209,8 @@
                                         click: () => {
 											var s = this;
 											s.formObj = params.row;
-											
-											s.formObj.productids = s.formObj.productids.split(',').map(item=>item*1)
-											console.log(s.formObj.productids,'s.formObj.productids')
-											Vue.obserable.trigger({type:'toggleMask',data:true});
+											console.log(s.formObj,'s.formObj');
+											this.$router.push({name:'article',params:{newsid:params.row.newsid}});
                                         }
                                     }
                                 }, '编辑'),
@@ -408,7 +403,7 @@
 					success(data){
 						if(data.getret === 0){
 							s.productList = data.list;	 
-							
+							console.log(s.productList,'s.productList')
 						}
 					}
 				})
