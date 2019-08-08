@@ -275,7 +275,7 @@
 							s.loading = false;
 							if(data.getret === 0){
 								s.dataSource = data.list;	
-								s.total = data.tatal||data.list.length; 
+								s.total = data.total||data.list.length; 
 								resolve();
 							}
 						}

@@ -19,7 +19,7 @@
                <div class="zmiti-user-info">
 				    <template v-if='!isAdmin'>
 						<span>
-							<router-link to='/user'>单位管理</router-link> 
+							<router-link to='/companyinfo'>单位管理</router-link> 
 						</span>
 						<span>
 							<router-link to='/resourcelist'>资源库</router-link> 
@@ -114,7 +114,6 @@
 <script>
     import Vue from 'vue';
     import zmitiUtil from '../lib/util';
-    
 	export default {
 		props:['isAdmin'],
 		name:'zmitiindex',

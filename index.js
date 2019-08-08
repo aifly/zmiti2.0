@@ -26,20 +26,15 @@ import consume from './components/consume';
 import workorderlist from './components/workorderlist';
 
 import Group from './common/group/index'
-import iView from 'iview';
+
 import VueRouter from 'vue-router'
 import './components/css/index.css';
 import './components/css/theme.less';
 
 import zmitiUtil from './common/lib/util';
-
-
-
-
-
-
+import iview from 'iview';
 Vue.use(VueRouter)
-Vue.use(iView)
+Vue.use(iview)
 var obserable = new Obserable();
 
 Vue.obserable = obserable;
@@ -69,7 +64,7 @@ const router = new VueRouter({
     {
 		path: "/home",
 		name: "home",
-		component: Home
+		component: () => import('./components/home/index.vue')
 	},
 	{
 		path: '/group/', name: 'group', component: Group, children: [
@@ -82,9 +77,9 @@ const router = new VueRouter({
 			{ path: "/changyuedepartment/:id?", name: "changyuedepartment", component:changyuedepartment},
 			{ path: "/user", name: "user", component:user},
 			{ path: "/usercheck/:id?", name: "usercheck", component:usercheck},
-			{ path: "/checkproduct/:id?", name: "checkproduct", component: checkproduct},
+			{ path: "/checkproduct/:id?", name: "checkproduct", component: import('./components/checkproduct/index.vue') },
 			{ path: "/order", name: "order", component: order},
-			{ path: "/companyinfo", name: "companyinfo", component:companyinfo},
+			{ path: "/companyinfo", name: "companyinfo", component:()=> import('./components/companyinfo/index.vue')},
 			{ path: "/companydetail", name: "companydetail", component: companydetail},
 			{ path: "/consume", name: "consume", component: consume},
 			{ path: "/workorderlist/:id?", name: "workorderlist", component:workorderlist},

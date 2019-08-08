@@ -1,6 +1,6 @@
 <template>
-	<div class='zmiti-resourcelist-ui'>
-		<header class='zmiti-resourcelist-header'>
+	<div class='zmiti-resourcelist-ui' :class="{'dialog':isDialog}">
+		<header class='zmiti-resourcelist-header' v-if='!isDialog'>
 			<h3>资料库</h3>
 			<div v-if='isDialog'>
 				<Icon type="md-close" />
@@ -9,7 +9,7 @@
 				<Input />
 			</div>
 		</header>
-		<div class="zmiti-resourcelist-content" :style="{height:viewH - 108+'px'}">
+		<div class="zmiti-resourcelist-content"  :style="{height:isDialog?'auto':(viewH - 108+'px')}">
 			<div class='zmiti-resource-cate'>
 				<div @click="getCateById(item,i)" :class="{'active':currentCateIndex === i}" v-for='(item ,i ) of defaultClass' :key="i">
 					<span class='zmt_iconfont' v-html='item.icon'></span>
@@ -25,8 +25,6 @@
 					<Button type='primary'><Icon type="ios-cloud-upload" /> 点击上传资源</Button>
 					<input type="file" ref='file' @change='uploadFile' v-if='false' name='fileobj'>
 					<div class='zmiti-upload-before'></div>		
-
-					
 				</section>
 			</div>
 			<div class='zmiti-resource-list'>
@@ -47,16 +45,16 @@
 							</li>
 						</ul>
 					</div>
-					<div>
+					<div :style="{width:isDialog?'26px':'100px'}">
 						<span @click="scrollToCate(-1)">
 							<Icon type="ios-arrow-forward" />
 						</span>
-						<span title='添加分类' @click='showAddCateModal(null)'>
+						<span v-if='!isDialog' title='添加分类' @click='showAddCateModal(null)'>
 							<Icon type="ios-add-circle" />
 						</span>
 					</div>
 				</header>
-				<header class='zmiti-resource-header1'>
+				<header class='zmiti-resource-header1' v-if='!isDialog'>
 					<div><Checkbox v-model="selectAll">全选</Checkbox></div>
 					<div>
 
@@ -79,8 +77,8 @@
 						<li v-for="(resource,i) of resourceList" :key="i" >
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
 								 
-								<img @click="currentResourceIndex =  i" :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="(resource.custombilethum&&resource.custombilethum[0])||resource.filepath" alt="">
-								<span v-else  @click="currentResourceIndex =  i" :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
+								<img @click="!isDialog &&( currentResourceIndex =  i)" :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="(resource.custombilethum&&resource.custombilethum[0])||resource.filepath" alt="">
+								<span v-else  @click="!isDialog &&( currentResourceIndex =  i)" :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
 
 								<template  v-if='!resource.isUploading'>
 									<Checkbox @on-change='toggleResource(resource)' size='large' v-model='resource.checked' class='zmiti-resource-check'></Checkbox>
@@ -101,7 +99,7 @@
 							<div class='zmiti-reource-name zmiti-text-overflow'>文件名：{{resource.filetitle}}</div>
 							<div class='zmiti-reource-name zmiti-text-overflow'>大小：{{(resource.filesize*1).toFixed(2)}} {{resource.filesizeunit}}</div>
 							<div class='zmiti-reource-name zmiti-text-overflow'>文件格式：{{resource.fileextname}} </div>
-							<div class='zmiti-reource-name zmiti-text-overflow'>上传时间：{{formatDate(resource.createdate)}} </div>
+							<div class='zmiti-reource-name zmiti-text-overflow' v-if='!isDialog'>上传时间：{{formatDate(resource.createdate)}} </div>
 						</li>
 						
 					</ul>
@@ -111,10 +109,11 @@
 			</div>
 			<div></div>
 		</div>
-		<div class="zmiti-resourcelist-footer" v-if='isDialog'>
+		
+		<!-- <div class="zmiti-resourcelist-footer" v-if='isDialog'>
 			<Button style='width:100px;'>取消</Button>
 			<Button style='width:100px;' type='primary'>确定</Button>
-		</div>
+		</div> -->
 		<Modal title='添加分类' v-model="showModal"
 			@on-ok="addCate"
 		
@@ -282,7 +281,8 @@ export default {
 		isAdmin:{
 			type:Boolean,
 			default:true,
-		}
+		},
+		 
 	},
 	data(){
 		return {
@@ -325,15 +325,18 @@ export default {
 				classname:"",
 				classtype:0,
 				page_index:0,
-				page_size:20
+				page_size:10
 			},
 			resourceCondition:{
 				page_index:0,
-				page_size:20,
+				page_size:15,
 				filetype:'图片',
 				//classtype:1,
 			},
 			resourceList:[],//资源集合
+			currentChooseResource:{
+
+			}
 		}
 	},
 	components:{
@@ -458,14 +461,24 @@ export default {
 			this.getResourceByClassId();
 		},
 		toggleResource(item){
-			if(item.checked){
-				this.checkedList.push(item)
-			}else{
-				this.checkedList.forEach((ck,i)=>{
-					if(ck.fileid ===  item.fileid){
-						this.checkedList.splice(i,1);
-					}
-				})
+			if(this.isDialog){
+				this.resourceList.forEach(res=>{
+					res.checked = res.fileid === item.fileid;
+				});
+				this.resourceList = this.resourceList.concat([]);
+				this.currentChooseResource = item;
+				this.$emit('onFinished',item);
+			}
+			else{
+				if(item.checked){
+					this.checkedList.push(item)
+				}else{
+					this.checkedList.forEach((ck,i)=>{
+						if(ck.fileid ===  item.fileid){
+							this.checkedList.splice(i,1);
+						}
+					})
+				}
 			}
 		},
 		downloadResource(){
@@ -578,7 +591,6 @@ export default {
 						})
 						s.resourceList = data.list;
 
-						console.log(s.resourceList,'s.resourceList')
 						
 					}
 				}
@@ -778,6 +790,9 @@ export default {
 			});
 		},
 		showAddCateModal(item){
+			if(this.isDialog){
+				return;
+			}
 			this.showModal = true;
 			
 			if(item){

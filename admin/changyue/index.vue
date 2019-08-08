@@ -29,7 +29,7 @@
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
-	var {companyActions,zmitiActions,adminActions} = zmitiUtil;
+	var {companyActions,zmitiActions,adminActions,formatDate} = zmitiUtil;
 
 	export default {
 		props:['obserable'],
@@ -80,16 +80,39 @@
 						align:'center',
 					},
 					{
-						title:"地址",
-						key:'companyaddress',
+						title:"单位负责人",
+						key:'realname',
 						align:'center',
 						width:200
 						
 					},{
-						title:"电话",
-						key:'companyphone',
-						align:'center'
+						title:"负责人电话",
+						key:'usermobile',
+						align:'center',
+						width:110
 						
+					},{
+						title:"使用人数",
+						key:'total',
+						align:'center',
+						width:200
+						
+					},{
+						title:'开始时间',
+						key:'startdate',
+						align:'center',
+						width:220,
+						render:(h,params)=>{
+							return h('div',{},formatDate(params.row.startdate))
+						}
+					},{
+						title:'到期时间',
+						key:'enddate',
+						align:'center',
+						width:220,
+						render:(h,params)=>{
+							return h('div',{},formatDate(params.row.enddate))
+						}
 					},{
 						title:"状态",
 						key:'status',

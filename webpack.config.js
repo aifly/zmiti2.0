@@ -14,7 +14,34 @@ module.exports = {
 		index: './index.js',
 		admin: './admin.js'
 	},
-
+	  optimization: {
+		splitChunks: {
+			chunks: "all",
+			cacheGroups: {
+				commons: {
+					chunks: "initial",
+					minChunks: 2,
+					maxInitialRequests: 5, // The default limit is too small to showcase the effect
+					minSize: 0,// This is example is too small to create commons chunks,
+				},
+				'vue': {
+					test: /vue/, // 直接使用 test 来做路径匹配
+					chunks: "initial",
+					name: "vue",
+					enforce: true,
+				},
+				'iview': {
+					test: /iview/, // 直接使用 test 来做路径匹配
+					chunks: "initial",
+					name: "iview",
+					enforce: true,
+				},
+			}
+		},
+		runtimeChunk: {
+		name: "manifest"
+		}
+	},
 	// 输出配置
 	output: {
 		// 输出目录

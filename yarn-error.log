@@ -1,5 +1,5 @@
 Arguments: 
-  F:\Program Files\nodejs\node.exe C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js start
+  F:\Program Files\nodejs\node.exe C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
 
 PATH: 
   C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\Doctrine extensions for PHP\;F:\xuchang2018\tools\Microsoft VS Code\bin;C:\WINDOWS\System32\OpenSSH\;F:\Program Files\Dart\dart-sdk\bin;F:\Program Files\Dart;F:\flutter\flutter_windows_v1.7.1-dev\flutter\bin;F:\Program Files\nodejs\;C:\Ruby25-x64\bin;C:\Users\13910\AppData\Local\Microsoft\WindowsApps;F:\install\Microsoft VS Code\bin;F:\mysql\MySQL Server 5.5\bin;F:\xuchang2018\tools\Microsoft VS Code\bin;F:\Anaconda3;F:\Anaconda3\Scripts;F:\Program Files\nodejs;F:\Program Files (x86)\Egret\Egret Wing 3\bin;C:\Users\13910\AppData\Roaming\npm
@@ -15,75 +15,76 @@ Platform:
 
 npm manifest: 
   {
-  	"name": "hotwords2019",
-  	"version": "1.0.0",
-  	"description": "",
-  	"main": "index.js",
-  	"scripts": {
-  		"test": "echo \"Error: no test specified\" && exit 1",
-  		"start": "webpack-dev-server --hot --inline --port 8000  --mode development",
-  		"build": "webpack -w --mode production --config webpack.config.build.js"
-  	},
-  	"author": "",
-  	"license": "ISC",
-  	"dependencies": {
-  		"@babel/preset-env": "^7.3.1",
-  		"babel-helper-vue-jsx-merge-props": "^2.0.3",
-  		"babel-plugin-dynamic-import-webpack": "^1.1.0",
-  		"babel-plugin-import": "^1.1.0",
-  		"babel-plugin-transform-object-assign": "^6.8.0",
-  		"babel-plugin-transform-runtime": "^6.1.2",
-  		"babel-plugin-transform-vue-jsx": "^3.5.0",
-  		"babel-polyfill": "^6.9.0",
-  		"babel-preset-es2015": "^6.1.2",
-  		"babel-preset-stage-0": "^6.1.2",
-  		"babel-runtime": "^5.8.0",
-  		"css-loader": "^0.23.1",
-  		"echarts": "^4.1.0",
-  		"extract-text-webpack-plugin": "^3.0.2",
-  		"file-loader": "^0.8.5",
-  		"html-loader": "^0.5.4",
-  		"iscroll": "^5.2.0",
-  		"iview": "^3.4.2",
-  		"iview-loader": "^1.2.2",
-  		"iview-theme": "^1.1.0",
-  		"jquery": "^3.3.1",
-  		"less": "^2.5.3",
-  		"less-loader": "^4.1.0",
-  		"less-plugin-clean-css": "^1.5.1",
-  		"node-sass": "^4.12.0",
-  		"open-browser-webpack-plugin": "^0.0.5",
-  		"sass-loader": "^7.1.0",
-  		"style-loader": "^0.13.0",
-  		"url-loader": "^1.1.2",
-  		"vue-animated-list": "^1.0.2",
-  		"vue-echarts": "^4.0.1",
-  		"vue-hot-reload-api": "^2.2.4",
-  		"vue-html-loader": "^1.2.4",
-  		"vue-js-tap": "^1.2.3",
-  		"vue-router": "^3.0.1",
-  		"vue-style-loader": "^3.0.1",
-  		"vue-touch": "^1.1.0"
-  	},
-  	"devDependencies": {
-  		"@babel/core": "^7.3.3",
-  		"@babel/plugin-proposal-class-properties": "^7.3.3",
-  		"@babel/plugin-transform-runtime": "^7.2.0",
-  		"@babel/runtime": "^7.3.1",
-  		"babel-core": "^6.26.3",
-  		"babel-loader": "^7.1.5",
-  		"babel-preset-env": "^1.7.0",
-  		"extend-shallow": "^3.0.2",
-  		"html-webpack-plugin": "^2.30.1",
-  		"scss-loader": "^0.0.1",
-  		"vue": "^2.6.6",
-  		"vue-loader": "^14.2.2",
-  		"vue-template-compiler": "^2.6.6",
-  		"vuex": "^3.1.1",
-  		"webpack": "^4.39.1",
-  		"webpack-cli": "^3.3.6",
-  		"webpack-dev-server": "^3.7.2"
-  	}
+    "name": "hotwords2019",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "webpack-dev-server --hot --inline --port 8000  --mode development",
+  	"build": "webpack -w --mode production --config webpack.config.build.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@babel/preset-env": "^7.3.1",
+      "babel-helper-vue-jsx-merge-props": "^2.0.3",
+      "babel-plugin-dynamic-import-webpack": "^1.1.0",
+      "babel-plugin-import": "^1.1.0",
+      "babel-plugin-transform-object-assign": "^6.8.0",
+      "babel-plugin-transform-runtime": "^6.1.2",
+      "babel-plugin-transform-vue-jsx": "^3.5.0",
+      "babel-polyfill": "^6.9.0",
+      "babel-preset-es2015": "^6.1.2",
+      "babel-preset-stage-0": "^6.1.2",
+      "babel-runtime": "^5.8.0",
+      "css-loader": "^0.23.1",
+      "echarts": "^4.1.0",
+      "extract-text-webpack-plugin": "^3.0.2",
+      "file-loader": "^0.8.5",
+      "html-loader": "^0.5.4",
+      "iscroll": "^5.2.0",
+      "iview": "^3.4.2",
+      "iview-loader": "^1.2.2",
+      "iview-theme": "^1.1.0",
+      "jquery": "^3.3.1",
+      "less": "^2.5.3",
+      "less-loader": "^4.1.0",
+      "less-plugin-clean-css": "^1.5.1",
+      "node-sass": "^4.12.0",
+      "open-browser-webpack-plugin": "^0.0.5",
+      "sass-loader": "^7.1.0",
+      "style-loader": "^0.13.0",
+      "url-loader": "^1.1.2",
+      "vue-animated-list": "^1.0.2",
+      "vue-echarts": "^4.0.1",
+      "vue-hot-reload-api": "^2.2.4",
+      "vue-html-loader": "^1.2.4",
+      "vue-js-tap": "^1.2.3",
+      "vue-quill-editor": "^3.0.6",
+      "vue-router": "^3.0.1",
+      "vue-style-loader": "^3.0.1",
+      "vue-touch": "^1.1.0"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.3.3",
+      "@babel/plugin-proposal-class-properties": "^7.3.3",
+      "@babel/plugin-transform-runtime": "^7.2.0",
+      "@babel/runtime": "^7.3.1",
+      "babel-core": "^6.26.3",
+      "babel-loader": "^7.1.5",
+      "babel-preset-env": "^1.7.0",
+      "extend-shallow": "^3.0.2",
+      "html-webpack-plugin": "^2.30.1",
+      "scss-loader": "^0.0.1",
+      "vue": "^2.6.6",
+      "vue-loader": "^14.2.2",
+      "vue-template-compiler": "^2.6.6",
+      "vuex": "^3.1.1",
+      "webpack": "^4.39.1",
+      "webpack-cli": "^3.3.6",
+      "webpack-dev-server": "^3.7.2"
+    }
   }
 
 yarn manifest: 
@@ -8896,13 +8897,68 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zrender/-/zrender-4.0.7.tgz#15ae960822f5efed410995d37e5107fe3de10e6d"
 
 Trace: 
-  Error: Command failed.
+  Error: F:\xuchang2018\project\zmiti2.0\node_modules\node-sass: Command failed.
   Exit code: 1
   Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c webpack-dev-server --hot --inline --port 8000  --mode development
-  Directory: F:\xuchang2018\project\zmiti2.0
+  Arguments: /d /s /c node scripts/build.js
+  Directory: F:\xuchang2018\project\zmiti2.0\node_modules\node-sass
   Output:
-  
+  Building: F:\Program Files\nodejs\node.exe F:\xuchang2018\project\zmiti2.0\node_modules\node-gyp\bin\node-gyp.js rebuild --verbose --libsass_ext= --libsass_cflags= --libsass_ldflags= --libsass_library=
+  gyp info it worked if it ends with ok
+  gyp verb cli [ 'F:\\Program Files\\nodejs\\node.exe',
+  gyp verb cli   'F:\\xuchang2018\\project\\zmiti2.0\\node_modules\\node-gyp\\bin\\node-gyp.js',
+  gyp verb cli   'rebuild',
+  gyp verb cli   '--verbose',
+  gyp verb cli   '--libsass_ext=',
+  gyp verb cli   '--libsass_cflags=',
+  gyp verb cli   '--libsass_ldflags=',
+  gyp verb cli   '--libsass_library=' ]
+  gyp info using node-gyp@3.8.0
+  gyp info using node@10.16.0 | win32 | x64
+  gyp verb command rebuild []
+  gyp verb command clean []
+  gyp verb clean removing "build" directory
+  gyp verb command configure []
+  gyp verb check python checking for Python executable "python2" in the PATH
+  gyp verb `which` failed Error: not found: python2
+  gyp verb `which` failed     at getNotFoundError (F:\xuchang2018\project\zmiti2.0\node_modules\which\which.js:13:12)
+  gyp verb `which` failed     at F (F:\xuchang2018\project\zmiti2.0\node_modules\which\which.js:68:19)
+  gyp verb `which` failed     at E (F:\xuchang2018\project\zmiti2.0\node_modules\which\which.js:80:29)
+  gyp verb `which` failed     at F:\xuchang2018\project\zmiti2.0\node_modules\which\which.js:89:16
+  gyp verb `which` failed     at F:\xuchang2018\project\zmiti2.0\node_modules\isexe\index.js:42:5
+  gyp verb `which` failed     at F:\xuchang2018\project\zmiti2.0\node_modules\isexe\windows.js:36:5
+  gyp verb `which` failed     at FSReqWrap.oncomplete (fs.js:153:21)
+  gyp verb `which` failed  python2 { Error: not found: python2
+  gyp verb `which` failed     at getNotFoundError (F:\xuchang2018\project\zmiti2.0\node_modules\which\which.js:13:12)
+  gyp verb `which` failed     at F (F:\xuchang2018\project\zmiti2.0\node_modules\which\which.js:68:19)
+  gyp verb `which` failed     at E (F:\xuchang2018\project\zmiti2.0\node_modules\which\which.js:80:29)
+  gyp verb `which` failed     at F:\xuchang2018\project\zmiti2.0\node_modules\which\which.js:89:16
+  gyp verb `which` failed     at F:\xuchang2018\project\zmiti2.0\node_modules\isexe\index.js:42:5
+  gyp verb `which` failed     at F:\xuchang2018\project\zmiti2.0\node_modules\isexe\windows.js:36:5
+  gyp verb `which` failed     at FSReqWrap.oncomplete (fs.js:153:21)
+  gyp verb `which` failed   stack:
+  gyp verb `which` failed    'Error: not found: python2\n    at getNotFoundError (F:\\xuchang2018\\project\\zmiti2.0\\node_modules\\which\\which.js:13:12)\n    at F (F:\\xuchang2018\\project\\zmiti2.0\\node_modules\\which\\which.js:68:19)\n    at E (F:\\xuchang2018\\project\\zmiti2.0\\node_modules\\which\\which.js:80:29)\n    at F:\\xuchang2018\\project\\zmiti2.0\\node_modules\\which\\which.js:89:16\n    at F:\\xuchang2018\\project\\zmiti2.0\\node_modules\\isexe\\index.js:42:5\n    at F:\\xuchang2018\\project\\zmiti2.0\\node_modules\\isexe\\windows.js:36:5\n    at FSReqWrap.oncomplete (fs.js:153:21)',
+  gyp verb `which` failed   code: 'ENOENT' }
+  gyp verb check python checking for Python executable "python" in the PATH
+  gyp verb `which` succeeded python F:\Anaconda3\python.EXE
+  gyp ERR! configure error 
+  gyp ERR! stack Error: Command failed: F:\Anaconda3\python.EXE -c import sys; print "%s.%s.%s" % sys.version_info[:3];
+  gyp ERR! stack   File "<string>", line 1
+  gyp ERR! stack     import sys; print "%s.%s.%s" % sys.version_info[:3];
+  gyp ERR! stack                                ^
+  gyp ERR! stack SyntaxError: invalid syntax
+  gyp ERR! stack 
+  gyp ERR! stack     at ChildProcess.exithandler (child_process.js:294:12)
+  gyp ERR! stack     at ChildProcess.emit (events.js:198:13)
+  gyp ERR! stack     at maybeClose (internal/child_process.js:982:16)
+  gyp ERR! stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:259:5)
+  gyp ERR! System Windows_NT 10.0.17134
+  gyp ERR! command "F:\\Program Files\\nodejs\\node.exe" "F:\\xuchang2018\\project\\zmiti2.0\\node_modules\\node-gyp\\bin\\node-gyp.js" "rebuild" "--verbose" "--libsass_ext=" "--libsass_cflags=" "--libsass_ldflags=" "--libsass_library="
+  gyp ERR! cwd F:\xuchang2018\project\zmiti2.0\node_modules\node-sass
+  gyp ERR! node -v v10.16.0
+  gyp ERR! node-gyp -v v3.8.0
+  gyp ERR! not ok 
+  Build failed with error code: 1
       at ProcessTermError.MessageError (C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
       at new ProcessTermError (C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:226:113)
       at ChildProcess.<anonymous> (C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:30281:17)

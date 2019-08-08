@@ -1,21 +1,71 @@
 <template>
-	<div class="zmiti-submit-main-ui">
-		<div class="zmiti-list-main">
-			<header class="zmiti-tab-header">
-				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅</div>
-				<div>
-					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
+	<div class="zmiti-company-detail-main-ui">
+		<div class='zmiti-company-header'>
+			{{companyInfo.companyname}}
+		</div>
+
+		<div class='zmiti-company-logo-C'>
+
+			<div class='zmiti-company-logo'>
+				<img :src='companyInfo.logourl' v-if='companyInfo.logourl' alt="">
+			</div>
+			<Button type="primary">更换logo</Button>
+		</div>
+
+		<div class='zmiti-company-item'>
+			 <Input size="large" v-model="companyInfo.companyname">
+				<span slot="prepend">单位名称：</span>
+				<Button slot="append">修改</Button>
+			</Input>
+		</div>
+		<div class='zmiti-company-item'>
+			 <Input size="large" v-model="companyInfo.companycode">
+				<span slot="prepend">单位编号：</span>
+				<Button slot="append">修改</Button>
+			</Input>
+		</div>
+		<div class='zmiti-company-item'>
+			 <Input size="large" v-model="companyInfo.companyphone">
+				<span slot="prepend">单位电话：</span>
+				<Button slot="append">修改</Button>
+			</Input>
+		</div>
+		<div class='zmiti-company-item'>
+			 <Input size="large" v-model="companyInfo.companyaddress">
+				<span slot="prepend">单位地址：</span>
+				<Button slot="append">修改</Button>
+			</Input>
+		</div>
+
+		<div class='zmiti-company-file'>
+			<div>
+				<div>单位营业执照</div>
+				<div class='zmiti-company-img' :style="{background:companyInfo.businesslicensepath?'url('+companyInfo.businesslicensepath+') no-repeat center center':'none',backgroundSize:'cover'}">
+					<img v-if='companyInfo.businesslicensepath' v-show='false' :src="companyInfo.businesslicensepath" alt="">
+					<span v-else>暂无</span>
 				</div>
-			</header>
-			<section class='zmiti-list-where'>
-				用户编号 <input type="text">
-			</section>
-			
-			<div class='zmiti-submit-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total"></ZmitiTable>
+				
+			</div>
+			<div>
+				<div>
+					单位合同扫描件
+				</div>
+				<div class='zmiti-company-img' :style="{background:companyInfo.contract?'url('+companyInfo.contract+') no-repeat center center':'none',backgroundSize:'cover'}">
+					<img v-if='companyInfo.contract' v-show='false' :src="companyInfo.contract" alt="">
+					<span v-else>暂无</span>
+				</div>
+				
 			</div>
 		</div>
-			 
+
+
+		<Modal v-model="showResource" title='资料库' width='800'>
+			<ResourceList :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;'>取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseLogo'>确定</Button>
+			</div> 
+		</Modal>
 	</div>
 </template>
 
@@ -26,243 +76,88 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	import ZmitiMask from '../../common/mask/';
-	import ZmitiTable from '../../common/table/';
-
-	var {companyActions,zmitiActions,changYueAcions,formatDate} = zmitiUtil;
-
-	import {manuscriptStatus} from '../../common/config';
-
-	
-
+	var {userActions} = zmitiUtil;
+	import ResourceList from '../../common/resourcelist';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
-
-				
-				targetKeys:[],
-				showAvatarModal:false,
-				
-				companyname:'',
-				roleList:[],
 				imgs:window.imgs,
-				isLoading:false,
-				showDetail:false,
-				total:0,
-				showDetailPage:-1,
-				currentClassId:-1, 
-				adminuserId:'',
-				loading:true,
-				currentUserid:'',
-				formUser:{
-					isover:0,
-					usersign:1,
-					usertypesign:1,
-					avatar:'&#xe6a4;'
-				},
-				address:'',
-				showPass:false,
-				showMap:false,
-				viewH:window.innerHeight,
-				viewW:window.innerWidth,
-				dataSource:[],
-				groupList:[],
-				companyList:[],
-				hideMenu:false,
-				unJoinedCompany:[],
-				columns:[
-					{
-						title:"产品编号",
-						key:'productid',
-						align:'center',
-					},
-					{
-						title:"产品名称",
-						key:'productname',
-						align:'center',
-					},
-					{
-						title:"开始时间",
-						key:'startdate',
-						align:'center',
-						width:220,
-						render:(h,params)=>{
-							return h('div',{},formatDate(params.row.startdate))
-						}
-					},
-					{
-						title:'结束时间',
-						key:'enddate',
-						width:220,
-						render:(h,params)=>{
-							return h('div',{},formatDate(params.row.enddate))
-						}
-					},
-				],
-				
-				formUser:{
-					pdfurl:'',
-					longitude :'116.585856',
-					latitude :'40.364989'
-				},
-				 
-				directoryList:{
+				userinfo:{},
+				showResource:true,
+				currentChooseResource:{},
+				companyInfo:{
 
-				},
-				condition:{
-					page_index:0,
-					page_size:10,
-				},
-				userinfo:{}
+				}
 			}
 		},
 		components:{
-			ZmitiMask,
-			ZmitiTable
+			ResourceList
 		},
 
 		beforeCreate(){
-			//var validate = sysbinVerification.validate(this);
-			//zmitiUtil.clearCookie('login');
-
-			///this.validate = validate;
+			
 		},
 		mounted(){
 			window.s = this;
-
-			this.getDataList();
-
-			
+			this.getDetail();
 			
 		},
 
 		watch:{
 			
 
-			showDetail(val){
-				if(val){
-					this.showDetailPage = 1;
-				}else{
-					setTimeout(() => {
-						this.showDetailPage = -1;
-					}, 310);
-				}
-			},
-			$route:{
-				deep:true,
-				handler(){
-					this.getDataList()
-				}
-			}
-			
 		},
 		
 		methods:{
-			change(e){
-				this.condition.page_index = e -1;
-				this.getMyCheckList();
-			},
-			closeMaskPage(){
-				this.showDetailPage = -1;
-			},
-			handleChange2(ids,index,companyids){
-				var s = this;
-				companyids.forEach((companyid,i)=>{
-					zmitiUtil.adminAjax({
-						remark:index === 'left'?"exitCompany":"joinCompany",
-						data:{
-							action:companyActions[index === 'left'?"exitCompany":"joinCompany"].action,
-							userid:s.currentUserid,
-							companyid
-						},
-						success(data){
-							s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg);
-							s.getJoinedCompany();
-						}
-					});
+
+			chooseLogo(){
+				this.showResource = false;
+				console.log(this.currentChooseResource);
+				this.companyInfo.logourl=this.currentChooseResource.custombilethum[0];
+
+				this.modifyCompanyInfo({
+					logourl:this.companyInfo.logourl
 				})
 
 			},
-			filterMethod (data, query) {
-                return data.label.indexOf(query) > -1;
-            },
-			getJoinedCompany(){
-				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'getJoinedCompany',
-					data:{
-						action:companyActions.getJoinedCompany.action,
-						condition:{
-							userid:s.currentUserid,
-							page_index:0,
-							page_size:20,
-						}
-					},
-					success(data){
-						if(data.getret === 0){
-							s.targetKeys = [];
-							data.list.forEach(dt=>{
-								s.targetKeys .push(dt.companyid)
-							})
-						}
-					}
-				});
-			},
-			 
-			 
-			checkUser(){
-				var username = this.formUser.username;
-				var {$Message} = this;
-				zmitiUtil.adminAjax({
-					remark:'checkUserName',
-					data:{
-						action:zmitiActions.checkUserName.action,
-						username
-					},
-					success(data){
-						$Message[data.getret === 0 ? data.used  ? 'error':'success':'error'](data.msg);
-					}
-				})
-			},
-			getAvatar(avatar){
-				this.formUser.avatar = avatar;
-			},
-		 
-			 
 
-			delete(manuscriptids){
+			modifyCompanyInfo(data){
 				var s = this;
+
+				var info = Object.assign(data,{
+					companyid:zmitiUtil.getCurrentCompanyId().companyid
+				})
 				zmitiUtil.ajax({
-					remark:'delManuscript',
+					remark:"editCompanyInfo",
 					data:{
-						action:changYueAcions.delManuscript.action,
-						condition:{
-							manuscriptids
-						}
+						action:userActions.editCompanyInfo.action,
+						info
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							
-							s.getDataList();
-							///s.dataSource = data.list;	 
-						}
 					}
 				})
 			},
-			change(e){
-				this.condition.page_index = e -1;
-				this.getDataList();
+
+			onFinished(item){
+				this.currentChooseResource = item;
 			},
-			getDataList(){
-				 zmitiUtil.getProductList((arr)=>{
-					if(arr.getret === 0 ){
-						this.loading = false;
-						this.dataSource = arr.list;
+			    
+			getDetail(){
+				 zmitiUtil.ajax({
+					remark:"getCompanyInfo",
+					data:{
+						action:userActions.getCompanyInfo.action,
+						companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					},
+					success(data){
+						if(data.getret === 0){
+							s.companyInfo = data.info;
+						}
 					}
-				},this);
+				 })
 			},
 			
 		}

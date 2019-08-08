@@ -38,6 +38,8 @@
 	&>div,&>ul{
 		margin:0 20px;
 		line-height:30px;
+		@include pos(r);
+		z-index: 10;
 	}
 }
 

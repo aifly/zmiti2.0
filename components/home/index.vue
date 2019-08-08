@@ -147,8 +147,6 @@
 
 <script>
 	import zmitiUtil from '../../common/lib/util';
-
-	
 	var {cityActions,weatherActions,userActions,companyAdminActions} = zmitiUtil;
 	import Vue from 'vue';
 	var json = {};
@@ -165,7 +163,7 @@
 					username:'一位巨蟹',
 					avatar:window.imgs.zmiti1,
 					info:{}
-				},
+				},	
 				allCompanyList:[],
 				currentCompanyIndex:0,
 				weatherData:{},
