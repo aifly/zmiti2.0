@@ -318,6 +318,15 @@ li {
   border: 1px solid #eee;
 }
 
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-C ul li.zmiti-resouce-nodata em {
+  font-style: normal;
+}
+
+.zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-C ul li.zmiti-resouce-nodata i {
+  -webkit-animation: rotate 1s linear infinite;
+  animation: rotate 1s linear infinite;
+}
+
 .zmiti-resourcelist-ui .zmiti-resourcelist-content .zmiti-resource-list .zmiti-resource-C ul li .zmiti-reource-name {
   height: 30px;
   line-height: 30px;

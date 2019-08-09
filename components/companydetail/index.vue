@@ -9,7 +9,7 @@
 			<div class='zmiti-company-logo'>
 				<img :src='companyInfo.logourl' v-if='companyInfo.logourl' alt="">
 			</div>
-			<Button type="primary" @click="showResource= true">更换logo</Button>
+			<Button type="primary" @click="showResource= true;imgType='logourl'">更换logo</Button>
 		</div>
 
 		<div class='zmiti-company-item'>
@@ -24,7 +24,9 @@
 		<div class='zmiti-company-item'>
 			 <div>单位编号：</div>
 			 <div>
-				 {{companyInfo.companycode}}
+				 <label for="" >
+				 	{{companyInfo.companycode}}
+				 </label>
 				<span><Icon type="ios-help-circle-outline" /></span>
 			 </div>
 			 
@@ -32,15 +34,33 @@
 		<div class='zmiti-company-item'>
 			 <div>单位电话：</div>
 			 <div>
-				 {{companyInfo.companyphone}}
-				<span>修改<Icon type="ios-help-circle-outline" /></span>
+				 <label for="" >
+				 	{{companyInfo.companyphone}}
+				 </label>
+				<span @click="showEditDialog('companyphone')">修改<Icon type="ios-help-circle-outline" /></span>
 			 </div>
 		</div>
 		<div class='zmiti-company-item'>
 			 <div>单位地址：</div>
 			 <div>
-				 {{companyInfo.companyaddress}}
-				<span>修改<Icon type="ios-help-circle-outline" /></span>
+				 <label for="">
+				 	{{companyInfo.companyaddress}}
+				 </label>
+				<span  @click="showEditDialog('companyaddress')">修改<Icon type="ios-help-circle-outline" /></span>
+			 </div>
+		</div>
+
+
+		<div class='zmiti-company-item'>
+			 <div>是否开启认证：</div>
+			 <div>
+				 <label for="">
+					 <RadioGroup @on-change='modifyCompanyInfo(companyInfo)' v-model="JSON.parse(companyInfo.config).is_auth">
+						<Radio :value='1' :label="1">开启认证</Radio>
+						<Radio :value='0' :label="0">关闭认证</Radio>
+					</RadioGroup>
+				 </label>
+				<span><Icon type="ios-help-circle-outline" /></span>
 			 </div>
 		</div>
 
@@ -61,7 +81,7 @@
 		<div class='zmiti-company-file'>
 			<div>
 				<div>单位营业执照</div>
-				<div class='zmiti-company-img' :style="{background:companyInfo.businesslicensepath?'url('+companyInfo.businesslicensepath+') no-repeat center center':'none',backgroundSize:'cover'}">
+				<div class='zmiti-company-img' @click="showResource= true;imgType='businesslicensepath'" :style="{background:companyInfo.businesslicensepath?'url('+companyInfo.businesslicensepath+') no-repeat center center':'none',backgroundSize:'cover'}">
 					<img v-if='companyInfo.businesslicensepath' v-show='false' :src="companyInfo.businesslicensepath" alt="">
 					<span v-else>暂无</span>
 				</div>
@@ -71,11 +91,10 @@
 				<div>
 					单位合同扫描件
 				</div>
-				<div class='zmiti-company-img' :style="{background:companyInfo.contract?'url('+companyInfo.contract+') no-repeat center center':'none',backgroundSize:'cover'}">
+				<div class='zmiti-company-img' @click="showResource= true;imgType='contract'" :style="{background:companyInfo.contract?'url('+companyInfo.contract+') no-repeat center center':'none',backgroundSize:'cover'}">
 					<img v-if='companyInfo.contract' v-show='false' :src="companyInfo.contract" alt="">
 					<span v-else>暂无</span>
 				</div>
-				
 			</div>
 		</div>
 
@@ -83,9 +102,18 @@
 		<Modal v-model="showResource" title='资料库' width='800'>
 			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
 			<div class="zmiti-resourcelist-footer"  slot='footer'>
-				<Button style='width:100px;'>取消</Button>
-				<Button style='width:100px;' type='primary' @click='chooseLogo'>确定</Button>
+				<Button style='width:100px;' @click="showResource=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseImg'>确定</Button>
 			</div> 
+		</Modal>
+
+		<Modal v-model="visiable" title='修改单位信息' @on-ok='modifyCompanyInfo(companyInfo)'>
+			 <Input v-model="companyInfo.companyphone" v-if='key === "companyphone"'>
+				<span slot="prepend">单位电话：</span>
+			</Input>
+			<Input v-model="companyInfo.companyaddress"  v-if='key === "companyaddress"'>
+				<span slot="prepend">单位地址：</span>
+			</Input>
 		</Modal>
 	</div>
 </template>
@@ -107,6 +135,9 @@
 				imgs:window.imgs,
 				userinfo:{},
 				showResource:false,
+				visiable:false,
+				key:'',
+				imgType:'',
 				currentChooseResource:{},
 				companyInfo:{
 
@@ -133,10 +164,18 @@
 		
 		methods:{
 
-			chooseLogo(){
+			showEditDialog(key){
+				this.key = key;
+				this.visiable = true;
+			},
+
+			chooseImg(){
+
 				this.showResource = false;
-				console.log(this.currentChooseResource);
-				this.companyInfo.logourl=this.currentChooseResource.custombilethum[0];
+				this.companyInfo[this.imgType] = this.currentChooseResource.custombilethum[0];
+
+				
+
 
 				this.modifyCompanyInfo(this.companyInfo)
 

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --hot --inline --port 8000  --mode development",
-	"build": "webpack -w --mode production --config webpack.config.build.js"
+	"admin": "webpack-dev-server --hot --inline --config webpack.admin.config.js --port 8001  --mode development",
+	"build": "webpack -w --mode production --config webpack.admin.config.js"
   },
   "author": "",
   "license": "ISC",

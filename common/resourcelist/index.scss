@@ -260,6 +260,12 @@ li{
 				width: 100%;
 				background: #f1f1f1;
 				border:1px solid #eee;
+				em{
+					font-style: normal;
+				}
+				i{
+					@include animation(rotate 1s linear infinite);
+				}
 
 			}
             width: 18%;

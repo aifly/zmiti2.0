@@ -2,8 +2,9 @@
 	<div class='zmiti-wo-detail-ui' :style="{height:viewH - 60+'px'}">
 		<div class='zmiti-wo-step'>
 			<ul>
+				
 				<li :class="{'through':workinfo.status>i,'active':workinfo.status==i}" v-for='(step,i) of orderStatus' :key="i">
-					<span v-if='i<=2'>{{step.status}}</span>
+					<span v-if='i<=3'>{{step.status}}</span>
 					<span v-else>{{workinfo.status === 3 ? step.status:"未评价"}}</span>
 				</li>
 			</ul>
@@ -38,23 +39,23 @@
 				</ul>
 			</div>
 			<div class='zmiti-wo-reply-ui'>
-				<template v-if='!(workinfo.status >=2 && isAdmin)'>
-					<header >{{workinfo.status === 2 ? '我要评价':workinfo.status === 3 ?"用户评价": '我要反馈'}}</header>
-					<div class='zmiti-reply-input' v-if='workinfo.status>=2' >
-						评分 :<Rate :disabled='workinfo.status === 3' clearable v-model="workinfo.grade" /> 
+				<template v-if='!(workinfo.status >=3 && isAdmin)'>
+					<header >{{workinfo.status === 3 ? '我要评价':workinfo.status === 4 ?"用户评价": '我要反馈'}}</header>
+					<div class='zmiti-reply-input' v-if='workinfo.status>=3' >
+						评分 :<Rate :disabled='workinfo.status === 4' clearable v-model="workinfo.grade" /> 
 					</div>
-					<div class='zmiti-reply-input'  v-if='workinfo.status>=3'>
+					<div class='zmiti-reply-input'  v-if='workinfo.status>=4'>
 						用户评价 :{{workinfo.feedback}}
 					</div>
-					<div class='zmiti-reply-input' v-if='workinfo.status>=2'>
+					<div class='zmiti-reply-input' v-if='workinfo.status>=3'>
 						是否解决：
 						<RadioGroup v-model="workinfo.issettle" >
-							<Radio :value='0' :label="0" :disabled='workinfo.status === 3'>已解决</Radio>
-							<Radio :value='1' :label="1" :disabled='workinfo.status === 3'>未解决</Radio>
+							<Radio :value='0' :label="0" :disabled='workinfo.status === 4'>已解决</Radio>
+							<Radio :value='1' :label="1" :disabled='workinfo.status === 4'>未解决</Radio>
 						</RadioGroup>
 					</div>
-					<Input v-if='workinfo.status < 3' class='zmiti-reply-input' type='textarea' :rows='8' v-model='content'/>
-					<div class='zmiti-reply-btn' v-if='workinfo.status < 3'>
+					<Input v-if='workinfo.status < 4' class='zmiti-reply-input' type='textarea' :rows='8' v-model='content'/>
+					<div class='zmiti-reply-btn' v-if='workinfo.status < 4'>
 						<Button style='position:relative;z-index:1' type='primary' @click='replyOrder'>提交</Button>
 					</div>
 				</template>
@@ -104,8 +105,8 @@ export default {
 			var {content,isAdmin,workinfo,$Message} = this;
 			var {grade,issettle} = workinfo;
 			var s = this;
-			if(workinfo.status >= 2){//已确认
-				if(workinfo.status === 3 ||isAdmin){
+			if(workinfo.status >= 3){//已确认
+				if(workinfo.status === 4 ||isAdmin){
 					return;
 				} 
 				zmitiUtil[isAdmin ? 'adminAjax':'ajax']({

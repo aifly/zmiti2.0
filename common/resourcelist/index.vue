@@ -73,12 +73,14 @@
 				
 				<div class='zmiti-resource-C zmiti-scroll'>
 					<ul>
-						<li v-if='resourceList.length<=0' class='zmiti-resouce-nodata'>暂无数据 ^_^</li>
+						<li v-if='resourceList.length<=0' class='zmiti-resouce-nodata'>
+							<label for=""  v-if='loading'><Icon type="ios-loading" /></label> <em v-else>暂无数据 ^_^</em>
+						</li>
 						<li v-for="(resource,i) of resourceList" :key="i" >
 							<div class='zmiti-resource-file'  :class="{'active':resource.checked}" >
 								 
-								<img @click="!isDialog &&( currentResourceIndex =  i)" :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="(resource.custombilethum&&resource.custombilethum[0])||resource.filepath" alt="">
-								<span v-else  @click="!isDialog &&( currentResourceIndex =  i)" :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
+								<img @click="imgClick(resource,i)" :class="resource.classList"  v-if='"jpg gif jpeg webp png".indexOf(resource.fileextname)>-1' draggable="false" :src="(resource.custombilethum&&resource.custombilethum[0])||resource.filepath" alt="">
+								<span v-else  @click="imgClick(resource,i)" :data-id='defaultExtNames[resource.fileextname]' v-html='defaultExtNames[resource.fileextname] || defaultExtNames["other"]' class='zmt_iconfont'></span>
 
 								<template  v-if='!resource.isUploading'>
 									<Checkbox @on-change='toggleResource(resource)' size='large' v-model='resource.checked' class='zmiti-resource-check'></Checkbox>
@@ -297,6 +299,7 @@ export default {
 			showMaskPage:true,
 			imgs:window.imgs,
 			total:0,
+			loading:false,
 			isCanEdit:false,
 			formatDate,
 			currentResourceIndex:-1,
@@ -378,6 +381,7 @@ export default {
 		},
 	},
 	methods: {
+		
 		closeClipDialog(){
 			this.showClipDialog = false;
 			this.checkedList = this.checkedList.slice(0,0);
@@ -395,7 +399,7 @@ export default {
 			
 
 		},
-		editResourceData(){
+		editResourceData(type){
 
 			var {isAdmin} = this;
 			var s = this;
@@ -421,7 +425,7 @@ export default {
 						console.log(data)
 					if(data.getret === 0 ){
 						s.userlabel = '';
-						s.isCanEdit = false;
+						type &&  (s.isCanEdit = false);
 					}
 					s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 				}
@@ -450,7 +454,7 @@ export default {
 		},
 		editResource(){
 			if(this.isCanEdit){
-				this.editResourceData();
+				this.editResourceData('save');
 			}else{
 				this.isCanEdit = true;
 			}
@@ -458,6 +462,20 @@ export default {
 		changeSize(e){
 			this.resourceCondition.page_index  = e - 1;
 			this.getResourceByClassId();
+		},
+		imgClick(item,i){
+			if(this.isDialog){
+				this.resourceList.forEach(res=>{
+					res.checked = res.fileid === item.fileid;
+				});
+				this.resourceList = this.resourceList.concat([]);
+				this.currentChooseResource = item;
+				this.$emit('onFinished',item);
+			}
+			else{
+				this. currentResourceIndex =  i;
+			}
+			
 		},
 		toggleResource(item){
 			if(this.isDialog){
@@ -529,6 +547,7 @@ export default {
 		getResourceByClassId(){
 			var {isAdmin,$Message} = this;
 			var s = this; 
+			s.loading = true;
 			var userinfo = zmitiUtil[isAdmin? 'getAdminUserInfo':'getUserInfo']();
 			
 			var condition = Object.assign(this.resourceCondition,{
@@ -587,7 +606,8 @@ export default {
 							}
 							//list.checked = false;
 
-						})
+						});
+						s.loading = false;
 						s.resourceList = data.list;
 
 						
