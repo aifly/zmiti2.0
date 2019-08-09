@@ -280,31 +280,15 @@
                 columns1: [
                     {
                         title: '姓名',
-                        key: 'username',
-                        render:(h,params)=>{
-
-                        	return h('span',{
-                        		class:''
-                        	},params.row.username)
-                        }
+                        key: 'username'
                     },
                     {
-                    	title: '电话',
-                        key: 'usermobile',
-                        render:(h,params)=>{
-                        	return h('span',{
-                        		class:''
-                        	},params.row.usermobile)
-                        }
+                    	title: '联系电话',
+                        key: 'usermobile'
                     },
                     {
                     	title: '邮箱',
-                        key: 'useremail',
-                        render:(h,params)=>{
-                        	return h('span',{
-                        		class:''
-                        	},params.row.useremail)
-                        }
+                        key: 'useremail'
                     },
                     {
                     	title: '状态',
@@ -332,7 +316,6 @@
                         key: '',
                         width:80,
                         render:(h,params)=>{
-                        	console.log(params.row.user,'params.row.user')
                         	return h('span',{
                         		class:'',
                         		style:{
@@ -382,8 +365,7 @@
 						action:userActions.getCompanyUserList.action,
 						condition
 					},
-					success(data){
-						
+					success(data){						
 						if(data.getret === 0){
 							s.conutpersonal=data.total;//人数
 							data.list.map(function(item,index){
@@ -395,7 +377,7 @@
 									status:item.user.status
 								})
 							})
-							console.log(s.userDatalist,'用户列表');
+							//console.log(s.userDatalist,'用户列表');
 						}
 					}
 				})
@@ -412,7 +394,7 @@
 						if(data.getret === 0){
 							s.companyInfo = data.info;
 							s.companyInfo.logourl=data.info.logourl || '../../assets/images/zmiti.jpg';
-							console.log(s.companyInfo,'单位详情');
+							//console.log(s.companyInfo,'单位详情');
 						}
 					}
 				 })
