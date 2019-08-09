@@ -2,264 +2,171 @@
 
 
 
-.zmiti-submit-main-ui {
+.zmiti-company-main-ui {
 	background: #f2f2f2;
 	box-sizing: border-box;
 	height: 100%;
 	width: 99%;
 	margin: 0 auto;
-
-	  
-	@at-root.zmiti-pager{
-		margin: 0px auto;
-		width: 98%;
-		padding: 10px 0;
-		background: #eee;
-		@include displayFlex(row);
-		justify-content: center;
-		-webkit-justify-content: center;
-		border:1px solid #dcdee2;
-		border-top: none;
-		
+	.zmiti-company-main-inner{
+		overflow: auto;
 	}
-	
-	.zmiti-cy-tag{
-		color:red;
-	}
-  .zmiti-avatar-list{
-	  @include displayFlex(row);
-	  span{
-		  font-size:40px;
-		  margin-right: 20px;
-		  cursor: pointer;
-		  &.active{
-			  color:#3390ff;
-		  }
-	  }
-  }
-
-  .ivu-table-wrapper {
-    border-bottom: none;
-    border-right: none;
-  }
-
-
-  .zmiti-list-main {
-    box-sizing: border-box;
-
-    background: #fff;
-    margin: 0 auto;
-    flex: 2;
-    -webkit-flex: 2;
-	@include pos(r);
-	top: 5px;
-    &:before {
-      content: "";
-      @include pos(a);
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      box-shadow: 0 0 0 1px #ccc;
+}
+.zmiti-systemhome-pane{
+    @include displayFlex(row);
+    .zmiti-systemhome-left{
+        flex:1;
+        -webkit-flex:1;
+        margin-left: 5px;
     }
-
-    .zmiti-add-form-close {
-      z-index: 100;
+    .zmiti-systemhome-right{
+        width:320px;
+        margin-left: 18px;
+        margin-right: 5px;
     }
-
-    & > div {
-      margin: 10px auto 10px;
-      //border-top:1px solid #ddd;
-      @include pos(r);
-      flex: 1;
-      -webkit-flex: 1;
-
-      //overflow: auto;
-
-      .zmiti-meet-form {
-        width: 100%;
-        margin: 0px auto;
-        padding: 20px 40px;
-        height: 600px;
-        overflow: auto;
-      }
+}
+.zmiti-systemhome-bor{
+    padding:8px 15px 3px 15px;
+    background-color:#ffffff;
+    box-shadow: 0px 0px 2px 2px #d3d3d3;
+}
+.zmiti-systemhome-hr{
+    height: 18px;
+    line-height: 0;
+    font-size: 0;
+    width: 100%;
+}
+.zmiti-systemhome-h3{
+    font-size: 18px;
+    line-height: 40px;
+    color:#222222;
+    font-weight: bold;
+}
+.zmiti-systemhome-p{
+    font-size: 18px;
+    line-height: 40px;
+    color:#222222;
+}
+.zmiti-systemhome-more{
+    line-height: 1;
+    a{
+        color: #3390ff;
+        font-size: 14px;
+        line-height: 40px;
     }
-    @include displayFlex(column);
-   
-
-    .zmiti-list-where {
-      width: 98%;
-      margin: 10px auto 0;
-      height: 40px;
-	  line-height: 40px;
-	  font-size:14px;
-	  @include pos(r);
-	  z-index: 10;
-	  input{
-		  height: 30px;
-	  }
-	  
-    }
-
-    .zmiti-submit-main {
-      flex: 5;
-	  -webkit-flex: 5;
-	  width: 100%;
-
-      & > div {
-        @include transition(0.3s);
-      }
-
-      .zmiti-submit-table {
-        width: 98%;
-        margin: 0 auto;
-
-        .ivu-table-wrapper {
-          //margin-top: 10px;
+}
+.zmiti-systemhome-ulist{    
+    li{
+        font-size: 14px;
+        line-height: 24px;
+        margin-bottom: 10px;
+        list-style: none;
+        &:last-child{
+            margin-bottom: 0;
         }
-
-        &.active {
-          ///width: 70%;
+        a{
+            color:#222222;
         }
-      }
+        h5{
+            font-weight: normal;
+            font-size: 14px;
+            color: #bbbbbb;
+        }
     }
-  }
-
-  .lt-full{
-	  position: fixed !important;
-	  background: rgba(0,0,0,.5);
-	  z-index: 1001;
-	  overflow: hidden;
-	  .zmiti-left-pannel{
-		  @include pos(a);
-		  width: 100%;
-		  height: 100px;
-		  left: 0;;
-		  top: 0;
-		  z-index: 10;
-	  }
-  }
-
-.zmiti-add-form {
-    flex: 1;
-    -webkit-flex: 1;
-	width:500px;
-	overflow: auto;
-	position: absolute !important;
-	top: 0;
-	right: 0;
-	z-index: 100;
-	
-	height: 100%;
-
-	.zmiti-safe-content{
-		@include displayFlex(row);
-		-webkit-align-items: center;
-		align-items: center;
-		margin-top: 30px;;
-		justify-content: space-around;;
-		-webkit-justify-content: space-around;;
-		border:1px dashed #ccc;
-		padding: 10px 0;
-		&>div{
-			
-			&:nth-of-type(1){
-				text-align: center;
-				width: 120px;
-				font-weight: bold;
-			}
-			&:nth-of-type(2){
-				flex:1;
-				-webkit-flex:1;
-			}
-			&:nth-of-type(3){
-				width: 80px;
-				cursor: pointer;
-				text-align: center;
-				color:rgb(0, 102, 204);
-			}
+}
+.zmiti-systemhome-user{
+    @include displayFlex(row);
+    height: 180px;
+    overflow: hidden;
+    padding:0 30px;
+    background-color:#ffffff;
+    box-shadow: 0px 0px 2px 2px #d3d3d3;
+    .zmiti-systemhome-userface{
+        margin-right: 20px;
+        height: 100%;
+        @include displayFlex(column);
+        justify-content: center;
+        img{
+            display: block;
+            width:120px;
+            height: 120px;
+            border:4px solid #eaf4ff;
+            border-radius:50%;
+        }
+    }
+    .zmiti-systemhome-userinfo{
+        height: 100%;
+        @include displayFlex(column);
+        justify-content: center;
+        .zmiti-systemhome-username{
+            font-size: 24px;
+            line-height: 1.45;
+            color: #222222;
+            b{
+                font-weight: normal;
+                padding-right:15px;
+            }
+            span{
+                color: #3390ff;
+                font-size: 16px;
+            }
+        }
+        .zmiti-systemhome-logintime{
+            color: #777777;
+            font-size: 16px;
+            padding:10px 0 0 0;
+        }
+    }
+}
+.zmiti-company-count{
+	width:320px;
+	height: 180px;
+	color: #ffffff;
+	font-size: 18px;
+	.p {
+		height: 30px;
+		line-height: 1;
+		padding:15px 0 0 0;
+		b{
+			font-size: 22px;			
 		}
 	}
-
-
-	&.detail-enter-active,
-	&.detail-leave-active {
-		@include transition(.2s);
-	}
-
-	&.detail-enter,
-	&.detail-leave-to {
-		@include transform(translateX(100%));
-		
-	}
-	
-
-	.zmiti-submit-avatar{
-		background: rgba(51,144,255,.1);
-		@include br();
-		text-align: center;
-		$size:80px;
-		width: $size;
-		height: $size;
-		line-height: $size;
-		margin: 0 auto 30px;
-		cursor: pointer;
-		@include pos(r);
-		label{
-			@include pos(a);
-			bottom: -50px;
-			font-size:12px;
-			width: 100%;
-			text-align: center;
-			left: 0;;
-		}
+	.h1{
+		font-size: 22px;
+		position:relative;
+		height: 68px;
 		span{
-			font-size:40px;
-			color:rgba(51,144,255,.8);
-			
+			display: inline-block;
+			position: absolute;
+			line-height: 1;
+			bottom:15px;
+		}
+		b{
+			font-size: 44px;
+			line-height: 1;
+			display: inline-block;
+			position: absolute;
+			bottom:8px;
+			left:100px;
 		}
 	}
-    @include pos(r);
-    box-shadow: 0 0 0 1px #ccc;
-    box-sizing: border-box;
-    background: #f9f9f9;
-
-	.zmiti-add-form-C{
-		margin: 10px auto 2px;
-		width: 90%;
+}
+.zmiti-company-column1{
+	@include displayFlex(row);
+	.zmiti-systemhome-user{
+		flex:1;
+		-webkit-flex:1;
+		-moz-flex:1;
+		margin-right: 18px;
 	}
-
-    .zmiti-add-form-item {
-	  line-height: 50px;
-	  
-	  
-      height: 50px;
-      &.zmiti-add-btns {
-        text-align: center;
-        @include pos(r);
-        z-index: 10;
-
-        button {
-          margin: 0 20px;
-          padding: 2px 20px;
-        }
-      }
-
-      input {
-        padding-left: 6px;
-        height: 32px;
-        width: 70%;
-        border: 1px solid#d8d8d8;
-        outline: none;
-      }
-    }
-  }
+}
+.zmiti-company-editbtn{
+	text-align: center;
+	span{
+		font-size: 16px;
+		color: #777777;
+		cursor: pointer;
+	}
 }
 
-.ivu-icon-ios-help-circle{
-	left: 25px;
-}
 
-.ivu-radio-inner:after{
-	border-radius: 10px !important;
-} 
