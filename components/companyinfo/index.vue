@@ -53,10 +53,10 @@
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 						<div class="zmiti-systemhome-ulist zmiti-systemhome-bor">
-							<div class="zmiti-systemhome-h3">单位新闻</div>
+							<div class="zmiti-systemhome-h3">单位新闻<button>新增+</button></div>
 							<ul>
 								<li v-for="item in noticeData">
-									<a href="#">{{item.title}}</a>
+									<a href="#">{{item.title | filterFun}}</a>
 								</li>
 							</ul>
 							<div class="zmiti-systemhome-more"><a href="#">更多</a></div>
@@ -398,8 +398,8 @@
 		},
 		filters: {
 	        filterFun: function(value) {
-	          if (value && value.length > 20) {
-	            value = value.substring(0, 20) + "...";
+	          if (value && value.length > 19) {
+	            value = value.substring(0, 19) + "...";
 	          }
 	    
 	          return value;

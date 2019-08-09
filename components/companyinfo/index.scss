@@ -41,6 +41,22 @@
     line-height: 40px;
     color:#222222;
     font-weight: bold;
+    position:relative;
+    button{
+    	position:absolute;
+    	bottom:8px;
+    	right: 0px;
+    	border:none;
+    	background-color:#eef3f8;
+    	color: #6b879f;
+    	font-size: 14px;
+    	padding:5px 10px;
+    	line-height: 1;
+    	cursor: pointer;
+    	border-radius:8px;
+    	-webkit-border-radius:8px;
+    	-moz-border-radius:8px;
+    }
 }
 .zmiti-systemhome-p{
     font-size: 18px;
