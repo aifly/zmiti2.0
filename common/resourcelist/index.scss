@@ -113,7 +113,9 @@ li{
         }
 
         .zmiti-resource-cate-list-C {
-          overflow: hidden;
+		  overflow: hidden;
+		  
+		  
           ul {
             margin-top: 2px;
             @include displayFlex(row);

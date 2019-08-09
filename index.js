@@ -9,7 +9,7 @@ import WorkOrderList from './components/workorderlist'
 import Practice from './task/practice/index'
 
 import Register from './components/register';
-import ResourceList from './common/resourcelist';
+import ResourceList from './components/resourcelist';
 import ChangYue from './components/changyue';
 import ChangYueMySubmit from './components/changyuemysubmit';
 import ChangYueMyCheck from './components/changyuemycheck';

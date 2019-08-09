@@ -45,6 +45,35 @@
 .zmiti-company-detail-main-ui .zmiti-company-item {
   width: 90%;
   margin: 20px auto;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.zmiti-company-detail-main-ui .zmiti-company-item > div {
+  font-size: 14px;
+  line-height: 40px;
+  position: relative;
+}
+
+.zmiti-company-detail-main-ui .zmiti-company-item > div:nth-of-type(1) {
+  width: 80px;
+}
+
+.zmiti-company-detail-main-ui .zmiti-company-item > div:nth-of-type(2) {
+  flex: 1;
+  -webkit-flex: 1;
+  border-bottom: 1px solid #ccc;
+  line-height: 40px;
+  font-size: 16px;
+}
+
+.zmiti-company-detail-main-ui .zmiti-company-item > div span {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
 }
 
 .zmiti-company-detail-main-ui .zmiti-company-file {

@@ -15,9 +15,6 @@
 				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total"></ZmitiTable>
 			</div>
 		</div>
-			 
- 
-	 
 		<Modal v-model="visible" width="360" title='审核意见'>
 			<Input type='textarea' v-model="suggestion" placeholder="请输入你的审核意见" />
 			<div slot="footer">
@@ -94,7 +91,7 @@
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
 	import ZmitiTable from '../../common/table/';
-	var {companyActions,zmitiActions,changYueAcions} = zmitiUtil;
+	var {companyActions,zmitiActions,changYueAcions,formatDate} = zmitiUtil;
 	import {manuscriptStatus} from '../../common/config';
 	export default {
 		props:['obserable'],
@@ -147,6 +144,9 @@
 						title:"提交时间",
 						key:'createtime',
 						align:'center',
+						render:(h,params)=>{
+							return h('div',{},formatDate(params.row.createtime));
+						}
 					},
 					{
 						title:'稿件状态',

@@ -6,7 +6,7 @@
 					<h2>
 						<img :src="imgs.zmiti1" alt="">
 						<span>{{userinfo.username}} </span>
-						<span style="color:#f00;font-size:14px" v-if='!companyInfo.companyname'>您当前没有加入任何单位，请
+						<span style="color:#f00;font-size:14px" v-if='false && !companyInfo.companyname'>您当前没有加入任何单位，请
 							<a href='javascript:void(0)' @click="visiable = true" style="color:#00f;font-size:20px">选择一个单位</a>
 						</span>
 					</h2>

@@ -9,21 +9,42 @@
 			<div class='zmiti-company-logo'>
 				<img :src='companyInfo.logourl' v-if='companyInfo.logourl' alt="">
 			</div>
-			<Button type="primary">更换logo</Button>
+			<Button type="primary" @click="showResource= true">更换logo</Button>
 		</div>
 
 		<div class='zmiti-company-item'>
-			 <Input size="large" v-model="companyInfo.companyname">
-				<span slot="prepend">单位名称：</span>
-				<Button slot="append">修改</Button>
-			</Input>
+			<div>单位名称：</div>
+			<div>
+				{{companyInfo.companyname}}
+				<span><Icon type="ios-help-circle-outline" /></span>
+			</div>
+			
+		</div>
+
+		<div class='zmiti-company-item'>
+			 <div>单位编号：</div>
+			 <div>
+				 {{companyInfo.companycode}}
+				<span><Icon type="ios-help-circle-outline" /></span>
+			 </div>
+			 
 		</div>
 		<div class='zmiti-company-item'>
-			 <Input size="large" v-model="companyInfo.companycode">
-				<span slot="prepend">单位编号：</span>
-				<Button slot="append">修改</Button>
-			</Input>
+			 <div>单位电话：</div>
+			 <div>
+				 {{companyInfo.companyphone}}
+				<span>修改<Icon type="ios-help-circle-outline" /></span>
+			 </div>
 		</div>
+		<div class='zmiti-company-item'>
+			 <div>单位地址：</div>
+			 <div>
+				 {{companyInfo.companyaddress}}
+				<span>修改<Icon type="ios-help-circle-outline" /></span>
+			 </div>
+		</div>
+
+		<!-- 
 		<div class='zmiti-company-item'>
 			 <Input size="large" v-model="companyInfo.companyphone">
 				<span slot="prepend">单位电话：</span>
@@ -36,7 +57,7 @@
 				<Button slot="append">修改</Button>
 			</Input>
 		</div>
-
+ -->
 		<div class='zmiti-company-file'>
 			<div>
 				<div>单位营业执照</div>
@@ -60,7 +81,7 @@
 
 
 		<Modal v-model="showResource" title='资料库' width='800'>
-			<ResourceList :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
+			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
 			<div class="zmiti-resourcelist-footer"  slot='footer'>
 				<Button style='width:100px;'>取消</Button>
 				<Button style='width:100px;' type='primary' @click='chooseLogo'>确定</Button>
@@ -85,7 +106,7 @@
 			return{
 				imgs:window.imgs,
 				userinfo:{},
-				showResource:true,
+				showResource:false,
 				currentChooseResource:{},
 				companyInfo:{
 
@@ -117,9 +138,7 @@
 				console.log(this.currentChooseResource);
 				this.companyInfo.logourl=this.currentChooseResource.custombilethum[0];
 
-				this.modifyCompanyInfo({
-					logourl:this.companyInfo.logourl
-				})
+				this.modifyCompanyInfo(this.companyInfo)
 
 			},
 

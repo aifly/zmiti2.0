@@ -33,7 +33,7 @@
 						<Icon type="ios-arrow-back" />
 					</div>
 					<div ref='cate' class='zmiti-resource-cate-list-C'  :style="{width:viewW-440+'px'}">
-						<ul :style="{width:100* cateList.length+'px'}">
+						<ul :style="{width:100* (cateList.length+1)+'px'}">
 							<li @click='changeCurrentClass({fileclassid:-1})' :class="{'active':currentClassId === -1}">
 								全部
 							</li>
@@ -164,8 +164,6 @@
 						
 						<div class='zmiti-deitail-btn' @click="changeResource(1)"><Icon type="ios-arrow-forward" /></div>
 					</div>
-
-					
 
 					<div class='zmiti-detail-item zmiti-text-overflow'>
 						<div>文件名称 ：</div>
@@ -433,6 +431,7 @@ export default {
 			var s = this;
 			s.resourceList[s.currentResourceIndex].userlabel += ','+this.userlabel;
 			this.editResourceData();
+		
 
 		},
 
@@ -862,6 +861,8 @@ export default {
 		getDefaultCate(){//获取默认分类。
 			var {isAdmin,condition} = this;
 			var s = this;
+			
+			console.log(zmitiUtil[isAdmin?'getAdminUserInfo':'getUserInfo'](),1)
 			var cdn = Object.assign(condition,{userid:zmitiUtil[isAdmin?'getAdminUserInfo':'getUserInfo']().ui.userid});
 			zmitiUtil[isAdmin? 'adminAjax':'ajax']({
 				remark:'getResourceCateList',
