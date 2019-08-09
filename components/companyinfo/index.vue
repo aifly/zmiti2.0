@@ -30,7 +30,7 @@
 
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
 							<div class="zmiti-systemhome-p">单位人数：23人 待审：6人</div>
-							<Table :border="false" :columns="columns2" :data="data2"></Table>
+							<Table :columns="columns1" :data="data1"></Table>
 							<div class="zmiti-systemhome-more">
 								<router-link to="/product">更多</router-link>
 							</div>
@@ -254,8 +254,96 @@
                 		productname:"产品名称产品名称产品名称产品名称产品名称",
                 		introduce:"产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍",
                 		createtime:1563465600
+                	},
+                	{
+                		productname:"产品名称产品名称产品名称产品名称产品名称",
+                		introduce:"产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍",
+                		createtime:1563465600
+                	},
+                	{
+                		productname:"产品名称产品名称产品名称产品名称产品名称",
+                		introduce:"产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍",
+                		createtime:1563465600
                 	}
-                ]
+                ],
+                data1:[
+                	{
+                		username:"小明",
+                		telephone:"13912345678",
+                		email:'xiaoming@163.com',
+                		status:1,
+                		createtime:1563465600
+                	},
+                	{
+                		username:"小强",
+                		telephone:"13812345678",
+                		email:'xiaoming@163.com',
+                		status:0,
+                		createtime:1563465600
+                	},
+                	{
+                		username:"小米",
+                		telephone:"13812345678",
+                		email:'xiaoming@163.com',
+                		status:1,
+                		createtime:1563465600
+                	}
+                ],
+                columns1: [
+                    {
+                        title: '姓名',
+                        key: 'username'
+                    },
+                    {
+                    	title: '电话',
+                        key: 'telephone'
+                    },
+                    {
+                    	title: '邮箱',
+                        key: 'email'
+                    },
+                    {
+                    	title: '状态',
+                        key: 'status',
+                        width:120,
+                        render:(h,params)=>{
+                        	return h('span',{
+                        		class:''
+                        	},params.row.status==1?'已审核':'待审核')
+                        }
+                    },
+                    {
+                        title: '使用到期时间',
+                        key: 'createtime',
+                        width:180,
+                        align:'center',
+                        render:(h,params)=>{
+                        	return h('div',{
+                        		class:'createtime'
+                        	},this.formatPubDate(params.row.createtime))
+                        }
+                    },
+                    {
+                        title: '操作',
+                        key: '',
+                        width:80,
+                        render:(h,params)=>{
+                        	return h('span',{
+                        		class:'',
+                        		style:{
+                        			color:'#3390ff',
+                        			cursor:'pointer'
+                        		},
+                        		on:{
+                        			click:()=>{
+                        				console.log('test')
+                        			}
+                        		}
+                        	},'详情')
+                        }
+                    }
+                    
+                ],
 			}
 		},
 		components:{
