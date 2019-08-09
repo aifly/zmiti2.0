@@ -42,6 +42,8 @@
   color: #222222;
   font-weight: bold;
   position: relative; }
+  .zmiti-systemhome-h3 label {
+    margin-right: 50px; }
   .zmiti-systemhome-h3 button {
     position: absolute;
     bottom: 8px;
@@ -170,5 +172,7 @@
     font-size: 16px;
     color: #777777;
     cursor: pointer; }
+    .zmiti-company-editbtn span a {
+      color: #777777; }
 
 /*# sourceMappingURL=index.css.map */

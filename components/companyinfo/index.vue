@@ -7,32 +7,32 @@
 						<div class="zmiti-company-column1">
 							<div class="zmiti-systemhome-user">
 								<div class="zmiti-systemhome-userface">
-									<img :src="userinfor.userface">
-									<div class="zmiti-company-editbtn"><span>修改</span></div>
+									<img :src="companyInfo.logourl">
+									<div class="zmiti-company-editbtn"><span><router-link to="/companydetail">修改</router-link></span></div>
 								</div>
 								<div class="zmiti-systemhome-userinfo">
 									<div class="zmiti-systemhome-username">
-										<b>{{userinfor.companyname}}</b>
+										<b>{{companyInfo.companyname}}</b>
 									</div>
 									<div class="zmiti-systemhome-logintime">
-										<div>{{userinfor.address}}</div>
-										<div>信用编号：{{userinfor.companynum}}</div>
+										<div>{{companyInfo.companyaddress}}</div>
+										<div>信用编号：{{companyInfo.companycode}}</div>
 									</div>
 								</div>							
 							</div>
 							<div class="zmiti-company-count zmiti-systemhome-bor" :style="{backgroundImage:'url(../../assets/images/img1.png)'}">
 								<div class="p"><b>工时</b>/小时</div>
-								<div class="h1"><span>总共工时</span><b>300</b></div>
-								<div class="h1"><span>剩余工时</span><b>123</b></div>
+								<div class="h1"><span>总共工时</span><b>{{conutnums[0]}}</b></div>
+								<div class="h1"><span>剩余工时</span><b>{{conutnums[1]}}</b></div>
 							</div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
-							<div class="zmiti-systemhome-p">单位人数：23人 待审：6人</div>
-							<Table :columns="columns1" :data="data1"></Table>
+							<div class="zmiti-systemhome-h3"><label>单位人数：{{conutpersonal}}人</label><label>待审：{{conutunapproved}}人</label></div>
+							<Table :columns="columns1" :data="userDatalist"></Table>
 							<div class="zmiti-systemhome-more">
-								<router-link to="/product">更多</router-link>
+								<a href="#">更多</a>
 							</div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
@@ -40,7 +40,7 @@
 						<div class="zmiti-systemhome-tdata zmiti-systemhome-bor">
 							<Table :columns="columns2" :data="data2"></Table>
 							<div class="zmiti-systemhome-more">
-								<router-link to="/product">更多</router-link>
+								<a href="#">更多</a>
 							</div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
@@ -48,8 +48,8 @@
 					<div class="zmiti-systemhome-right">
 						<div class="zmiti-company-count zmiti-systemhome-bor" :style="{backgroundImage:'url(../../assets/images/img2.png)'}">
 							<div class="p"><b>产品</b>/件</div>
-							<div class="h1"><span>总共件数</span><b>345</b></div>
-							<div class="h1"><span>完成件数</span><b>123</b></div>
+							<div class="h1"><span>总共件数</span><b>{{conutnums[2]}}</b></div>
+							<div class="h1"><span>完成件数</span><b>{{conutnums[3]}}</b></div>
 						</div>
 						<div class="zmiti-systemhome-hr"></div>
 						<div class="zmiti-systemhome-ulist zmiti-systemhome-bor">
@@ -120,7 +120,7 @@
 <script>
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
-	var {companyActions,zmitiActions,changYueAcions} = zmitiUtil;
+	var {companyActions,userActions,formatDate} = zmitiUtil;
 	import {manuscriptStatus} from '../../common/config';
 	export default {
 		props:['obserable'],
@@ -129,41 +129,28 @@
 			return{				
 				targetKeys:[],		
 				companyname:zmitiUtil.getCurrentCompanyId().companyname,
-				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
-				showDetail:false,
-				total:0,
-				showDetailPage:-1,
-				currentClassId:-1, 
 				adminuserId:'',
 				loading:true,
-				currentUserid:'',
 				formUser:{
 					isover:0,
 					usersign:1,
 					usertypesign:1,
 					avatar:'&#xe6a4;'
 				},
-				address:'',
-				showPass:false,
-				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
-				groupList:[],
-				companyList:[],
-				hideMenu:false,
-				unJoinedCompany:[],	
 				condition:{
 					page_index:0,
-					page_size:10,
+					page_size:7
 				},
-				userinfor:{
-					companyname:'北京麟腾文化传媒有限公司',
-					address:'北京市西城区宣武门西大街甲97号新华社发行楼',
-					companynum:'9944556677',
-					userface:'../../assets/images/zmiti.jpg'
+				companyInfo:{
+					logourl:'../../assets/images/zmiti.jpg'
 				},
+				conutnums:['--','--','--','--'],//工时&产品
+				conutpersonal:'-',//单位人数
+				conutunapproved:'-',//未审核人数
 				articleData:[
 					{
 						id:1,
@@ -289,18 +276,35 @@
                 		createtime:1563465600
                 	}
                 ],
+                userDatalist:[],
                 columns1: [
                     {
                         title: '姓名',
-                        key: 'username'
+                        key: 'username',
+                        render:(h,params)=>{
+
+                        	return h('span',{
+                        		class:''
+                        	},params.row.username)
+                        }
                     },
                     {
                     	title: '电话',
-                        key: 'telephone'
+                        key: 'usermobile',
+                        render:(h,params)=>{
+                        	return h('span',{
+                        		class:''
+                        	},params.row.usermobile)
+                        }
                     },
                     {
                     	title: '邮箱',
-                        key: 'email'
+                        key: 'useremail',
+                        render:(h,params)=>{
+                        	return h('span',{
+                        		class:''
+                        	},params.row.useremail)
+                        }
                     },
                     {
                     	title: '状态',
@@ -328,6 +332,7 @@
                         key: '',
                         width:80,
                         render:(h,params)=>{
+                        	console.log(params.row.user,'params.row.user')
                         	return h('span',{
                         		class:'',
                         		style:{
@@ -354,7 +359,8 @@
 
 		},
 		mounted(){
-			
+			this.getUserList();
+			this.getDetail();
 		},
 
 		watch:{
@@ -363,7 +369,7 @@
 		
 		methods:{
 
-			getDataList(){
+			getUserList(){//获取用户列表
 				var s = this;
 				this.loading = true;
 				var {condition} = this;
@@ -371,19 +377,45 @@
 					companyid:zmitiUtil.getCurrentCompanyId().companyid
 				})
 				zmitiUtil.ajax({
-					remark:"getMySubmitList",
+					remark:"getCompanyUserList",
 					data:{
-						action:changYueAcions.getMySubmitList.action,
+						action:userActions.getCompanyUserList.action,
 						condition
 					},
 					success(data){
-						s.loading = false;
+						
 						if(data.getret === 0){
-							s.total = data.total;
-							s.dataSource = data.list;
+							s.conutpersonal=data.total;//人数
+							data.list.map(function(item,index){
+								s.userDatalist.push({
+									createtime:item.user.createtime,
+									username:item.user.username,
+									usermobile:item.user.usermobile,
+									useremail:item.user.useremail,
+									status:item.user.status
+								})
+							})
+							console.log(s.userDatalist,'用户列表');
 						}
 					}
 				})
+			},
+			getDetail(){//获取单位详情
+				var s = this;
+				 zmitiUtil.ajax({
+					remark:"getCompanyInfo",
+					data:{
+						action:userActions.getCompanyInfo.action,
+						companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					},
+					success(data){						
+						if(data.getret === 0){
+							s.companyInfo = data.info;
+							s.companyInfo.logourl=data.info.logourl || '../../assets/images/zmiti.jpg';
+							console.log(s.companyInfo,'单位详情');
+						}
+					}
+				 })
 			},
 			formatPubDate: function (value) {
 				let date = new Date(value*1000);
