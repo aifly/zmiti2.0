@@ -130,7 +130,6 @@
 						<Input v-model="formBasicConfig.info.audio_size_list" placeholder="最大音频文件大小,与文件格式相对应：" />
 					</FormItem>
 
-
 					<div v-for="(list,i) in formBasicConfig.info.oss_list" :key="i">
 						<h2 class='zmiti-oss-title' :class="{'active':formBasicConfig.info.oss_selected === i+1}">第{{i+1}}个OSS配置</h2>
 						<FormItem label="索引：">
@@ -160,6 +159,68 @@
 						</FormItem>
 					</div>
 
+					<FormItem label="短信服务配置：">
+
+					</FormItem>
+
+					<FormItem label='是否启用：'>
+						<RadioGroup v-model="formBasicConfig.info.smtp_config.status">
+							<Radio :value='1' :label="1">启用</Radio>
+							<Radio :value='0' :label="0">关闭</Radio>
+						</RadioGroup>
+					</FormItem>
+					<FormItem label='smtp服务器地址：'>
+						<Input v-model="formBasicConfig.info.smtp_config.smtp_server" />
+					</FormItem>
+					<FormItem label='smtp端口：'>
+						<Input v-model="formBasicConfig.info.smtp_config.smtp_port" />
+					</FormItem>
+					<FormItem label='发送邮件账号：'>
+						<Input v-model="formBasicConfig.info.smtp_config.smtp_user" placeholder="发送邮件账号"/>
+					</FormItem>
+					<FormItem label='邮箱授权码：'>
+						<Input v-model="formBasicConfig.info.smtp_config.smtp_password" placeholder="邮箱授权码（邮箱登录密码）" />
+					</FormItem>
+
+					<FormItem label='是否启用加密链接：'>
+						<RadioGroup v-model="formBasicConfig.info.smtp_config.smtp_ssl">
+							<Radio :value='1' :label="1">启用</Radio>
+							<Radio :value='0' :label="0">禁用</Radio>
+						</RadioGroup>
+					</FormItem>
+					<FormItem label='模板类型 ：'>
+						<RadioGroup v-model="formBasicConfig.info.smtp_config.smtp_template.type">
+							<Radio :value='1' :label="1">找回密码 </Radio>
+						</RadioGroup>
+					</FormItem>
+
+					<FormItem label='邮件标题：'>
+						<Input type="textarea" v-model="formBasicConfig.info.smtp_config.smtp_template.smtp_title" placeholder="邮件标题：" />
+					</FormItem>
+					<FormItem label='邮件内容：'>
+						<quill-editor 
+							v-model="formBasicConfig.info.smtp_config.smtp_template.smtp_body" 
+							ref="myQuillEditor" 
+							aria-placeholder="123"
+							:options="editorOption" 
+							@blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+							@change="onEditorChange($event)">
+							</quill-editor>
+					</FormItem>
+
+					<FormItem label='是否启用加密链接：'>
+						<RadioGroup v-model="formBasicConfig.info.smtp_config.smtp_template.status">
+							<Radio :value='1' :label="1">启用</Radio>
+							<Radio :value='0' :label="0">禁用</Radio>
+						</RadioGroup>
+					</FormItem>
+					<!--
+
+
+
+					  -->
+					
+
 
 					<FormItem label="">
 						<Button @click="save" type="primary">保存</Button>
@@ -187,12 +248,21 @@
 	var companyActions = zmitiUtil.adminActions;
 	var companyActions = zmitiUtil.companyActions;
 	var basicConfigActions = zmitiUtil.basicConfigActions;
+	import VueQuillEditor from 'vue-quill-editor';
+	Vue.use(VueQuillEditor)
 	
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
+				editorOption:{
+					modules:{
+                        toolbar:[
+						  []
+                        ]
+                    }
+				},
 
 				tabIndex:[0,-1],
 				showAvatarModal:false,
@@ -209,6 +279,23 @@
 						}],
 						oss_list:{
 							
+						},
+						smtp_config:{
+							status:1,
+							smtp_server:'',
+							smtp_port:'465',
+							smtp_user:"",
+							smtp_password:'',
+							smtp_ssl:"",
+							smtp_template:{
+								type:1,
+								smtp_body:'',
+								smtp_title:'',
+								status:1
+
+							}
+
+
 						}
 					},
 					is_thumb_custom:1,
@@ -223,7 +310,8 @@
 						fix:[],
 						w:0,
 						height:0
-					}]
+					}],
+					
 				},
 				imgs:window.imgs,
 				viewH:window.innerHeight,
@@ -264,6 +352,13 @@
 		},
 		
 		methods:{
+
+			onEditorBlur(){//失去焦点事件
+            },
+            onEditorFocus(){//获得焦点事件
+            },
+            onEditorChange(){//内容改变事件
+            },
 
 			setOssStatus(i){
 				this.formBasicConfig.info.oss_selected = i;
@@ -358,7 +453,22 @@
 					success(data){
 						if(data.getret === 0){
 							s.formBasicConfig = data;
-							s.formBasicConfig.info.oss_selected = s.formBasicConfig.info.oss_selected || 1;
+							s.formBasicConfig.info.smtp_config = s.formBasicConfig.info.smtp_config ||{
+						status:1,
+						smtp_server:'',
+						smtp_port:'465',
+						smtp_user:"",
+						smtp_password:'',
+						smtp_ssl:"",
+						smtp_template:{
+							type:1,
+							smtp_body:'',
+							smtp_title:'',
+							status:1
+
+						}
+					};
+					s.formBasicConfig.info.oss_selected = s.formBasicConfig.info.oss_selected || 1;
 
 							
 						}

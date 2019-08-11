@@ -9,9 +9,9 @@ var workOrderType = {
 
 
 let  orderStatus = {
-	/* 0: {
+	0: {
 		status: '已禁用'
-	}, */
+	},
 	1:{
 		status:'已受理'
 	},

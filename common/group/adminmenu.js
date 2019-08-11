@@ -74,15 +74,19 @@ var basicconfig_admin_rolegroup_setrole_pv_form = {
 };
 
 let workorder_workorderlist = {
-	title: "工单管理",
+	title: "工单处理",
 	keys:[
-		'workorder',
-		'workorderlist'
+		'workorderlist',
+		'unworkorder',
+		'doneworkorder'
 	],
 	tabs: [
 		{
-			name: '提交工单',
-			link: '/workorder'
+			name: '待处理工单',
+			link: '/unworkorder'
+		}, {
+			name: '已结束工单',
+			link: '/doneworkorder'
 		}, {
 			name: '工单列表',
 			link: '/workorderlist'

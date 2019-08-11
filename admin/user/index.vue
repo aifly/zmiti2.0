@@ -80,7 +80,7 @@
 						<div class='zmiti-add-form-item zmiti-add-btns'>
 							<Button size='large' type='primary' @click='adminAction'>{{formUser.userid?'保存':'确定'}}</Button>
 						</div>
-						<template v-if='formUser.userid && false'>
+						<template v-if='formUser.userid '>
 							<header class='zmiti-add-header zmiti-safe-bar'>
 								<span>安全信息</span>
 							</header>

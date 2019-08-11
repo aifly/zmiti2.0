@@ -1,5 +1,5 @@
 import zmitiActions from '../action.js';
-
+import Vue from 'vue';
 
 
 
@@ -74,6 +74,120 @@ var zmitiUtil = {
 		}
 
 		return loginObj;
+	},
+	heart() {
+		var { userid, token } = this.getUserInfo().ui;
+		var { socket } = this;
+		setTimeout(() => {
+			var json = JSON.stringify({ action: 500, ui: { userid: userid, token: token } })
+			socket.send(json);
+			
+		}, 10 * 1000);
+	},
+
+	getTempToken(token) {
+		if (!this.socket) {
+			this.socket = new WebSocket("ws://newapi.zmiti.com:50294");
+
+			var { socket } = this;
+			this.socket.onopen = function () {
+
+				var json = JSON.stringify({ action: zmitiActions.userActions.getTempToken.action, client_token: token });
+
+				socket.send(json);
+			};
+			this.heart();
+			this.socket.onmessage = (evt) => {
+				var data = JSON.parse(evt.data);
+				console.log(data, '===');
+
+				switch (data.action) {
+					case 0:
+					case 9995:
+						//提示并退出
+						break;
+					case 90000001://授权成功。
+						if (data.getret === 0) {
+						}
+						Vue.obserable.trigger({
+							type: 'closeQrcodePage'
+						});
+						break;
+					case 90000002:
+						Vue.obserable.trigger({
+							type: 'loginSuccess',
+							data
+						});
+						break;
+					case 500:
+						this.heart();
+						break;
+					default:
+						break;
+				}
+			};
+		} else {
+
+
+		}
+
+
+	},
+
+	listener(uid, tk) {
+
+		var { userid, token } = this.getUserInfo().ui;
+
+		if (!userid || !token) {
+			userid = uid;
+			token = tk;
+		}
+		if (this.socket) {
+			return;
+		}
+
+		var socket = new WebSocket("ws://newapi.zmiti.com:50294");
+
+		socket.onopen = function () {
+			var json = JSON.stringify({ action: 10000000, ui: { userid: userid, token: token } })
+			socket.send(json);
+		};
+
+		this.socket = socket;
+		this.heart();
+
+		socket.onmessage = (evt) => {
+			var data = JSON.parse(evt.data);
+			console.log(data,'onmessage');
+			if (data.getret === 0) {
+
+				switch (data.action) {
+					case 0:
+					case 9995:
+						
+						break;
+					case 90000001:
+						Vue.obserable.trigger({
+							type: 'closeQrcodePage'
+						});
+						break;
+					case 90000002:
+						break;
+					case 500:
+						this.heart();
+						break;
+					default:
+						break;
+				}
+			}
+			if (data.getret === 9995 || data.getret === 9994){
+				Vue.obserable.trigger({
+					type:'loginError'
+				})
+				/**/
+			}
+		};
+
 	},
 
 	getAdminUserInfo() {

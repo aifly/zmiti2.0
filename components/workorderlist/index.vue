@@ -19,10 +19,10 @@
 								title="确定要删除吗?"
 								@on-ok='selectionDelete'
 								>
-								<Button type='error' size='small'>删除</Button>
+								<div class='zmiti-table-btn'>删除</div>
 								
 							</Poptip>
-							<Button size='small' type='warning'>禁用</Button>
+							<div class='zmiti-table-btn'>禁用</div>
 						</div>
 					</ZmitiTable>
 					</div>
@@ -36,6 +36,7 @@
 
 <style lang="scss" scoped>
 	@import './index.scss';
+	
 </style>
 <script>
 
@@ -213,11 +214,10 @@
 						}
 					}
 				],
-			 
 			
 				condition:{
 					page_index:0,
-					page_size:10,
+					page_size:2,
 				},
 				userinfo:{}
 			}
@@ -315,11 +315,12 @@
 						remark:'getUserWorkOrderList',
 						data:{
 							action:userActions.getUserWorkOrderList.action,
-							condition:this.condition
+							condition:s.condition
 						},
 						success(data){
 							s.loading = false;
 							if(data.getret === 0){
+								s.total = data.total || data.list.length;
 								s.dataSource = data.list;	 
 								resolve();
 							}

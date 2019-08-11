@@ -181,6 +181,7 @@
 						align:'center',
 						render:(h,params)=>{
 							return h('div',[
+								params.row.status<=0?
 								h('span',{
 									style:{
 										cursor:'pointer',
@@ -194,7 +195,17 @@
 											this.formCheck = c;
 										}
 									}
-								},'审核'),
+								},'审核'):h('span',{
+									style:{
+										cursor:'pointer',
+										color:"#3390ff"
+									},
+									on:{
+										click:()=>{
+											this.revokeManuscript(params.row.manuscriptid);
+										}
+									}
+								},'撤销审核'),
 								h('span',{
 									style:{
 										cursor:'pointer',
@@ -300,6 +311,25 @@
 				})
 			},
 
+			revokeManuscript(manuscriptid){
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'revokeManuscript',
+					data:{
+						action:changYueAcions.revokeManuscript.action,
+						info:{
+							manuscriptid
+						}
+					},
+					success(data){
+						
+						s.$Message[data.getret ===0 ?'success':'error'](data.msg);
+						if(data.getret === 0 ){
+							s.getDataList();
+						}
+					}
+				})
+			},
 			change(e){
 				this.condition.page_index = e -1;
 				this.getDataList();

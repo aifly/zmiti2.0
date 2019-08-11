@@ -19,10 +19,10 @@
 							title="确定要删除吗?"
 							@on-ok='selectionDelete'
 							>
-							<Button type='error' size='small'>删除</Button>
+							<div class='zmiti-table-btn'>删除</div>
 							
 						</Poptip>
-						<Button size='small' type='warning'>禁用</Button>
+						<div class='zmiti-table-btn'>禁用</div>
 					</div>
 				</ZmitiTable>
 				</div>
@@ -45,11 +45,16 @@
 	import zmitiUtil from '../../common/lib/util';
 	import WorkOrderDetail from '../../common/workorderdetail';
 	import {orderStatus,workOrderType} from '../../common/config';
-	import ZmitiTable from '../../common/table'
+	import ZmitiTable from '../../common/table';
 	var adminActions = zmitiUtil.adminActions;
 	
 	export default {
-		props:['obserable'],
+		props:{
+			status:{
+				type:Array,
+				default:Object.keys(orderStatus)
+			}
+		},
 		name:'zmitiindex',
 		data(){
 			return{
@@ -87,13 +92,12 @@
 						render:(h,params)=>{
 							return h('div',{},this.formatDate(params.row.createtime))
 						}
-						
-						
 					},{
 						title:"状态",
 						key:'status',
 						align:'center',
 						render:(h,params)=>{
+							
 							return h('div',{},orderStatus[params.row.status].status)
 						}
 					},{
@@ -263,13 +267,16 @@
 			getDataList(){
 				var s = this;
 			
-				
+				var {condition} = this;
+				condition = Object.assign(condition,{
+					status:this.status.join(',')
+				})
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.adminAjax({
 						remark:'getUserWorkOrderList',
 						data:{
 							action:adminActions.getUserWorkOrderList.action,
-							condition:this.condition
+							condition:condition
 						},
 						success(data){
 							s.loading = false;

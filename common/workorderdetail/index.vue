@@ -3,7 +3,7 @@
 		<div class='zmiti-wo-step'>
 			<ul>
 				
-				<li :class="{'through':workinfo.status>i,'active':workinfo.status==i}" v-for='(step,i) of orderStatus' :key="i">
+				<li v-show='i>0' :class="{'through':workinfo.status>i,'active':workinfo.status==i}" v-for='(step,i) of orderStatus' :key="i">
 					<span v-if='i<=3'>{{step.status}}</span>
 					<span v-else>{{workinfo.status === 3 ? step.status:"未评价"}}</span>
 				</li>

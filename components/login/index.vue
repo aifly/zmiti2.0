@@ -37,7 +37,7 @@
 			
 		</section>
 
-		<div class='zmiti-choose-company' v-if='company_list.length>1'>
+		<div class='zmiti-choose-company' v-if=' company_list.length > 1 '>
 			<div>
 				<h1>请选择单位</h1>
 				<ul>
@@ -161,7 +161,7 @@
 							
 							window.localStorage.setItem('login',JSON.stringify(data));
 							window.localStorage.setItem('currentCompany',JSON.stringify(data.info.company_list[0]));
-
+							
 							if(data.info.company_list.length>1){
 								_this.company_list = data.info.company_list;
 								//window.localStorage.setItem('currentCompany',JSON.stringify(data.info.company_list[0]));

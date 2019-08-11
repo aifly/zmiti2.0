@@ -83,7 +83,6 @@
 						title:"单位负责人",
 						key:'realname',
 						align:'center',
-						width:200
 						
 					},{
 						title:"负责人电话",
@@ -95,13 +94,12 @@
 						title:"使用人数",
 						key:'total',
 						align:'center',
-						width:200
 						
 					},{
 						title:'开始时间',
 						key:'startdate',
 						align:'center',
-						width:220,
+						width:200,
 						render:(h,params)=>{
 							return h('div',{},formatDate(params.row.startdate))
 						}
@@ -109,7 +107,7 @@
 						title:'到期时间',
 						key:'enddate',
 						align:'center',
-						width:220,
+						width:200,
 						render:(h,params)=>{
 							return h('div',{},formatDate(params.row.enddate))
 						}

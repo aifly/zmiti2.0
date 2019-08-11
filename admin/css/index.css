@@ -8,6 +8,24 @@
   margin: 0 auto;
 }
 
+.zmiti-table-btn {
+  background: #fff;
+  padding: 0 8px;
+  position: relative;
+  top: 1px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  left: -10px;
+  display: inline-block;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.zmiti-table-btn:hover {
+  border-color: #00c1de;
+  color: #00c1de;
+}
+
 .zmiti-text-overflow {
   overflow: hidden;
   white-space: nowrap;

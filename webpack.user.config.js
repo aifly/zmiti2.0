@@ -1,7 +1,7 @@
 var path = require('path');
 //const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
 //const HtmlWebpackPlugin = require('html-webpack-plugin');
-var port = 8000;
+var port = 8001;
 //var webpack = require('webpack');
 //const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
@@ -11,7 +11,37 @@ module.exports = {
 	// 输入配置
 	entry: {
 		index: './index.js',
-		admin: './admin.js',
+	},
+	optimization: {
+		splitChunks: {
+			chunks: "all",
+			cacheGroups: {
+				commons: {
+					chunks: "initial",
+					minChunks: 2,
+					maxInitialRequests: 5, // The default limit is too small to showcase the effect
+					minSize: 0,// This is example is too small to create commons chunks,
+					reuseExistingChunk: true // 可设置是否重用该chunk
+				},
+				'vue': {
+					test: /vue/, // 直接使用 test 来做路径匹配
+					chunks: "initial",
+					name: "vue",
+					enforce: true,
+					reuseExistingChunk: true // 可设置是否重用该chunk
+				},
+				'iview': {
+					test: /iview/, // 直接使用 test 来做路径匹配
+					chunks: "initial",
+					name: "iview",
+					enforce: true,
+					reuseExistingChunk: true // 可设置是否重用该chunk
+				},
+			}
+		},
+		runtimeChunk: {
+			name: "manifest"
+		}
 	},
 	// 输出配置
 	output: {
@@ -20,7 +50,7 @@ module.exports = {
 		// 输出文件名 name 为 entry 的 key 值，也可以加上 hash 值， 如：[name].[hash:8].js
 		filename: '[name].js',
 		// 构建生成的 js 在html中引用时的路径
-		publicPath: process.env.WEBPACK_DEV_SERVER? "/" : '/assets/js/',
+		publicPath: process.env.WEBPACK_DEV_SERVER ? "/" : '/assets/js/',
 		//publicPath: '/'
 	},
 
@@ -86,8 +116,8 @@ module.exports = {
 			test: /\.js$/,
 			exclude: /node_modules/,
 			loader: 'babel-loader',
-			options:{
-				'babelrc':false,
+			options: {
+				'babelrc': false,
 				"plugins": [
 					"dynamic-import-webpack"
 				]

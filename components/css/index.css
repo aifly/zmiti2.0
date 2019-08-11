@@ -18,6 +18,24 @@ li {
   list-style: none;
 }
 
+.zmiti-table-btn {
+  background: #fff;
+  padding: 0 8px;
+  position: relative;
+  top: 1px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  left: -10px;
+  display: inline-block;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.zmiti-table-btn:hover {
+  border-color: #00c1de;
+  color: #00c1de;
+}
+
 .zmiti-user-table {
   width: 98%;
   margin: 0 auto;
@@ -126,7 +144,7 @@ header.zmiti-add-header img {
   content: '';
   width: 4px;
   height: 24px;
-  background: #b20000;
+  background: #00c1de;
   left: -4px;
   position: absolute;
   top: 12px;

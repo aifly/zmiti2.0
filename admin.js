@@ -56,6 +56,8 @@ var productrole = ()=>import('./admin/productrole/index.vue') */
 import changyue from './admin/changyue';
 import resourcelist from './admin/resourcelist';
 import workorderlist from './admin/workorderlist';
+import doneworkorder from './admin/doneworkorder';
+import unworkorder from './admin/unworkorder';
 import workorder from './admin/workorder';
 import news from './admin/news';
 import article from './admin/news/article';
@@ -103,7 +105,7 @@ const router = new VueRouter({
 		
 		},
 		{ path: '/resourcelist/:id?', name: 'resourcelist', component:resourcelist },
-		{ path: '/workorderlist/:id?', name: 'workorderlist', component:workorderlist },
+		
 
 		
 		{ path: '/workorder/', name: 'workorder', component:  workorder},
@@ -111,6 +113,9 @@ const router = new VueRouter({
 		{ path: '/news/article/:newsid?', name: 'article', component: article},
 		 {
 			path: '/group/', name: 'group', component: group, children: [
+				{ path: '/workorderlist/:id?', name: 'workorderlist', component: workorderlist },
+				 { path: '/doneworkorder/:id?', name: 'doneworkorder', component: doneworkorder },
+				{ path: '/unworkorder/:id?', name: 'unworkorder', component: unworkorder },
 				{ path: '/user/:companyid?', name: 'user', component:user  },
 				{ path: '/adminchangyue/:id?', name: 'adminchangyue', component:changyue  },
 				{ path: '/adminchangyuesetting', name: 'adminchangyuesetting', component: changyuesetting },

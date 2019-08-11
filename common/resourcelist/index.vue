@@ -62,10 +62,10 @@
 							confirm
 							title="确定要删除吗？"
 							@on-ok="delResource">
-							<Button type='error' size='small'>删除</Button>
+							<Button :disabled='checkedList.length<=0' type='error' size='small'>删除</Button>
 						</Poptip>
-						<Button type='primary' size='small' @click="showClipDialog = true;moveType = 1">复制到</Button>
-						<Button type='primary' size='small' @click="showClipDialog = true;moveType = 2">剪切到</Button>
+						<Button :disabled='checkedList.length<=0' type='primary' size='small' @click="showClipDialog = true;moveType = 1">复制到</Button>
+						<Button :disabled='checkedList.length<=0' type='primary' size='small' @click="showClipDialog = true;moveType = 2">剪切到</Button>
 						<span style='opacity:0'>1</span>
 						<Button v-if='false' type='error' size='small' @click='downloadResource'>下载</Button>
 					</div>
@@ -213,8 +213,16 @@
 					<div class='zmiti-detail-item zmiti-text-overflow'>
 						<div>备注 ：</div>
 						<div>
-							<Input v-if='isCanEdit' type='textarea' v-model='resourceList[currentResourceIndex].filedesc' />
-							<span v-else>{{resourceList[currentResourceIndex].filedesc}}</span>
+							<quill-editor 
+							v-if='isCanEdit'
+							v-model="resourceList[currentResourceIndex].filedesc" 
+							ref="myQuillEditor" 
+							aria-placeholder="123"
+							:options="editorOption" 
+							@blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+							@change="onEditorChange($event)">
+							</quill-editor>
+							<span v-else v-html='resourceList[currentResourceIndex].filedesc'></span>
 						</div>
 					</div>
 
@@ -286,6 +294,13 @@ export default {
 	},
 	data(){
 		return {
+			editorOption:{
+				modules:{
+					toolbar:[
+						[]
+					]
+				}
+			},
 			defaultClass:defaultClass(this.isAdmin? 4 : 3),
 			cateList:[
 				
@@ -381,6 +396,13 @@ export default {
 		},
 	},
 	methods: {
+		
+		onEditorBlur(){//失去焦点事件
+		},
+		onEditorFocus(){//获得焦点事件
+		},
+		onEditorChange(){//内容改变事件
+		},
 		
 		closeClipDialog(){
 			this.showClipDialog = false;

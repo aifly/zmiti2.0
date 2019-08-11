@@ -1,6 +1,6 @@
 @import "./base.scss";
  
-$color:#b20000;
+$color:#00c1de;
 
 .ivu-radio-inner:after{
 	border-radius: 4px !important;
@@ -13,6 +13,21 @@ img {
 }
 li{
 	list-style: none;
+}
+@at-root.zmiti-table-btn{
+	background: #fff;
+	padding: 0 8px;
+	position: relative;
+	top: 1px;
+	border:1px solid #ddd;
+	cursor: pointer;
+	left:-10px;
+	display: inline-block;
+	@include transition(.2s);
+	&:hover{
+		border-color:$color;
+		color:$color;
+	}
 }
 
 .zmiti-user-table {

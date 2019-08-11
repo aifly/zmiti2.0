@@ -5,10 +5,10 @@
 		</div>
 		<div class='zmiti-pager'>
 			<div>
-				<Checkbox @on-change='selectAll'>全选</Checkbox>
+				<Checkbox @on-change='selectAll'><span style="opacity:0">全</span></Checkbox>
 				<slot name='table-btns'></slot>
 			</div>
-			<Page @on-change='change' :page-size='page_size' :total="total" show-total />
+			<Page @on-change='change' :page-size='pageSize' :total="total" show-total />
 		</div>
 	</div>
 </template>
@@ -16,7 +16,7 @@
 @import '../css/base.scss';
 .zmiti-user-table {
 	width: 98%;
-	margin: 0 auto;
+	margin: 2px auto;
 }
 @at-root.zmiti-text-overflow {
   overflow: hidden;
@@ -35,6 +35,13 @@
 	-webkit-justify-content: space-between;
 	border:1px solid #dcdee2;
 	border-top: none;
+	
+	button.ivu-btn{
+		height:32px;
+		background:#fff;
+		border-color:#ddd;
+		color:#222;
+	}
 	&>div,&>ul{
 		margin:0 20px;
 		line-height:30px;
@@ -61,9 +68,8 @@ export default {
 
 			}
 		},
-		page_size:{
+		pageSize:{
 			type:Number,
-			default:10,
 		},
 		total:{
 			type:Number,

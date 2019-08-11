@@ -408,6 +408,10 @@ let changYueAcions = {
 	manuscriptDetail:{
 		desc:"稿件详情",
 		action:"2001913"
+	},
+	revokeManuscript:{
+		desc:'撤销审核',
+		action:'2001921'
 	}
 
 }

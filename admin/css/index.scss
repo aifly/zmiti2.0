@@ -1,6 +1,8 @@
 @charset "utf-8";
 @import "./base.scss";
 
+$color:#00c1de;
+
 .zmiti-user-table {
 	width: 98%;
 	margin: 0 auto;
@@ -13,6 +15,22 @@
 		///width: 70%;
 	}
 	}
+
+@at-root.zmiti-table-btn{
+	background: #fff;
+	padding: 0 8px;
+	position: relative;
+	top: 1px;
+	border:1px solid #ddd;
+	cursor: pointer;
+	left:-10px;
+	display: inline-block;
+	@include transition(.2s);
+	&:hover{
+		border-color:$color;
+		color:$color;
+	}
+}
 @at-root.zmiti-text-overflow {
   overflow: hidden;
   white-space: nowrap;

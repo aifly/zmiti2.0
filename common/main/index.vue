@@ -39,7 +39,7 @@
 							消息发布
 						</span>
 						<span>
-							<router-link to='/workorderlist'>工单处理</router-link> 
+							<router-link :to='isAdmin?"/unworkorder":"/workorderlist"'>工单处理</router-link> 
 						</span>
 					</template>
                    <span class="zmiti-text-overflow">
@@ -191,6 +191,18 @@
 			this.userinfo = userinfo||{info:{}};  
 			
 			var s = this;
+
+
+			obserable.on('loginError',()=>{
+				this.$Modal.warning({
+					title:'智小媒提醒您',
+					content:'<p>您的帐号已在其他终端登录。</p> <p>如非本人操作，建议您重新登录后更改密码。</p>',
+					onOk:()=>{
+						window.localStorage.clear();
+						window.location.href = window.location.href.split('#')[0]; 
+					}
+				});
+			});
 			
             obserable.on('getProduct',()=>{
 				if(!window.isAdmin && s.$route.name !=='login' && s.$route.name !=='register'){

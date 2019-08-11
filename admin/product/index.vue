@@ -21,7 +21,7 @@
 								{{data.productname}} <span class='zmt_iconfont' v-html='"&#xe64e;"'></span>
 							</router-link>
 						</div>
-						<div v-html="data.introduce"></div>
+						<div v-html="data.introduce" style="max-height:70px;overflow:hidden"></div>
 						<div>
 							<div>创建时间：{{formatDate(data.createtime).substr(0,10)}}</div>
 							<div>
@@ -102,8 +102,8 @@
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask';
 	import VueQuillEditor from 'vue-quill-editor';
-	var {adminActions,companyActions,formatDate } = zmitiUtil;
 	Vue.use(VueQuillEditor)
+	var {adminActions,companyActions,formatDate } = zmitiUtil;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -274,6 +274,8 @@
 			},
 			getDataList(){
 				var s = this;
+
+			
 			
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.adminAjax({
