@@ -280,7 +280,7 @@
                 columns1: [
                     {
                         title: '姓名',
-                        key: 'username'
+                        key: 'realname'
                     },
                     {
                     	title: '联系电话',
@@ -371,7 +371,7 @@
 							data.list.map(function(item,index){
 								s.userDatalist.push({
 									createtime:item.user.createtime,
-									username:item.user.username,
+									realname:item.user.realname,
 									usermobile:item.user.usermobile,
 									useremail:item.user.useremail,
 									status:item.user.status
