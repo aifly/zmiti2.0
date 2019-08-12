@@ -13,7 +13,7 @@ import ResourceList from './components/resourcelist';
 import ChangYue from './components/changyue';
 import ChangYueMySubmit from './components/changyuemysubmit';
 import ChangYueMyCheck from './components/changyuemycheck';
-
+import ChangYueDetail from './components/changyuedetail';
 import changyuecompany from './components/changyuecompany';
 import changyuedepartment from './components/changyuedepartment';
 import user from './components/user';
@@ -73,6 +73,7 @@ const router = new VueRouter({
 			{ path: "/changyue/:id?", name: "changyue", component:ChangYue},
 			{ path: "/changyuemysubmit/:id?", name: "changyuemysubmit", component: ChangYueMySubmit},
 			{ path: "/changyuemycheck/:id?", name: "changyuemycheck", component: ChangYueMyCheck},
+			{ path: "/changyuedetail/:manuscriptid/:id/", name: "changyuedetail", component: ChangYueDetail},
 			{ path: "/changyuecompany/:id?", name: "changyuecompany", component:changyuecompany},
 			{ path: "/changyuedepartment/:id?", name: "changyuedepartment", component:changyuedepartment},
 			{ path: "/user", name: "user", component:user},

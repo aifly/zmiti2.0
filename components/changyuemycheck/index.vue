@@ -271,7 +271,7 @@
 			getDetail(manuscriptid){
 				//manuscriptDetail
 				var s = this;
-				s.modaldetail=true;
+				/*s.modaldetail=true;
 				zmitiUtil.ajax({
 					remark:'manuscriptDetail',
 					data:{
@@ -284,9 +284,9 @@
 						console.log(data);
 						s.detailData=data.detail;
 						s.formCheck.manuscriptid=data.detail.manuscriptid;
-						//console.log(s.formCheck.manuscriptid,'s.formCheck.manuscriptid');
 					}
-				})
+				})*/
+				this.$router.push({name:'changyuedetail',params:{'manuscriptid':manuscriptid,'id':this.$route.params.id}})
 			},
 			checkManuscript(status){//审核稿件
 				var s = this;
