@@ -75,6 +75,13 @@
         background-color: #00b858; }
       .zmiti-changye-main-ui .changyue-item1 .pannel-btns .ivu-btn-info {
         background-color: #3390ff; }
+      .zmiti-changye-main-ui .changyue-item1 .pannel-btns a {
+        color: #2D8cF0;
+        font-size: 15px; }
+        .zmiti-changye-main-ui .changyue-item1 .pannel-btns a .ivu-icon {
+          font-size: 18px;
+          margin-top: -2px;
+          margin-right: 5px; }
   .zmiti-changye-main-ui .changyue-item2 .item-icon {
     padding: 50px 0 50px 40px; }
   .zmiti-changye-main-ui .changyue-item2 .item-inner {

@@ -10,7 +10,8 @@
 							<div class="pannel-smmary">一套用于提交上级审阅，<br/>并支持一键检测错别字，敏感词的内容检测插件</div> -->
 							<img class="img2" :src='imgs["CLIENT"+16]'>
 							<div class="pannel-btns">
-								<Button type="success">插件下载</Button><Button type="info">进入</Button>
+								<!-- <Button type="success">插件下载</Button><Button type="info">进入</Button> -->
+								<a href="#"><Icon type="ios-help-circle-outline" />使用帮助</a>
 							</div>
 						</div>
 					</div>
