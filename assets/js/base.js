@@ -67,7 +67,10 @@ var imgs = {
 	CLIENT16:'./assets/images/client/cy-home1.png',
 	CLIENT17:'./assets/images/client/cy-home8.png',
 	CLIENT18:'./assets/images/client/cy-home7.png',
-	CLIENT19:'./assets/images/client/view-b2.jpg'
+	CLIENT19:'./assets/images/client/view-b2.jpg',
+	CHECK0:'./assets/images/client/static-a0.png',
+	CHECK1:'./assets/images/client/static-a1.png',
+	CHECKb0:'./assets/images/client/static-b0.png'
 
 };
 

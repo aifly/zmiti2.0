@@ -406,12 +406,20 @@ let changYueAcions = {
 		action:'2001912'
 	},
 	manuscriptDetail:{
-		desc:"稿件详情",
+		desc:"稿件详情-无需登陆",
 		action:"2001913"
 	},
 	revokeManuscript:{
 		desc:'撤销审核',
 		action:'2001921'
+	},
+	getuserManuscript:{
+		desc:'获取稿件所有审核意见',
+		action:'2001922'
+	},
+	getuserDetails:{
+		desc:'审核人查看稿件详情',
+		action:'2001920'
 	}
 
 }
