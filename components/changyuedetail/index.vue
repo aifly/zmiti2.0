@@ -182,6 +182,7 @@
 						s.suggestion = '';
 						s.$Message[data.getret ===0 ?'success':'error'](data.msg);
 						if(data.getret === 0 ){
+							s.getDetail();
 							s.getusermanuscript();
 						}
 					}
