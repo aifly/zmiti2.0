@@ -62,10 +62,9 @@ var zmitiUtil = {
 
 		var loginObj = {};
 		try {
-			loginObj = JSON.parse(localStorage.getItem(key));
+			loginObj = JSON.parse(localStorage.getItem(key)) || {};
 		} catch (error) {
 			//window.location.reload();
-			return {};
 			window.location.hash = 'login';
 
 			if (window.location.hash != '#/login') {

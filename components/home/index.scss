@@ -134,10 +134,19 @@ $color: #be0000;
 								font-weight: bold;
 							}
 						}
+						@include pos(r);
+
+						.zmiti-joincompany-btn{
+							@include pos(a);
+							right:0;
+							top: 0;
+							height: 100%;
+							line-height: 40px;
+							cursor: pointer;
+						}
 
 						span{
 							@include pos(r);
-							top: 4px;
 						}
 						img{
 							height: 20px;

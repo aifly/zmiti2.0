@@ -36,7 +36,8 @@ var basicconfig_admin_rolegroup_setrole_pv_form = {
 		'pv',
 		'form'
 	],
-	tabs: [
+	tabs:
+	 [
 		{
 			name: '基础配置',
 			link: '/basicconfig'
@@ -44,7 +45,8 @@ var basicconfig_admin_rolegroup_setrole_pv_form = {
 		{
 			name: '管理员管理',
 			link: '/admin'
-		}, {
+		}, 
+		{
 			name: '权限管理',
 			link: '/role',
 			children: [
@@ -56,7 +58,8 @@ var basicconfig_admin_rolegroup_setrole_pv_form = {
 					link: '/setrole'
 				}
 			]
-		}, {
+		}, 
+		{
 			name: "简易统计",
 			link: '/',
 			children: [

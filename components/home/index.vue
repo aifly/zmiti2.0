@@ -38,6 +38,8 @@
 							<div class='active'>
 								<span>{{companyInfo.companyname}}</span>
 								 <router-link style='font-size:12px;cursor:pointer;color:#333;top:4px;position:relative;' to='/login' v-if='userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
+
+								 <div @click="visiable=true;" class='zmiti-joincompany-btn'>加入单位</div>
 							</div>
 						</header>
 						<div class='zmiti-companyinfo'>
@@ -347,6 +349,7 @@
 			this.getWeatherData();
 
 			this.getCompanyInfo();
+			this.getCompanyList();
 			this.getAllProductList();
 			this.getCheckedProduct();
 
@@ -471,8 +474,8 @@
 			getCompanyInfo(){
 				var companyid = zmitiUtil.getCurrentCompanyId().companyid;
 				var s = this;
+				
 				if(!companyid){
-					this.getCompanyList();
 					return;
 				}
 				this.loading = true;

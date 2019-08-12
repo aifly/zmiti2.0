@@ -42,7 +42,6 @@
 				<h1>请选择单位</h1>
 				<ul>
 					<li @click='chooseCompany(company)' v-for='(company,i) in company_list' :key="i">{{company.companyname}}</li>
-					
 				</ul>
 			</div>
 		</div>
