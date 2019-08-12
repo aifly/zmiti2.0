@@ -22,16 +22,18 @@
 						</div>
 					</div>
 					<div class="zmiti-details-items">
-				        <div class="h3">填写审核意见：</div>
-				        <div class="zmiti-details-textarea">
-				        	<Input type='textarea' :rows="6" v-model="suggestion" placeholder="请输入你的审核意见，可以为空~~" />
-				        </div>
-				        <div class="zmiti-details-checkbtn">				        	
-							<Button type="error" @click="checkManuscript(2)"  >拒绝</Button>
-							<Button type="primary"  @click="checkManuscript(1)" >通过</Button>
-				        </div>
 
-				        <div class="view-messagelist zmiti-checklist" v-show="getusermanuscriptlist.length>0">
+						<div v-if="getusermanuscriptlist.length==0">
+					        <div class="h3">填写审核意见：</div>
+					        <div class="zmiti-details-textarea">
+					        	<Input type='textarea' :rows="6" v-model="suggestion" placeholder="请输入你的审核意见，可以为空~~" />
+					        </div>
+					        <div class="zmiti-details-checkbtn">				        	
+								<Button type="error" @click="checkManuscript(2)"  >拒绝</Button>
+								<Button type="primary"  @click="checkManuscript(1)" >通过</Button>
+					        </div>
+				        </div>
+				        <div class="view-messagelist zmiti-checklist" v-else>
 				        	<div class="view-messagelist-inner">
 				        		<div class="h3">全部审核意见</div>
 				        		<div class="msg-items">
@@ -225,21 +227,7 @@
 						}
 					}
 				})
-			},
-			change(e){
-				this.condition.page_index = e -1;
-				this.getDataList();
-			},
-
-			getDataList(){
-				var s = this;
-				s.loading = true;
-				var {condition} = this;
-				var productid =  this.$route.params.id;
-			
-			},
-			
-			 
+			}
 		},
 		filters: {
 	      formatDate: function (value) {
