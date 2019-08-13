@@ -70,6 +70,7 @@ var imgs = {
 	CLIENT19:'./assets/images/client/view-b2.jpg',
 	CHECK0:'./assets/images/client/static-a0.png',
 	CHECK1:'./assets/images/client/static-a1.png',
+	CHECK2:'./assets/images/client/static-a2.png',
 	CHECKb0:'./assets/images/client/static-b0.png'
 
 };
