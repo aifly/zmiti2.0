@@ -45,8 +45,8 @@
 				        						<div class="msg-times">审核时间：{{item.updatetime | formatDate}}</div>
 				        						<Button type="primary" v-show="item.status==1" @click="revokeManuscript(item.manuscriptid)">撤销审核</Button>
 				        					</div>
-				        					<div class="msg-status" v-show="item.status==1" :style="{backgroundImage:'url('+imgs['CHECK1']+')'}"></div>
-				        					<div class="msg-status" v-show="item.status==2" :style="{backgroundImage:'url('+imgs['CHECK2']+')'}"></div>
+				        					<div class="msg-status" v-if="item.status==1" :style="{backgroundImage:'url('+imgs['CHECK1']+')'}"></div>
+				        					<div class="msg-status" v-if="item.status==2" :style="{backgroundImage:'url('+imgs['CHECK2']+')'}"></div>
 				        				</li>
 				        			</ul>
 				        		</div>
