@@ -175,7 +175,19 @@
 											}
 										}
 									}, '删除')
-								])
+								]),
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginLeft:'10px'
+									},
+									on:{
+										click:()=>{
+											this.getDetail(params.row.manuscriptid)
+										}
+									}
+								},'详情')
                             ]);
 							
 							 
@@ -245,6 +257,10 @@
 		},
 		
 		methods:{
+			getDetail(manuscriptid){
+				var s = this;
+				this.$router.push({name:'changyuedetail',params:{'manuscriptid':manuscriptid,'id':this.$route.params.id}})
+			},
 			change(e){
 				this.condition.page_index = e -1;
 				this.getMyCheckList();
