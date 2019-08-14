@@ -55,7 +55,7 @@
 			 <div>是否开启认证：</div>
 			 <div>
 				 <label for="">
-					 <RadioGroup @on-change='modifyCompanyInfo(companyInfo)' v-model="JSON.parse(companyInfo.config).is_auth">
+					 <RadioGroup @on-change='modifyCompanyInfo(companyInfo)' v-model="companyInfo.is_auth">
 						<Radio :value='1' :label="1">开启认证</Radio>
 						<Radio :value='0' :label="0">关闭认证</Radio>
 					</RadioGroup>

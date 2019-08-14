@@ -145,6 +145,15 @@ $color: #be0000;
 							cursor: pointer;
 						}
 
+						.zmiti-create-company-btn{
+							@include pos(a);
+							top: 0;
+							left: 130px;
+							height: 100%;
+							line-height: 40px;
+							cursor: pointer;
+						}
+
 						span{
 							@include pos(r);
 						}
@@ -331,3 +340,106 @@ $color: #be0000;
 		}
 	}
 }
+
+
+@at-root.zmiti-add-form {
+    flex: 1;
+    -webkit-flex: 1;
+	width:500px;
+	overflow: auto;
+	position: absolute !important;
+	top: 0;
+	right: 0;
+	z-index: 100;
+	
+	height: 100%;
+
+	.zmiti-safe-content{
+		@include displayFlex(row);
+		-webkit-align-items: center;
+		align-items: center;
+		margin-top: 30px;;
+		justify-content: space-around;;
+		-webkit-justify-content: space-around;;
+		border:1px dashed #ccc;
+		padding: 10px 0;
+		&>div{
+			
+			&:nth-of-type(1){
+				text-align: center;
+				width: 120px;
+				font-weight: bold;
+			}
+			&:nth-of-type(2){
+				flex:1;
+				-webkit-flex:1;
+			}
+			&:nth-of-type(3){
+				width: 80px;
+				cursor: pointer;
+				text-align: center;
+				color:rgb(0, 102, 204);
+			}
+		}
+	}
+
+	.zmiti-company-avatar{
+		background: rgba(51,144,255,.1);
+		@include br();
+		text-align: center;
+		$size:80px;
+		width: $size;
+		height: $size;
+		line-height: $size;
+		margin: 0 auto 30px;
+		cursor: pointer;
+		@include pos(r);
+		label{
+			@include pos(a);
+			bottom: -50px;
+			font-size:12px;
+			width: 100%;
+			text-align: center;
+			left: 0;;
+		}
+		span{
+			font-size:40px;
+			color:rgba(51,144,255,.8);
+			
+		}
+	}
+    @include pos(r);
+    box-shadow: 0 0 0 1px #ccc;
+    box-sizing: border-box;
+    background: #f9f9f9;
+
+	.zmiti-add-form-C{
+		margin: 10px auto 2px;
+		width: 90%;
+	}
+
+    .zmiti-add-form-item {
+	  line-height: 50px;
+	  
+	  
+      height: 50px;
+      &.zmiti-add-btns {
+        text-align: center;
+        @include pos(r);
+        z-index: 10;
+
+        button {
+          margin: 0 20px;
+          padding: 2px 20px;
+        }
+      }
+
+      input {
+        padding-left: 6px;
+        height: 32px;
+        width: 70%;
+        border: 1px solid#d8d8d8;
+        outline: none;
+      }
+    }
+  }

@@ -37,9 +37,9 @@
 
 							<div class='active'>
 								<span>{{companyInfo.companyname}}</span>
-								 <router-link style='font-size:12px;cursor:pointer;color:#333;top:4px;position:relative;' to='/login' v-if='userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
-
-								 <div @click="visiable=true;" class='zmiti-joincompany-btn'>加入单位</div>
+								<router-link style='font-size:12px;cursor:pointer;color:#333;top:4px;position:relative;' to='/login' v-if='userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
+								<div class='zmiti-create-company-btn' @click="showAddCompanyPanel">创建单位</div>
+								<div @click="visiable=true;" class='zmiti-joincompany-btn'>加入单位</div>
 							</div>
 						</header>
 						<div class='zmiti-companyinfo'>
@@ -139,6 +139,77 @@
 				</li>
 			</ul>
 		</Modal>
+
+		<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
+			<div slot='mask-content' name='detail'>
+				<section class='zmiti-add-form zmiti-scroll'  >
+					<header class='zmiti-add-header'>
+						<img :src="imgs.back" alt=""  @click='closeMaskPage' >
+						<span>基础信息</span>
+					</header>
+					<div class='zmiti-company-avatar' @click="showAvatarModal = true">
+						<span class='zmt_iconfont' v-html='formCompany.logourl'></span>
+						<label>更换头像</label>
+					</div>
+					<Form class='zmiti-add-form-C' :model="formCompany" :label-width="120">
+						<FormItem label="单位名称：">
+							<Input v-model="formCompany.companyname" placeholder="单位名称：" />
+						</FormItem>
+						<FormItem label="单位地址：">
+							<Input v-model="formCompany.companyaddress" placeholder="单位地址：" />
+						</FormItem>
+						<FormItem label="纳税识别号：">
+							<Input v-model="formCompany.companycode" placeholder="纳税识别号：" />
+						</FormItem>
+						<FormItem label="单位电话：">
+							<Input v-model="formCompany.companyphone" placeholder="单位电话：" />
+						</FormItem>
+						<FormItem label="开户行：">
+							<Input v-model="formCompany.bank" placeholder="开户行：" />
+						</FormItem>
+						<FormItem label="开户行账号：">
+							<Input v-model="formCompany.bankcode" placeholder="开户行账号：" />
+						</FormItem>
+						<FormItem label="单位合同扫描件：">
+							<Input v-model="formCompany.contract" placeholder="单位合同扫描件：" />
+						</FormItem>
+						<FormItem label="营业执照：">
+							<Input v-model="formCompany.businesslicensepath" placeholder="营业执照：" />
+						</FormItem>
+						<FormItem label="标识：">
+							<RadioGroup v-model="formCompany.isover">
+								<Radio :value='1' :label="1">正常使用</Radio>
+								<Radio :value='0' :label="0">禁用</Radio>
+							</RadioGroup>
+						</FormItem>
+						<!-- <FormItem label="单位管理员：">
+							<Select v-model="formCompany.userid">
+								<Option :value="user.userid" v-for='(user,i) of userList' :key="i">
+									{{user.username}}
+								</Option>
+							</Select>
+						</FormItem> -->
+
+						
+						
+						<FormItem label="备注：">
+							<Input v-model="formCompany.comment" placeholder="备注：" />
+						</FormItem>
+						<FormItem label="配置：">
+							<Input v-model="formCompany.config" placeholder="配置：" />
+						</FormItem>
+						
+					</Form>
+					
+					<div class='zmiti-add-form-item zmiti-add-btns'>
+						<Button size='large' type='primary' @click='addCompany'>确定</Button>
+					</div>
+					
+				</section>
+			</div>
+		</ZmitiMask>
+ 
+		<Avatar v-model="showAvatarModal" :avatar='formCompany.avatar' @getAvatar='getAvatar'></Avatar>
 	</div>
 </template>
 
@@ -151,14 +222,18 @@
 	import zmitiUtil from '../../common/lib/util';
 	var {cityActions,weatherActions,userActions,companyAdminActions} = zmitiUtil;
 	import Vue from 'vue';
+	import Avatar from '../../common/avatar';
+	import ZmitiMask from '../../common/mask/';
 	var json = {};
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
+				showAvatarModal:false,
 				currentChooseCompany:{},
 				visiable:false,
+				formCompany:{},
 				loadingCompanyModal:true,
 				imgs:window.imgs,
 				userinfo:{
@@ -168,6 +243,7 @@
 				},	
 				allCompanyList:[],
 				currentCompanyIndex:0,
+				showDetailPage:-1,
 				weatherData:{},
 				companyInfo:{},
 				productNews:[
@@ -319,6 +395,8 @@
 			}
 		},
 		components:{
+			ZmitiMask,
+			Avatar
 		},
 
 		beforeCreate(){
@@ -386,6 +464,41 @@
 		},
 		
 		methods:{
+
+			showAddCompanyPanel(){
+				Vue.obserable.trigger({type:'toggleMask',data:true});
+			},
+
+			addCompany(){
+				var s = this;
+				var id = this.formCompany.companyid;
+				var action = userActions.addCompany.action;
+				this.formCompany.userid = zmitiUtil.getUserInfo().ui.userid;
+				zmitiUtil.ajax({
+					remark:'addCompany',
+					data:{
+						action,
+						info:s.formCompany
+					},
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							s.showDetail = false;
+							Vue.obserable.trigger({type:'toggleMask',data:false});
+						}
+					}
+				})
+			},
+			getAvatar(avatar){
+				this.formCompany.avatar = avatar;
+			},
+
+			closeMaskPage(){
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:false
+				})
+			},
 
 			joinCompany(){
 				var s = this;

@@ -157,7 +157,7 @@ var zmitiUtil = {
 
 		socket.onmessage = (evt) => {
 			var data = JSON.parse(evt.data);
-			console.log(data,'onmessage');
+			//console.log(data,'onmessage');
 			if (data.getret === 0) {
 
 				switch (data.action) {
@@ -339,6 +339,7 @@ var zmitiUtil = {
 					adminErrorFn && adminErrorFn();
 				} else {
 					window.location.hash = '/login';
+					window.localStorage.clear();
 					setTimeout(() => {
 						window.location.reload();
 					}, 10);

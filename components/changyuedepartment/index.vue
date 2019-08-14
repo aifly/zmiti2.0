@@ -20,10 +20,10 @@
 							title="确定要删除吗?"
 							@on-ok='selectionDelete'
 							>
-							<Button type='error' size='small'>删除</Button>
+							<div class='zmiti-table-btn'>删除</div>
 							
 						</Poptip>
-						<Button size='small' type='warning'>禁用</Button>
+						<div class='zmiti-table-btn'>禁用</div>
 					</div>
 				</ZmitiTable>
 			</div>

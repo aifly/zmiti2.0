@@ -232,6 +232,10 @@ let userActions = {
 		desc:'用户端修改密码',
 		action: '2000010'
 	},//
+	addCompany:{
+		desc:"创建单位",
+		action:'2000100'
+	},
 	userRegister: {
 		desc:'用户注册',
 		action: '2000004'
