@@ -43,7 +43,7 @@
 				        					<div class="msg-author">
 				        						<div>审核人：{{item.realname}}</div>
 				        						<div class="msg-times">审核时间：{{item.updatetime | formatDate}}</div>
-				        						<Button type="primary" v-show="item.status==1" @click="revokeManuscript(item.manuscriptid)">撤销审核</Button>
+				        						<Button type="primary" v-show="item.status==1 && item.userid==currentUserid" @click="revokeManuscript(item.manuscriptid)">撤销审核</Button>
 				        					</div>
 				        					<div class="msg-status" v-if="item.status==1" :style="{backgroundImage:'url('+imgs['CHECK1']+')'}"></div>
 				        					<div class="msg-status" v-if="item.status==2" :style="{backgroundImage:'url('+imgs['CHECK2']+')'}"></div>
@@ -51,7 +51,27 @@
 				        			</ul>
 				        		</div>
 				        	</div>
+				        </div>
 
+				        <!-- 当前用户的审核意见 -->
+				        <div class="view-messagelist zmiti-checklist" v-if="currentCheckData.length==1 && getusermanuscriptlist<1">
+				        	<div class="view-messagelist-inner">
+				        		<div class="h3">审核意见</div>
+				        		<div class="msg-items">
+				        			<ul>
+				        				<li>
+				        					<div class="msg-con"><b>审核意见：</b>{{currentCheckData[0].suggestion}}</div>
+				        					<div class="msg-author">
+				        						<div>审核人：{{currentCheckData[0].realname}}</div>
+				        						<div class="msg-times">审核时间：{{currentCheckData[0].updatetime | formatDate}}</div>
+				        						<Button type="primary" @click="revokeManuscript(currentCheckData[0].manuscriptid)">撤销审核</Button>
+				        					</div>
+				        					<div class="msg-status" v-if="currentCheckData[0].status==1" :style="{backgroundImage:'url('+imgs['CHECK1']+')'}"></div>
+				        					<div class="msg-status" v-if="currentCheckData[0].status==2" :style="{backgroundImage:'url('+imgs['CHECK2']+')'}"></div>
+				        				</li>
+				        			</ul>
+				        		</div>
+				        	</div>
 				        </div>
 				    </div>
 				</div>				
@@ -119,7 +139,8 @@
 				detailStyle:{
 
 				},
-				getusermanuscriptlist:[]
+				getusermanuscriptlist:[],
+				currentCheckData:[],//当前用户的审核意见
 			}
 		},
 		components:{
@@ -139,7 +160,7 @@
 			
 			this.getDetail();
 			this.getusermanuscript();
-			
+			this.mymsg();
 		},
 
 		watch:{
@@ -164,6 +185,28 @@
 					success(data){
 						console.log(data);
 						s.detailData=data.detail;
+						s.currentUserid=data.ui.userid;
+					}
+				})
+			},
+			mymsg(){//当前用户的审核意见
+				var s = this;
+				var condition={
+					manuscriptid:s.$route.params.manuscriptid,
+					page_index:0,
+					page_size:1
+				}
+				zmitiUtil.ajax({
+					remark:"getMyCheckList",
+					data:{
+						action:changYueAcions.getMyCheckList.action,
+						condition
+					},
+					success(data){
+						if(data.getret === 0){
+							console.log(data.list,'当前用户的审核意见')
+							s.currentCheckData = data.list;
+						}
 					}
 				})
 			},

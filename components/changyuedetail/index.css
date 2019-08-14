@@ -42,7 +42,8 @@
 .zmiti-mydetail-main {
   font-size: 14px;
   position: relative;
-  z-index: 2; }
+  z-index: 2;
+  padding: 0 10px; }
 
 .view-content p {
   margin: 10px 0 0 0;
