@@ -18,13 +18,13 @@ import changyuecompany from './components/changyuecompany';
 import changyuedepartment from './components/changyuedepartment';
 import user from './components/user';
 import usercheck from './components/usercheck';
-import checkproduct from './components/checkproduct';
+//import checkproduct from './components/checkproduct';
 import order from './components/order';
-import companyinfo from './components/companyinfo';
+//import companyinfo from './components/companyinfo';
 import companydetail from './components/companydetail';
+import tripexpence from './components/tripexpence/index/index.vue';
 import consume from './components/consume';
 import workorderlist from './components/workorderlist';
-
 import Group from './common/group/index'
 
 import VueRouter from 'vue-router'
@@ -78,20 +78,21 @@ const router = new VueRouter({
 			{ path: "/changyuedepartment/:id?", name: "changyuedepartment", component:changyuedepartment},
 			{ path: "/user", name: "user", component:user},
 			{ path: "/usercheck/:id?", name: "usercheck", component:usercheck},
-			{ path: "/checkproduct/:id?", name: "checkproduct", component: import('./components/checkproduct/index.vue') },
+			{ path: "/checkproduct/:id?", name: "checkproduct", component:()=> import('./components/checkproduct/index.vue') },
 			{ path: "/order", name: "order", component: order},
 			{ path: "/companyinfo", name: "companyinfo", component:()=> import('./components/companyinfo/index.vue')},
 			{ path: "/companydetail", name: "companydetail", component: companydetail},
 			{ path: "/consume", name: "consume", component: consume},
 			{ path: "/workorderlist/:id?", name: "workorderlist", component:workorderlist},
+			{ path: "/tripexpence/:id?", name: "tripexpence", component: tripexpence},
 		]
 	},
-    {
+   /*  {
 		path: "/practice",
 		name: "practice",
 		component: (resolve) => require(['./task/practice'],resolve),
 		props: true
-    }
+    } */
   ]
 });
 
@@ -99,7 +100,9 @@ router.afterEach((to, from) => {
 	if (to.name === 'login' || to.name === 'register'){
 		return;
 	}
+
 	var userinfo = zmitiUtil.getUserInfo();
+	
 	zmitiUtil.listener();
 	
 	if (!userinfo) {

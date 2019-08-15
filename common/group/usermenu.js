@@ -97,8 +97,20 @@ let company = {
 	]
 }
 
+let triptraffic ={
+	title:"出差宝",
+	keys: ['tripexpence'],
+	tabs: [
+		{
+			name: '概览',
+			link: "/tripexpence"
+		},
+	]
+}
+
 export {
 	changyue,
 	company,
-	workorder_workorderlist
+	workorder_workorderlist,
+	triptraffic
 }

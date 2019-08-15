@@ -128,7 +128,8 @@
 					data:{
 						action:userActions.userLogin.action,
 						username:_this.username,
-						password:_this.password
+						password:_this.password,
+						type:1,
 					},
 					success(data){
 						s.showLoading = false;
