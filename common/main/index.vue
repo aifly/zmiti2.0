@@ -77,14 +77,14 @@
                            <li class='zmiti-menu-title' v-if='!isAdmin'>
                                <div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
                             </li>
-                           <li @click='mouseout' class='zmiti-text-overflow zmiti-menu-item' :class='{"active":$route.name.indexOf(item.producturl.substring(1))>-1}' :key='i' v-for="(item,i) in productList" :name="item.productid">
+                           <li @click='mouseout' class='zmiti-text-overflow zmiti-menu-item1' :class='{"active":$route.name.indexOf(item.producturl.substring(1))>-1}' :key='i' v-for="(item,i) in productList" :name="item.productid">
 						  		 <div><router-link :to='item.producturl'><span class='zmt_iconfont' v-html='item.icon || "&#xe609;"'></span></router-link> </div>
                                 <div>
                                     <router-link  :to='item.producturl'> {{item.productname}} </router-link>
                                 </div>
                            </li>
                            <template v-if='isAdmin'>
-                                <li @click='mouseout'  class='zmiti-menu-item' :class="{'active':menu.active.some(ar=>ar === $route.name)}" v-for="(menu,i) in menus" :key='i'>
+                                <li @click='mouseout'  class='zmiti-menu-item1' :class="{'active':menu.active.some(ar=>ar === $route.name)}" v-for="(menu,i) in menus" :key='i'>
 									
                                     <div><router-link :to="menu.link"><span class='zmt_iconfont' v-html='menu.icon'></span></router-link> </div>
                                     <div><router-link :to="menu.link">{{menu.name}}</router-link></div>

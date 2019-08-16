@@ -187,6 +187,9 @@
 		margin: 0 auto 30px;
 		cursor: pointer;
 		@include pos(r);
+		img{
+			width: 100%;
+		}
 		label{
 			@include pos(a);
 			bottom: -50px;

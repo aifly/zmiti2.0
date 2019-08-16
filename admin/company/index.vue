@@ -27,8 +27,10 @@
 						<img :src="imgs.back" alt=""  @click='closeMaskPage' >
 						<span>基础信息</span>
 					</header>
-					<div class='zmiti-company-avatar' @click="showAvatarModal = true">
-						<span class='zmt_iconfont' v-html='formCompany.logourl'></span>
+					<!--@click="showAvatarModal = true"-->
+					<div class='zmiti-company-avatar' @click="showResource= true;imgType='logourl'">
+						<span class='zmt_iconfont' v-html='formCompany.logourl' v-if='false'></span>
+						<img :src="formCompany.logourl" alt="" v-if='formCompany.logourl'>
 						<label>更换头像</label>
 					</div>
 					<Form class='zmiti-add-form-C' :model="formCompany" :label-width="120">
@@ -90,6 +92,13 @@
 		</ZmitiMask>
  
 		<Avatar v-model="showAvatarModal" :avatar='formCompany.avatar' @getAvatar='getAvatar'></Avatar>
+		<Modal v-model="showResource" title='资料库' width='800'>
+			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showResource=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseImg'>确定</Button>
+			</div> 
+		</Modal>
 	</div>
 </template>
 
@@ -104,6 +113,7 @@
 	var companyActions = zmitiUtil.adminActions;
 	var companyActions = zmitiUtil.companyActions;
 	import ZmitiMask from '../../common/mask/';
+	import ResourceList from '../../common/resourcelist';
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -112,7 +122,10 @@
 
 				tabIndex:[0,-1],
 				showAvatarModal:false,
+				imgType:'',
+				currentChooseResource:{},
 				visible:false,
+				showResource:false,
 				avatarList:[
 					'&#xe6a5;',
 					'&#xe6a4;',
@@ -271,7 +284,8 @@
 		},
 		components:{
 			Avatar,
-			ZmitiMask
+			ZmitiMask,
+			ResourceList
 		},
 
 		beforeCreate(){
@@ -303,6 +317,17 @@
 		},
 		
 		methods:{
+			chooseImg(){
+
+				this.showResource = false;
+				this.formCompany[this.imgType] = this.currentChooseResource.custombilethum[0];
+
+				
+
+			},
+			onFinished(item){
+				this.currentChooseResource = item;
+			},
 			getUserList(){
 				var s = this;
 				

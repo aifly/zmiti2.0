@@ -59,6 +59,7 @@
 
 .layout .ivu-layout-header > div:nth-of-type(1) .zmiti-title {
   height: 50px;
+  line-height: 50px;
   position: relative;
 }
 
@@ -283,21 +284,21 @@
   bottom: -6px;
 }
 
-.layout .zmiti-tab-C .zmiti-menu-item {
+.layout .zmiti-tab-C .zmiti-menu-item1 {
   font-size: 12px;
   margin-left: -1px;
   position: relative;
 }
 
-.layout .zmiti-tab-C .zmiti-menu-item.active {
+.layout .zmiti-tab-C .zmiti-menu-item1.active {
   background: #00c1de !important;
 }
 
-.layout .zmiti-tab-C .zmiti-menu-item:hover {
+.layout .zmiti-tab-C .zmiti-menu-item1:hover {
   background: #192129;
 }
 
-.layout .zmiti-tab-C .zmiti-menu-item a {
+.layout .zmiti-tab-C .zmiti-menu-item1 a {
   position: relative;
   width: 100%;
   height: 100%;

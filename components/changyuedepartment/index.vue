@@ -2,9 +2,9 @@
 	<div class="zmiti-user-main-ui">
 		<div class="zmiti-list-main">
 			<header class="zmiti-tab-header">
-				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅-部门管理</div>
+				<div><span v-if='companyname'>{{companyname}} —— </span>畅阅-角色管理</div>
 				<div>
-					<Button type='primary' @click="addAdmin">添加部门</Button>
+					<Button type='primary' @click="addAdmin">添加角色</Button>
 					<Button type='primary' :loading='loading' @click="getDataList">刷新</Button>
 				</div>
 			</header>
@@ -38,8 +38,8 @@
 						</header>
 						<h1 style="height:60px;"></h1>
 						<Form class='zmiti-add-form-C' :model="formObj" :label-width="120">
-							<FormItem label="部门名称：">
-								<Input v-model="formObj.departmentname"  placeholder="部门名称：" />
+							<FormItem label="角色名称：">
+								<Input v-model="formObj.departmentname"  placeholder="角色名称：" />
 							</FormItem>
  
 
@@ -63,7 +63,7 @@
 			<div>
 				 <Transfer
 					:data="unJoinedDepartment"
-					:titles="['用户列表','当前部门下的用户']"
+					:titles="['用户列表','当前角色下的用户']"
 					:target-keys="targetKeys"
 					filterable
 					:filter-method="filterMethod"
@@ -133,12 +133,12 @@
 				unJoinedDepartment:[],
 				columns:[
 					{
-						title:"部门编号",
+						title:"角色编号",
 						key:'departmentid',
 						align:'center',
 					},
 					{
-						title:"部门名称",
+						title:"角色名称",
 						key:'departmentname',
 						align:'center',
 						width:200

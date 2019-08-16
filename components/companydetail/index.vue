@@ -174,9 +174,6 @@
 				this.showResource = false;
 				this.companyInfo[this.imgType] = this.currentChooseResource.custombilethum[0];
 
-				
-
-
 				this.modifyCompanyInfo(this.companyInfo)
 
 			},

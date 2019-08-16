@@ -189,6 +189,10 @@
   position: relative;
 }
 
+.zmiti-add-form .zmiti-company-avatar img {
+  width: 100%;
+}
+
 .zmiti-add-form .zmiti-company-avatar label {
   position: absolute;
   bottom: -50px;

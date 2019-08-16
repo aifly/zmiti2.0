@@ -193,7 +193,7 @@ var zmitiUtil = {
 		return this.getUserInfo('adminlogin');
 	},
 	formatDate(time = +new Date()) {
-		var date = new Date(time * 1000 + 8 * 3600 * 1000); // 增加8小时
+		var date = new Date(time*1000  + 8 * 3600 * 1000); // 增加8小时
 		return date.toJSON().substr(0, 19).replace('T', ' ');
 	},
 	getProductListByAdmin(opt={}) {

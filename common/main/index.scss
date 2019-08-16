@@ -55,6 +55,7 @@ $primary-color: #00c1de;
 				 color:#fff;
 				 .zmiti-title{
 					 height: 50px;
+					 line-height: 50px;
 					 @include pos(r);
 					 img{
 						 width: 80px;
@@ -268,7 +269,7 @@ $primary-color: #00c1de;
 				bottom: -6px;
 			}
 		}
-		.zmiti-menu-item{
+		.zmiti-menu-item1{
 			font-size:12px;
 			margin-left: -1px;
 			@include pos(r);

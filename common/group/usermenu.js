@@ -23,7 +23,7 @@ let changyue = {
 			link:'/changyuecompany',
 			children:[
 				{
-					name:'部门管理',
+					name:'角色管理',
 					link:'/changyuedepartment'
 				},
 				

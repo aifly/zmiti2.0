@@ -18,7 +18,7 @@ import changyuecompany from './components/changyuecompany';
 import changyuedepartment from './components/changyuedepartment';
 import user from './components/user';
 import usercheck from './components/usercheck';
-//import checkproduct from './components/checkproduct';
+import checkproduct from './components/checkproduct';
 import order from './components/order';
 //import companyinfo from './components/companyinfo';
 import companydetail from './components/companydetail';
@@ -78,7 +78,7 @@ const router = new VueRouter({
 			{ path: "/changyuedepartment/:id?", name: "changyuedepartment", component:changyuedepartment},
 			{ path: "/user", name: "user", component:user},
 			{ path: "/usercheck/:id?", name: "usercheck", component:usercheck},
-			{ path: "/checkproduct/:id?", name: "checkproduct", component:()=> import('./components/checkproduct/index.vue') },
+			{ path: "/checkproduct/:id?", name: "checkproduct", component: checkproduct},
 			{ path: "/order", name: "order", component: order},
 			{ path: "/companyinfo", name: "companyinfo", component:()=> import('./components/companyinfo/index.vue')},
 			{ path: "/companydetail", name: "companydetail", component: companydetail},
