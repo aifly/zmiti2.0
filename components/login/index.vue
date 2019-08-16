@@ -275,9 +275,9 @@
 			 },1000)
 			},
 			openMobileform(){//打开手机验证码表单
-				this.accountStatus=false;//关闭用户名表单
+				/*this.accountStatus=false;
 				this.mobileStatus=true;
-				this.weixinStatus=false;
+				this.weixinStatus=false;*/
 			},
 			weixinLogin(){
 				zmitiUtil.ajax({
