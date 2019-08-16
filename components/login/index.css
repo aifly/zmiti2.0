@@ -344,4 +344,10 @@
   text-align: center;
   font-size: 16px; }
 
+.disabled {
+  background-color: #ddd;
+  border-color: #ddd;
+  color: #57a3f3;
+  cursor: not-allowed; }
+
 /*# sourceMappingURL=index.css.map */

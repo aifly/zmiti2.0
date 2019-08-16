@@ -339,6 +339,14 @@ let userActions = {
 	getMobileCode:{
 		desc:'手机获取验证码',
 		action:'3004001'
+	},
+	getWXCode:{
+		desc:'获取微信QRCode',
+		action:"2000099"
+	},
+	getTempToken:{
+		desc:'微信扫码绑定临时token',
+		action:'10000001'
 	}
 
 };

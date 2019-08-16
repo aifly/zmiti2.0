@@ -41,18 +41,24 @@
 							<div class="zmiti-login-code">
 								<span class="zmiti-login-icon"><img :src="imgs.loginU4" alt=""></span>
 								<input type="text" v-model="usercode" placeholder="请输入验证码">
-								<Button class="zmiti-login-getcodebtn" type="primary" @click="getMobileCode">获取验证码</Button>
+								<Button :class="['zmiti-login-getcodebtn',{disabled:!this.canClick}]" type="primary" @click="countDown">{{codecontent}}</Button>
 							</div>
 						</div>
 						<div class='zmiti-login-btn zmiti-login-btn2' v-press>
-							<div @click="login">立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
+							<div>立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
+						</div>
+					</div>
+
+					<div v-if="weixinStatus==true">
+						<div class="zmiti-login-weixin">
+							<img :src="weixinData.url" v-if="weixinData!=''">
 						</div>
 					</div>
 					
 					<div class="zmiti-login-other">
 						<h5><span>或</span></h5>
 						<div class="zmiti-login-apibtn">
-							<img :src="imgs.loginU5"><img :src="imgs.loginU6">
+							<img :src="imgs.loginU5" @click="openMobileform"><img :src="imgs.loginU6" @click="getWXCode">
 						</div>
 					</div>
 				</div>
@@ -111,8 +117,16 @@
 				viewH:document.documentElement.clientHeight,
 				accountStatus:true,
 				mobileStatus:false,
+				weixinStatus:false,
+				weixinData:[{
+					token:'',
+					url:''
+				}],
 				usermobile:'',
-				usercode:''
+				usercode:'',
+				codecontent: '发送验证码',
+				totalTime: 60,//60秒
+				canClick: true//发送验证码状态
 			}
 		},
 		components:{
@@ -243,7 +257,69 @@
 						console.log(data,'获取手机验证码成功')
 					}
 				})
-			}	
+			},
+			countDown () {//发送验证码
+			 if (!this.canClick) return
+			 this.getMobileCode();//获取验证码
+			 this.canClick = false
+			 this.codecontent = this.totalTime + 's后重新发送'
+			 let clock = window.setInterval(() => {
+			  this.totalTime--
+			  this.codecontent = this.totalTime + 's后重新发送'
+			  if (this.totalTime < 0) {
+			   window.clearInterval(clock)
+			   this.codecontent = '重新发送验证码'
+			   this.totalTime = 60
+			   this.canClick = true  //这里重新开启
+			  }
+			 },1000)
+			},
+			openMobileform(){//打开手机验证码表单
+				this.accountStatus=false;//关闭用户名表单
+				this.mobileStatus=true;
+				this.weixinStatus=false;
+			},
+			weixinLogin(){
+				zmitiUtil.ajax({
+					remark:'getWXFollow',
+					data:{
+						action:userActions.getWXFollow.action
+					},
+					success(data){
+						console.log(data,'---');
+						if(data.getret === 0){
+							clearInterval(t);
+							s.showQRCodePage = false;
+							s.$router.push({path:s.companyList.length<=1?"/nav":'/company/'});
+						}
+					}
+				});
+			},			
+			openweiXin(){
+				this.accountStatus=false;//关闭用户名表单
+				this.mobileStatus=false;
+				this.weixinStatus=true;
+			},
+			getWXCode(fn,type=1){//获取二维码
+				/*this.accountStatus=false;
+				this.mobileStatus=false;
+				this.weixinStatus=true;
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'getWXCode',
+					data:{
+						action: userActions.getWXCode.action,
+						type,
+					},
+					success(data){
+						if(data.getret === 0){
+							console.log('二维码获取成功')
+							s.weixinData=data.info;
+							console.log(s.weixinData,'s.weixinData')
+						}
+					}
+				})*/
+			}
 			
 
 		},
