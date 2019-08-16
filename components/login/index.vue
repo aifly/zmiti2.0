@@ -3,28 +3,39 @@
 		<section></section>
 		<section> 
 			<div class="zmiti-login-C">
-				<h2>智媒体用户管理系统登陆</h2>
+				<div class="zmiti-login-code2">
+					<img :src="imgs.loginU1">
+				</div>
+				<h2 class="zmiti-login-logo"><img :src="imgs.loginU2">用户管理系统登录</h2>
 				<div class="zmiti-login-form">
-					<div :class="{'active':userFocus}">
-						<label>
-							<img :src="imgs.loginPerson" alt="">
-							<input @focus='userFocus = true;errMsg = ""' @blur='userFocus = false' type="text" v-model="username" placeholder="请输入账号">
-						</label>
-						<div class='zmiti-login-error' v-if='loginError'>{{loginError}}</div>
-					</div>
-					<div :class="{'active':passFocus}">
-						<label>
-							<img :src="imgs.loginLock" alt="">
-							<input  @focus='passFocus = true;errMsg = ""' @blur='passFocus = false'  @keydown.13='login' type="password" v-model="password" placeholder="请输入密码">
-						</label>
+					<div class="zmiti-login-account">
+						<div id="zmiti-login-accountname" :class="{'active':userFocus}">
+							<label>
+								<span class="zmiti-login-icon"><img :src="imgs.loginU3" alt=""></span>
+								<input class="zmiti-login-account-name" @focus='userFocus = true;errMsg = ""' @blur='userFocus = false' type="text" v-model="username" placeholder="用户名">
+							</label>
+							<div class='zmiti-login-error' v-if='loginError'>{{loginError}}</div>
+						</div>
+						<div :class="{'active':passFocus}">
+							<label>
+								<span class="zmiti-login-icon"><img :src="imgs.loginU4" alt=""></span>
+								<input  @focus='passFocus = true;errMsg = ""' @blur='passFocus = false'  @keydown.13='login' type="password" v-model="password" placeholder="密码">
+							</label>
+						</div>
 					</div>
 					<div class='zmiti-remember-pass'>
-						<label><router-link to='register'>用户注册</router-link></label>
+						<label class="zmiti-login-check"><Checkbox v-model="checked">记住密码</Checkbox></label>						
 						<label v-if='errMsg' style="color:#f00;font-weight:bold;">{{errMsg}}</label>
-						<label><Checkbox v-model="checked">记住密码</Checkbox></label>
+						<label><span class="zmiti-login-linkspan"><router-link to='register'>免费注册</router-link></span><span class="zmiti-login-linkspan"><router-link to='login'>忘记密码？</router-link></span></label>
 					</div>
 					<div class='zmiti-login-btn' v-press>
-						<div @click="login" ref='login'>登  录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
+						<div @click="login" ref='login'>立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
+					</div>
+					<div class="zmiti-login-other">
+						<h5><span>或</span></h5>
+						<div class="zmiti-login-apibtn">
+							<img :src="imgs.loginU5"><img :src="imgs.loginU6">
+						</div>
 					</div>
 				</div>
 				<div class='zmiti-browner-tip' v-if='isNotChrome'>
@@ -36,6 +47,7 @@
 			</div>
 			
 		</section>
+		<div class="zmiti-copyright">麟腾传媒文化有限公司出品 &copy;版权所有</div>
 
 		<div class='zmiti-choose-company' v-if=' company_list.length > 1 '>
 			<div>
