@@ -335,6 +335,10 @@ let userActions = {
 	getAllCompanyUserList:{
 		desc:'获取公司下所有用户列表',
 		action:'2001919'
+	},
+	getMobileCode:{
+		desc:'手机获取验证码',
+		action:'3004001'
 	}
 
 };

@@ -8,29 +8,47 @@
 				</div>
 				<h2 class="zmiti-login-logo"><img :src="imgs.loginU2">用户管理系统登录</h2>
 				<div class="zmiti-login-form">
-					<div class="zmiti-login-account">
-						<div id="zmiti-login-accountname" :class="{'active':userFocus}">
-							<label>
+					<div v-if="accountStatus==true">					
+						<div class="zmiti-login-account">
+							<div id="zmiti-login-accountname" :class="{'active':userFocus}">
+								<label>
+									<span class="zmiti-login-icon"><img :src="imgs.loginU3" alt=""></span>
+									<input class="zmiti-login-account-name" @focus='userFocus = true;errMsg = ""' @blur='userFocus = false' type="text" v-model="username" placeholder="用户名">
+								</label>
+								<div class='zmiti-login-error' v-if='loginError'>{{loginError}}</div>
+							</div>
+							<div :class="{'active':passFocus}">
+								<label>
+									<span class="zmiti-login-icon"><img :src="imgs.loginU4" alt=""></span>
+									<input  @focus='passFocus = true;errMsg = ""' @blur='passFocus = false'  @keydown.13='login' type="password" v-model="password" placeholder="密码">
+								</label>
+							</div>
+						</div>
+						<div class='zmiti-remember-pass'>
+							<label class="zmiti-login-check"><Checkbox v-model="checked">记住密码</Checkbox></label>						
+							<label v-if='errMsg' style="color:#f00;font-weight:bold;">{{errMsg}}</label>
+							<label><span class="zmiti-login-linkspan"><router-link to='register'>免费注册</router-link></span><span class="zmiti-login-linkspan"><router-link to='login'>忘记密码？</router-link></span></label>
+						</div>
+						<div class='zmiti-login-btn' v-press>
+							<div @click="login" ref='login'>立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
+						</div>
+					</div>
+					<div v-if="mobileStatus==true">
+						<div class="zmiti-login-mobile" >
+							<div class="zmiti-login-number">
 								<span class="zmiti-login-icon"><img :src="imgs.loginU3" alt=""></span>
-								<input class="zmiti-login-account-name" @focus='userFocus = true;errMsg = ""' @blur='userFocus = false' type="text" v-model="username" placeholder="用户名">
-							</label>
-							<div class='zmiti-login-error' v-if='loginError'>{{loginError}}</div>
-						</div>
-						<div :class="{'active':passFocus}">
-							<label>
+								<input class="zmiti-login-iptmobile" type="text" v-model="usermobile" placeholder="请输入手机号"></div>
+							<div class="zmiti-login-code">
 								<span class="zmiti-login-icon"><img :src="imgs.loginU4" alt=""></span>
-								<input  @focus='passFocus = true;errMsg = ""' @blur='passFocus = false'  @keydown.13='login' type="password" v-model="password" placeholder="密码">
-							</label>
+								<input type="text" v-model="usercode" placeholder="请输入验证码">
+								<Button class="zmiti-login-getcodebtn" type="primary" @click="getMobileCode">获取验证码</Button>
+							</div>
+						</div>
+						<div class='zmiti-login-btn zmiti-login-btn2' v-press>
+							<div @click="login">立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
 						</div>
 					</div>
-					<div class='zmiti-remember-pass'>
-						<label class="zmiti-login-check"><Checkbox v-model="checked">记住密码</Checkbox></label>						
-						<label v-if='errMsg' style="color:#f00;font-weight:bold;">{{errMsg}}</label>
-						<label><span class="zmiti-login-linkspan"><router-link to='register'>免费注册</router-link></span><span class="zmiti-login-linkspan"><router-link to='login'>忘记密码？</router-link></span></label>
-					</div>
-					<div class='zmiti-login-btn' v-press>
-						<div @click="login" ref='login'>立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
-					</div>
+					
 					<div class="zmiti-login-other">
 						<h5><span>或</span></h5>
 						<div class="zmiti-login-apibtn">
@@ -90,7 +108,11 @@
 				showError:false,
 				errorMsg:'',
 				company_list:[],
-				viewH:document.documentElement.clientHeight
+				viewH:document.documentElement.clientHeight,
+				accountStatus:true,
+				mobileStatus:false,
+				usermobile:'',
+				usercode:''
 			}
 		},
 		components:{
@@ -208,8 +230,20 @@
 				if(zmitiUtil.getUserInfo() && zmitiUtil.getUserInfo().info){
 					this.company_list = zmitiUtil.getUserInfo().info.company_list||[];
 				}
-			}
-		
+			},
+			getMobileCode(){
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'getMobileCode',
+					data:{
+						action:userActions.getMobileCode.action,
+						mobile:s.usermobile
+					},
+					success(data){
+						console.log(data,'获取手机验证码成功')
+					}
+				})
+			}	
 			
 
 		},
