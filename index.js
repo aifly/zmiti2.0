@@ -4,9 +4,6 @@ import Main from './common/main';
 import Login from './components/login'
 import Home from './components/home'
 import WorkOrder from './components/workorder'
-import WorkOrderList from './components/workorderlist'
-
-import Practice from './task/practice/index'
 
 import Register from './components/register';
 import ResourceList from './components/resourcelist';
@@ -64,7 +61,7 @@ const router = new VueRouter({
     {
 		path: "/home",
 		name: "home",
-		component: () => import('./components/home/index.vue')
+		component: Home
 	},
 	{
 		path: '/group/', name: 'group', component: Group, children: [
