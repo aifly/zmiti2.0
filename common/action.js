@@ -441,6 +441,52 @@ let changYueAcions = {
 }
 
 
+let tripActions = {
+	getCityList:{
+		desc:'城市基础数据',
+		action:"2001931"
+	},
+	addJob:{
+		desc:'新增职称',
+		action:'2001933'
+	},
+	editJob:{
+		desc:'修改职称',
+		action:'2001934'
+	},
+	delJob:{
+		desc:'删除职称',
+		action:'2001935'
+	},
+	getJobList:{
+		desc:'获取单位职称列表',
+		action:'2001937'
+	},
+	getExpenselist:{
+		desc:"获取公司交通费用标准列表",
+		action:'2001953'
+	},
+	addBusinesstrip:{
+		desc:"新增出差事由",
+		action:'2001959'
+	},
+	delBusinesstrip: {
+		desc: "删除出差事由",
+		action: '2001960'
+	},
+	editBusinesstrip: {
+		desc: "编辑出差事由",
+		action: '2001961'
+	},
+	searchBusinesstripList:{
+		desc:"查询出差事由",
+		action:"2001962"
+	}
+
+
+	
+};
+
 
 //通用接口
 let resourceActions = {
@@ -543,7 +589,8 @@ var zmitiActions =   /*#__PURE__*/{
 	cityActions,
 	companyAdminActions,
 	changYueAcions,
-	newsActions
+	newsActions,
+	tripActions
 }
 
 export  default zmitiActions;

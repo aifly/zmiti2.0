@@ -59,7 +59,7 @@
 							<Input v-model="formCompany.businesslicensepath" placeholder="营业执照：" />
 						</FormItem>
 						<FormItem label="标识：">
-							<RadioGroup v-model="formCompany.isover">
+							<RadioGroup v-model="formCompany.status">
 								<Radio :value='1' :label="1">正常使用</Radio>
 								<Radio :value='0' :label="0">禁用</Radio>
 							</RadioGroup>
@@ -80,6 +80,13 @@
 						<FormItem label="配置：">
 							<Input v-model="formCompany.config" placeholder="配置：" />
 						</FormItem>
+
+						<FormItem label="是否开启认证：">
+							 <RadioGroup v-model="formCompany.is_auth">
+								<Radio :value='1' :label="1">开启认证</Radio>
+								<Radio :value='0' :label="0">关闭认证</Radio>
+							</RadioGroup>
+						</FormItem>
 						
 					</Form>
 					
@@ -93,7 +100,7 @@
  
 		<Avatar v-model="showAvatarModal" :avatar='formCompany.avatar' @getAvatar='getAvatar'></Avatar>
 		<Modal v-model="showResource" title='资料库' width='800'>
-			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
+			<ResourceList v-if='showResource' :isAdmin='true' :isDialog='true' @onFinished='onFinished'></ResourceList>
 			<div class="zmiti-resourcelist-footer"  slot='footer'>
 				<Button style='width:100px;' @click="showResource=false;">取消</Button>
 				<Button style='width:100px;' type='primary' @click='chooseImg'>确定</Button>

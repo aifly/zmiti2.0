@@ -660,7 +660,6 @@ export default {
 			var {isAdmin,$Message} = this;
 			var s = this;  
 			var userinfo = zmitiUtil[isAdmin?'getAdminUserInfo':'getUserInfo']();
-			
 			var {userid,token} = userinfo.ui;
 
 		
@@ -676,6 +675,7 @@ export default {
 				classtype:defaultClass()[this.currentCateIndex].id,//
 				file_token:Math.random().toString(36).substr(2)
 			};
+
 
 			if(s.uploader){
 				///s.uploader.destroy();

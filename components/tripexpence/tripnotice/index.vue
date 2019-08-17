@@ -1,46 +1,19 @@
 <template>
 	<div class="zmiti-tripexpence-main-ui">
-
-		 <div :class="{'hide':showTable}" ref='tripexpence-main-ui' class='zmiti-tripexpence-map lt-full'>
+		 <div ref='tripexpence-main-ui' class='zmiti-tripexpence-map lt-full'>
 
 		 </div>
-		 <div :class="{'active':showTable}" class='zmiti-tripexpence-table lt-full'>
-			 <header>
-				 <div>
-					 <span>{{currentProv}}</span>
-					 -差旅费
-				 </div>
-				 <div>
-					 <Button @click="back" type="primary">返回</Button>
-				 </div>
-			 </header>
-			 <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
-					<div slot='table-btns' style="display:inline-block">
-						<Poptip
-							confirm
-							title="确定要删除吗?"
-							@on-ok='selectionDelete'
-							>
-							<div class='zmiti-table-btn'>删除</div>
-							
-						</Poptip>
-						<div class='zmiti-table-btn'>禁用</div>
-					</div>
-				</ZmitiTable>
-		 </div>
 
-		<ul v-if='cityList[currentCityIndex] && !showTable' ref='city-C' class='tripexpence-citylist'  :style="{transform:'translate3d('+(transX)+'px,'+transY+'px,0)'}">
-			<li :key='i' v-for='(item,i) in cityList[currentCityIndex].children'>
+		<ul ref='city-C' class='tripexpence-citylist'  :style="{transform:'translate3d('+(transX)+'px,'+transY+'px,0)'}">
+			<li :key='i' v-for='(item,i) in cityList.children'>
 				<Checkbox
-					:checked='item.isChecked'
-					@on-change='selectCity(item)'
+					checked={item.isChecked}
+					onChange={this.selectCity.bind(this,item)}
 					>{{item.label}}</Checkbox>
 			</li>
 			<li v-if='cityList.length>1 && currentCityIndex >-1' @click="next">下一步</li>
 				
 		</ul>
-
-
 	</div>
 </template>
 
@@ -54,8 +27,6 @@
 	import echarts from 'echarts/lib/echarts';
 	import 'echarts/lib/chart/map';
 	import '../../../common/echarts/china';
-
-	import ZmitiTable from '../../../common/table';
 
 	var {randomString,tripActions} = zmitiUtil;
 
@@ -71,73 +42,141 @@
 				showAvatarModal:false,
 				
 				companyname:'',
-				addDataSource:[],
+				roleList:[],
 				imgs:window.imgs,
+				isLoading:false,
+				showDetail:false,
 				total:0,
+				showDetailPage:-1,
+				currentClassId:-1, 
+				adminuserId:'',
 				loading:true,
 				currentCityIndex: -1,
 				currentCityId: -1,
 				transX: 0,
 				transY: 0,
+				currentUserid:'',
+				formUser:{
+					isover:0,
+					usersign:1,
+					usertypesign:1,
+					avatar:'&#xe6a4;'
+				},
+				address:'',
+				showPass:false,
+				showMap:false,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				dataSource:[],
-				jobList:[],
-				columns:[{
-					title: '市',
-					dataIndex: 'cityname',
-					key: 'cityname',
+				groupList:[],
+				companyList:[],
+				hideMenu:false,
+				unJoinedCompany:[],
+				columns:[
+					{
+						title:"稿件编号",
+						key:'manuscriptid',
+						align:'center',
+					},
+					{
+						title:"稿件标题",
+						key:'doctitle',
+						align:'center',
+					},
+					{
+						title:"提交时间",
+						key:'createtime',
+						align:'center'
+					},
+					{
+						title:'审核人',
+						key:'status',
+						width:220,
+						render:(h,params)=>{
+							  
+							return h('div',(params.row.checkuserlist||[])['map']((c,i)=>{
+								return h('span',{
+									style:{
+										marginRight:'5px'
+									},
+									on:{
+										click:()=>{
+											console.log(c);
+											this.$Modal.info({
+												title:c.realname + '的审核意见 —— ' + manuscriptStatus[c.status].name,
+												content:'<p>审核意见：</p>' + (c.suggestion || '暂无 ：('),
+												okText: '确定',
+												closable:true,
+												cancelText: '取消'
 
-				}, {
-					title: '职务',
-					dataIndex: 'jobname',
-					key: 'jobname',
-					
-				}, {
-					title: '淡季住宿标准',
-					dataIndex: 'hotelprice1',
-					key: 'hotelprice1',
+											});
+										}
+									},
+									domProps:{
+										innerHTML:`
+											<label>${c.realname}</label>
+											<label title='${manuscriptStatus[c.status].name}' class='zmiti-cy-tag zmt_iconfont' style='color:${manuscriptStatus[c.status].color}'>
+												${manuscriptStatus[c.status].icon}
+											</label>
+										`
+									}
+								});
+							}));
+						}
+					},
+					{
+						title:'操作',
+						key:'action',
+						align:'center',
+						width:200,
+						render:(h,params)=>{
 
-					render: (text, record, index) => {}
+							return h('div', [
+                                h('Poptip',{
+									props:{
+										confirm:true,
+										title:"确定要删除吗？",
+										placement:'left'
 
-				}, {
-					title: '旺季住宿标准',
-					dataIndex: 'hotelprice2',
-					key: 'hotelprice2',
-					
-					render: (text, record, index) => {}
-				}, {
-					title: '伙食费',
-					dataIndex: 'foodprice',
-					key: 'foodprice',
-					
-					render: (text, record, index) => {}
-				}, {
-					title: '交通补助',
-					dataIndex: 'othertraficprice',
-					key: 'othertraficprice',
-					
-					render: (text, record, index) => {
-
+									},
+									on:{
+										'on-ok':()=>{
+											this.delete(params.row.manuscriptid);
+										},
+										
+									}
+								},[
+									h('span', {
+										props: {
+											type: 'error',
+											size: 'small'
+										},
+										style:{
+											cursor:'pointer',
+											color:'#06C'
+										},
+										on: {
+											click: () => {
+											}
+										}
+									}, '删除')
+								])
+                            ]);
+							
+							 
+						}
 					}
-				}, {
-					title: '旺季',
-					dataIndex: 'daterange',
-					key: 'daterange',
-					
-					render: (value, row, index) => {
-
-						return '';
-					}
-
-				}],
-
-				showTable:true,
+				],
+				showTable:false,
 				
 				formUser:{
 					pdfurl:'',
 					longitude :'116.585856',
 					latitude :'40.364989'
+				},
+				 
+				directoryList:{
+
 				},
 				cityList:[],
 				condition:{
@@ -146,12 +185,10 @@
 				},
 				userinfo:{},
 				currentProvId: '',
-				currentProv: '',
-				seasonList: [], //淡旺季列表。
+       		     seasonList: [], //淡旺季列表。
 			}
 		},
 		components:{
-			ZmitiTable
 		},
 
 		beforeCreate(){
@@ -159,14 +196,10 @@
 		},
 		mounted(){
 
-			setTimeout(() => {
-				
-				this.initEcharts();
-				this.getCascader();
-				this.bindNewdata();
-				this.loadJobList();
-				this.loadSeasonData(); //加载淡旺季列表。
-			}, 100);
+			this.initEcharts();
+			this.getCascader();
+			this.loadJobList();
+			this.loadSeasonData(); //加载淡旺季列表。
 			
 		},
 
@@ -181,88 +214,28 @@
 		},
 		
 		methods:{
-			change(){},
-			selectionDelete(){
-
-			},
-			getSelection(){},
-			back(){
-				this.showTable = false;
-				this.addDataSource = [];
-			},
-
-
-			selectCity(item) {
-				item.isChecked = true;
-				var s = this;
-				this.addDataSource = this.addDataSource || [];
-				this.jobList.map((data, i) => {
-					this.addDataSource.push({
-						cityid: item.value,
-						cityname: item.label,
-						companyid: zmitiUtil.getCurrentCompanyId().companyid,
-						createtime: '',
-						expenseid: '',
-						foodprice: 0,
-						hotelprice1: 0,
-						hotelprice2: 0,
-						jobid: data.jobid,
-						jobname: data.jobname,
-						key: randomString(32),
-						level: data.level,
-						notes: data.notes,
-						otherprice: 0,
-						othertraficprice: 0,
-						overratio: 0,
-						provid: s.currentProvId,
-						provname: s.currentProv
-					});
-
-				});
-				this.$forceUpdate();
-			},
 
 			loadJobList(){
-				var {condition} = this;
 				var s = this;
-				var t = setInterval(() => {
-					if(Vue.productList){
-						clearInterval(t);
+				return;
+				var userid = this.props.params.userid ? this.props.params.userid : this.userid;
+				$.ajax({
+					url: window.baseUrl + 'travel/get_joblist', //接口地址
+					type: window.ajaxType || 'get',
+					data: {
+						setuserid: userid,
+						userid: s.userid,
+						getusersigid: s.getusersigid
+					},
+					success(data) {
 
-						if(!productid){
+						if (data.getret === 0) {
 
-							Vue.productList.forEach(p=>{
-								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
-									productid  = p.productid;
-								}
-							})
-							
+							s.state.jobList = data.list;
+							s.forceUpdate();
 						}
-						this.$router.push({path:'/trip/'+productid});
-						var productid =  this.$route.params.id ;
-
-						condition = Object.assign(condition,{
-							companyid:zmitiUtil.getCurrentCompanyId().companyid,
-							productid
-						})
-						zmitiUtil.ajax({
-							remark:"getJobList",
-							data:{
-								action:tripActions.getJobList.action,
-								condition:condition
-							},
-							success(data){
-								s.loading = false;
-								if(data.getret === 0){
-									s.total = data.total;
-									s.jobList = data.list;
-								}
-							}
-						})
 					}
-				}, 100);
-
-				
+				})
 			},
 
 			loadSeasonData() {
@@ -351,14 +324,14 @@
 					s.dataSource = s.defaultList.filter((item, i) => {
 						return item.provname === s.state.currentProv;
 					});
-					s.dataSource.forEach((item, i) => {
-						item.key = randomString(32);
+					s.state.dataSource.forEach((item, i) => {
+						item.key = s.randomString(32);
 					});
 
 					var arr = [];
 
 					var dataSource = [];
-					s.dataSource.map((item, i) => {
+					s.state.dataSource.map((item, i) => {
 						var isExists = false;
 						dataSource.map((data, k) => {
 							if (data.cityid === item.cityid) {
@@ -370,12 +343,11 @@
 							dataSource.push(item);
 						}
 					});
-
-					s.dataSource.length = 0;
+					s.state.dataSource.length = 0;
 					dataSource.forEach((data, k) => {
-						s.jobList.map((item, i) => {
+						s.state.jobList.map((item, i) => {
 
-							s.dataSource.push({
+							s.state.dataSource.push({
 								cityid: data.cityid,
 								cityname: data.cityname,
 								companyid: data.companyid,
@@ -386,7 +358,7 @@
 								hotelprice2: 0,
 								jobid: item.jobid,
 								jobname: item.jobname,
-								key: randomString(32),
+								key: s.randomString(32),
 								level: data.level,
 								notes: data.notes,
 								otherprice: 0,
@@ -398,7 +370,7 @@
 						});
 					});
 					s.defaultList.forEach((item, i) => {
-						s.dataSource.forEach((data, k) => {
+						s.state.dataSource.forEach((data, k) => {
 							if (data.jobid === item.jobid && 　data.cityid === item.cityid) {
 								data.expenseid = item.expenseid;
 								data.foodprice = item.foodprice;
@@ -465,27 +437,6 @@
 				})
 			},
 
-			bindNewdata() {
-				var s = this;
-				zmitiUtil.ajax({
-					remark:'getExpenselist',
-					data:{
-						action:tripActions.getExpenselist.action,
-						condition:{
-							companyid:zmitiUtil.getCurrentCompanyId().companyid
-						},
-						
-					},
-					success(data){
-						console.log(data);
-							if (data.getret === 0) {
-							s.fillDataSouce(data);
-						}
-					}
-				})
-				
-			},
-
 			mouseover(params) {
 				var s = this;
 				var cityid = -1,
@@ -532,9 +483,10 @@
 			 fillDataSouce(data) {
 				var s = this;
 				s.defaultList = s.defaultList || data.list.concat([]);
-				s.dataSource = s.defaultList.filter((item, i) => {
-					return item.provname === s.currentProv;
+				s.state.dataSource = s.defaultList.filter((item, i) => {
+					return item.provname === s.state.currentProv;
 				});
+
 				s.dataSource.forEach((item, i) => {
 					item.key = randomString(32);
 				});

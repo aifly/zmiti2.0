@@ -20,6 +20,10 @@ import order from './components/order';
 //import companyinfo from './components/companyinfo';
 import companydetail from './components/companydetail';
 import tripexpence from './components/tripexpence/index/index.vue';
+import triptraffic from './components/tripexpence/triptraffic/index.vue';
+import tripreason from './components/tripexpence/tripreason/index.vue';
+import tripnotice from './components/tripexpence/tripnotice/index.vue';
+import tripost from './components/tripexpence/tripost/index.vue';
 import consume from './components/consume';
 import workorderlist from './components/workorderlist';
 import Group from './common/group/index'
@@ -81,7 +85,11 @@ const router = new VueRouter({
 			{ path: "/companydetail", name: "companydetail", component: companydetail},
 			{ path: "/consume", name: "consume", component: consume},
 			{ path: "/workorderlist/:id?", name: "workorderlist", component:workorderlist},
-			{ path: "/tripexpence/:id?", name: "tripexpence", component: tripexpence},
+			{ path: "/trip/:id?", name: "trip", component: tripexpence},
+			{ path: "/triptraffic/:id?", name: "triptraffic", component: triptraffic},
+			{ path: "/tripreason/:id?", name: "tripreason", component: tripreason},
+			{ path: "/tripnotice/:id?", name: "tripnotice", component: tripnotice},
+			{ path: "/tripost/:id?", name: "tripost", component: tripost},
 		]
 	},
    /*  {

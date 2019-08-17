@@ -99,12 +99,26 @@ let company = {
 
 let triptraffic ={
 	title:"出差宝",
-	keys: ['tripexpence'],
+	keys: ['trip', 'triptraffic', 'tripnotice', 'tripreason','tripost'],
 	tabs: [
 		{
-			name: '概览',
-			link: "/tripexpence"
+			name:'交通工具',
+			link:'/triptraffic'
 		},
+		{
+			name: '差旅费',
+			link: "/trip"
+		},
+		{
+			name:'出差事由',
+			link:'/tripreason'
+		},{
+			name:"注意事项",
+			link:'/tripnotice'
+		},{
+			name:"职位",
+			link:'/tripost'
+		}
 	]
 }
 

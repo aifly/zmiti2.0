@@ -116,7 +116,6 @@
 			changeGroup(){
 
 				for(var menu in menuObj){
-					
 					menuObj[menu].keys.forEach((key,i)=>{
 						if(key === this.$route.name){
 							this.menuObj = menuObj[menu];

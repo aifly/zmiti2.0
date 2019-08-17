@@ -1,5 +1,3 @@
-import zmitiUtil from '../lib/util';
-
 
 if (!window.isAdmin){
 	var { changyue, company, workorder_workorderlist, triptraffic} = require('./usermenu');
