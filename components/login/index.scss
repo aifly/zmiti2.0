@@ -426,8 +426,12 @@ $baseColor1 :#3390ff;
 	font-size: 16px;
 }
 .disabled{
- background-color: #ddd;
- border-color: #ddd;
- color:#57a3f3;
- cursor: not-allowed;
+	background-color: #ddd;
+	border-color: #ddd;
+	color:#57a3f3;
+	cursor: not-allowed;
+}
+.zmiti-login-qrcode{
+	@include displayFlex(column);
+	align-items:center;
 }

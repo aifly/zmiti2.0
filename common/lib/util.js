@@ -1,4 +1,5 @@
 import zmitiActions from '../action.js';
+import   './qrcode';
 import Vue from 'vue';
 
 
@@ -15,6 +16,19 @@ var zmitiUtil = {
 	companyAdminActions: zmitiActions.companyAdminActions,
 	tripActions: zmitiActions.tripActions,
 	newsActions: zmitiActions.newsActions,
+
+	createQrCode(container, url,size=150) {
+		//实例化
+		var qrcode = new QRCode(
+			//二维码存放的div
+			container, {
+				width: size, //设置宽高
+				height: size
+			}
+		);
+		//根据input框的值生成二维码
+		qrcode.makeCode(url);
+	},
 
 	dataToNumber(date){
 		return new Date(date).getTime() 
@@ -97,29 +111,29 @@ var zmitiUtil = {
 		}, 10 * 1000);
 	},
 
-	getTempToken(token) {
-		if (!this.socket) {
+	getTempToken(token){
+		if (!this.socket){
 			this.socket = new WebSocket("ws://newapi.zmiti.com:50294");
-
+			
 			var { socket } = this;
 			this.socket.onopen = function () {
-
+				
 				var json = JSON.stringify({ action: zmitiActions.userActions.getTempToken.action, client_token: token });
-
+				
 				socket.send(json);
 			};
 			this.heart();
 			this.socket.onmessage = (evt) => {
 				var data = JSON.parse(evt.data);
-				console.log(data, '===');
-
+				console.log(data,'==socket==');
+				
 				switch (data.action) {
 					case 0:
 					case 9995:
 						//提示并退出
 						break;
 					case 90000001://授权成功。
-						if (data.getret === 0) {
+						if(data.getret === 0){
 						}
 						Vue.obserable.trigger({
 							type: 'closeQrcodePage'
@@ -138,12 +152,12 @@ var zmitiUtil = {
 						break;
 				}
 			};
-		} else {
-
+		}else{
+		
 
 		}
-
-
+		
+		
 	},
 
 	listener(uid, tk) {
@@ -161,7 +175,7 @@ var zmitiUtil = {
 		var socket = new WebSocket("ws://newapi.zmiti.com:50294");
 
 		socket.onopen = function () {
-			var json = JSON.stringify({type:1, action: 10000000, ui: { userid: userid, token: token } })
+			var json = JSON.stringify({ type:3,action: 10000000, ui: { userid: userid, token: token } })
 			socket.send(json);
 		};
 
@@ -170,13 +184,13 @@ var zmitiUtil = {
 
 		socket.onmessage = (evt) => {
 			var data = JSON.parse(evt.data);
-			//console.log(data,'onmessage');
+			console.log(data, 'onmessage');
 			if (data.getret === 0) {
 
 				switch (data.action) {
 					case 0:
 					case 9995:
-						
+
 						break;
 					case 90000001:
 						Vue.obserable.trigger({
@@ -192,11 +206,9 @@ var zmitiUtil = {
 						break;
 				}
 			}
-			if (data.getret === 9995 || data.getret === 9994){
-				Vue.obserable.trigger({
-					type:'loginError'
-				})
-				/**/
+			if (data.getret === 9995 || data.getret === 9994) {
+				window.localStorage.clear();
+				window.location.href = window.location.href.split('#')[0];
 			}
 		};
 
