@@ -1,19 +1,58 @@
 <template>
-	<div class="zmiti-tripexpence-main-ui">
-		 <div ref='tripexpence-main-ui' class='zmiti-tripexpence-map lt-full'>
-
-		 </div>
-
-		<ul ref='city-C' class='tripexpence-citylist'  :style="{transform:'translate3d('+(transX)+'px,'+transY+'px,0)'}">
-			<li :key='i' v-for='(item,i) in cityList.children'>
-				<Checkbox
-					checked={item.isChecked}
-					onChange={this.selectCity.bind(this,item)}
-					>{{item.label}}</Checkbox>
-			</li>
-			<li v-if='cityList.length>1 && currentCityIndex >-1' @click="next">下一步</li>
-				
-		</ul>
+	<div class="zmiti-tripost-main-ui">
+		<div class="zmiti-list-main">
+			<header class="zmiti-tab-header">
+				<div><span v-if='companyname'></span>交通工具-{{companyname}}</div>
+				<div>
+					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
+					<Button type="primary" @click='add()'>添加</Button>
+				</div>
+			</header>
+			<div class='zmiti-submit-main zmiti-scroll ' :style="{height:viewH - 130+'px' }">
+				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
+					<div slot='table-btns' style="display:inline-block">
+					<!-- 	<Poptip
+							confirm
+							title="确定要删除吗?"
+							@on-ok='selectionDelete'
+							>
+							<div class='zmiti-table-btn'>删除</div>
+							
+						</Poptip>
+						<div class='zmiti-table-btn'>禁用</div> -->
+					</div>
+				</ZmitiTable>
+			</div>
+		</div>
+		<ZmitiMask v-model='showDetailPage' @closeMaskPage='closeMaskPage'>
+			<div slot='mask-content'>
+				<transition name='detail'>
+					<section class='zmiti-add-form zmiti-scroll' >
+						<header class='zmiti-add-header'>
+							<img :src="imgs.back" alt=""  @click='closeMaskPage' >
+							<span>基础信息</span>
+						</header>
+					
+						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
+							<FormItem label="交通工具：">
+								<Select v-model="formObj.transportid">
+									<Option :value="item.transportid" :lable='item.transportid' v-for="(item,i) in transport" :key="i">{{item.transportname+'-'+item.transportlevel}}</Option>
+								</Select>
+							</FormItem>
+							<FormItem label="职务级别：">
+								<Select v-model="formObj.jobid">
+									<Option :value="item.jobid" :lable='item.jobid' v-for="(item,i) in tripost" :key="i">{{item.jobname}}</Option>
+								</Select>
+							</FormItem>
+						</Form>
+						
+						<div class='zmiti-add-form-item zmiti-add-btns'>
+							<Button size='large' type='primary' @click='adminAction'>{{formObj.jobid?'保存':'确定'}}</Button>
+						</div>
+					</section>
+				</transition>
+			</div>
+		</ZmitiMask>
 	</div>
 </template>
 
@@ -24,13 +63,14 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import echarts from 'echarts/lib/echarts';
-	import 'echarts/lib/chart/map';
-	import '../../../common/echarts/china';
+	import ZmitiMask from '../../../common/mask/';
+	import ZmitiTable from '../../../common/table';
 
-	var {randomString,tripActions} = zmitiUtil;
+	var {companyActions,zmitiActions,tripActions,formatDate} = zmitiUtil;
 
 	import {manuscriptStatus} from '../../../common/config';
+
+	
 
 	export default {
 		props:['obserable'],
@@ -38,10 +78,11 @@
 		data(){
 			return{
 
+				
 				targetKeys:[],
 				showAvatarModal:false,
 				
-				companyname:'',
+				companyname:zmitiUtil.getCurrentCompanyId().companyname,
 				roleList:[],
 				imgs:window.imgs,
 				isLoading:false,
@@ -51,16 +92,15 @@
 				currentClassId:-1, 
 				adminuserId:'',
 				loading:true,
-				currentCityIndex: -1,
-				currentCityId: -1,
-				transX: 0,
-				transY: 0,
+				jobLevel:[
+					'普通职称',
+					'中级职称',
+					'高级职称'
+				],
 				currentUserid:'',
-				formUser:{
-					isover:0,
-					usersign:1,
-					usertypesign:1,
-					avatar:'&#xe6a4;'
+				formObj:{
+					jobid:'',
+					transportid:''
 				},
 				address:'',
 				showPass:false,
@@ -74,54 +114,29 @@
 				unJoinedCompany:[],
 				columns:[
 					{
-						title:"稿件编号",
-						key:'manuscriptid',
-						align:'center',
-					},
-					{
-						title:"稿件标题",
-						key:'doctitle',
-						align:'center',
-					},
-					{
-						title:"提交时间",
-						key:'createtime',
+						title:"交通工具",
+						key:'transportlevel',
 						align:'center'
 					},
 					{
-						title:'审核人',
-						key:'status',
-						width:220,
+						title:"职务名称",
+						key:'jobname',
+						align:'center',
+					},
+					{
+						title:"职务级别",
+						key:'level',
+						align:'center',
 						render:(h,params)=>{
-							  
-							return h('div',(params.row.checkuserlist||[])['map']((c,i)=>{
-								return h('span',{
-									style:{
-										marginRight:'5px'
-									},
-									on:{
-										click:()=>{
-											console.log(c);
-											this.$Modal.info({
-												title:c.realname + '的审核意见 —— ' + manuscriptStatus[c.status].name,
-												content:'<p>审核意见：</p>' + (c.suggestion || '暂无 ：('),
-												okText: '确定',
-												closable:true,
-												cancelText: '取消'
-
-											});
-										}
-									},
-									domProps:{
-										innerHTML:`
-											<label>${c.realname}</label>
-											<label title='${manuscriptStatus[c.status].name}' class='zmiti-cy-tag zmt_iconfont' style='color:${manuscriptStatus[c.status].color}'>
-												${manuscriptStatus[c.status].icon}
-											</label>
-										`
-									}
-								});
-							}));
+							return h('div',{},this.jobLevel[params.row.level-1]);
+						}
+					},
+					{
+						title:"创建时间",
+						key:'createtime',
+						align:'center',
+						render:(h,params)=>{
+							return h('div',{},params.row.createtime);
 						}
 					},
 					{
@@ -141,7 +156,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delete(params.row.manuscriptid);
+											this.delete(params.row.traffic);
 										},
 										
 									}
@@ -160,338 +175,252 @@
 											}
 										}
 									}, '删除')
-								])
+								]),
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginLeft:'10px'
+									},
+									on:{
+										click:()=>{
+											this.formObj = params.row;
+											Vue.obserable.trigger({
+												type:'toggleMask',
+												data:true
+											})
+										}
+									}
+								},'详情')
                             ]);
 							
 							 
 						}
 					}
 				],
-				showTable:false,
 				
-				formUser:{
-					pdfurl:'',
-					longitude :'116.585856',
-					latitude :'40.364989'
-				},
+				
 				 
 				directoryList:{
 
 				},
-				cityList:[],
 				condition:{
 					page_index:0,
 					page_size:10,
 				},
-				userinfo:{},
-				currentProvId: '',
-       		     seasonList: [], //淡旺季列表。
+				transport:[],
+				tripost:[],
+				userinfo:{}
 			}
 		},
 		components:{
+			ZmitiMask,
+			ZmitiTable
 		},
 
 		beforeCreate(){
-			
+			//var validate = sysbinVerification.validate(this);
+			//zmitiUtil.clearCookie('login');
+
+			///this.validate = validate;
 		},
 		mounted(){
+			window.s = this;
+			var userinfo = zmitiUtil.getUserInfo();
+			if(!userinfo){
+				this.$router.push({path:'/login'})
 
-			this.initEcharts();
-			this.getCascader();
-			this.loadJobList();
-			this.loadSeasonData(); //加载淡旺季列表。
+			}
+			this.getDataList();
+			this.getbaseData();
+			this.getJobData();
+			
 			
 		},
 
 		watch:{
 			
-
-			showDetail(val){
-				
-			},
-			
+ 
 			
 		},
 		
 		methods:{
-
-			loadJobList(){
+			getJobData(){
 				var s = this;
-				return;
-				var userid = this.props.params.userid ? this.props.params.userid : this.userid;
-				$.ajax({
-					url: window.baseUrl + 'travel/get_joblist', //接口地址
-					type: window.ajaxType || 'get',
-					data: {
-						setuserid: userid,
-						userid: s.userid,
-						getusersigid: s.getusersigid
-					},
-					success(data) {
+				s.loading = true;
 
-						if (data.getret === 0) {
+				var t = setInterval(() => {
+					var productid =  this.$route.params.id ;
+					if(Vue.productList){
+						clearInterval(t);
+						if(!productid){
 
-							s.state.jobList = data.list;
-							s.forceUpdate();
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
+								}
+							})
+							
 						}
-					}
-				})
-			},
-
-			loadSeasonData() {
-				var s = this;
-				return;
-				var userid = this.props.params.userid ? this.props.params.userid : this.userid;
-				$.ajax({
-					url: window.baseUrl + 'travel/get_seasondatelist', //接口地址
-					type: window.ajaxType || 'get',
-					data: {
-						setuserid: userid,
-						userid: s.userid,
-						getusersigid: s.getusersigid
-					},
-					success(data) {
-
-						if (data.getret === 0) {
-							//console.log(data.list,"信息列表");
-							s.state.seasonList = data.list;
-
-						}
-					}
-				})
-			},
-		 
-			initEcharts(){
-				 var s = this;
-				this.lastCityId = this.lastCityId || -1;
-				var myChart = echarts.init(this.$refs['tripexpence-main-ui']);
-				var  option = {
-					tooltip: {
-						trigger: 'item',
-						formatter: '{b}'
-					},
-					series: [{
-						name: '中国',
-						type: 'map',
-						mapType: 'china',
-						selectedMode: 'single',
-						label: {
-							normal: {
-								show: true
+						var {condition} = this;
+						condition = Object.assign(condition,{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid
+						})
+						zmitiUtil.ajax({
+							remark:"getJobList",
+							data:{
+								action:tripActions.getJobList.action,
+								condition:condition
 							},
-							emphasis: {
-								show: true
+							success(data){
+								s.loading = false;
+								if(data.getret === 0){
+									s.total = data.total;
+									s.tripost = data.list;
+								}
 							}
-						}
-					}]
-				};
-				if (option && typeof option === "object") {
-					myChart.setOption(option, true);
-				}
+						})
+					}
+				}, 100);
 
-				myChart.on('click', function(params) {
-
-					s.mouseover(params);
-					setTimeout(() => {
-					//	s.next();
-					}, 100)
-				});
-				myChart.on('mouseover', (params) => {
-
-					!this.showTable && s.mouseover(params);
-				});
+				
 			},
-			//Cascader
-			getCascader() {
-				var s = this;
-				var provinceOptions = [];
+			getbaseData(){
+				var s=this;
+
 				zmitiUtil.ajax({
-					remark:'getcitylist',
+					remark:'getTrafficbase',
 					data:{
-						action:tripActions.getCityList.action,
+						action:tripActions.getTrafficbase.action,
+						condition:{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid
+						}
 					},
 					success(data){
 						if(data.getret === 0){
-							s.cityList = data.list[0].children;
+							s.transport = data.list;
+						}
+					}
+				})
+			
+				
+			},
+			closeMaskPage(){
+				Vue.obserable.trigger({type:'toggleMask',data:false});
+			},
+			add(){
+				this.formObj = {};
+				Vue.obserable.trigger({type:'toggleMask',data:true});
+			},
+
+			adminAction(){
+				var s = this;
+				var action = this.formObj.jobid ? tripActions.editTraffic.action:tripActions.addTraffic.action;
+
+				let info = {
+					jobid:this.formObj.jobid,
+					transportid:this.formObj.transportid,
+					companyid:zmitiUtil.getCurrentCompanyId().companyid
+				}
+				if(this.formObj.jobid){
+					info.traffic = this.formObj.traffic
+				}
+				zmitiUtil.ajax({
+					remark:this.formObj.jobid ?　'editTraffic':'addTraffic',
+					data:{
+						action,
+						info
+					},
+					success(data){
+						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						s.closeMaskPage();
+						if(data.getret === 0){
+							s.getDataList();
 						}
 					}
 				})
 			},
-			next() {
+			
+			change(e){
+				this.condition.page_index = e -1;
+				this.getDataList();
+			},
+		 
+			 
+
+			delete(traffic){
 				var s = this;
-				this.showTable = true;
-				this.$nextTick(()=>{
-					s.dataSource = s.defaultList.filter((item, i) => {
-						return item.provname === s.state.currentProv;
-					});
-					s.state.dataSource.forEach((item, i) => {
-						item.key = s.randomString(32);
-					});
-
-					var arr = [];
-
-					var dataSource = [];
-					s.state.dataSource.map((item, i) => {
-						var isExists = false;
-						dataSource.map((data, k) => {
-							if (data.cityid === item.cityid) {
-								isExists = true;
-							}
-						});
-						if (!isExists) {
-
-							dataSource.push(item);
+				zmitiUtil.ajax({
+					remark:'delTraffic',
+					data:{
+						action:tripActions.delTraffic.action,
+						condition:{
+							traffic
 						}
-					});
-					s.state.dataSource.length = 0;
-					dataSource.forEach((data, k) => {
-						s.state.jobList.map((item, i) => {
+					},
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						if(data.getret === 0){
+							
+							s.getDataList();
+							///s.dataSource = data.list;	 
+						}
+					}
+				})
+			},
+			change(e){
+				this.condition.page_index = e -1;
+				this.getDataList();
+			},
+			getDataList(){
+				var s = this;
+				s.loading = true;
 
-							s.state.dataSource.push({
-								cityid: data.cityid,
-								cityname: data.cityname,
-								companyid: data.companyid,
-								createtime: data.createtime,
-								expenseid: data.expenseid,
-								foodprice: 0,
-								hotelprice1: 0,
-								hotelprice2: 0,
-								jobid: item.jobid,
-								jobname: item.jobname,
-								key: s.randomString(32),
-								level: data.level,
-								notes: data.notes,
-								otherprice: 0,
-								othertraficprice: 0,
-								overratio: data.overratio,
-								provid: data.provid,
-								provname: data.provname
-							})
-						});
-					});
-					s.defaultList.forEach((item, i) => {
-						s.state.dataSource.forEach((data, k) => {
-							if (data.jobid === item.jobid && 　data.cityid === item.cityid) {
-								data.expenseid = item.expenseid;
-								data.foodprice = item.foodprice;
-								data.hotelprice1 = item.hotelprice1;
-								data.hotelprice2 = item.hotelprice2;
-								data.othertraficprice = item.othertraficprice;
-								data.otherprice = item.otherprice;
-							}
-						});
-					});
-					if (s.addDataSource) {
-						s.addDataSource.map((item, i) => {
-							var userid = s.props.params.userid ? s.props.params.userid : s.userid;
+				var t = setInterval(() => {
+					var productid =  this.$route.params.id ;
+					if(Vue.productList){
+						clearInterval(t);
 
-							var params = {
-								userid: s.userid,
-								getusersigid: s.getusersigid,
-								setuserid: userid,
-								provid: s.state.currentProvId, //this.state.inputValue[0],
-								cityid: item.cityid, //this.state.inputValue[1],
-								jobid: item.jobid,
-								hotelprice1: 0,
-								hotelprice2: 0,
-								foodprice: 0,
-								othertraficprice: 0,
-								otherprice: 0,
-							}
+						if(!productid){
 
-							$.ajax({
-								type: 'POST',
-								async: false,
-								url: window.baseUrl + 'travel/add_expense/',
-								data: params,
-								success(data) {
-
-									item.expenseid = data.key;
-									//  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
 								}
-							});
+							})
+							
+						}
+						this.$router.push({path:'/triptraffic/'+productid});
+						var {condition} = this;
+						condition = Object.assign(condition,{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid
+						})
+						zmitiUtil.ajax({
+							remark:"getTrafficlist",
+							data:{
+								action:tripActions.getTrafficlist.action,
+								condition:condition
+							},
+							error(){
+								s.loading = false;
+							},
+							success(data){
+								s.loading = false;
+								if(data.getret === 0){
+									s.total = data.total;
+									s.dataSource = data.list;
+								}
+							}
 						})
 					}
+				}, 100);
 
-					s.state.dataSource = s.state.dataSource.concat(s.addDataSource || []);
-
-					s.dataSource.forEach((item, i) => {
-						s.seasonList.map((sea, k) => {
-							if (item.cityid === sea.cityid) {
-								item.daterange = sea.daterange;
-							}
-						});
-
-					});
-					s.dataSort();
-
-
-					s.$forceUpdate();
-				})
-			},
-
-			dataSort() {
-				var s = this;
-				s.dataSource = s.dataSource.sort(function(param1, param2) {
-					return param1.cityname.localeCompare(param2.cityname); //
-				})
-			},
-
-			mouseover(params) {
-				var s = this;
-				var cityid = -1,
-					index = -1,
-					currentProv = '',
-					currentProvId = -1;
-
-				s.cityList.map((city, i) => {
-					if (params.name === city.label) {
-						cityid = city.value;
-						index = i;
-						currentProvId = city.value;
-						currentProv = city.label
-						return;
-					}
-				});
-				if (cityid === -1 || index === -1) {
-					return;
-				}
-
-				s.lastCityId = cityid;
-				s.currentCityIndex = index;
-				s.currentProvId = currentProvId;
-				s.currentProv = currentProv;
 				
-				s.$nextTick(()=>{
-					var height = s.$refs['city-C'].offsetHeight;
-					s.fillDataSouce();
-					s.cityList[index].children.forEach((item, i) => {
-						s.dataSource.forEach((data, k) => {
-							if (data.cityid === item.value) {
-								item.isChecked = true;
-							}
-						});
-					});
-
-					var transY = params.event.offsetY - height;
-					transY < 0 && (transY = 0);
-					s.currentCityIndex = index;
-					s.transX =  params.event.offsetX + 2;
-					s.transY = transY;
-				})
 			},
-			 fillDataSouce(data) {
-				var s = this;
-				s.defaultList = s.defaultList || data.list.concat([]);
-				s.state.dataSource = s.defaultList.filter((item, i) => {
-					return item.provname === s.state.currentProv;
-				});
-
-				s.dataSource.forEach((item, i) => {
-					item.key = randomString(32);
-				});
-				s.$forceUpdate();
-			}
+			
 		}
 	}
 </script>

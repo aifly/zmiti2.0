@@ -116,7 +116,7 @@ let triptraffic ={
 			name:"注意事项",
 			link:'/tripnotice'
 		},{
-			name:"职位",
+			name:"职务",
 			link:'/tripost'
 		}
 	]

@@ -481,6 +481,38 @@ let tripActions = {
 	searchBusinesstripList:{
 		desc:"查询出差事由",
 		action:"2001962"
+	},
+	getTrafficlist:{
+		desc:"获取公司交通费用标准列表",
+		action:"2001948"
+	},
+	getTrafficbase:{
+		desc:"交通工具基础数据",
+		action:'2001943'
+	},
+	addTraffic:{
+		desc:'新增交通费用标准',
+		action:"2001944"
+	},
+	editTraffic:{
+		desc:'新增交通费用标准',
+		action:"2001945"
+	},
+	delTraffic: {
+		desc: '删除交通费用标准',
+		action: "2001946"
+	},
+	searchNotice:{
+		desc:'查询注意事项',
+		action:'2001957'
+	},
+	addNotice:{
+		desc:'添加注意事项',
+		action:'2001954'
+	},
+	editNotice:{
+		desc: '编辑注意事项',
+		action: '2001955'
 	}
 
 
