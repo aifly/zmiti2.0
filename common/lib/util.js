@@ -1,4 +1,5 @@
 import zmitiActions from '../action.js';
+import   './qrcode';
 import Vue from 'vue';
 
 
@@ -15,6 +16,19 @@ var zmitiUtil = {
 	companyAdminActions: zmitiActions.companyAdminActions,
 	tripActions: zmitiActions.tripActions,
 	newsActions: zmitiActions.newsActions,
+
+	createQrCode(container, url,size=150) {
+		//实例化
+		var qrcode = new QRCode(
+			//二维码存放的div
+			container, {
+				width: size, //设置宽高
+				height: size
+			}
+		);
+		//根据input框的值生成二维码
+		qrcode.makeCode(url);
+	},
 
 	dataToNumber(date){
 		return new Date(date).getTime() 

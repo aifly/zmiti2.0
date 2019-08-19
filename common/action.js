@@ -347,6 +347,10 @@ let userActions = {
 	getTempToken:{
 		desc:'微信扫码绑定临时token',
 		action:'10000001'
+	},
+	getWXFollow:{
+		desc:'定时刷新获取微信关注',
+		action:'2000098'
 	}
 
 };

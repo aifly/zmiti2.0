@@ -8,7 +8,7 @@
 				</div>
 				<h2 class="zmiti-login-logo"><img :src="imgs.loginU2">用户管理系统登录</h2>
 				<div class="zmiti-login-form">
-					<div v-if="accountStatus==true">					
+					<template v-if="formStatus==1">					
 						<div class="zmiti-login-account">
 							<div id="zmiti-login-accountname" :class="{'active':userFocus}">
 								<label>
@@ -32,8 +32,8 @@
 						<div class='zmiti-login-btn' v-press>
 							<div @click="login" ref='login'>立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
 						</div>
-					</div>
-					<div v-if="mobileStatus==true">
+					</template>
+					<template v-if="formStatus==2">
 						<div class="zmiti-login-mobile" >
 							<div class="zmiti-login-number">
 								<span class="zmiti-login-icon"><img :src="imgs.loginU3" alt=""></span>
@@ -47,18 +47,25 @@
 						<div class='zmiti-login-btn zmiti-login-btn2' v-press>
 							<div>立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
 						</div>
-					</div>
+					</template>
 
-					<div v-if="weixinStatus==true">
+					<template v-if="formStatus==3">
 						<div class="zmiti-login-weixin">
-							<img :src="weixinData.url" v-if="weixinData!=''">
+							<div class='zmiti-login-qrcode'>
+								<div ref='loginqrcode'></div>							
+								<section>{{qrCodeErrMsg}}</section>
+							</div>
 						</div>
-					</div>
+						<div class='zmiti-qrcode-page' v-if='showQRCodePage'>
+							<div ref='container' class='zmiti-qrcode-role'></div>
+						</div>
+					</template>
+					
 					
 					<div class="zmiti-login-other">
 						<h5><span>或</span></h5>
 						<div class="zmiti-login-apibtn">
-							<img :src="imgs.loginU5" @click="openMobileform"><img :src="imgs.loginU6" @click="getWXCode">
+							<img :src="imgs.loginU5" @click="openMobileform"><img :src="imgs.loginU6" @click="openweiXin">
 						</div>
 					</div>
 				</div>
@@ -115,9 +122,11 @@
 				errorMsg:'',
 				company_list:[],
 				viewH:document.documentElement.clientHeight,
-				accountStatus:true,
-				mobileStatus:false,
-				weixinStatus:false,
+				formStatus:1,
+				qrCodeErrMsg:'',
+				showQRCodePage:false,
+				qrCodePageIndex:0,
+				errMsg:"",
 				weixinData:[{
 					token:'',
 					url:''
@@ -126,7 +135,9 @@
 				usercode:'',
 				codecontent: '发送验证码',
 				totalTime: 60,//60秒
-				canClick: true//发送验证码状态
+				canClick: true,//发送验证码状态
+				username:window.localStorage.getItem('zmt-username'),
+				password:window.localStorage.getItem('zmt-password')
 			}
 		},
 		components:{
@@ -275,9 +286,7 @@
 			 },1000)
 			},
 			openMobileform(){//打开手机验证码表单
-				/*this.accountStatus=false;
-				this.mobileStatus=true;
-				this.weixinStatus=false;*/
+				this.formStatus=2;
 			},
 			weixinLogin(){
 				zmitiUtil.ajax({
@@ -296,15 +305,26 @@
 				});
 			},			
 			openweiXin(){
-				this.accountStatus=false;//关闭用户名表单
-				this.mobileStatus=false;
-				this.weixinStatus=true;
-			},
-			getWXCode(fn,type=1){//获取二维码
-				/*this.accountStatus=false;
-				this.mobileStatus=false;
-				this.weixinStatus=true;
 				var s = this;
+				s.formStatus=3;
+				s.createLoginQRCode();			
+			},
+			createLoginQRCode(){
+				var s = this;
+				if(s.url){
+					return;
+				}
+				this.getWXCode(function(info){
+				
+					zmitiUtil.getTempToken(info.token);
+					s.$refs['loginqrcode'].innerHTML = '';
+					zmitiUtil.createQrCode(s.$refs['loginqrcode'],info.url,170);
+					s.url = s.$refs['loginqrcode'].querySelector('img').src;
+				},1)
+			},
+			getWXCode(fn,type=1){
+				var s = this;
+
 				zmitiUtil.ajax({
 					remark:'getWXCode',
 					data:{
@@ -313,13 +333,11 @@
 					},
 					success(data){
 						if(data.getret === 0){
-							console.log('二维码获取成功')
-							s.weixinData=data.info;
-							console.log(s.weixinData,'s.weixinData')
+							fn && fn (data.info);	
 						}
 					}
-				})*/
-			}
+				})
+			},
 			
 
 		},
@@ -337,6 +355,61 @@
 				}.bind(this));
 			});
 
+			//this.createLoginQRCode();
+			var s = this;
+			Vue.obserable.on('closeQrcodePage',()=>{
+				this.qrCodePageIndex = 1;
+				this.getWXCode((data)=>{
+					this.$refs['container'].innerHTML = '';
+					zmitiUtil.createQrCode(s.$refs['container'],data.url,170);
+				},2)
+				var t = setInterval(() => {
+					zmitiUtil.ajax({
+						remark:'getWXFollow',
+						data:{
+							action:userActions.getWXFollow.action
+						},
+						success(data){
+							console.log(data,'---');
+							if(data.getret === 0){
+								clearInterval(t);
+								s.showQRCodePage = false;
+								s.$router.push({path:'/home/'});
+							}
+						}
+					});
+				}, 3000);
+			})
+			Vue.obserable.on('loginSuccess',(data)=>{
+
+				if (data.getret === 0 || data.getret === 100) {
+					var {username,password } = this;
+					window.localStorage.clear();
+					window.localStorage.setItem('login', JSON.stringify(data));
+					window.localStorage.setItem('zmiti_user_username', username);
+					window.localStorage.setItem('zmiti_user_password', password);
+
+					zmitiUtil.listener();
+					if(data.info.wechat_auth_url){
+						s.showQRCodePage = true;
+						s.qrCodePageIndex = 0;
+						setTimeout(() => {
+							zmitiUtil.createQrCode(s.$refs['container'],data.info.wechat_auth_url,170);
+						}, 10);
+					}
+					else{
+						s.$router.push({path:'/home/'});
+					}
+
+				}else{
+					s.qrCodeErrMsg = data.msg;
+					s.createLoginQRCode();
+					setTimeout(() => {
+						s.qrCodeErrMsg = '';
+					}, 4000);
+				}
+
+			})
 			
 
 		}
