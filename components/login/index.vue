@@ -315,8 +315,10 @@
 					return;
 				}
 				this.getWXCode(function(info){
-					console.log(info,'info-info-info');					
+					console.log(info,'info-info-info');	
+					console.log(info.token,'info.token88888');				
 					zmitiUtil.getTempToken(info.token);
+					console.log(info.token,'info.token99999');
 					s.$refs['loginqrcode'].innerHTML = '';										
 					zmitiUtil.createQrCode(s.$refs['loginqrcode'],info.url,170);
 					s.url = s.$refs['loginqrcode'].querySelector('img').src;

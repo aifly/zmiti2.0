@@ -101,14 +101,19 @@ var zmitiUtil = {
 
 		return loginObj;
 	},
-	heart() {
+	getAdminUserInfo() {
+		return this.getUserInfo('adminlogin');
+	},
+	heart(){
+		if (!this.getUserInfo()){
+			return;
+		}
 		var { userid, token } = this.getUserInfo().ui;
-		var { socket } = this;
+		var { socket} = this;
 		setTimeout(() => {
-			var json = JSON.stringify({ action: 500, ui: { userid: userid, token: token } })
+			var json = JSON.stringify({ action: 500, ui: { userid: userid, token: token } })			
 			socket.send(json);
-			
-		}, 10 * 1000);
+		}, 10*1000);
 	},
 
 	getTempToken(token){
@@ -121,11 +126,14 @@ var zmitiUtil = {
 				var json = JSON.stringify({ action: zmitiActions.userActions.getTempToken.action, client_token: token });
 				
 				socket.send(json);
+
 			};
+			console.log(json,'json-json-json-json')
 			this.heart();
 			this.socket.onmessage = (evt) => {
+				console.log('onmessage-onmessage');//
 				var data = JSON.parse(evt.data);
-				console.log(data,'==socket==');
+				console.log(data,'===');
 				
 				switch (data.action) {
 					case 0:
