@@ -8,7 +8,7 @@
 				</div>
 				<h2 class="zmiti-login-logo"><img :src="imgs.loginU2">用户管理系统登录</h2>
 				<div class="zmiti-login-form">
-					<template v-if="formStatus==1">					
+					<template v-if="loginType === 0">					
 						<div class="zmiti-login-account">
 							<div id="zmiti-login-accountname" :class="{'active':userFocus}">
 								<label>
@@ -33,7 +33,7 @@
 							<div @click="login" ref='login'>立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>
 						</div>
 					</template>
-					<template v-if="formStatus==2">
+					<template v-if="loginType === 1">
 						<div class="zmiti-login-mobile" >
 							<div class="zmiti-login-number">
 								<span class="zmiti-login-icon"><img :src="imgs.loginU3" alt=""></span>
@@ -49,10 +49,10 @@
 						</div>
 					</template>
 
-					<template v-if="formStatus==3">
+					<template v-if="loginType === 2">
 						<div class="zmiti-login-weixin">
 							<div class='zmiti-login-qrcode'>
-								<div ref='loginqrcode'></div>							
+								<div ref='loginqrcode'><img src=""></div>							
 								<section>{{qrCodeErrMsg}}</section>
 							</div>
 						</div>
@@ -65,7 +65,7 @@
 					<div class="zmiti-login-other">
 						<h5><span>或</span></h5>
 						<div class="zmiti-login-apibtn">
-							<img :src="imgs.loginU5" @click="openMobileform"><img :src="imgs.loginU6" @click="openweiXin">
+							<img :src="imgs.loginU5" @click="changeLoginType(1)"><img :src="imgs.loginU6" @click="changeLoginType(2)">
 						</div>
 					</div>
 				</div>
@@ -127,10 +127,7 @@
 				showQRCodePage:false,
 				qrCodePageIndex:0,
 				errMsg:"",
-				weixinData:[{
-					token:'',
-					url:''
-				}],
+				loginType:0,
 				usermobile:'',
 				usercode:'',
 				codecontent: '发送验证码',
@@ -232,6 +229,23 @@
 								_this.isLogined = true;
 							}
 
+
+							/*微信登录*/
+
+							zmitiUtil.listener();
+							if(data.info.wechat_auth_url){
+								s.showQRCodePage = true;
+								s.qrCodePageIndex = 0;
+								console.log('test1111')
+								setTimeout(() => {
+									zmitiUtil.createQrCode(s.$refs['container'],data.info.wechat_auth_url,170);
+								}, 10);
+							}
+							else{
+								console.log('test22222')
+								s.$router.push({path:'/home/'});
+							}
+
 							
 						}else{
 							_this.errMsg = data.msg;
@@ -284,30 +298,16 @@
 			   this.canClick = true  //这里重新开启
 			  }
 			 },1000)
-			},
-			openMobileform(){//打开手机验证码表单
-				this.formStatus=2;
-			},
-			weixinLogin(){
-				zmitiUtil.ajax({
-					remark:'getWXFollow',
-					data:{
-						action:userActions.getWXFollow.action
-					},
-					success(data){
-						console.log(data,'---');
-						if(data.getret === 0){
-							clearInterval(t);
-							s.showQRCodePage = false;
-							s.$router.push({path:s.companyList.length<=1?"/nav":'/company/'});
-						}
-					}
-				});
-			},			
-			openweiXin(){
+			},	
+			changeLoginType(index){
+				if(this.loginType === index){
+					return;
+				}
+				this.loginType = index;
 				var s = this;
-				s.formStatus=3;
-				s.createLoginQRCode();			
+				if(index === 2){//二维码登录
+					this.createLoginQRCode();
+				}
 			},
 			createLoginQRCode(){
 				var s = this;
@@ -315,11 +315,12 @@
 					return;
 				}
 				this.getWXCode(function(info){
-				
+					console.log(info,'info-info-info');					
 					zmitiUtil.getTempToken(info.token);
-					s.$refs['loginqrcode'].innerHTML = '';
+					s.$refs['loginqrcode'].innerHTML = '';										
 					zmitiUtil.createQrCode(s.$refs['loginqrcode'],info.url,170);
 					s.url = s.$refs['loginqrcode'].querySelector('img').src;
+	
 				},1)
 			},
 			getWXCode(fn,type=1){
@@ -338,7 +339,6 @@
 					}
 				})
 			},
-			
 
 		},
 		mounted(){
@@ -355,14 +355,14 @@
 				}.bind(this));
 			});
 
-			//this.createLoginQRCode();
+			this.createLoginQRCode();
 			var s = this;
 			Vue.obserable.on('closeQrcodePage',()=>{
 				this.qrCodePageIndex = 1;
 				this.getWXCode((data)=>{
 					this.$refs['container'].innerHTML = '';
 					zmitiUtil.createQrCode(s.$refs['container'],data.url,170);
-				},2)
+				},1)
 				var t = setInterval(() => {
 					zmitiUtil.ajax({
 						remark:'getWXFollow',
@@ -390,6 +390,7 @@
 					window.localStorage.setItem('zmiti_user_password', password);
 
 					zmitiUtil.listener();
+					
 					if(data.info.wechat_auth_url){
 						s.showQRCodePage = true;
 						s.qrCodePageIndex = 0;
