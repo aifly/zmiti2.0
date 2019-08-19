@@ -270,7 +270,7 @@
 					this.company_list = zmitiUtil.getUserInfo().info.company_list||[];
 				}
 			},
-			getMobileCode(){
+			getMobileCode(){//获取手机验证码
 				var s = this;
 				zmitiUtil.ajax({
 					remark:'getMobileCode',
@@ -309,7 +309,7 @@
 					this.createLoginQRCode();
 				}
 			},
-			createLoginQRCode(){
+			createLoginQRCode(){//生成二维码
 				var s = this;
 				if(s.url){
 					return;
@@ -355,14 +355,13 @@
 				}.bind(this));
 			});
 
-			this.createLoginQRCode();
-			var s = this;
+			//this.createLoginQRCode();
 			Vue.obserable.on('closeQrcodePage',()=>{
 				this.qrCodePageIndex = 1;
 				this.getWXCode((data)=>{
 					this.$refs['container'].innerHTML = '';
 					zmitiUtil.createQrCode(s.$refs['container'],data.url,170);
-				},1)
+				},2)
 				var t = setInterval(() => {
 					zmitiUtil.ajax({
 						remark:'getWXFollow',
@@ -380,6 +379,8 @@
 					});
 				}, 3000);
 			})
+
+			var s = this;
 			Vue.obserable.on('loginSuccess',(data)=>{
 
 				if (data.getret === 0 || data.getret === 100) {
@@ -390,7 +391,6 @@
 					window.localStorage.setItem('zmiti_user_password', password);
 
 					zmitiUtil.listener();
-					
 					if(data.info.wechat_auth_url){
 						s.showQRCodePage = true;
 						s.qrCodePageIndex = 0;
