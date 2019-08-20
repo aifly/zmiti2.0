@@ -4,20 +4,17 @@
 			<header class="zmiti-tab-header">
 				<div><span v-if='companyname'></span>注意事项-{{companyname}}</div>
 				<div>
-					<Button type="primary" @click='save'>保存</Button>
+					<Button type="primary" @click='addNotice'>{{btnMsg}}</Button>
 				</div>
 			</header>
 		</div>
 		<div class='zmiti-tripnotice-editor'>
-			<quill-editor 
-				v-model="formObj.notice" 
-				ref="myQuillEditor" 
-				aria-placeholder="123"
-				:options="editorOption" 
-				@blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
-				@change="onEditorChange($event)">
-			</quill-editor>
-			
+			<UE
+			:default-msg="formObj.notice" 
+			id="editor" 
+			:config="editorOption" 
+			@contentChanged="contentChange">				
+			</UE>
 		</div>
 	</div>
 </template>
@@ -28,20 +25,35 @@
 <script>
 
 	import Vue from 'vue';
-	import VueQuillEditor from 'vue-quill-editor';
-	Vue.use(VueQuillEditor);
 	import zmitiUtil from '../../../common/lib/util';
-	import '../../../common/css/quill.css';
-
+	import UE from '../../../common/ueditor' // 引入组件
 	var {tripActions} = zmitiUtil;
+
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
-				editorOption:{
-					
-				},
+				viewH:window.innerHeight,
+				editorOption: {
+					initialFrameWidth:'100%',
+					initialFrameHeight:window.innerHeight-200,
+					enableAutoSave:false,
+					autoHeightEnabled:false,
+					toolbars:[[
+					'bold', 'italic', 'underline',  '|',
+					'forecolor', 'backcolor', '|',
+					'paragraph', 'fontfamily', 'fontsize', 'lineheight', '|',
+					'insertorderedlist', 'insertunorderedlist', '|',
+					'removeformat', 'blockquote', 'indent', '|',
+					'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+					'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+					'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', '|',
+					'source',
+					'fullscreen'
+					]]
+		        },
+		        
 				companyname:zmitiUtil.getCurrentCompanyId().companyname,
 				 
 				formObj:{
@@ -50,11 +62,13 @@
 		 
 				userinfo:{},
 				currentProvId: '',
-       		      
+				btnMsg:'保存',
+				remarkName:'editNotice',
+				actioName:tripActions.editNotice.action	      
 			}
 		},
 		components:{
-			//'quill-editor':VueQuillEditor
+			UE
 		},
 
 		beforeCreate(){
@@ -80,30 +94,26 @@
             },
             onEditorChange(){//内容改变事件
 			},
-			save(){
-
-			},
 			addNotice(){
-				var productid =  this.$route.params.id ;
-			
+				var s = this;
+				var productid =  this.$route.params.id;		
 
 				var info  = {
 					companyid:zmitiUtil.getCurrentCompanyId().companyid,
 					productid,
-					notice:"<h1>1234</h1>"
+					notice:this.formObj.notice
 				}
-
 				zmitiUtil.ajax({
-					remark:"addNotice",
+					remark:s.remarkName,
 					data:{
-						action:tripActions.addNotice.action,
+						action:s.actioName,
 						info
 					},
 					success(data){
 						s.loading = false;
 						if(data.getret === 0){
-							s.total = data.total;
-							s.dataSource = data.list;
+							s.$Message[data.getret ===0 ?'success':'error'](data.getmsg);
+							s.getDataList();
 						}
 					}
 				})	
@@ -111,7 +121,6 @@
 			getDataList(){
 				var s = this;
 				s.loading = true;
-
 				var t = setInterval(() => {
 					var productid =  this.$route.params.id ;
 					if(Vue.productList){
@@ -145,7 +154,13 @@
 								s.loading = false;
 								if(data.getret === 0){
 									s.formObj.notice = data.notice;
-									
+									s.btnMsg="保存";
+									s.remarkName='editNotice';
+									s.actioName=tripActions.editNotice.action;
+								}else{
+									s.btnMsg="新增";
+									s.remarkName='addNotice';
+									s.actioName=tripActions.addNotice.action;
 								}
 							}
 						})
@@ -154,7 +169,9 @@
 
 				
 			},
-
+			contentChange (val) { // 改变父组件数据
+		      this.formObj.notice = val
+		    }
 			 
 		}
 	}
