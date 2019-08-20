@@ -34,10 +34,10 @@
 								</Select>
 							</FormItem>
 							 <FormItem label="开始时间：" prop='startdate'>
-								<DatePicker format='yyyy-MM-dd HH:mm:ss' v-model="formUser.startdate" type="datetime" placeholder="开始时间：" style="width:100%" ></DatePicker>
+								<DatePicker format='yyyy-MM-dd' v-model="formUser.startdate" type="date" placeholder="开始时间：" style="width:100%" ></DatePicker>
 							</FormItem>
 							 <FormItem label="结束时间：" prop='enddate'>
-								<DatePicker v-model="formUser.enddate" type="datetime" placeholder="结束时间：" style="width:100%"></DatePicker>
+								<DatePicker  format='yyyy-MM-dd' v-model="formUser.enddate" type="date" placeholder="结束时间：" style="width:100%"></DatePicker>
 							</FormItem>
 							<FormItem label="状态：">
 								<RadioGroup v-model="formUser.status">

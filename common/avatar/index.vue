@@ -1,8 +1,9 @@
 <template>
 	<div v-if='value'>
-		<Modal title='更换头像' v-model="show" :transfer='false'
+		<Modal title='更换头像' v-model="show" :transfer='true'
 			:mask-closable='false'
 			@on-visible-change='closeModal'
+
 			>
 				<div slot='footer'>
 					<Button @click='chooseAvatar'  type='primary'>确定</Button>
@@ -63,7 +64,8 @@ export default {
 				'&#xe6a4;',
 				'&#xe6a3;',
 				'&#xe6a2;',
-				'&#xe6a0;'
+				'&#xe6a0;',
+				'&#xe661;'
 			]
 		}
 	},

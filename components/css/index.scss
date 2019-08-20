@@ -1,6 +1,20 @@
 @import "./base.scss";
  
 $color:#00c1de;
+.zmiti-trip-ul{
+	height: 80px;
+	@include pos(r);
+	width: 100%;
+	text-align: center;
+	@include displayFlex(column);
+	li{
+		flex:1;
+		line-height: 40px;
+		&:nth-of-type(2){
+			border-top: 1px solid #f2f2f2;
+		}
+	}
+}
 
 .ivu-radio-inner:after{
 	border-radius: 4px !important;

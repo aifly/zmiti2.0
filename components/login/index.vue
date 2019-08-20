@@ -149,8 +149,8 @@
 			chooseCompany(company){
 				var _this = this;
 				window.localStorage.setItem('currentCompany',JSON.stringify(company));
-				_this.$router.push({path:'/home'})
-				return;
+				
+				this.$router.push({path:'/home'});
 				setTimeout(() => {
 					window.location.reload();
 				}, 200);
@@ -351,17 +351,12 @@
 			Vue.obserable.on('loginSuccess',(data)=>{
 				console.log(data,'.....');
 				if (data.getret === 0 || data.getret === 100) {
-					console.log(data,'loginSuccess-loginSuccess');
 					var {username,password } = this;
 					window.localStorage.clear();
 					window.localStorage.setItem('login', JSON.stringify(data));
-					zmitiUtil.listener();
+					 
 					if(data.info.wechat_auth_url){
-						s.showQRCodePage = true;
-						s.qrCodePageIndex = 0;
-						setTimeout(() => {
-							zmitiUtil.createQrCode(s.$refs['container'],data.info.wechat_auth_url,170);
-						}, 10);
+						
 					}
 					else{
 						if(data.info.company_list.length>1){

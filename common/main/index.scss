@@ -204,6 +204,34 @@ $primary-color: #00c1de;
 		
 	}
 
+	.zmiti-company-info{
+		@include pos(a);
+		top:0;
+		width: 80%;
+		text-align: center;
+		left: 10%;
+		font-weight: bold;
+		a{
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			vertical-align: middle;
+			@include pos(r);
+			&:before{
+				content:'';
+				@include pos(a);
+				width: 0;
+				height: 0;
+				top:4px;
+				border-width: 8px;
+				border-style: solid;
+				border-color:#fff transparent transparent transparent;
+				left: 5px;
+				top:10px;
+			}
+		}
+	}
+
 	.zmiti-tab-C{
 		background:$color;
 		width:50px;

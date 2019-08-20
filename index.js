@@ -108,10 +108,11 @@ router.afterEach((to, from) => {
 
 	var userinfo = zmitiUtil.getUserInfo();
 	
-	zmitiUtil.listener();
+	//zmitiUtil.listener();
 	
 	if (!userinfo) {
-		this.$router.push({ path: '/login' })
+		alert(2)
+		//this.$router.push({ path: '/login' })
 	}
 	
 })

@@ -1,8 +1,10 @@
 ﻿@import "../../css/base.scss";
-
+ 
 .zmiti-tripexpence-main-ui{
 	width: 100%;
 	overflow: hidden;
+
+	
 	.zmiti-tripexpence-table{
 		@include transition(.6s);
 		opacity:0;

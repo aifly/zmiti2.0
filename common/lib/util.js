@@ -92,22 +92,20 @@ var zmitiUtil = {
 			loginObj = JSON.parse(localStorage.getItem(key)) || {};
 		} catch (error) {
 			//window.location.reload();
+			
 			window.location.hash = 'login';
 
 			if (window.location.hash != '#/login') {
 				//window.location.reload();
 			}
 		}
-
-
-
 		return loginObj;
 	},
 	getAdminUserInfo() {
 		return this.getUserInfo('adminlogin');
 	},
 	heart(){
-		if (!this.getUserInfo()){
+		if (!this.getUserInfo() || !this.getUserInfo().ui){
 			return;
 		}
 		var { userid, token } = this.getUserInfo().ui;
@@ -130,7 +128,7 @@ var zmitiUtil = {
 				socket.send(json);
 			};
 			
-			//this.heart();?500
+			this.heart();
 			this.socket.onmessage = (evt) => {
 				
 				var data = JSON.parse(evt.data);
@@ -231,7 +229,7 @@ var zmitiUtil = {
 		return this.getUserInfo('adminlogin');
 	},
 	formatDate(time = +new Date()) {
-		var date = new Date(time*1000  + 8 * 3600 * 1000); // 增加8小时
+		var date = new Date(time  + 8 * 3600 * 1000); // 增加8小时
 		return date.toJSON().substr(0, 19).replace('T', ' ');
 	},
 	getProductListByAdmin(opt={}) {
@@ -280,6 +278,7 @@ var zmitiUtil = {
 			})
 		}else{
 
+			
 			this.ajax({
 				remark: 'getProductList',
 				data: {
@@ -357,6 +356,8 @@ var zmitiUtil = {
 		var _ui = option._ui || {};
 		var userInfo = this.getUserInfo(option.isAdmin ? 'adminlogin' : 'login');
 
+		console.log(userInfo,'userInfouserInfo');
+
 		if (userInfo && userInfo.ui) {
 			opt.ui = Object.assign(userInfo.ui, _ui);
 		}
@@ -376,11 +377,11 @@ var zmitiUtil = {
 				if (option.isAdmin) {
 					adminErrorFn && adminErrorFn();
 				} else {
-					window.location.hash = '/login';
+				/* 	window.location.hash = '/login';
 					window.localStorage.clear();
 					setTimeout(() => {
 						window.location.reload();
-					}, 10);
+					}, 10); */
 				}
 
 			}

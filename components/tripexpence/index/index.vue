@@ -4,7 +4,7 @@
 		 <div :class="{'hide':showTable}" ref='tripexpence-main-ui' class='zmiti-tripexpence-map lt-full'>
 
 		 </div>
-		 <div :class="{'active':showTable}" class='zmiti-tripexpence-table lt-full'>
+		 <div :class="{'active':showTable}" v-if='showTable' class='zmiti-tripexpence-table lt-full'>
 			 <header>
 				 <div>
 					 <span>{{currentProv}}</span>
@@ -14,7 +14,9 @@
 					 <Button @click="back" type="primary">返回</Button>
 				 </div>
 			 </header>
-			 <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
+			 <div class='zmiti-scroll' :style="{height:viewH - 110+'px'}">
+				
+				<ZmitiTable :border='true' :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
 					<div slot='table-btns' style="display:inline-block">
 						<Poptip
 							confirm
@@ -27,6 +29,7 @@
 						<div class='zmiti-table-btn'>禁用</div>
 					</div>
 				</ZmitiTable>
+			 </div>
 		 </div>
 
 		<ul v-if='cityList[currentCityIndex] && !showTable' ref='city-C' class='tripexpence-citylist'  :style="{transform:'translate3d('+(transX)+'px,'+transY+'px,0)'}">
@@ -83,56 +86,143 @@
 				viewW:window.innerWidth,
 				dataSource:[],
 				jobList:[],
-				columns:[{
+				columns:[
+					{
 					title: '市',
 					dataIndex: 'cityname',
 					key: 'cityname',
-
+					width:100,
+					align:'center',
 				}, {
 					title: '职务',
 					dataIndex: 'jobname',
 					key: 'jobname',
+					width:100,
+					render:(h,params)=>{
+						
+
+						return h('ul',{class:'zmiti-trip-ul'},(params.row.list||[]).map((item)=>{
+							return h('li',{},item.jobname);
+						}))
+
+					}
 					
 				}, {
 					title: '淡季住宿标准',
 					dataIndex: 'hotelprice1',
 					key: 'hotelprice1',
+					width:100,
 
-					render: (text, record, index) => {}
+					render:(h,params)=>{
+						
+						return h('ul',{
+							class:'zmiti-trip-ul'
+						},(params.row.list||[]).map((item)=>{
+							return h('li',{},item.hotelprice1);
+						}))
+					}
 
 				}, {
 					title: '旺季住宿标准',
 					dataIndex: 'hotelprice2',
 					key: 'hotelprice2',
+					width:100,
 					
-					render: (text, record, index) => {}
+					
+					render:(h,params)=>{
+						
+						return h('ul',{
+							class:'zmiti-trip-ul'
+						},(params.row.list||[]).map((item)=>{
+							return h('li',{},item.hotelprice2);
+						}))
+					}
 				}, {
 					title: '伙食费',
 					dataIndex: 'foodprice',
 					key: 'foodprice',
+					width:100,
 					
-					render: (text, record, index) => {}
+					render:(h,params)=>{
+						
+						return h('ul',{
+							class:'zmiti-trip-ul'
+						},(params.row.list||[]).map((item)=>{
+							return h('li',{},item.foodprice);
+						}))
+					}
 				}, {
 					title: '交通补助',
 					dataIndex: 'othertraficprice',
 					key: 'othertraficprice',
+					width:100,
 					
-					render: (text, record, index) => {
-
+					render:(h,params)=>{
+						return h('ul',{
+							class:'zmiti-trip-ul'
+						},(params.row.list||[]).map((item)=>{
+							return h('li',{},item.othertraficprice);
+						}))
 					}
 				}, {
 					title: '旺季',
 					dataIndex: 'daterange',
 					key: 'daterange',
 					
-					render: (value, row, index) => {
+					render:(h,params)=>{
+						// <DatePicker type="datetimerange" format="yyyy-MM-dd HH:mm" placeholder="Select date and time(Excluding seconds)" style="width: 300px"></DatePicker>
+						if(params.row.daterange){
 
-						return '';
+							var arr = params.row.daterange.split('/');
+							return h('div',[...arr.map((item)=>{
+								return h('div',{
+									style:{
+										margin:'4px 0'
+									}
+								},[
+									h('DatePicker',{
+										style:{
+										},
+										props:{
+											size:'small',
+											format:"yyyy-MM-dd",
+											type:'datetimerange',
+											value:item.split(',')
+										}
+									}),
+									h('Button',{
+										props:{
+											type:'primary',
+											size:'small'
+										}
+									},'删除')
+
+								])
+							}),h('Button',{
+								props:{
+									size:'small',
+									type:'primary'
+								},
+								on:{
+									'click':()=>{
+										this.addSeason(params.row,params.index);
+									}
+								}
+							},'添加')],'')
+						}else{
+							return h('Button',{
+								props:{
+									type:'primary',
+									size:'small'
+								}
+							},'添加');
+						}
+						
 					}
 
 				}],
 
-				showTable:true,
+				showTable:false,
 				
 				formUser:{
 					pdfurl:'',
@@ -160,7 +250,6 @@
 		mounted(){
 
 			setTimeout(() => {
-				
 				this.initEcharts();
 				this.getCascader();
 				this.bindNewdata();
@@ -181,6 +270,52 @@
 		},
 		
 		methods:{
+			addSeason(sea, isNew) {
+
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				var startDate = year + '-' + month + '-' + day;
+
+				/* if (isNew) {
+					sea.daterange = startDate + ',' + startDate;
+					sea.daterange1 = startDate + ',' + startDate;
+				} else {
+					sea.daterange += "/" + startDate + ',' + startDate;
+					sea.daterange1 += '/' + startDate + ',' + startDate;
+				} */
+				sea.daterange += "/" + startDate + ',' + startDate;
+			
+				var s = this;
+				
+				var productid =  this.$route.params.id ;
+
+				var info = {
+					companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					productid,
+					daterange:sea.daterange,
+					seasontype:0,
+					provid:sea.provid,
+					cityid:sea.cityid,
+
+				}
+				zmitiUtil.ajax({
+					remark:"addSeason",
+					data:{
+						action:tripActions.addSeason.action,
+						info
+					},
+					success(data){
+						s.loading = false;
+						s.$Message[data.getret === 0 ?'success':'error'](data.mgs);
+						if(data.getret === 0){
+						}
+					}
+				})
+				//var type = 'edit_seasondate';
+
+			},
 			change(){},
 			selectionDelete(){
 
@@ -266,26 +401,42 @@
 			},
 
 			loadSeasonData() {
+				 var {condition} = this;
 				var s = this;
-				return;
-				var userid = this.props.params.userid ? this.props.params.userid : this.userid;
-				$.ajax({
-					url: window.baseUrl + 'travel/get_seasondatelist', //接口地址
-					type: window.ajaxType || 'get',
-					data: {
-						setuserid: userid,
-						userid: s.userid,
-						getusersigid: s.getusersigid
-					},
-					success(data) {
+				var t = setInterval(() => {
+					if(Vue.productList){
+						clearInterval(t);
 
-						if (data.getret === 0) {
-							//console.log(data.list,"信息列表");
-							s.state.seasonList = data.list;
+						if(!productid){
 
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
+								}
+							})
+							
 						}
+						var productid =  this.$route.params.id ;
+						condition = Object.assign(condition,{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid
+						})
+						zmitiUtil.ajax({
+							remark:"getCompanySeasonDateList",
+							data:{
+								action:tripActions.getCompanySeasonDateList.action,
+								condition:condition
+							},
+							success(data){
+								s.loading = false;
+								console.log(data,'seasonList')
+								if(data.getret === 0){
+									 s.seasonList = data.list;
+								}
+							}
+						})
 					}
-				})
+				}, 100);
 			},
 		 
 			initEcharts(){
@@ -344,35 +495,67 @@
 					}
 				})
 			},
+			
 			next() {
 				var s = this;
 				this.showTable = true;
 				this.$nextTick(()=>{
 					s.dataSource = s.defaultList.filter((item, i) => {
-						return item.provname === s.state.currentProv;
+						return item.provname === s.currentProv;
 					});
-					s.dataSource.forEach((item, i) => {
-						item.key = randomString(32);
-					});
-
+				 
 					var arr = [];
-
-					var dataSource = [];
-					s.dataSource.map((item, i) => {
-						var isExists = false;
-						dataSource.map((data, k) => {
-							if (data.cityid === item.cityid) {
-								isExists = true;
+					 
+					s.dataSource.forEach((item, i) => {
+					
+						var exists = false;
+						arr.forEach((ar,i)=>{
+							if(ar.cityid === item.cityid){
+								exists = true;//存在
+								ar.list.push({
+										othertraficprice:item.othertraficprice,
+										hotelprice1:item.hotelprice1,
+										foodprice:item.foodprice,
+										hotelprice2:item.hotelprice2,
+										jobname:item.jobname,
+										provid:item.provid,
+										jobid:item.jobid,
+								})
 							}
 						});
-						if (!isExists) {
-
-							dataSource.push(item);
+						if(!exists){
+							arr.push({
+								expenseid:item.expenseid,
+								cityid:item.cityid,
+								cityname:item.cityname,
+								provid:item.provid,
+								list:[
+									{
+										othertraficprice:item.othertraficprice,
+										hotelprice1:item.hotelprice1,
+										foodprice:item.foodprice,
+										hotelprice2:item.hotelprice2,
+										jobname:item.jobname,
+										provid:item.provid,
+										jobid:item.jobid,
+									}
+								]
+							})
 						}
 					});
 
-					s.dataSource.length = 0;
-					dataSource.forEach((data, k) => {
+					s.dataSource = arr;
+					s.total = arr.length;
+					s.dataSource.forEach((item, i) => {
+						s.seasonList.map((sea, k) => {
+							if (item.cityid === sea.cityid) {
+								item.daterange = sea.daterange;
+							}
+						});
+					});
+
+					console.log(s.dataSource,'.....')
+					/* dataSource.forEach((data, k) => {
 						s.jobList.map((item, i) => {
 
 							s.dataSource.push({
@@ -396,8 +579,9 @@
 								provname: data.provname
 							})
 						});
-					});
-					s.defaultList.forEach((item, i) => {
+					}); */
+
+					/* s.defaultList.forEach((item, i) => {
 						s.dataSource.forEach((data, k) => {
 							if (data.jobid === item.jobid && 　data.cityid === item.cityid) {
 								data.expenseid = item.expenseid;
@@ -408,8 +592,11 @@
 								data.otherprice = item.otherprice;
 							}
 						});
-					});
+					}); */
+
 					if (s.addDataSource) {
+
+						return;
 						s.addDataSource.map((item, i) => {
 							var userid = s.props.params.userid ? s.props.params.userid : s.userid;
 
@@ -477,8 +664,7 @@
 						
 					},
 					success(data){
-						console.log(data);
-							if (data.getret === 0) {
+						if (data.getret === 0) {
 							s.fillDataSouce(data);
 						}
 					}
@@ -529,15 +715,13 @@
 					s.transY = transY;
 				})
 			},
-			 fillDataSouce(data) {
+			fillDataSouce(data) {
 				var s = this;
 				s.defaultList = s.defaultList || data.list.concat([]);
 				s.dataSource = s.defaultList.filter((item, i) => {
 					return item.provname === s.currentProv;
-				});
-				s.dataSource.forEach((item, i) => {
-					item.key = randomString(32);
-				});
+				}).concat([]);
+				
 				s.$forceUpdate();
 			}
 		}

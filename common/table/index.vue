@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class='zmiti-user-table' >
-			<Table @on-selection-change='selection' ref='selection'  :loading='loading' :data='dataSource' :columns='myColumns'></Table>
+			<Table :border='border' @on-selection-change='selection' ref='selection'  :loading='loading' :data='dataSource' :columns='myColumns'></Table>
 		</div>
 		<div class='zmiti-pager'>
 			<div>
@@ -17,6 +17,7 @@
 .zmiti-user-table {
 	width: 98%;
 	margin: 2px auto;
+		
 }
 @at-root.zmiti-text-overflow {
   overflow: hidden;
@@ -77,7 +78,11 @@ export default {
 		},
 		loading:{
 			type:Boolean,
-			type:true,
+			default:true,
+		},
+		border:{
+			type:Boolean,
+			default:false,
 		}
 	},
 	data(){
