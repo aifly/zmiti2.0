@@ -99,6 +99,8 @@ var zmitiUtil = {
 			}
 		}
 
+
+
 		return loginObj;
 	},
 	getAdminUserInfo() {
@@ -126,12 +128,11 @@ var zmitiUtil = {
 				var json = JSON.stringify({ action: zmitiActions.userActions.getTempToken.action, client_token: token });
 				
 				socket.send(json);
-
 			};
-			console.log(json,'json-json-json-json')
-			this.heart();
+			
+			//this.heart();?500
 			this.socket.onmessage = (evt) => {
-				console.log('onmessage-onmessage');//
+				
 				var data = JSON.parse(evt.data);
 				console.log(data,'===');
 				
@@ -154,7 +155,7 @@ var zmitiUtil = {
 						});
 						break;
 					case 500:
-						this.heart();
+						//this.heart();?500
 						break;
 					default:
 						break;
@@ -170,6 +171,10 @@ var zmitiUtil = {
 
 	listener(uid, tk) {
 
+
+		if (!this.getUserInfo()){
+			return;
+		}
 		var { userid, token } = this.getUserInfo().ui;
 
 		if (!userid || !token) {

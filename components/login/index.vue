@@ -78,7 +78,7 @@
 			</div>
 			
 		</section>
-		<div class="zmiti-copyright">麟腾传媒文化有限公司出品 &copy;版权所有</div>
+		<div class="zmiti-copyright">智媒体平台 &copy;版权所有</div>
 
 		<div class='zmiti-choose-company' v-if=' company_list.length > 1 '>
 			<div>
@@ -150,6 +150,7 @@
 				var _this = this;
 				window.localStorage.setItem('currentCompany',JSON.stringify(company));
 				_this.$router.push({path:'/home'})
+				return;
 				setTimeout(() => {
 					window.location.reload();
 				}, 200);
@@ -228,24 +229,6 @@
 								}, 30);
 								_this.isLogined = true;
 							}
-
-
-							/*微信登录*/
-
-							zmitiUtil.listener();
-							if(data.info.wechat_auth_url){
-								s.showQRCodePage = true;
-								s.qrCodePageIndex = 0;
-								console.log('test1111')
-								setTimeout(() => {
-									zmitiUtil.createQrCode(s.$refs['container'],data.info.wechat_auth_url,170);
-								}, 10);
-							}
-							else{
-								console.log('test22222')
-								s.$router.push({path:'/home/'});
-							}
-
 							
 						}else{
 							_this.errMsg = data.msg;
@@ -314,11 +297,9 @@
 				if(s.url){
 					return;
 				}
-				this.getWXCode(function(info){
-					console.log(info,'info-info-info');	
-					console.log(info.token,'info.token88888');				
+				this.getWXCode(function(info){			
 					zmitiUtil.getTempToken(info.token);
-					console.log(info.token,'info.token99999');
+					console.log(info.token,'getTempToken');
 					s.$refs['loginqrcode'].innerHTML = '';										
 					zmitiUtil.createQrCode(s.$refs['loginqrcode'],info.url,170);
 					s.url = s.$refs['loginqrcode'].querySelector('img').src;
@@ -357,41 +338,23 @@
 				}.bind(this));
 			});
 
-			//this.createLoginQRCode();
 			Vue.obserable.on('closeQrcodePage',()=>{
 				this.qrCodePageIndex = 1;
 				this.getWXCode((data)=>{
 					this.$refs['container'].innerHTML = '';
 					zmitiUtil.createQrCode(s.$refs['container'],data.url,170);
 				},2)
-				var t = setInterval(() => {
-					zmitiUtil.ajax({
-						remark:'getWXFollow',
-						data:{
-							action:userActions.getWXFollow.action
-						},
-						success(data){
-							console.log(data,'---');
-							if(data.getret === 0){
-								clearInterval(t);
-								s.showQRCodePage = false;
-								s.$router.push({path:'/home/'});
-							}
-						}
-					});
-				}, 3000);
 			})
 
 			var s = this;
+			var _this=this;
 			Vue.obserable.on('loginSuccess',(data)=>{
-
+				console.log(data,'.....');
 				if (data.getret === 0 || data.getret === 100) {
+					console.log(data,'loginSuccess-loginSuccess');
 					var {username,password } = this;
 					window.localStorage.clear();
 					window.localStorage.setItem('login', JSON.stringify(data));
-					window.localStorage.setItem('zmiti_user_username', username);
-					window.localStorage.setItem('zmiti_user_password', password);
-
 					zmitiUtil.listener();
 					if(data.info.wechat_auth_url){
 						s.showQRCodePage = true;
@@ -401,7 +364,15 @@
 						}, 10);
 					}
 					else{
-						s.$router.push({path:'/home/'});
+						if(data.info.company_list.length>1){
+							_this.company_list = data.info.company_list;
+						}else{
+							_this.$router.push({path:'/home'})
+							setTimeout(() => {
+								window.location.reload();
+							}, 30);
+							_this.isLogined = true;
+						}
 					}
 
 				}else{
