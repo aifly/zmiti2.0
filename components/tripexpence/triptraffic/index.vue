@@ -10,8 +10,8 @@
 			</header>
 			<div class='zmiti-submit-main zmiti-scroll ' :style="{height:viewH - 130+'px' }">
 				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
-					<div slot='table-btns' style="display:inline-block">
-					<!-- 	<Poptip
+					<!-- <div slot='table-btns' style="display:inline-block">
+						<Poptip
 							confirm
 							title="确定要删除吗?"
 							@on-ok='selectionDelete'
@@ -19,8 +19,7 @@
 							<div class='zmiti-table-btn'>删除</div>
 							
 						</Poptip>
-						<div class='zmiti-table-btn'>禁用</div> -->
-					</div>
+					</div> -->
 				</ZmitiTable>
 			</div>
 		</div>
@@ -210,7 +209,8 @@
 				},
 				transport:[],
 				tripost:[],
-				userinfo:{}
+				userinfo:{},
+				selectList:[]
 			}
 		},
 		components:{
@@ -419,6 +419,21 @@
 				}, 100);
 
 				
+			},
+			getSelection(data){				
+				this.selectList = data;
+			},
+			selectionDelete(){
+				if(this.selectList.length<=0){
+					this.$Message.error({content:'您还未选择任何要删除的项',duration:5});
+					return;
+				}
+				console.log(this.selectList,'data-select')
+				var jobid = this.selectList.map(item=>{
+					return item.jobid;
+				}).join(',');
+				console.log(jobid,'jobid-jobid')
+				this.delete(jobid);
 			},
 			
 		}

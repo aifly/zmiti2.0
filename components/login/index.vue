@@ -149,8 +149,12 @@
 			chooseCompany(company){
 				var _this = this;
 				window.localStorage.setItem('currentCompany',JSON.stringify(company));
+<<<<<<< HEAD
 				
 				this.$router.push({path:'/home'});
+=======
+				_this.$router.push({path:'/home'})
+>>>>>>> d2ac80fdc2cbbd685effda294c80ec1a6228782c
 				setTimeout(() => {
 					window.location.reload();
 				}, 200);
