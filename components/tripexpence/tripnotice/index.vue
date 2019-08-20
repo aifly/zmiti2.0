@@ -8,14 +8,25 @@
 				</div>
 			</header>
 		</div>
-		<div class='zmiti-tripnotice-editor'>
-			<UE
-			:default-msg="formObj.notice" 
-			id="editor" 
-			:config="editorOption" 
-			@contentChanged="contentChange">				
-			</UE>
-		</div>
+		<div class="zmiti-trip-content" :style="{maxHeight:mobileH+'px'}">
+			<div class="zmiti-trip-mobile">
+				<div class="zmiti-editor-phone" style="width: 240px;height:500px;"><img :src="imgs['mobileSkin']"></div>
+				<div class="zmiti-editor-header" style="height:350px;">
+					<img class="wxHeader" :src="imgs['wxHeader']">
+					<div class="zmiti-editor-m-c">
+						<div v-html="formObj.notice"></div>
+					</div>
+				</div>
+			</div>
+			<div class='zmiti-tripnotice-editor'>
+				<UE
+				:default-msg="formObj.notice" 
+				id="editor" 
+				:config="editorOption" 
+				@contentChanged="contentChange">				
+				</UE>
+			</div>
+		</div>		
 	</div>
 </template>
 
@@ -35,6 +46,8 @@
 		data(){
 			return{
 				viewH:window.innerHeight,
+				mobileH:window.innerHeight-120,
+				imgs:window.imgs,
 				editorOption: {
 					initialFrameWidth:'100%',
 					initialFrameHeight:window.innerHeight-200,
