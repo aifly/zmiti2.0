@@ -12,13 +12,15 @@
                   <div v-if='isAdmin'>管理端控制平台</div>
                   <div v-else>
 					  <span><router-link to='/home'>单位端控制平台</router-link></span>
-					  <span style='margin:0 10px 0 20px' v-if='currentComapny'>当前单位： {{currentComapny.companyname}}</span>
-					  <router-link style='font-size:12px;cursor:pointer;' to='/login' v-if='userinfo.info&&userinfo.info.company_list&&userinfo.info.company_list.length>1'>（切换）</router-link>
+					  <div class='zmiti-company-info'>
+						   <span style='margin:0 10px 0 20px' v-if='currentComapny'>当前单位： {{currentComapny.companyname}}</span>
+					  <router-link style='font-size:12px;cursor:pointer;' to='/login' v-if='userinfo.info&&userinfo.info.company_list&&userinfo.info.company_list.length>1'></router-link>
+					  </div>
 				  </div>
                </div>
                <div class="zmiti-user-info">
 				    <template v-if='!isAdmin'>
-						<span>
+						<span v-if='currentComapny.islead'>
 							<router-link to='/companyinfo'>单位管理</router-link> 
 						</span>
 						<span>
@@ -122,7 +124,8 @@
 				imgs:window.imgs,
 				showMenu:false,
                 viewH:document.documentElement.clientHeight,
-                tabIndex:0,
+				tabIndex:0,
+				isLead:zmitiUtil.getCurrentCompanyId().islead,
                 userinfo:{
 					info:{
 
@@ -182,8 +185,7 @@
 		mounted(){
            ///this.menus = this.defaultMenu.concat([]);
 			var obserable = Vue.obserable;
-
-
+ 
 			
 			
 			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();

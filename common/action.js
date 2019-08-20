@@ -240,6 +240,10 @@ let userActions = {
 		desc:'用户注册',
 		action: '2000004'
 	},//用户注册
+	registerCompanyUser: {
+		desc: "公司管理员添加用户信息并加入公司",
+		action: '2000112'
+	},
 	userCommitWorkOrder:{
 		desc:'用户提交工单',
 		action:"2001000"
@@ -506,6 +510,22 @@ let tripActions = {
 		desc: '删除交通费用标准',
 		action: "2001946"
 	},
+	addSeason:{
+		desc:'新增淡旺季',
+		action:'2001938'
+	},
+	editSeason: {
+		desc: '编辑淡旺季',
+		action: '2001939'
+	},
+	delSeason: {
+		desc: '编辑淡旺季',
+		action: '2001940'
+	},
+	getCompanySeasonDateList:{
+		desc:'获取公司谈旺季列表',
+		action:'2001942'
+	},
 	searchNotice:{
 		desc:'查询注意事项',
 		action:'2001957'
@@ -518,8 +538,6 @@ let tripActions = {
 		desc: '编辑注意事项',
 		action: '2001955'
 	}
-
-
 	
 };
 

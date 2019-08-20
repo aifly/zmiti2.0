@@ -1,8 +1,22 @@
-/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
-    background-color: #fff;
-    border-color: #bf1616;
-    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
-}*/
+.zmiti-trip-ul {
+  height: 80px;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+}
+
+.zmiti-trip-ul li {
+  flex: 1;
+  line-height: 40px;
+}
+
+.zmiti-trip-ul li:nth-of-type(2) {
+  border-top: 1px solid #f2f2f2;
+}
+
 .ivu-radio-inner:after {
   border-radius: 4px !important;
 }
