@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanager-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>类型管理</span>
+						 <span>栏目配置</span>
 
 					 </div>
 					 <div>
@@ -38,18 +38,19 @@
 						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
 							<FormItem label="信息类型：">
 								<Select v-model="formObj.specialnum">
-									<Option :value="item.value" :lable='item.label' v-for="(item,i) in specialnumData" :key="i">{{item.label}}</Option>
+									<Option :value="item.value" :lable='Number(item.label)' v-for="(item,i) in specialnumData" :key="i">{{item.label}}</Option>
 								</Select>
+								
 							</FormItem>
 							<FormItem label="类型名称：">
 								<Input v-model="formObj.typename" placeholder="类型名称"></Input>
 							</FormItem>
-							<FormItem label="选择人员：">
-								<RadioGroup v-model="formObj.isalluser">
+							<FormItem label="权限人员：">
+								<RadioGroup v-model="formObj.isalluser" @on-change="changeUserStatus">
 							        <Radio label="0">全部人员</Radio>
 							        <Radio label="1">指定人员</Radio>
 							    </RadioGroup>							    
-							    <div class="zmiti-inforuserlist-select" v-if="formObj.isalluser==1">
+							    <div class="zmiti-inforuserlist-select" v-if="showSelectUser==true">
 							    	<CheckboxGroup v-model="formObj.users" @on-change="changeUsers">
 							    	<ul>
 								    	<li v-for="(item,index) in userSource" :key="index">
@@ -107,6 +108,7 @@
 					page_size:10,
 				},
 				userinfo:{},
+				showSelectUser:false,
 				productid:'1072203850',
 				userstatus:1,
 				userList:[{
@@ -137,7 +139,7 @@
 				formObj:{
 					specialnum:'',
 					typename:'',
-					isalluser:'1',
+					isalluser:0,
 					infotypeid:'',
 					users:[{
 						userid:0,
@@ -178,25 +180,21 @@
 						key:'typename',
 						align:'center',
 						width:180
-					},
+					},					
 					{
-						title:"创建者",
-						key:"createuserid",
-						align:"center",
-						render:(h,params)=>{
-							var username='';
-							if(params.row.createuserid==4){
-								username="宋显"
-							}
-							return h('div',{},username);
-						}
-					},
-					{
-						title:"时间",
+						title:"创建时间",
 						key:"createtime",
 						align:"center",
 						render:(h,params)=>{
-							return h('div',{},zmitiUtil.formatDate(params.row.createtime*1000));
+							return h('div',{},zmitiUtil.formatDate(params.row.createtime));
+						}
+					},
+					{
+						title:"权限",
+						key:"isalluser",
+						align:"center",
+						render:(h,params)=>{
+							return h('div',{},params.row.isalluser==0?'全部':'查看');
 						}
 					},
 					{
@@ -244,6 +242,8 @@
 									on:{
 										click:()=>{
 											this.formObj = params.row;
+											this.formObj.isalluser=String(params.row.isalluser);
+											console.log(this.formObj,'this.formObj')
 											Vue.obserable.trigger({
 												type:'toggleMask',
 												data:true
@@ -285,8 +285,9 @@
 		methods:{
 			selectColumn(e){
 				this.specialnumVal=e;
+				this.formObj.specialnum=e;
 				this.getDataList(this.specialnumVal);
-				console.log(this.specialnumVal,'选择栏目')
+				console.log(this.formObj.specialnum,'选择栏目')
 			},
 			change(e){
 				this.condition.page_index = e -1;
@@ -296,6 +297,11 @@
 				console.log(ele,'多选');
 			},
 			changeUserStatus(ele){
+				if(ele==='1'){
+					this.showSelectUser=true;
+				}else{
+					this.showSelectUser=false;
+				}
 				console.log(ele,'element')
 			},
 			getDataList(specialnum){
@@ -329,7 +335,11 @@
 				Vue.obserable.trigger({type:'toggleMask',data:false});
 			},
 			add(){
+				this.showSelectUser=false;
 				this.formObj = {};
+				this.formObj.specialnum=this.specialnumVal;
+				this.formObj.isalluser="0";
+				console.log(this.formObj,'this.formObj')
 				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
 			adminAction(){
