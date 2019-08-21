@@ -70,7 +70,18 @@
 			</div>
 		</ZmitiMask>
 
-
+		<Modal
+	        v-model="modal1"
+	        title="信息管理权限"
+	        @on-ok="ok"
+	        @on-cancel="cancel">
+		        <Transfer
+		        :data="data1"
+		        :target-keys="targetKeys1"
+		        :render-format="render1"
+		        @on-change="handleChange1">
+		        </Transfer>
+	    </Modal>
 
 
 	</div>
@@ -169,6 +180,9 @@
 					value:5
 				}],
 				persons:0,
+				modal1: false,
+				data1: this.getMockData(),
+                targetKeys1: this.getTargetKeys(),
 				columns:[
 					{
 						title:"编号",
@@ -194,7 +208,19 @@
 						key:"isalluser",
 						align:"center",
 						render:(h,params)=>{
-							return h('div',{},params.row.isalluser==0?'全部':'查看');
+							const viewuser=[h('span',{
+								style:{
+									cursor:'pointer',
+									color:"rgb(0, 102, 204)"
+								},
+								on:{
+									click:()=>{
+										console.log(params.row.infotypeid,'params.row.infotypeid');
+										this.modal1=true;//打开弹窗
+									}
+								}
+							},'查看')];
+							return h('div',{},params.row.isalluser==0?'全部':viewuser);
 						}
 					},
 					{
@@ -243,6 +269,12 @@
 										click:()=>{
 											this.formObj = params.row;
 											this.formObj.isalluser=String(params.row.isalluser);
+											this.showSelectUser=false;//隐藏用户列表
+											/*if(this.formObj.isalluser==='0'){
+												this.showSelectUser=false;
+											}else{
+												this.showSelectUser=true;
+											}*/
 											console.log(this.formObj,'this.formObj')
 											Vue.obserable.trigger({
 												type:'toggleMask',
@@ -410,7 +442,40 @@
 						}
 					}
 				})
-			}
+			},
+			ok () {
+                this.$Message.info('Clicked ok');
+            },
+            cancel () {
+                this.$Message.info('Clicked cancel');
+            },
+            /*穿梭框*/
+            getMockData () {
+                let mockData = [];
+                for (let i = 1; i <= 20; i++) {
+                    mockData.push({
+                        key: i.toString(),
+                        label: 'Content ' + i,
+                        description: 'The desc of content  ' + i,
+                        disabled: Math.random() * 3 < 1
+                    });
+                }
+                return mockData;
+            },
+            getTargetKeys () {
+                return this.getMockData()
+                        .filter(() => Math.random() * 2 > 1)
+                        .map(item => item.key);
+            },
+            render1 (item) {
+                return item.label;
+            },
+            handleChange1 (newTargetKeys, direction, moveKeys) {
+                console.log(newTargetKeys);
+                console.log(direction);
+                console.log(moveKeys);
+                this.targetKeys1 = newTargetKeys;
+            }
 
 		}
 	}
