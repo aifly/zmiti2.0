@@ -1,11 +1,10 @@
 <template>
 	<div class="zmiti-tripexpence-main-ui">
 
-
 		 <div class='zmiti-tripexpence-table lt-full'>
 			 <header>
 				 <div>
-					 <span>消息</span>
+					 <span>公告</span>
 
 				 </div>
 			 </header>
@@ -14,9 +13,6 @@
 				
 			 </div>
 		 </div>
-
-
-
 
 	</div>
 </template>

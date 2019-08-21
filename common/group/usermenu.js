@@ -124,12 +124,47 @@ let triptraffic ={
 
 let infomanager ={
 	title:"信息管理",
-	keys: ['infomanager'],
+	keys: ['infomanager','infomanagerlist','infomanagernotice','infomanagerbox','infomanagernews','infomanagerdoc','infomanagercolumn','infomanagersetting'],
 	tabs: [
 		{
-			name:'信息管理',
+			name:"消息",
 			link:'/infomanager'
-		}
+		},
+		{
+			name:'公告',
+			link:'/infomanagerlist'
+		},
+		{
+			name:'通知',
+			link:'/infomanagernotice'
+		},
+		{
+			name:'意见箱',
+			link:'/infomanagerbox'
+		},
+		{
+			name:'新闻',
+			link:'/infomanagernews'
+		},
+		{
+			name:'资料',
+			link:'/infomanagerdoc'
+		},
+		{
+			name:"配置管理",
+			link:'/infomanagercolumn',
+			children:[
+				{
+					name:'栏目配置',
+					link:'/infomanagercolumn'
+				},
+				{
+					name:'权限配置',
+					link:'/infomanagersetting'
+				},
+				
+			]
+		},
 	]
 }
 

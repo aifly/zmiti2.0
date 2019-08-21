@@ -5,7 +5,7 @@
 		 <div class='zmiti-tripexpence-table lt-full'>
 			 <header>
 				 <div>
-					 <span>消息</span>
+					 <span>权限设置</span>
 
 				 </div>
 			 </header>
