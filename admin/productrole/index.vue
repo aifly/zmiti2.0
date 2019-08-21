@@ -388,7 +388,6 @@
 								})
 
 							})
-							console.log(s.companyList);
 						}
 					}
 				})

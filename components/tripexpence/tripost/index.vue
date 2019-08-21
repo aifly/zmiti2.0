@@ -342,7 +342,7 @@
 						var {condition} = this;
 						condition = Object.assign(condition,{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
-						//	productid
+							productid
 						})
 						zmitiUtil.ajax({
 							remark:"getJobList",

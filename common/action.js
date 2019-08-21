@@ -537,8 +537,15 @@ let tripActions = {
 	editNotice:{
 		desc: '编辑注意事项',
 		action: '2001955'
+	},
+	editExpense:{
+		desc:"修改差旅费标准",
+		action:'2001950'
+	},
+	addExpense: {
+		desc: "新增差旅费标准",
+		action: '2001949'
 	}
-	
 };
 
 

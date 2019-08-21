@@ -63,7 +63,7 @@
 	var {randomString,tripActions} = zmitiUtil;
 
 	import {manuscriptStatus} from '../../../common/config';
-
+	var arrObj = [];
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -86,18 +86,17 @@
 				viewW:window.innerWidth,
 				dataSource:[],
 				jobList:[],
+				arrObj,
 				columns:[
 					{
 					title: '市',
 					dataIndex: 'cityname',
 					key: 'cityname',
-					width:100,
 					align:'center',
 				}, {
 					title: '职务',
 					dataIndex: 'jobname',
 					key: 'jobname',
-					width:100,
 					render:(h,params)=>{
 						
 
@@ -111,14 +110,81 @@
 					title: '淡季住宿标准',
 					dataIndex: 'hotelprice1',
 					key: 'hotelprice1',
-					width:100,
+					width:130,
 
 					render:(h,params)=>{
 						
 						return h('ul',{
 							class:'zmiti-trip-ul'
-						},(params.row.list||[]).map((item)=>{
-							return h('li',{},item.hotelprice1);
+						},(params.row.list||[]).map((item,i)=>{
+							if(item.hotelprice1.editable){
+
+								return h('li',{},[
+									h('Input',{
+										props:{
+											value:item.hotelprice1.price
+										},
+										style:{
+											width:'60px'
+										},
+										on:{
+
+											'on-keydown':(e)=>{
+												if(e.keyCode === 13){
+													item.hotelprice1.price = e.target.value;
+													this.editExpense(params.row,item,'hotelprice1',e.target.value)
+												}
+											}
+										}
+									}),
+									h('Icon',{
+										props:{
+											type:'md-checkmark'
+										},
+										style:{
+											cursor:'pointer',
+											'font-size':'20px'
+										},
+										on:{
+											click:()=>{
+												this.editExpense(params.row,item,'hotelprice1',e.target.value)
+											}
+										}
+									})
+								],item.hotelprice1);
+							}else{
+								return h('li',{
+									on:{
+										mouseover:()=>{
+											item.hotelprice1.show = true;
+											params.row.list = params.row.list.concat([])
+										},
+										mouseout:()=>{
+											item.hotelprice1.show = false;
+											params.row.list = params.row.list.concat([])
+										}
+										
+									}
+								},[
+									h('span',{},item.hotelprice1.price),
+									h('Icon',{
+										props:{
+											type:'md-create'
+										},
+										style:{
+											cursor:'pointer',
+											'font-size':'20px',
+											opacity:item.hotelprice1.show ?1 :0 
+										},
+										on:{
+											click:()=>{
+												item.hotelprice1.editable = true;
+												params.row.list = params.row.list.concat([]);
+											}
+										}
+									})
+								]);
+							}
 						}))
 					}
 
@@ -126,55 +192,251 @@
 					title: '旺季住宿标准',
 					dataIndex: 'hotelprice2',
 					key: 'hotelprice2',
-					width:100,
-					
-					
+					align:'center',
+					width:130,
 					render:(h,params)=>{
-						
 						return h('ul',{
 							class:'zmiti-trip-ul'
-						},(params.row.list||[]).map((item)=>{
-							return h('li',{},item.hotelprice2);
+						},(params.row.list||[]).map((item,i)=>{
+							if(item.hotelprice2.editable){
+
+								return h('li',{},[
+									h('Input',{
+										props:{
+											value:item.hotelprice2.price
+										},
+										style:{
+											width:'60px'
+										},
+										on:{
+
+											'on-keydown':(e)=>{
+												if(e.keyCode === 13){
+													item.hotelprice2.price = e.target.value;
+													this.editExpense(params.row,item,'hotelprice2',e.target.value)
+												}
+											}
+										}
+									}),
+									h('Icon',{
+										props:{
+											type:'md-checkmark'
+										},
+										style:{
+											cursor:'pointer',
+											'font-size':'20px'
+										},
+										on:{
+											click:()=>{
+												this.editExpense(params.row,item,'hotelprice2',e.target.value)
+											}
+										}
+									})
+								],item.hotelprice2);
+							}else{
+								return h('li',{
+									on:{
+										mouseover:()=>{
+											item.hotelprice2.show = true;
+											params.row.list = params.row.list.concat([])
+										},
+										mouseout:()=>{
+											item.hotelprice2.show = false;
+											params.row.list = params.row.list.concat([])
+										}
+									}
+								},[
+									h('span',{},item.hotelprice2.price),
+									h('Icon',{
+										props:{
+											type:'md-create'
+										},
+										style:{
+											cursor:'pointer',
+											'font-size':'20px',
+											opacity:item.hotelprice2.show ?1 :0 
+										},
+										on:{
+											click:()=>{
+												item.hotelprice2.editable = true;
+												params.row.list = params.row.list.concat([]);
+											}
+										}
+									})
+								]);
+							}
 						}))
 					}
 				}, {
 					title: '伙食费',
 					dataIndex: 'foodprice',
 					key: 'foodprice',
-					width:100,
-					
+					width:130,
 					render:(h,params)=>{
 						
 						return h('ul',{
 							class:'zmiti-trip-ul'
-						},(params.row.list||[]).map((item)=>{
-							return h('li',{},item.foodprice);
+						},(params.row.list||[]).map((item,i)=>{
+							if(item.foodprice.editable){
+
+								return h('li',{},[
+									h('Input',{
+										props:{
+											value:item.foodprice.price
+										},
+										style:{
+											width:'60px'
+										},
+										on:{
+
+											'on-keydown':(e)=>{
+												if(e.keyCode === 13){
+													item.foodprice.price = e.target.value;
+													this.editExpense(params.row,item,'foodprice',e.target.value)
+												}
+											}
+										}
+									}),
+									h('Icon',{
+										props:{
+											type:'md-checkmark'
+										},
+										style:{
+											cursor:'pointer',
+											'font-size':'20px'
+										},
+										on:{
+											click:()=>{
+												this.editExpense(params.row,item,'foodprice',e.target.value)
+											}
+										}
+									})
+								],item.foodprice);
+							}else{
+								return h('li',{
+									on:{
+										mouseover:()=>{
+											item.foodprice.show = true;
+											params.row.list = params.row.list.concat([])
+										},
+										mouseout:()=>{
+											item.foodprice.show = false;
+											params.row.list = params.row.list.concat([])
+										}
+										
+									}
+								},[
+									h('span',{},item.foodprice.price),
+									h('Icon',{
+										props:{
+											type:'md-create'
+										},
+										style:{
+											cursor:'pointer',
+											'font-size':'20px',
+											opacity:item.foodprice.show ?1 :0 
+										},
+										on:{
+											click:()=>{
+												item.foodprice.editable = true;
+												params.row.list = params.row.list.concat([]);
+											}
+										}
+									})
+								]);
+							}
 						}))
 					}
 				}, {
 					title: '交通补助',
 					dataIndex: 'othertraficprice',
 					key: 'othertraficprice',
-					width:100,
-					
+					width:130,
 					render:(h,params)=>{
 						return h('ul',{
 							class:'zmiti-trip-ul'
-						},(params.row.list||[]).map((item)=>{
-							return h('li',{},item.othertraficprice);
+						},(params.row.list||[]).map((item,i)=>{
+							if(item.othertraficprice.editable){
+
+								return h('li',{},[
+									h('Input',{
+										props:{
+											value:item.othertraficprice.price
+										},
+										style:{
+											width:'60px'
+										},
+										on:{
+
+											'on-keydown':(e)=>{
+												if(e.keyCode === 13){
+													item.othertraficprice.price = e.target.value;
+													this.editExpense(params.row,item,'othertraficprice',e.target.value)
+												}
+											}
+										}
+									}),
+									h('Icon',{
+										props:{
+											type:'md-checkmark'
+										},
+										style:{
+											cursor:'pointer',
+											'font-size':'20px'
+										},
+										on:{
+											click:()=>{
+												this.editExpense(params.row,item,'othertraficprice',e.target.value)
+											}
+										}
+									})
+								],item.othertraficprice);
+							}else{
+								return h('li',{
+									on:{
+										mouseover:()=>{
+											item.othertraficprice.show = true;
+											params.row.list = params.row.list.concat([])
+										},
+										mouseout:()=>{
+											item.othertraficprice.show = false;
+											params.row.list = params.row.list.concat([])
+										}
+									}
+								},[
+									h('span',{},item.othertraficprice.price),
+									h('Icon',{
+										props:{
+											type:'md-create'
+										},
+										style:{
+											cursor:'pointer',
+											'font-size':'20px',
+											opacity:item.othertraficprice.show ?1 :0 
+										},
+										on:{
+											click:()=>{
+												item.othertraficprice.editable = true;
+												params.row.list = params.row.list.concat([]);
+											}
+										}
+									})
+								]);
+							}
 						}))
 					}
 				}, {
 					title: '旺季',
 					dataIndex: 'daterange',
 					key: 'daterange',
-					
+					width:280,
 					render:(h,params)=>{
 						// <DatePicker type="datetimerange" format="yyyy-MM-dd HH:mm" placeholder="Select date and time(Excluding seconds)" style="width: 300px"></DatePicker>
 						if(params.row.daterange){
 
+
 							var arr = params.row.daterange.split('/');
-							return h('div',[...arr.map((item)=>{
+							arrObj = [...arr.map((item,i)=>{
 								return h('div',{
 									style:{
 										margin:'4px 0'
@@ -191,7 +453,7 @@
 										},
 										on:{
 											'on-change':(e)=>{
-												this.editSeason(params.row,e);
+												this.editSeason({sea:params.row,type:'change',daterange:e,index:i});
 											}
 										}
 									}),
@@ -202,7 +464,11 @@
 										},
 										on:{
 											click:()=>{
-												this.delSeason(params.row);
+												//
+												if(params.row.daterange.split('/').length<=1){
+													this.delSeason(params.row);
+												}
+												this.editSeason({sea:params.row,index:i,type:'del'});
 											}
 										}
 									},'删除')
@@ -214,11 +480,12 @@
 									type:'primary'
 								},
 								on:{
-									'click':()=>{
-										this.addSeason(params.row,params.index);
+									'click':(e)=>{
+										this.editSeason({sea:params.row,type:'add'});
 									}
 								}
-							},'添加')],'')
+							},'添加')];
+							return h('div',arrObj,'')
 						}else{
 							return h('Button',{
 								props:{
@@ -247,7 +514,7 @@
 				cityList:[],
 				condition:{
 					page_index:0,
-					page_size:10,
+					page_size:120,
 				},
 				userinfo:{},
 				currentProvId: '',
@@ -284,19 +551,91 @@
 		},
 		
 		methods:{
-			editSeason(sea,daterange){
+			editExpense(sea,item,type,price){
+				var s = this;
+
+				console.log(sea)
+				console.log(item);
+
+				var productid =  this.$route.params.id ;
+				var {foodprice,hotelprice1,othertraficprice,otherprice,hotelprice2} = item;
+					
+				var info =  {
+					companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					productid,
+					expenseid:sea.expenseid,
+					provid:sea.provid,
+					cityid:sea.cityid,
+					jobid:item.jobid,
+					foodprice:foodprice.price,
+					hotelprice1:hotelprice1.price,
+					hotelprice2:hotelprice2.price,
+					othertraficprice:othertraficprice.price,
+					otherprice:otherprice.price,
+					[type]:price
+					
+				}
+				zmitiUtil.ajax({
+					remark:'editExpense',
+					data:{
+						action:tripActions.editExpense.action,
+						info
+					},
+					success(data){
+						s.$Message[data.getret === 0 ?'success':'error'](data.getmsg);
+						item[type].editable = false;
+
+					}
+				});
+			},
+			editSeason({type,sea,daterange,index}){
 				var s = this;
 				
 				var productid =  this.$route.params.id ;
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				var startDate = year + '-' + month + '-' + day;
+				switch (type) {
+					case 'add':
+						if(sea.daterange){
+							sea.daterange += "/" + startDate + ',' + startDate;
+						}else{
+							sea.daterange =  startDate + ',' + startDate;
+						}
+						break;
+					case 'del':
+						sea.daterange = sea.daterange.split('/').splice(index,1).join('/');
+						break;
+					case 'change':
+						var rangeArr = sea.daterange.split('/').concat([]);
+						rangeArr[index] = daterange.join(',');
+						if(sea.daterange){
 
+						}else{
+
+						}
+						sea.daterange = rangeArr.join('/')
+						break;
+				
+					default:
+						break;
+				}
+				console.log(sea.daterange);
+				
 				var info = {
 					companyid:zmitiUtil.getCurrentCompanyId().companyid,
 					productid,
-					daterange:daterange.join('/'),
+					daterange: sea.daterange,
 					seasontype:0,
 					provid:sea.provid,
 					cityid:sea.cityid,
 				}
+
+				
+
+			
 				zmitiUtil.ajax({
 					remark:"editSeason",
 					data:{
@@ -304,7 +643,6 @@
 						info
 					},
 					success(data){
-						s.loading = false;
 						s.$Message[data.getret === 0 ?'success':'error'](data.getmsg);
 						if(data.getret === 0){
 						}
@@ -332,11 +670,13 @@
 					success(data){
 						s.$Message[data.getret === 0 ?'success':'error'](data.getmsg);
 						if(data.getret === 0){
+							sea.daterange = '';
+							s.$forceUpdate();
 						}
 					}
 				})
 			},
-			addSeason(sea, isNew) {
+			addSeason(sea, index) {
 
 				var date = new Date();
 				var year = date.getFullYear();
@@ -351,11 +691,11 @@
 					sea.daterange += "/" + startDate + ',' + startDate;
 					sea.daterange1 += '/' + startDate + ',' + startDate;
 				} */
-				sea.daterange += "/" + startDate + ',' + startDate;
+				sea.daterange = startDate + ',' + startDate;
 			
 				var s = this;
 				
-				var productid =  this.$route.params.id ;
+				var productid =  this.$route.params.id;
 
 				var info = {
 					companyid:zmitiUtil.getCurrentCompanyId().companyid,
@@ -373,9 +713,11 @@
 						info
 					},
 					success(data){
-						s.loading = false;
+						
 						s.$Message[data.getret === 0 ?'success':'error'](data.getmsg);
 						if(data.getret === 0){
+							s.dataSource[index].daterange =startDate + ',' + startDate;
+							s.dataSource = s.dataSource.concat([]);
 						}
 					}
 				})
@@ -498,7 +840,6 @@
 							},
 							success(data){
 								s.loading = false;
-								console.log(data,'seasonList')
 								if(data.getret === 0){
 									 s.seasonList = data.list;
 								}
@@ -540,7 +881,7 @@
 
 					s.mouseover(params);
 					setTimeout(() => {
-					//	s.next();
+						s.next();
 					}, 100)
 				});
 				myChart.on('mouseover', (params) => {
@@ -586,10 +927,26 @@
 							if(ar.cityid === item.cityid){
 								exists = true;//存在
 								ar.list.push({
-										othertraficprice:item.othertraficprice,
-										hotelprice1:item.hotelprice1,
-										foodprice:item.foodprice,
-										hotelprice2:item.hotelprice2,
+										othertraficprice:{
+											price:item.othertraficprice,
+											editable:false
+										},
+										otherprice:{
+											price:item.otherprice,
+											editable:false
+										},
+										hotelprice1:{
+											price:item.hotelprice1,
+											editable:false
+										},
+										foodprice:{
+											price:item.foodprice,
+											editable:false
+										},
+										hotelprice2:{
+											price:item.hotelprice2,
+											editable:false
+										},
 										jobname:item.jobname,
 										provid:item.provid,
 										jobid:item.jobid,
@@ -604,10 +961,26 @@
 								provid:item.provid,
 								list:[
 									{
-										othertraficprice:item.othertraficprice,
-										hotelprice1:item.hotelprice1,
-										foodprice:item.foodprice,
-										hotelprice2:item.hotelprice2,
+										othertraficprice:{
+											price:item.othertraficprice,
+											editable:false
+										},
+										otherprice:{
+											price:item.otherprice,
+											editable:false
+										},
+										hotelprice1:{
+											price:item.hotelprice1,
+											editable:false
+										},
+										foodprice:{
+											price:item.foodprice,
+											editable:false
+										},
+										hotelprice2:{
+											price:item.hotelprice2,
+											editable:false
+										},
 										jobname:item.jobname,
 										provid:item.provid,
 										jobid:item.jobid,
@@ -627,7 +1000,6 @@
 						});
 					});
 
-					console.log(s.dataSource,'.....')
 					/* dataSource.forEach((data, k) => {
 						s.jobList.map((item, i) => {
 
@@ -693,7 +1065,6 @@
 								url: window.baseUrl + 'travel/add_expense/',
 								data: params,
 								success(data) {
-
 									item.expenseid = data.key;
 									//  message[data.getret === 0 ? 'success':'error'](data.getmsg);
 								}
@@ -752,7 +1123,9 @@
 					index = -1,
 					currentProv = '',
 					currentProvId = -1;
-
+				if(!s.cityList){
+					return;
+				}
 				s.cityList.map((city, i) => {
 					if (params.name === city.label) {
 						cityid = city.value;
