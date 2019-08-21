@@ -1,0 +1,75 @@
+.zmiti-tripexpence-main-ui {
+  width: 100%;
+  overflow: hidden;
+}
+
+.zmiti-tripexpence-main-ui .zmiti-tripexpence-table {
+  -webkit-transition: 0.6s;
+  transition: 0.6s;
+  opacity: 0;
+  z-index: -1;
+}
+
+.zmiti-tripexpence-main-ui .zmiti-tripexpence-table.active {
+  opacity: 1;
+  z-index: 0;
+}
+
+.zmiti-tripexpence-main-ui .zmiti-tripexpence-table > header {
+  width: 98%;
+  margin: 0 auto;
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+}
+
+.zmiti-tripexpence-main-ui .zmiti-tripexpence-map {
+  -webkit-transition: 0.6s;
+  transition: 0.6s;
+  opacity: 1;
+  z-index: 0;
+}
+
+.zmiti-tripexpence-main-ui .zmiti-tripexpence-map.hide {
+  opacity: 0;
+  z-index: -1;
+}
+
+.tripexpence-citylist {
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  position: absolute;
+  top: 0;
+  width: 200px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  background: #555;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.tripexpence-citylist li {
+  padding: 2px 10px;
+  height: 30px;
+  line-height: 30px;
+  width: 50%;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+
+.tripexpence-citylist li:hover {
+  background: #0e77ca;
+}
+
+.tripexpence-citylist li:last-of-type {
+  background: #0e77ca;
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+}

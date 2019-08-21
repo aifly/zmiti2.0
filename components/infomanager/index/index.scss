@@ -1,0 +1,74 @@
+﻿@import "../../css/base.scss";
+ 
+.zmiti-tripexpence-main-ui{
+	width: 100%;
+	overflow: hidden;
+
+	
+	.zmiti-tripexpence-table{
+		@include transition(.6s);
+		opacity:0;
+		z-index: -1;
+
+		&.active{
+			opacity: 1;
+			z-index: 0;
+		}
+
+		&>header{
+			width: 98%;
+			margin: 0 auto;
+			height: 50px;
+			line-height: 50px;
+			@include displayFlex(row);
+			justify-content: space-between;
+			border-bottom: 1px solid #ddd;
+		}
+		
+	}
+
+	.zmiti-tripexpence-map{
+		@include transition(.6s);
+		opacity: 1;
+		z-index: 0;
+		&.hide{
+			opacity: 0;
+			z-index: -1;
+		}
+	}
+}
+
+
+.tripexpence-citylist{
+		@include transition(.3s);
+		@include pos(a);
+		top: 0;
+		width: 200px;
+
+		@include displayFlex(row);
+		
+		flex-wrap:wrap;
+
+		background: #555;
+		@include br(4px);
+		li{
+			padding: 2px 10px;
+			height: 30px;
+			line-height: 30px;
+			width: 50%;
+			@include transition(.1s);
+			&:hover{
+				background: #0e77ca;
+			}
+
+			&:last-of-type{
+				background: #0e77ca;
+				width: 200px;
+				text-align: center;
+				cursor: pointer;
+
+			}
+		}
+		color:#fff;
+	}
+ 
