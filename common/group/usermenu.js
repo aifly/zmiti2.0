@@ -122,9 +122,21 @@ let triptraffic ={
 	]
 }
 
+let infomanager ={
+	title:"信息管理",
+	keys: ['infomanager'],
+	tabs: [
+		{
+			name:'信息管理',
+			link:'/infomanager'
+		}
+	]
+}
+
 export {
 	changyue,
 	company,
 	workorder_workorderlist,
-	triptraffic
+	triptraffic,
+	infomanager
 }

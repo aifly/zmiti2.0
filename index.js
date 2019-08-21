@@ -27,6 +27,7 @@ import tripost from './components/tripexpence/tripost/index.vue';
 import consume from './components/consume';
 import workorderlist from './components/workorderlist';
 import Group from './common/group/index'
+import infomanager from './components/infomanager/index'
 
 import VueRouter from 'vue-router'
 import './components/css/index.css';
@@ -94,6 +95,7 @@ const router = new VueRouter({
 			{ path: "/tripreason/:id?", name: "tripreason", component: tripreason},
 			{ path: "/tripnotice/:id?", name: "tripnotice", component: tripnotice},
 			{ path: "/tripost/:id?", name: "tripost", component: tripost},
+			{ path: "/infomanager", name: "infomanager", component: infomanager},
 		]
 	},
    /*  {
