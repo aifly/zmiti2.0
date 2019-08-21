@@ -30,7 +30,7 @@ var zmitiUtil = {
 	},
 
 	dataToNumber(date){
-		return new Date(date).getTime() 
+		return new Date(date).getTime()/1000
 	},
 
 
@@ -47,24 +47,7 @@ var zmitiUtil = {
 
 	
 
-	formatDate(inputTime,flag = false){
-		var date = new Date(inputTime * 1000);
-		var y = date.getFullYear();
-		var m = date.getMonth() + 1;
-		m = m < 10 ? ('0' + m) : m;
-		var d = date.getDate();
-		d = d < 10 ? ('0' + d) : d;
-		var h = date.getHours();
-		h = h < 10 ? ('0' + h) : h;
-		var minute = date.getMinutes();
-		var second = date.getSeconds();
-		minute = minute < 10 ? ('0' + minute) : minute;
-		second = second < 10 ? ('0' + second) : second;
-		if(flag){
-			return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
-		}
-		return y + '-' + m + '-' + d ;
-	},
+ 
 
 	getQueryString: function (name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -228,8 +211,8 @@ var zmitiUtil = {
 		return this.getUserInfo('adminlogin');
 	},
 	formatDate(time = +new Date()) {
-		var date = new Date(time  + 8 * 3600 * 1000); // 增加8小时
-		return date.toJSON().substr(0, 19).replace('T', ' ');
+		var date = new Date(time*1000  + 8 * 3600 * 1000); // 增加8小时
+		return date.toJSON().substr(0, 10).replace('T', ' ');
 	},
 	getProductListByAdmin(opt={}) {
 
@@ -355,7 +338,6 @@ var zmitiUtil = {
 		var _ui = option._ui || {};
 		var userInfo = this.getUserInfo(option.isAdmin ? 'adminlogin' : 'login');
 
-		console.log(userInfo,'userInfouserInfo');
 
 		if (userInfo && userInfo.ui) {
 			opt.ui = Object.assign(userInfo.ui, _ui);

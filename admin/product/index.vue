@@ -23,7 +23,7 @@
 						</div>
 						<div v-html="data.introduce" style="max-height:70px;overflow:hidden"></div>
 						<div>
-							<div>创建时间：{{formatDate(data.createtime*1000).substr(0,10)}}</div>
+							<div>创建时间：{{formatDate(data.createtime).substr(0,10)}}</div>
 							<div>
 								<Poptip
 									:confirm="true"

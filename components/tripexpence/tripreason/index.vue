@@ -224,8 +224,6 @@
 			window.s = this;
 
 			this.getDataList();
-
-			
 			
 		},
 
@@ -348,27 +346,49 @@
 			getDataList(){
 				var s = this;
 				this.loading = true;
-				var {condition} = this;
-				condition = Object.assign(condition,{
-					companyid:zmitiUtil.getCurrentCompanyId().companyid
-				})
-				zmitiUtil.ajax({
-					remark:"searchBusinesstripList",
-					data:{
-						action:tripActions.searchBusinesstripList.action,
-						condition
-					},
-					error(){
-						s.loading = false;
-					} ,
-					success(data){
-						s.loading = false;
-						if(data.getret === 0){
-							s.total = data.total;
-							s.dataSource = data.list;
+
+
+				var t = setInterval(() => {
+					var productid =  this.$route.params.id ;
+					if(Vue.productList){
+						clearInterval(t);
+
+						if(!productid){
+
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
+								}
+							})
+							
 						}
+						this.$router.push({path:'/tripreason/'+productid});
+						var {condition} = this;
+						condition = Object.assign(condition,{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid
+						})
+						
+						zmitiUtil.ajax({
+							remark:"searchBusinesstripList",
+							data:{
+								action:tripActions.searchBusinesstripList.action,
+								condition
+							},
+							error(){
+								s.loading = false;
+							} ,
+							success(data){
+								s.loading = false;
+								if(data.getret === 0){
+									s.total = data.total;
+									s.dataSource = data.list;
+								}
+							}
+						})
 					}
-				})
+				}, 100);
+				
 			},
 			adminAction(){
 				var s = this;
