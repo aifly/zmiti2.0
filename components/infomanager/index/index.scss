@@ -1,3 +1,36 @@
 ﻿@import "../../css/base.scss";
 
- 
+.zmiti-informanager-main-ui {
+	background: #f2f2f2;
+	box-sizing: border-box;
+	height: 100%;
+	width: 99%;
+	margin: 0 auto;
+	.zmiti-list-main {
+	    box-sizing: border-box;
+	    background: #fff;
+	    margin: 0 auto;
+	}
+    .zmiti-submit-main {
+      flex: 5;
+	  -webkit-flex: 5;
+	  width: 100%;
+
+      & > div {
+        @include transition(0.3s);
+      }
+
+      .zmiti-submit-table {
+        width: 98%;
+        margin: 0 auto;
+
+        .ivu-table-wrapper {
+          //margin-top: 10px;
+        }
+
+        &.active {
+          ///width: 70%;
+        }
+      }
+    }
+}
