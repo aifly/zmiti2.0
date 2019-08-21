@@ -150,7 +150,7 @@
 				var _this = this;
 				window.localStorage.setItem('currentCompany',JSON.stringify(company));
 				this.$router.push({path:'/home'});
- 				setTimeout(() => {
+				setTimeout(() => {
 					window.location.reload();
 				}, 200);
 			},

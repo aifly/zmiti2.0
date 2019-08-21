@@ -77,7 +77,9 @@ var imgs = {
 	loginU3:'./assets/images/login-a3.png',
 	loginU4:'./assets/images/login-a4.png',
 	loginU5:'./assets/images/login-a5.png',
-	loginU6:'./assets/images/login-a6.png'
+	loginU6:'./assets/images/login-a6.png',
+	mobileSkin:'./assets/images/phone-bg.png',
+	wxHeader:'./assets/images/wx-header.png',
 
 };
 

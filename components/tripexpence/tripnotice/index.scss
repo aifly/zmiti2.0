@@ -1,3 +1,54 @@
 ﻿@import "../../css/base.scss";
+.zmiti-tripnotice-main-ui{
+	.zmiti-trip-content{
+		@include displayFlex(row);
+		.zmiti-trip-mobile{
+			margin:20px 20px 0 20px;
+			@include pos(r);
+			
+			@include displayFlex(column);
+			flex:1;
+			-webkit-flex:1;
+			justify-content: center;
+			align-content: center;
+		}
+		.zmiti-tripnotice-editor{
+			flex:2;
+			-webkit-flex:2;
+		}
+		.zmiti-editor-phone{
+			width:100%;
+			@include displayFlex(column);
+			margin:0 auto;
+			img{
+				width:auto;
+				height:100%;
+			}
+		}
+		.zmiti-editor-header{
+			position: absolute;
+			width:100%;
+			margin:0 auto;
+		    overflow: hidden;		    
+		    @include displayFlex(column);		    
+			img.wxHeader{
+				width:220px;				
+				height: auto;
+				margin:0 auto;
+			}
+			.zmiti-editor-m-c{
+				flex:1;
+				width:220px;
+				margin:0 auto;
+				border: 3px solid #ccc;
+				overflow: hidden;
+			}
+		}
+		.zmiti-tripnotice-editor{
+			flex:2;
+			-webkit-flex:2;
+		}
+	}
+}
 
  

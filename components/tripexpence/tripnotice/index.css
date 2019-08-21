@@ -1,0 +1,49 @@
+.zmiti-tripnotice-main-ui .zmiti-trip-content {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row; }
+  .zmiti-tripnotice-main-ui .zmiti-trip-content .zmiti-trip-mobile {
+    margin: 20px 20px 0 20px;
+    position: relative;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column;
+    flex: 1;
+    -webkit-flex: 1;
+    justify-content: center;
+    align-content: center; }
+  .zmiti-tripnotice-main-ui .zmiti-trip-content .zmiti-tripnotice-editor {
+    flex: 2;
+    -webkit-flex: 2; }
+  .zmiti-tripnotice-main-ui .zmiti-trip-content .zmiti-editor-phone {
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column;
+    margin: 0 auto; }
+    .zmiti-tripnotice-main-ui .zmiti-trip-content .zmiti-editor-phone img {
+      width: auto;
+      height: 100%; }
+  .zmiti-tripnotice-main-ui .zmiti-trip-content .zmiti-editor-header {
+    position: absolute;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column; }
+    .zmiti-tripnotice-main-ui .zmiti-trip-content .zmiti-editor-header img.wxHeader {
+      width: 220px;
+      height: auto;
+      margin: 0 auto; }
+    .zmiti-tripnotice-main-ui .zmiti-trip-content .zmiti-editor-header .zmiti-editor-m-c {
+      flex: 1;
+      width: 220px;
+      margin: 0 auto;
+      border: 3px solid #ccc;
+      overflow: hidden; }
+  .zmiti-tripnotice-main-ui .zmiti-trip-content .zmiti-tripnotice-editor {
+    flex: 2;
+    -webkit-flex: 2; }
+
+/*# sourceMappingURL=index.css.map */
