@@ -1,74 +1,36 @@
 ﻿@import "../../css/base.scss";
- 
-.zmiti-tripexpence-main-ui{
-	width: 100%;
-	overflow: hidden;
 
-	
-	.zmiti-tripexpence-table{
-		@include transition(.6s);
-		opacity:0;
-		z-index: -1;
-
-		&.active{
-			opacity: 1;
-			z-index: 0;
-		}
-
-		&>header{
-			width: 98%;
-			margin: 0 auto;
-			height: 50px;
-			line-height: 50px;
-			@include displayFlex(row);
-			justify-content: space-between;
-			border-bottom: 1px solid #ddd;
-		}
-		
+.zmiti-informanager-main-ui {
+	background: #f2f2f2;
+	box-sizing: border-box;
+	height: 100%;
+	width: 99%;
+	margin: 0 auto;
+	.zmiti-list-main {
+	    box-sizing: border-box;
+	    background: #fff;
+	    margin: 0 auto;
 	}
+    .zmiti-submit-main {
+      flex: 5;
+	  -webkit-flex: 5;
+	  width: 100%;
 
-	.zmiti-tripexpence-map{
-		@include transition(.6s);
-		opacity: 1;
-		z-index: 0;
-		&.hide{
-			opacity: 0;
-			z-index: -1;
-		}
-	}
+      & > div {
+        @include transition(0.3s);
+      }
+
+      .zmiti-submit-table {
+        width: 98%;
+        margin: 0 auto;
+
+        .ivu-table-wrapper {
+          //margin-top: 10px;
+        }
+
+        &.active {
+          ///width: 70%;
+        }
+      }
+    }
 }
-
-
-.tripexpence-citylist{
-		@include transition(.3s);
-		@include pos(a);
-		top: 0;
-		width: 200px;
-
-		@include displayFlex(row);
-		
-		flex-wrap:wrap;
-
-		background: #555;
-		@include br(4px);
-		li{
-			padding: 2px 10px;
-			height: 30px;
-			line-height: 30px;
-			width: 50%;
-			@include transition(.1s);
-			&:hover{
-				background: #0e77ca;
-			}
-
-			&:last-of-type{
-				background: #0e77ca;
-				width: 200px;
-				text-align: center;
-				cursor: pointer;
-
-			}
-		}
-		color:#fff;
-	}
- 

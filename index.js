@@ -26,7 +26,15 @@ import tripnotice from './components/tripexpence/tripnotice/index.vue';
 import tripost from './components/tripexpence/tripost/index.vue';
 import consume from './components/consume';
 import workorderlist from './components/workorderlist';
-import Group from './common/group/index'
+import Group from './common/group/index';
+import infomanager from './components/infomanager/index';
+import infomanagerlist from './components/infomanager/list/index';
+import infomanagernotice from './components/infomanager/notice/index';
+import infomanagernews from './components/infomanager/news/index';
+import infomanagerdoc from './components/infomanager/doc/index';
+import infomanagerbox from './components/infomanager/box/index';
+import infomanagercolumn from './components/infomanager/column/index';
+import infomanagersetting from './components/infomanager/setting/index';
 
 import VueRouter from 'vue-router'
 import './components/css/index.css';
@@ -94,6 +102,14 @@ const router = new VueRouter({
 			{ path: "/tripreason/:id?", name: "tripreason", component: tripreason},
 			{ path: "/tripnotice/:id?", name: "tripnotice", component: tripnotice},
 			{ path: "/tripost/:id?", name: "tripost", component: tripost},
+			{ path: "/infomanager", name: "infomanager", component: infomanager},
+			{ path: "/infomanagernotice", name: "infomanagernotice", component: infomanagernotice},
+			{path:"/infomanagerlist",name:"infomanagerlist",component:infomanagerlist},
+			{path:"/infomanagernews",name:"infomanagernews",component:infomanagernews},
+			{path:"/infomanagerdoc",name:"infomanagerdoc",component:infomanagerdoc},
+			{path:"/infomanagerbox",name:"infomanagerbox",component:infomanagerbox},
+			{path:"/infomanagercolumn",name:"infomanagercolumn",component:infomanagercolumn},
+			{path:"/infomanagersetting",name:"infomanagersetting",component:infomanagersetting},
 		]
 	},
    /*  {

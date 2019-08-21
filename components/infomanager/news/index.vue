@@ -1,22 +1,19 @@
 <template>
-	<div class="zmiti-informanager-main-ui">
+	<div class="zmiti-tripexpence-main-ui">
 
-		<div class="zmiti-list-main">
-			
-		
-			 <div class='zmiti-informanager-table lt-full'>
-				 <header class="zmiti-tab-header">
-					 <div>
-						 <span>消息</span>
 
-					 </div>
-				 </header>
-				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-					
-					消息
+		 <div class='zmiti-tripexpence-table lt-full'>
+			 <header>
+				 <div>
+					 <span>新闻</span>
+
 				 </div>
+			 </header>
+			 <div class='zmiti-scroll' :style="{height:viewH - 110+'px'}">
+				
+				
 			 </div>
-		</div>
+		 </div>
 
 
 
