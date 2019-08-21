@@ -3,7 +3,6 @@ import   './qrcode';
 import Vue from 'vue';
 
 
-
 var zmitiUtil = {
 	userActions: zmitiActions.userActions,
 	adminActions: zmitiActions.adminActions,
@@ -16,7 +15,7 @@ var zmitiUtil = {
 	companyAdminActions: zmitiActions.companyAdminActions,
 	tripActions: zmitiActions.tripActions,
 	newsActions: zmitiActions.newsActions,
-
+	infomanagerActions: zmitiActions.infomanagerActions,
 	createQrCode(container, url,size=150) {
 		//实例化
 		var qrcode = new QRCode(

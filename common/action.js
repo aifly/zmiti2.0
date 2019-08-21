@@ -593,6 +593,40 @@ let resourceActions = {
 		action:'3001317'
 	},
 };
+let infomanagerActions = {	
+	addtypeList:{
+		desc:'添加类型列表',
+		action:"2001300"
+	},
+	edittypeList:{
+		desc:'修改类型列表',
+		action:"2001301"
+	},
+	deltypeList:{
+		desc:'删除类型列表',
+		action:"2001302"
+	},
+	gettypeList:{
+		desc:'获取类型列表',
+		action:"2001303"
+	},
+	addpermission:{
+		desc:'添加信息管理权限列表',
+		action:"2001305"
+	},
+	editpermission:{
+		desc:'修改信息管理权限列表',
+		action:"2001306"
+	},
+	delpermission:{
+		desc:'删除信息管理权限列表',
+		action:"2001307"
+	},
+	getpermission:{
+		desc:'获取信息管理权限列表',
+		action:"2001308"
+	}
+}
 
 //天气预报
 let weatherActions = {
@@ -644,7 +678,8 @@ var zmitiActions =   /*#__PURE__*/{
 	companyAdminActions,
 	changYueAcions,
 	newsActions,
-	tripActions
+	tripActions,
+	infomanagerActions
 }
 
 export  default zmitiActions;

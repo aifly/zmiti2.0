@@ -1,21 +1,26 @@
 <template>
-	<div class="zmiti-informanagercolumn-main-ui">
+	<div class="zmiti-informanager-main-ui">
+
 		<div class="zmiti-list-main">
-			 <div class='zmiti-informanagercolumn-table lt-full'>
+			
+		
+			 <div class='zmiti-informanager-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>栏目设置</span>
-					 </div>
-					 <div>
-					 	<Button type="primary">类型管理</Button>
+						 <span>消息</span>
+
 					 </div>
 				 </header>
-				 <div class='zmiti-scroll' :style="{height:viewH - 110+'px'}">
+				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
 					
-					
+					消息
 				 </div>
 			 </div>
 		</div>
+
+
+
+
 	</div>
 </template>
 

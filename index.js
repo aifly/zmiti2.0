@@ -28,6 +28,7 @@ import consume from './components/consume';
 import workorderlist from './components/workorderlist';
 import Group from './common/group/index';
 import infomanager from './components/infomanager/index';
+import infomanagermsg from './components/infomanager/msg/index';
 import infomanagerlist from './components/infomanager/list/index';
 import infomanagernotice from './components/infomanager/notice/index';
 import infomanagernews from './components/infomanager/news/index';
@@ -103,13 +104,14 @@ const router = new VueRouter({
 			{ path: "/tripnotice/:id?", name: "tripnotice", component: tripnotice},
 			{ path: "/tripost/:id?", name: "tripost", component: tripost},
 			{ path: "/infomanager", name: "infomanager", component: infomanager},
-			{ path: "/infomanagernotice", name: "infomanagernotice", component: infomanagernotice},
-			{path:"/infomanagerlist",name:"infomanagerlist",component:infomanagerlist},
-			{path:"/infomanagernews",name:"infomanagernews",component:infomanagernews},
-			{path:"/infomanagerdoc",name:"infomanagerdoc",component:infomanagerdoc},
-			{path:"/infomanagerbox",name:"infomanagerbox",component:infomanagerbox},
-			{path:"/infomanagercolumn",name:"infomanagercolumn",component:infomanagercolumn},
-			{path:"/infomanagersetting",name:"infomanagersetting",component:infomanagersetting},
+			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
+			{ path: "/infomanagernotice/:id?", name: "infomanagernotice", component: infomanagernotice},
+			{path:"/infomanagerlist/:id?",name:"infomanagerlist",component:infomanagerlist},
+			{path:"/infomanagernews/:id?",name:"infomanagernews",component:infomanagernews},
+			{path:"/infomanagerdoc/:id?",name:"infomanagerdoc",component:infomanagerdoc},
+			{path:"/infomanagerbox/:id?",name:"infomanagerbox",component:infomanagerbox},
+			{path:"/infomanagercolumn/:id?",name:"infomanagercolumn",component:infomanagercolumn},
+			{path:"/infomanagersetting/:id?",name:"infomanagersetting",component:infomanagersetting},
 		]
 	},
    /*  {

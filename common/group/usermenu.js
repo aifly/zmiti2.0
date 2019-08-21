@@ -124,11 +124,11 @@ let triptraffic ={
 
 let infomanager ={
 	title:"信息管理",
-	keys: ['infomanager','infomanagerlist','infomanagernotice','infomanagerbox','infomanagernews','infomanagerdoc','infomanagercolumn','infomanagersetting'],
+	keys: ['infomanager','infomanagermsg','infomanagerlist','infomanagernotice','infomanagerbox','infomanagernews','infomanagerdoc','infomanagercolumn','infomanagersetting'],
 	tabs: [
 		{
 			name:"消息",
-			link:'/infomanager'
+			link:'/infomanagermsg'
 		},
 		{
 			name:'公告',

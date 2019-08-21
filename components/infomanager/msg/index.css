@@ -1,21 +1,21 @@
-.zmiti-informanagercolumn-main-ui {
+.zmiti-informanager-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
   width: 99%;
   margin: 0 auto; }
-  .zmiti-informanagercolumn-main-ui .zmiti-list-main {
+  .zmiti-informanager-main-ui .zmiti-list-main {
     box-sizing: border-box;
     background: #fff;
     margin: 0 auto; }
-  .zmiti-informanagercolumn-main-ui .zmiti-submit-main {
+  .zmiti-informanager-main-ui .zmiti-submit-main {
     flex: 5;
     -webkit-flex: 5;
     width: 100%; }
-    .zmiti-informanagercolumn-main-ui .zmiti-submit-main > div {
+    .zmiti-informanager-main-ui .zmiti-submit-main > div {
       -webkit-transition: 0.3s;
       transition: 0.3s; }
-    .zmiti-informanagercolumn-main-ui .zmiti-submit-main .zmiti-submit-table {
+    .zmiti-informanager-main-ui .zmiti-submit-main .zmiti-submit-table {
       width: 98%;
       margin: 0 auto; }
 
