@@ -1,8 +1,3 @@
-/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
-    background-color: #fff;
-    border-color: #bf1616;
-    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
-}*/
 .zmiti-company-detail-main-ui {
   background: #fff;
   box-sizing: border-box;
@@ -15,6 +10,36 @@
   font-size: 30px;
   text-indent: 1em;
   padding-top: 10px;
+}
+
+.zmiti-companyuser-list {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
+.zmiti-companyuser-list li {
+  margin: 10px;
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: #ddd;
+  padding: 0 10px;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.zmiti-companyuser-list li.active {
+  background: #3390ff;
+  color: #fff;
+}
+
+.zmiti-companyuser-list li:hover {
+  background: #3390ff;
+  color: #fff;
 }
 
 .zmiti-company-detail-main-ui .zmiti-company-logo-C {

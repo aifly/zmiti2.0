@@ -29,7 +29,7 @@
 	import ZmitiMask from '../../common/mask/';
 	import ZmitiTable from '../../common/table/';
 
-	var {companyActions,zmitiActions,changYueAcions} = zmitiUtil;
+	var {companyActions,zmitiActions,userActions , formatDate} = zmitiUtil;
 
 	import {manuscriptStatus} from '../../common/config';
 
@@ -73,55 +73,47 @@
 				unJoinedCompany:[],
 				columns:[
 					{
-						title:"稿件编号",
-						key:'manuscriptid',
+						title:"用户名",
+						key:'username',
 						align:'center',
+						render:(h,params)=> {
+							return h('div',{},params.row.user.username);
+						},
 					},
 					{
-						title:"稿件标题",
-						key:'doctitle',
+						title:"真实姓名",
+						key:'realname',
 						align:'center',
+						render:(h,params)=> {
+							return h('div',{},params.row.user.realname);
+						},
 					},
 					{
-						title:"提交时间",
+						title:"加入时间",
+						key:'joindate',
+						align:'center',
+						width:160,
+						render:(h,params)=> {
+							return h('div',{},formatDate(params.row.joindate));
+						},
+					},
+					{
+						title:"用户状态",
 						key:'createtime',
-						align:'center'
+						align:'center',
+						
+						render:(h,params)=> {
+							return h('div',{},params.row.user.status === 1 ?'正常':params.row.user.status === 0 ? '已禁用':"已删除");
+						},
 					},
-					{
-						title:'审核人',
-						key:'status',
-						width:220,
-						render:(h,params)=>{
-							  
-							return h('div',(params.row.checkuserlist||[])['map']((c,i)=>{
-								return h('span',{
-									style:{
-										marginRight:'5px'
-									},
-									on:{
-										click:()=>{
-											console.log(c);
-											this.$Modal.info({
-												title:c.realname + '的审核意见 —— ' + manuscriptStatus[c.status].name,
-												content:'<p>审核意见：</p>' + (c.suggestion || '暂无 ：('),
-												okText: '确定',
-												closable:true,
-												cancelText: '取消'
-
-											});
-										}
-									},
-									domProps:{
-										innerHTML:`
-											<label>${c.realname}</label>
-											<label title='${manuscriptStatus[c.status].name}' class='zmiti-cy-tag zmt_iconfont' style='color:${manuscriptStatus[c.status].color}'>
-												${manuscriptStatus[c.status].icon}
-											</label>
-										`
-									}
-								});
-							}));
-						}
+					 {
+						width:120,
+						title:"是否单位管理员",
+						key:'islead',
+						align:'center',
+						render:(h,params)=> {
+							return h('div',{},params.row.islead === 1 ?'是':"否");
+						},
 					},
 					{
 						title:'操作',
@@ -131,41 +123,30 @@
 						render:(h,params)=>{
 
 							return h('div', [
-                                h('Poptip',{
-									props:{
-										confirm:true,
-										title:"确定要删除吗？",
-										placement:'left'
-
-									},
-									on:{
-										'on-ok':()=>{
-											this.delete(params.row.manuscriptid);
-										},
-										
-									}
-								},[
-									h('span', {
+								
+                                h('span', {
 										props: {
 											type: 'error',
 											size: 'small'
 										},
 										style:{
 											cursor:'pointer',
-											color:'#06C'
+											color:"#3390ff",
 										},
 										on: {
 											click: () => {
+												this.checkAction(params.row.ucid,1);
 											}
 										}
-									}, '删除')
-								])
+								}, '通过'),
+								 
                             ]);
 							
 							 
 						}
 					}
 				],
+				
 				
 				formUser:{
 					pdfurl:'',
@@ -250,70 +231,19 @@
 				})
 
 			},
-			filterMethod (data, query) {
-                return data.label.indexOf(query) > -1;
-            },
-			getJoinedCompany(){
-				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'getJoinedCompany',
-					data:{
-						action:companyActions.getJoinedCompany.action,
-						condition:{
-							userid:s.currentUserid,
-							page_index:0,
-							page_size:20,
-						}
-					},
-					success(data){
-						if(data.getret === 0){
-							s.targetKeys = [];
-							data.list.forEach(dt=>{
-								s.targetKeys .push(dt.companyid)
-							})
-						}
-					}
-				});
-			},
-			 
-			 
-			checkUser(){
-				var username = this.formUser.username;
-				var {$Message} = this;
-				zmitiUtil.adminAjax({
-					remark:'checkUserName',
-					data:{
-						action:zmitiActions.checkUserName.action,
-						username
-					},
-					success(data){
-						$Message[data.getret === 0 ? data.used  ? 'error':'success':'error'](data.msg);
-					}
-				})
-			},
-			getAvatar(avatar){
-				this.formUser.avatar = avatar;
-			},
-		 
-			 
-
-			delete(manuscriptids){
+		
+			checkAction(userid,status){
 				var s = this;
 				zmitiUtil.ajax({
-					remark:'delManuscript',
+					remark:'editCompanyUser',
 					data:{
-						action:changYueAcions.delManuscript.action,
-						condition:{
-							manuscriptids
-						}
+						action:userActions.editCompanyUser.action,
+						ucid:userid,
+						status
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							
-							s.getDataList();
-							///s.dataSource = data.list;	 
-						}
+						s.getDataList()
 					}
 				})
 			},
@@ -326,14 +256,18 @@
 				this.loading = true;
 				var {condition} = this;
 				condition = Object.assign(condition,{
-					companyid:zmitiUtil.getCurrentCompanyId().companyid
+					companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					status:0
 				})
 				zmitiUtil.ajax({
-					remark:"getMySubmitList",
+					remark:"getCompanyUserList",
 					data:{
-						action:changYueAcions.getMySubmitList.action,
+						action:userActions.getCompanyUserList.action,
 						condition
 					},
+					error(){
+						s.loading = false;
+					} ,
 					success(data){
 						s.loading = false;
 						if(data.getret === 0){

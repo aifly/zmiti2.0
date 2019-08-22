@@ -244,6 +244,10 @@ let userActions = {
 		desc: "公司管理员添加用户信息并加入公司",
 		action: '2000112'
 	},
+	checkUserIntoCompany:{
+		desc:'用户审核公司邀请',
+		action:'2000114'
+	},
 	userCommitWorkOrder:{
 		desc:'用户提交工单',
 		action:"2001000"
@@ -283,6 +287,10 @@ let userActions = {
 	searchCompanyList: {
 		desc: "搜索单位",
 		action: '2000104'
+	},
+	changeAdmin:{
+		desc:'转让单位管理员',
+		action:'2000105'
 	},
 	evaluateWorkOrder:{
 		desc:"用户评价工单",

@@ -251,6 +251,7 @@
 		methods:{
 			add(){
 				Vue.obserable.trigger({type:'toggleMask',data:true});
+				this.formObj = {};
 			},
 			closeMaskPage(){
 				Vue.obserable.trigger({type:'toggleMask',data:false});

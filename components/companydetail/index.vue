@@ -29,7 +29,6 @@
 				 </label>
 				<span><Icon type="ios-help-circle-outline" /></span>
 			 </div>
-			 
 		</div>
 		<div class='zmiti-company-item'>
 			 <div>单位电话：</div>
@@ -63,6 +62,15 @@
 				<span><Icon type="ios-help-circle-outline" /></span>
 			 </div>
 		</div>
+		<div class='zmiti-company-item'>
+			 <div>转让管理员：</div>
+			 <div>
+				<Button type='primary' @click="showuser = true">选择人员</Button>
+			 </div>
+		</div>
+
+
+
 
 		<!-- 
 		<div class='zmiti-company-item'>
@@ -115,6 +123,14 @@
 				<span slot="prepend">单位地址：</span>
 			</Input>
 		</Modal>
+
+		<Modal v-model="showuser" title='转让管理员' @on-ok='changeAdmin' >
+			<ul class='zmiti-companyuser-list'>
+				<li @click="chooseUser(user)" v-for='(user,i) in userList' :key="i" :class="{'active':currentUser.ucid === user.ucid}">
+					{{user.user.realname||user.user.username}}
+				</li>
+			</ul>
+		</Modal>
 	</div>
 </template>
 
@@ -133,14 +149,21 @@
 		data(){
 			return{
 				imgs:window.imgs,
+				showuser:false,
 				userinfo:{},
 				showResource:false,
 				visiable:false,
 				key:'',
 				imgType:'',
+				userList:[],
 				currentChooseResource:{},
 				companyInfo:{
 
+				},
+				currentUser:{},
+				condition:{
+					page_index:0,
+					page_size:20,
 				}
 			}
 		},
@@ -154,6 +177,8 @@
 		mounted(){
 			window.s = this;
 			this.getDetail();
+
+			this.getUserList();
 			
 		},
 
@@ -163,6 +188,53 @@
 		},
 		
 		methods:{
+			changeAdmin(){
+				var s = this;
+				zmitiUtil.ajax({
+					remark:"changeAdmin",
+					data:{
+						action:userActions.changeAdmin.action,
+						to_user_id:s.currentUser.user.userid,
+						companyid:zmitiUtil.getCurrentCompanyId().companyid
+					},
+					error(){
+					} ,
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+
+						}
+					}
+				})
+
+			},
+			chooseUser(user){
+				this.currentUser = user;
+			},
+			getUserList(){
+				var s = this;
+				
+				var {condition} = this;
+				condition = Object.assign(condition,{
+					companyid:zmitiUtil.getCurrentCompanyId().companyid
+				})
+				zmitiUtil.ajax({
+					remark:"getCompanyUserList",
+					data:{
+						action:userActions.getCompanyUserList.action,
+						condition
+					},
+					error(){
+					} ,
+					success(data){
+						if(data.getret === 0){
+
+							s.total = data.total;
+							s.userList = data.list;
+						}
+					}
+				})
+			},
 
 			showEditDialog(key){
 				this.key = key;
