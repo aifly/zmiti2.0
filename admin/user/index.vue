@@ -183,7 +183,25 @@
 						title:"姓名",
 						key:'realname',
 						align:'center',
-						width:200
+						width:200,
+						render:(h,params)=>{
+							if( this.$route.params.companyid){
+								return h('div',{},[
+									h('span',{},params.row.realname),
+									h('span',{
+										domProps:{
+											innerHTML:`<span class='zmt_iconfont'>&#xe63d;</span>`,
+											title:'管理员'
+										},
+										style:{
+											cursor:'pointer',
+											display:params.row.islead?'inline':'none'
+										}
+									},'&#xe63d;')
+								]);	
+							}
+							return h('div',{},params.row.realname);
+						}
 						
 					},{
 						title:"邮箱",
@@ -208,10 +226,27 @@
 						title:'操作',
 						key:'action',
 						align:'center',
-						width:200,
+						width:280,
 						render:(h,params)=>{
 
 							return h('div', [
+								 h('span', {
+                                  
+                                    style: {
+										border:'none',
+										fontSize: '12px',
+										cursor:'pointer',
+										color:'#06C',
+										display: this.$route.params.companyid? 'inline':'none'
+                                    },
+                                    on: {
+                                        click: () => {
+											
+											this.setAdmin(params.row.userid);
+											
+                                        }
+                                    }
+								}, '设为管理员'),
                                
                                 h('span', {
                                   
@@ -219,7 +254,9 @@
 										border:'none',
 										fontSize: '12px',
 										cursor:'pointer',
-										color:'#06C'
+										color:'#06C',
+										margin: '2px 10px',
+										
 										
                                     },
                                     on: {
@@ -399,6 +436,21 @@
 						}
 					}
 				});
+			},
+			setAdmin(userid){
+				var s = this;
+				zmitiUtil.adminAjax({
+					remark:'changeCompanyAdmin',
+					data:{
+						action:companyActions.changeCompanyAdmin.action,
+						companyid:s.$route.params.companyid,
+						userid
+					},
+					success(data){
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						s.getDataList();
+					}
+				})
 			},
 			getCompanyList(){
 				var s = this;

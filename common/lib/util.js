@@ -359,11 +359,11 @@ var zmitiUtil = {
 				if (option.isAdmin) {
 					adminErrorFn && adminErrorFn();
 				} else {
-				/* 	window.location.hash = '/login';
+					window.location.hash = '/login';
 					window.localStorage.clear();
 					setTimeout(() => {
 						window.location.reload();
-					}, 10); */
+					}, 10);
 				}
 
 			}

@@ -14,7 +14,7 @@
 					 <Button @click="back" type="primary">返回</Button>
 				 </div>
 			 </header>
-			 <div class='zmiti-scroll' :style="{height:viewH - 110+'px'}">
+			 <div class='zmiti-scroll' :style="{height:viewH - 110+'px',overflow:'auto'}">
 				
 				<ZmitiTable :border='true' :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total" @getSelection='getSelection'>
 					<div slot='table-btns' style="display:inline-block">
@@ -35,7 +35,7 @@
 		<ul v-if='cityList[currentCityIndex] && !showTable' ref='city-C' class='tripexpence-citylist'  :style="{transform:'translate3d('+(transX)+'px,'+transY+'px,0)'}">
 			<li :key='i' v-for='(item,i) in cityList[currentCityIndex].children'>
 				<Checkbox
-					:checked='item.isChecked'
+					v-model="item.isChecked"
 					@on-change='selectCity(item)'
 					>{{item.label}}</Checkbox>
 			</li>
@@ -128,7 +128,9 @@
 											width:'60px'
 										},
 										on:{
-
+											'on-change':(e)=>{
+												item.hotelprice1.price = e.target.value;
+											},
 											'on-keydown':(e)=>{
 												if(e.keyCode === 13){
 													item.hotelprice1.price = e.target.value;
@@ -147,7 +149,7 @@
 										},
 										on:{
 											click:()=>{
-												this.editExpense(params.row,item,'hotelprice1',e.target.value)
+												this.editExpense(params.row,item,'hotelprice1',item.hotelprice1.price)
 											}
 										}
 									})
@@ -209,7 +211,9 @@
 											width:'60px'
 										},
 										on:{
-
+											'on-change':(e)=>{
+												item.hotelprice2.price = e.target.value;
+											},
 											'on-keydown':(e)=>{
 												if(e.keyCode === 13){
 													item.hotelprice2.price = e.target.value;
@@ -228,7 +232,7 @@
 										},
 										on:{
 											click:()=>{
-												this.editExpense(params.row,item,'hotelprice2',e.target.value)
+												this.editExpense(params.row,item,'hotelprice2',item.hotelprice2.price)
 											}
 										}
 									})
@@ -288,6 +292,9 @@
 											width:'60px'
 										},
 										on:{
+											'on-change':(e)=>{
+												item.foodprice.price = e.target.value;
+											},
 
 											'on-keydown':(e)=>{
 												if(e.keyCode === 13){
@@ -307,7 +314,7 @@
 										},
 										on:{
 											click:()=>{
-												this.editExpense(params.row,item,'foodprice',e.target.value)
+												this.editExpense(params.row,item,'foodprice',item.foodprice.price)
 											}
 										}
 									})
@@ -367,7 +374,9 @@
 											width:'60px'
 										},
 										on:{
-
+											'on-change':(e)=>{
+												item.othertraficprice.price = e.target.value;
+											},
 											'on-keydown':(e)=>{
 												if(e.keyCode === 13){
 													item.othertraficprice.price = e.target.value;
@@ -386,7 +395,7 @@
 										},
 										on:{
 											click:()=>{
-												this.editExpense(params.row,item,'othertraficprice',e.target.value)
+												this.editExpense(params.row,item,'othertraficprice',item.othertraficprice.price)
 											}
 										}
 									})
@@ -468,7 +477,10 @@
 												if(params.row.daterange.split('/').length<=1){
 													this.delSeason(params.row);
 												}
-												this.editSeason({sea:params.row,index:i,type:'del'});
+												else{
+													
+													this.editSeason({sea:params.row,index:i,type:'del'});
+												}
 											}
 										}
 									},'删除')
@@ -606,7 +618,10 @@
 						}
 						break;
 					case 'del':
-						sea.daterange = sea.daterange.split('/').splice(index,1).join('/');
+
+						var rangArr = sea.daterange.split('/');
+						rangArr.splice(index,1);
+						sea.daterange =rangArr.join('/');
 						break;
 					case 'change':
 						var rangeArr = sea.daterange.split('/').concat([]);
@@ -622,8 +637,6 @@
 					default:
 						break;
 				}
-				console.log(sea.daterange);
-				
 				var info = {
 					companyid:zmitiUtil.getCurrentCompanyId().companyid,
 					productid,
@@ -736,8 +749,10 @@
 
 
 			selectCity(item) {
+				return;
 				item.isChecked = true;
 				var s = this;
+
 				this.addDataSource = this.addDataSource || [];
 				this.jobList.map((data, i) => {
 					this.addDataSource.push({
@@ -919,6 +934,17 @@
 					});
 				 
 					var arr = [];
+
+					var existsCity = [];
+					s.cityList[s.currentCityIndex].children.forEach(item=>{
+						if(item.isChecked){
+							existsCity.push(item.value);
+						}
+					})
+					
+					s.dataSource = s.dataSource.filter(item=>{
+						return existsCity.join(',').indexOf(item.cityid)>-1;
+					})
 					 
 					s.dataSource.forEach((item, i) => {
 					
@@ -989,6 +1015,8 @@
 							})
 						}
 					});
+
+					s.total = s.dataSource.length;
 
 					s.dataSource = arr;
 					s.total = arr.length;
@@ -1084,8 +1112,6 @@
 					});
 					s.dataSort();
 
-
-					s.$forceUpdate();
 				})
 			},
 
@@ -1139,6 +1165,7 @@
 					return;
 				}
 
+
 				s.lastCityId = cityid;
 				s.currentCityIndex = index;
 				s.currentProvId = currentProvId;
@@ -1154,6 +1181,9 @@
 							}
 						});
 					});
+
+					s.cityList = s.cityList.concat([])
+
 
 					var transY = params.event.offsetY - height;
 					transY < 0 && (transY = 0);

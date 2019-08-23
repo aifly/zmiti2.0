@@ -5,7 +5,7 @@
 				<div><span v-if='companyname'>{{companyname}} —— </span>用户列表</div>
 				<div>
 					<div class='zmiti-upload-btn'>
-						<input type="file" @change='importData'>
+						<input type="file" ref='file' @change='importData'>
 						<Button type="primary">用户导入</Button>
 					</div>
 					<Button @click="add()" type="primary">添加用户</Button>
@@ -61,6 +61,14 @@
 				</transition>
 			</div>
 		</ZmitiMask>
+
+
+		<Modal v-model='visiable' title='待提交的用户' width='800' >
+			<div class='zmiti-import-loading'>
+				<span></span>
+			</div>
+			<Table :columns='excelColumns' :data='excel_list' :height='viewH*.6'></Table>
+		</Modal>
 			 
 	</div>
 </template>
@@ -87,7 +95,7 @@
 		data(){
 			return{
 
-				
+				visiable:true,
 				targetKeys:[],
 				showAvatarModal:false,
 
@@ -232,7 +240,124 @@
 					page_index:0,
 					page_size:10,
 				},
-				userinfo:{}
+				userinfo:{},
+				excel_list:[
+					{
+						"username":"test",
+						"username_exist":1,
+						"realname":"测试",
+						"usermobile":13720885914,
+						"usermobile_exist":0,
+						"useremail":"27489658@qq.com",
+						"useremail_exist":0
+					}
+				],
+				excelColumns:[
+					{
+						title:'用户名',
+						key:'username',
+						align:'center',
+						render:(h,params)=>{
+							return h('Input',{
+								props:{
+									value:params.row.username
+								},
+								on:{
+									'on-change':(e)=>{
+										this.excel_list[params.index].username = e.target.value;
+									}
+								}
+							})
+						}
+					},{
+						title:'真实姓名',
+						key:'realname',
+						align:'center',
+						render:(h,params)=>{
+							return h('Input',{
+								props:{
+									value:params.row.realname
+								},
+								on:{
+									'on-change':(e)=>{
+										this.excel_list[params.index].realname = e.target.value;
+									}
+								}
+							})
+						}
+					},{
+						title:'手机号',
+						key:'usermobile',
+						align:'center',
+						render:(h,params)=>{
+							return h('Input',{
+								props:{
+									value:params.row.usermobile
+								},
+								on:{
+									'on-change':(e)=>{
+										this.excel_list[params.index].usermobile = e.target.value;
+									}
+								}
+							})
+						}
+					},{
+						title:'邮箱',
+						key:'useremail',
+						align:'center',
+						render:(h,params)=>{
+							return h('Input',{
+								props:{
+									value:params.row.useremail
+								},
+								on:{
+									'on-change':(e)=>{
+										this.excel_list[params.index].useremail = e.target.value;
+									}
+								}
+							})
+						}
+					},{
+						title:'操作',
+						key:'',
+						align:'center',
+						render:(h,params)=>{
+							
+							return h('div',{},[h('Poptip',{
+								props:{
+									confirm:true,
+									title:"确定要删除吗？",
+									placement:'left'
+
+								},
+								
+								on:{
+									'on-ok':()=>{
+										this.excel_list.splice(params.index,1);
+										//this.delete(params.row.ucid);
+									},
+									
+								}
+							},[
+								h('span', {
+									props: {
+										type: 'error',
+										size: 'small'
+									},
+									style:{
+										cursor:'pointer',
+										color:"#3390ff",
+									},
+									on: {
+										click: () => {
+										}
+									}
+								}, '删除')
+							])])
+
+						}
+					}
+				]
 			}
 		},
 		components:{
@@ -251,6 +376,10 @@
 
 			this.getDataList();
 
+
+			for(var i =0 ;i<5;i++){
+				this.excel_list = this.excel_list.concat(this.excel_list);
+			}
 			
 			
 		},
@@ -264,7 +393,20 @@
 		
 		methods:{
 			importData(){
+				var userinfo = zmitiUtil.getUserInfo();
+				if(!userinfo.ui){
+					return;
+				}
+				var s = this;
+				var formData = new FormData();
 
+				formData.append('userid',userinfo.ui.userid);
+				formData.append('token',userinfo.ui.token);
+				formData.append('type',1);
+				formData.append('file',this.$refs['file'].files[0]);
+				axios.post(window.config.baseUrl+'index/importexcel/index',formData).then(data=>{
+					s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+				})
 			},
 			change(e){
 				this.condition.page_index = e -1;

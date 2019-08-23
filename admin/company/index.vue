@@ -305,7 +305,7 @@
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getCompanyList();
-			this.getUserList();
+			//this.getUserList();
 		},
 
 		watch:{

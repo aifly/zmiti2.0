@@ -232,7 +232,7 @@
 
 			}
 			this.getDataList();
-			this.getbaseData();
+		
 			this.getJobData();
 			
 			
@@ -286,7 +286,7 @@
 
 				
 			},
-			getbaseData(){
+			getbaseData(productid){
 				var s=this;
 
 				zmitiUtil.ajax({
@@ -294,7 +294,8 @@
 					data:{
 						action:tripActions.getTrafficbase.action,
 						condition:{
-							companyid:zmitiUtil.getCurrentCompanyId().companyid
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid
 						}
 					},
 					success(data){
@@ -390,9 +391,9 @@
 									productid  = p.productid;
 								}
 							})
-							
 						}
 						this.$router.push({path:'/triptraffic/'+productid});
+						this.getbaseData(productid);
 						var {condition} = this;
 						condition = Object.assign(condition,{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,

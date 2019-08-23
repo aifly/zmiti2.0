@@ -12,6 +12,25 @@
   cursor: pointer;
 }
 
+.zmiti-import-loading {
+  height: 10px;
+  position: relative;
+  padding: 3px;
+  margin: 0 0 10px 0;
+  background: #eee;
+}
+
+.zmiti-import-loading span {
+  width: 30px;
+  position: absolute;
+  left: 0;
+  background: #3390ff;
+  height: 10px;
+  vertical-align: top;
+  top: 0;
+  border-radius: 4px;
+}
+
 .zmiti-submit-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
