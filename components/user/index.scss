@@ -1,6 +1,18 @@
 ﻿@import "../css/base.scss";
 
 
+.zmiti-upload-btn{
+	display: inline-block;
+	@include pos(r);
+	input[type='file']{
+		@include pos(a);
+		height: 43px;
+		opacity: 0;
+		left: -16px;
+		width: 100px;
+		cursor: pointer;
+	}
+}
 
 .zmiti-submit-main-ui {
 	background: #f2f2f2;

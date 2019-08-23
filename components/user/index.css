@@ -1,8 +1,17 @@
-/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
-    background-color: #fff;
-    border-color: #bf1616;
-    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
-}*/
+.zmiti-upload-btn {
+  display: inline-block;
+  position: relative;
+}
+
+.zmiti-upload-btn input[type='file'] {
+  position: absolute;
+  height: 43px;
+  opacity: 0;
+  left: -16px;
+  width: 100px;
+  cursor: pointer;
+}
+
 .zmiti-submit-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;

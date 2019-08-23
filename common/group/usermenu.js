@@ -168,10 +168,27 @@ let infomanager ={
 	]
 }
 
+let orderFood ={
+	title: "订餐管理",
+	keys: ['orderfood','userconfig'],
+	tabs:[
+		{
+			name: '用户订餐',
+			link: '/orderfood'
+		},
+		{
+			name:'设置订餐配置项',
+			link:'/userconfig'
+		},
+		
+	]
+}
+
 export {
 	changyue,
 	company,
 	workorder_workorderlist,
 	triptraffic,
-	infomanager
+	infomanager,
+	orderFood
 }

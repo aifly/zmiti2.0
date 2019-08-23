@@ -16,6 +16,7 @@ var zmitiUtil = {
 	tripActions: zmitiActions.tripActions,
 	newsActions: zmitiActions.newsActions,
 	infomanagerActions: zmitiActions.infomanagerActions,
+	orderFoodActions: zmitiActions.orderFoodActions,
 	createQrCode(container, url,size=150) {
 		//实例化
 		var qrcode = new QRCode(

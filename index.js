@@ -37,6 +37,9 @@ import infomanagerbox from './components/infomanager/box/index';
 import infomanagercolumn from './components/infomanager/column/index';
 import infomanagersetting from './components/infomanager/setting/index';
 
+import OrderFood from './components/orderfood/orderfood';
+import userConfig from './components/orderfood/userconfig';
+
 import VueRouter from 'vue-router'
 import './components/css/index.css';
 import './components/css/theme.less';
@@ -112,6 +115,8 @@ const router = new VueRouter({
 			{path:"/infomanagerbox/:id?",name:"infomanagerbox",component:infomanagerbox},
 			{path:"/infomanagercolumn/:id?",name:"infomanagercolumn",component:infomanagercolumn},
 			{path:"/infomanagersetting/:id?",name:"infomanagersetting",component:infomanagersetting},
+			{path:"/orderfood/:id?",name:"orderfood",component:OrderFood},
+			{ path: "/userconfig/:id?", name: "userconfig", component: userConfig},
 		]
 	},
    /*  {

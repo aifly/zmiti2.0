@@ -4,7 +4,11 @@
 			<header class="zmiti-tab-header">
 				<div><span v-if='companyname'>{{companyname}} —— </span>用户列表</div>
 				<div>
-					<Button :loading='loading' @click="add()" type="primary">添加用户</Button>
+					<div class='zmiti-upload-btn'>
+						<input type="file" @change='importData'>
+						<Button type="primary">用户导入</Button>
+					</div>
+					<Button @click="add()" type="primary">添加用户</Button>
 					<Button :loading='loading' @click="getDataList()" type="primary">刷新</Button>
 				</div>
 			</header>
@@ -172,7 +176,9 @@
 									},
 									on:{
 										click:()=>{
+											this.formObj = params.row.user;
 											Vue.obserable.trigger({type:'toggleMask',data:true});
+
 										}
 									}
 								},'详情'),
@@ -257,6 +263,9 @@
 		},
 		
 		methods:{
+			importData(){
+
+			},
 			change(e){
 				this.condition.page_index = e -1;
 				this.getMyCheckList();
@@ -286,7 +295,6 @@
 					}
 				})
 			},
-		 
 			getDataList(){
 				var s = this;
 				this.loading = true;
@@ -320,6 +328,9 @@
 				this.formObj = {};
 			},
 			adminAction(){
+				if(this.formObj.userid){
+					return;
+				}
 				var s = this;
 				var action =  userActions.registerCompanyUser.action;
 				var info = {

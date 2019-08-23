@@ -456,6 +456,26 @@ let changYueAcions = {
 
 }
 
+let orderFoodActions = {
+	setOrderFoodConfigTop:{
+		desc:'设置订餐配置项',
+		action:'2001800'
+	},
+	userOrderFood:{
+		desc:'用户订餐',
+		action:'2001801'
+	},
+	statisticsOrderFoodUserCount:{
+		desc:'统计某个时间段内订餐人数',
+		action:'2001802'
+	},
+	getDateRangeOrderFoodCount:{
+		desc:'获取某个时间段内订餐人数',
+		action:'2001803'
+
+	}
+
+}
 
 let tripActions = {
 	getCityList:{
@@ -694,7 +714,8 @@ var zmitiActions =   /*#__PURE__*/{
 	changYueAcions,
 	newsActions,
 	tripActions,
-	infomanagerActions
+	infomanagerActions,
+	orderFoodActions
 }
 
 export  default zmitiActions;
