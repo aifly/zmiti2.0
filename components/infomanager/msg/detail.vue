@@ -192,6 +192,7 @@
 			this.typeid=this.$route.params.typeid;
 			console.log(this.id,'this.id');
 			console.log(this.typeid,'this.typeid');
+			this.getnewsDetail();
 		},
 
 		watch:{	
@@ -212,7 +213,7 @@
 				let info = this.formObj;
 				info.typeid=this.$route.params.typeid;
 				if(this.id!=undefined){
-					info.id=this.$route.params.id
+					info.id=this.$route.params.id;
 				}
 				console.log(info)
 				zmitiUtil.ajax({
@@ -229,6 +230,33 @@
 			},
 			contentChange (val) { // 改变父组件数据
 		      this.formObj.content = val
+		    },
+		    getnewsDetail(){
+		    	var s = this;
+		    	zmitiUtil.ajax({
+					remark:"getnewsDetail",
+					data:{
+						action:infomanagerActions.getnewsDetail.action,
+						infoid:this.$route.params.id,
+						productid:this.productid
+					},
+					error(){
+						s.loading = false;
+					},
+					success(data){
+						s.loading = false;
+
+						console.log(data.info,'获取新闻详情');
+						if(data.getret === 0){
+							s.formObj=data.info;
+							s.formObj.allowreply=data.info.allowreply.toString();
+							s.formObj.issecret=data.info.issecret.toString();
+							s.formObj.status=data.info.status.toString();
+							s.formObj.visit=data.info.visit.toString();
+							console.log(s.formObj,'获取新闻详情s.formObj');			
+						}
+					}
+				})
 		    }
 		}
 	}
