@@ -69,14 +69,69 @@
 				columns:[
 					{
 						title:"编号",
-						key:'infotypeid',
-						align:'center'
-					},
-					{
-						title:"名称",
-						key:'typename',
+						key:'infoid',
 						align:'center',
 						width:180
+					},
+					{
+						title:"标题",
+						key:'title',
+						align:'center',
+						
+					},
+					{
+						title:"操作",
+						key:"action",
+						align:"center",
+						render:(h,params)=>{
+
+							return h('div', [
+                                h('Poptip',{
+									props:{
+										confirm:true,
+										title:"确定要删除吗？",
+										placement:'left'
+
+									},
+									on:{
+										'on-ok':()=>{
+											this.delete(params.row.infoid);
+										},
+										
+									}
+								},[
+									h('span', {
+										props: {
+											type: 'error',
+											size: 'small'
+										},
+										style:{
+											cursor:'pointer',
+											color:'#06C'
+										},
+										on: {
+											click: () => {
+											}
+										}
+									}, '删除')
+								]),
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginLeft:'10px'
+									},
+									on:{
+										click:()=>{
+											this.formObj = params.row;
+											this.$router.push({name:'infomanagerdetail',params:{id:this.formObj.infoid,typeid:2}});
+										}
+									}
+								},'详情')
+                            ]);
+							
+							 
+						}
 					}
 				]
 			}
@@ -131,8 +186,25 @@
 							s.total = data.total;
 							if(data.total>0){
 								s.dataSource = data.list;
+							}else{
+								s.dataSource =[]
 							}							
 						}
+					}
+				})
+			},
+			delete(infoid){//删除信息
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'delnews',
+					data:{
+						action:infomanagerActions.delnews.action,
+						productid:this.productid,
+						infoid,
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						s.getDataList();//更新列表
 					}
 				})
 			}
