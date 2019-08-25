@@ -29,6 +29,7 @@ import workorderlist from './components/workorderlist';
 import Group from './common/group/index';
 import infomanager from './components/infomanager/index';
 import infomanagermsg from './components/infomanager/msg/index';
+import infomanagerdetail from './components/infomanager/msg/detail';
 import infomanagerlist from './components/infomanager/list/index';
 import infomanagernotice from './components/infomanager/notice/index';
 import infomanagernews from './components/infomanager/news/index';
@@ -44,9 +45,9 @@ import VueRouter from 'vue-router'
 import './components/css/index.css';
 import './components/css/theme.less';
 
-import './common/ueditor/ueditor.config'
-import './common/ueditor/ueditor.all'
-import './common/ueditor/lang/zh-cn/zh-cn'
+import './assets/ueditor/ueditor.config'
+import './assets/ueditor/ueditor.all'
+import './assets/ueditor/lang/zh-cn/zh-cn'
 
 import zmitiUtil from './common/lib/util';
 import iview from 'iview';
@@ -108,7 +109,8 @@ const router = new VueRouter({
 			{ path: "/tripost/:id?", name: "tripost", component: tripost},
 			{ path: "/infomanager", name: "infomanager", component: infomanager},
 			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
-			{ path: "/infomanagernotice/:id?", name: "infomanagernotice", component: infomanagernotice},
+			{path:"/infomanagerdetail/:typeid?/:id?",name:"infomanagerdetail",component:infomanagerdetail},
+			{path: "/infomanagernotice/:id?", name: "infomanagernotice", component: infomanagernotice},
 			{path:"/infomanagerlist/:id?",name:"infomanagerlist",component:infomanagerlist},
 			{path:"/infomanagernews/:id?",name:"infomanagernews",component:infomanagernews},
 			{path:"/infomanagerdoc/:id?",name:"infomanagerdoc",component:infomanagerdoc},

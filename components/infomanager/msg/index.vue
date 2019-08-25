@@ -1,19 +1,22 @@
 <template>
-	<div class="zmiti-informanager-main-ui">
+	<div class="zmiti-informanagernews-main-ui">
 
 		<div class="zmiti-list-main">
 			
 		
-			 <div class='zmiti-informanager-table lt-full'>
+			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>消息</span>
+						 <span>栏目配置</span>
 
+					 </div>
+					 <div>
+					 	<Button type="primary" @click='add()'>添加</Button>
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-					
-					消息
+					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :page-size='condition.page_size'  :total="total">
+					</ZmitiTable>
 				 </div>
 			 </div>
 		</div>
@@ -32,6 +35,7 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
 	import ZmitiTable from '../../../common/table';
+	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -57,7 +61,89 @@
 					page_size:10,
 				},
 				userinfo:{},
-				productid:0,
+				typeid:1,
+				productid:1072203850,
+				title:'',
+				begin_time:0,
+				end_time:0,
+				columns:[
+					{
+						title:"编号",
+						key:'infoid',
+						align:'center',
+						width:180
+					},
+					{
+						title:"标题",
+						key:'title',
+						align:'center',
+						
+					},
+					{
+						title:"时间",
+						key:"createtime",
+						align:"center",
+						render:(h,params)=>{
+							return h('div',{},formatDate(params.row.createtime))
+						}
+					},
+					{
+						title:"操作",
+						key:"action",
+						align:"center",
+						width:180,
+						render:(h,params)=>{
+
+							return h('div', [
+                                
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginRight:'10px'
+									},
+									on:{
+										click:()=>{
+											this.formObj = params.row;
+											this.$router.push({name:'infomanagerdetail',params:{typeid:2,id:this.formObj.infoid}});
+										}
+									}
+								},'编辑'),
+								h('Poptip',{
+									props:{
+										confirm:true,
+										title:"确定要删除吗？",
+										placement:'left'
+
+									},
+									on:{
+										'on-ok':()=>{
+											this.delete(params.row.infoid);
+										},
+										
+									}
+								},[
+									h('span', {
+										props: {
+											type: 'error',
+											size: 'small'
+										},
+										style:{
+											cursor:'pointer',
+											color:'#06C'
+										},
+										on: {
+											click: () => {
+											}
+										}
+									}, '删除')
+								])
+                            ]);
+							
+							 
+						}
+					}
+				]
 			}
 		},
 		components:{
@@ -68,10 +154,7 @@
 			
 		},
 		mounted(){
-
-			setTimeout(() => {
-				//this.productid =  this.$route.params.id
-			}, 100);
+			this.getDataList();
 			
 		},
 
@@ -82,9 +165,59 @@
 		},
 		
 		methods:{
-
-
-
+			add(){
+				this.$router.push({name:'infomanagerdetail',params:{typeid:2}})				
+			},
+			getDataList(){
+				var s = this;
+				var {condition} = this;
+				condition = Object.assign(condition,{
+					typeid:s.typeid,
+					productid:s.productid,
+					page_index:0,
+					page_size:10,
+					title:s.title,
+					begin_time:s.begin_time,
+					end_time:s.end_time
+				})
+				zmitiUtil.ajax({
+					remark:"getnewsList",
+					data:{
+						action:infomanagerActions.getnewsList.action,
+						condition:condition
+					},
+					error(){
+						s.loading = false;
+					},
+					success(data){
+						s.loading = false;
+						console.log(data,'获取列表')
+						if(data.getret === 0){
+							s.total = data.total;
+							if(data.total>0){
+								s.dataSource = data.list;
+							}else{
+								s.dataSource =[]
+							}							
+						}
+					}
+				})
+			},
+			delete(infoid){//删除信息
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'delnews',
+					data:{
+						action:infomanagerActions.delnews.action,
+						productid:this.productid,
+						infoid,
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						s.getDataList();//更新列表
+					}
+				})
+			}
 		}
 	}
 </script>

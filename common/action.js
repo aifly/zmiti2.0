@@ -667,7 +667,51 @@ let infomanagerActions = {
 	getpermission:{
 		desc:'获取信息管理权限列表',
 		action:"2001308"
-	}
+	},
+	addnews:{
+		desc:'添加信息',
+		action:"2001310"
+	},
+	editnews:{
+		desc:'修改信息',
+		action:"2001311"
+	},
+	delnews:{
+		desc:'删除信息',
+		action:"2001312"
+	},
+	getnewsList:{
+		desc:'获取信息列表',
+		action:"2001313"
+	},
+	getnewsDetail:{
+		desc:'获取信息详情',
+		action:"2001314"
+	},
+	addAccessible:{
+		desc:'添加可访问人信息',
+		action:"2001315"
+	},
+	editAccessible:{
+		desc:'修改可访问人信息',
+		action:"2001316"
+	},
+	delAccessible:{
+		desc:'删除可访问人信息',
+		action:"2001317"
+	},
+	getaddAccessibleList:{
+		desc:'获取可访问人列表',
+		action:"2001318"
+	},
+	getViewList:{
+		desc:'获取查看列表',
+		action:"2001319"
+	},
+	getViewDetail:{
+		desc:'获取查看列表详细',
+		action:"2001320"
+	},
 }
 
 //天气预报

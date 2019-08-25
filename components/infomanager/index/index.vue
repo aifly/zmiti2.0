@@ -18,7 +18,7 @@
 					<div class="zmiti-select-column">
 						<label>类型标识：</label>
 						<RadioGroup @on-change="selectColumn" v-model="specialnumVal">
-					        <Radio v-for="(item,index) in specialnumData" :label="item.value" >{{item.label}}</Radio>
+					        <Radio v-for="(item,index) in specialnumData" :label="item.value" :key="index" >{{item.label}}</Radio>
 					    </RadioGroup>
 					</div>
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
@@ -45,6 +45,12 @@
 							<FormItem label="类型名称：">
 								<Input v-model="formObj.typename" placeholder="类型名称"></Input>
 							</FormItem>
+							<FormItem label="状态：">
+								<RadioGroup v-model="formObj.status">
+							        <Radio label="1">启用</Radio>
+							        <Radio label="0">禁用</Radio>
+							    </RadioGroup>
+							</FormItem>
 							<FormItem label="权限人员：">
 								<RadioGroup v-model="formObj.isalluser" @on-change="changeUserStatus">
 							        <Radio label="0">全部人员</Radio>
@@ -54,7 +60,7 @@
 							    	<CheckboxGroup v-model="formObj.users" @on-change="changeUsers">
 							    	<ul>
 								    	<li v-for="(item,index) in userSource" :key="index">
-								    		<div class="label-name"><Checkbox :label="item.userid">{{item.username}}</Checkbox></div>
+								    		<div class="label-name"><Checkbox :label="item.userid">{{item.realname}}</Checkbox></div>
 								    	</li>
 							    	</ul>
 							    	</CheckboxGroup>
@@ -73,14 +79,17 @@
 		<Modal
 	        v-model="modal1"
 	        title="信息管理权限"
+	        width="470"
 	        @on-ok="ok"
 	        @on-cancel="cancel">
 		        <Transfer
+		        :titles="['选择用户','已分配用户']"
 		        :data="data1"
 		        :target-keys="targetKeys1"
 		        :render-format="render1"
 		        @on-change="handleChange1">
 		        </Transfer>
+		        <div slot="footer"></div>
 	    </Modal>
 
 
@@ -120,8 +129,9 @@
 				},
 				userinfo:{},
 				showSelectUser:false,
-				productid:'1072203850',
+				productid:1072203850,
 				userstatus:1,
+				infotypeid:-1,
 				userList:[{
 					username:'songxian',
 					userid:4,
@@ -155,7 +165,8 @@
 					users:[{
 						userid:0,
 						status:1
-					}]
+					}],
+					status:1
 				},
 				userSource:[],
 				userDataList:[],
@@ -182,7 +193,8 @@
 				persons:0,
 				modal1: false,
 				data1: this.getMockData(),
-                targetKeys1: this.getTargetKeys(),
+                targetKeys1:[],//当前具有权限的用户 //this.getTargetKeys(),
+                mockData:[],
 				columns:[
 					{
 						title:"编号",
@@ -204,6 +216,22 @@
 						}
 					},
 					{
+						title:"状态",
+						key:"status",
+						align:"center",
+						render:(h,params)=>{
+							var status='';
+							if(params.row.status===0){
+								status='禁用'
+							}else if(params.row.status===2){
+								status='已删除'
+							}else{								
+								status='正常'
+							}
+							return h('div',{},status);
+						}
+					},
+					{
 						title:"权限",
 						key:"isalluser",
 						align:"center",
@@ -217,6 +245,8 @@
 									click:()=>{
 										console.log(params.row.infotypeid,'params.row.infotypeid');
 										this.modal1=true;//打开弹窗
+										this.infotypeid=params.row.infotypeid;
+										this.getpermission(params.row.infotypeid,params.row.companyid);//获取当前具有权限的用户
 									}
 								}
 							},'查看')];
@@ -269,12 +299,7 @@
 										click:()=>{
 											this.formObj = params.row;
 											this.formObj.isalluser=String(params.row.isalluser);
-											this.showSelectUser=false;//隐藏用户列表
-											/*if(this.formObj.isalluser==='0'){
-												this.showSelectUser=false;
-											}else{
-												this.showSelectUser=true;
-											}*/
+											this.formObj.status=String(params.row.status);
 											console.log(this.formObj,'this.formObj')
 											Vue.obserable.trigger({
 												type:'toggleMask',
@@ -301,13 +326,19 @@
 		},
 		created(){
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
+			this.getUserList();
 		},
 		mounted(){
 			this.getDataList(0);
-			this.getUserList();
+			//this.getUserList();
 		},
-
+		computed:{
+			alluser:function(){			
+				return this.userSource
+			}
+		},
 		watch:{
+			
 			$route:{
 				deep:true
 			}
@@ -318,6 +349,7 @@
 			selectColumn(e){
 				this.specialnumVal=e;
 				this.formObj.specialnum=e;
+				this.formObj.status=1;
 				this.getDataList(this.specialnumVal);
 				console.log(this.formObj.specialnum,'选择栏目')
 			},
@@ -329,10 +361,12 @@
 				console.log(ele,'多选');
 			},
 			changeUserStatus(ele){
-				if(ele==='1'){
-					this.showSelectUser=true;
+				console.log(this.infotypeid,'this.infotypeid')
+				if(ele==='1' && this.infotypeid===-1){
+					//当为添加状态时显示
+					this.showSelectUser=true;					
 				}else{
-					this.showSelectUser=false;
+					this.showSelectUser=false;					
 				}
 				console.log(ele,'element')
 			},
@@ -371,6 +405,7 @@
 				this.formObj = {};
 				this.formObj.specialnum=this.specialnumVal;
 				this.formObj.isalluser="0";
+				this.formObj.status="1";
 				console.log(this.formObj,'this.formObj')
 				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
@@ -383,6 +418,7 @@
 					isalluser:this.formObj.isalluser,
 					typename:this.formObj.typename,
 					infotypeid:this.formObj.infotypeid,
+					status:this.formObj.status,
 					companyid:this.companyid,
 					productid:this.productid
 				}
@@ -414,7 +450,20 @@
 				})
 			},
 			delete(infotypeid){
-				console.log(infotypeid,'infotypeid')
+				console.log(infotypeid,'infotypeid');
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'deltypeList',
+					data:{
+						action:infomanagerActions.deltypeList.action,
+						infotypeid,
+						productid:s.productid
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						s.getDataList(s.specialnumVal);//更新列表
+					}
+				})
 			},
 			getUserList(){
 				var s = this;			
@@ -431,50 +480,137 @@
 					},
 					success(data){
 						if(data.getret === 0){
-							s.userDataList=data.list;
 							data.list.forEach((item,index)=>{
 								s.userSource.push({
 									userid:item.userid,
 									realname:item.user.realname,
 									username:item.user.username
-								})
+								})								
 							})
+							//console.log(s.userSource,'s.userSource')
+
 						}
 					}
 				})
 			},
 			ok () {
-                this.$Message.info('Clicked ok');
+                /*var infotypeid=this.infotypeid;
+                this.targetKeys1.forEach((item,index)=>{
+                	this.addpermission(item,infotypeid);
+                	console.log(item,'targetKeys1')
+                })*/
+                this.targetKeys1=[];//清空穿梭框
             },
             cancel () {
-                this.$Message.info('Clicked cancel');
+            	this.targetKeys1=[];//清空穿梭框
+                //this.$Message.info('Clicked cancel');
             },
             /*穿梭框*/
             getMockData () {
-                let mockData = [];
-                for (let i = 1; i <= 20; i++) {
-                    mockData.push({
-                        key: i.toString(),
-                        label: 'Content ' + i,
-                        description: 'The desc of content  ' + i,
-                        disabled: Math.random() * 3 < 1
-                    });
-                }
+            	var s = this;
+            	let mockData = [];
+                setTimeout(()=>{
+            		s.userSource.forEach((item,index)=>{
+	                	mockData.push({
+	                        key: item.userid.toString(),
+	                        label: item.realname,
+	                        description: item.username
+	                    });
+	                })
+            	},1000)                
                 return mockData;
             },
-            getTargetKeys () {
-                return this.getMockData()
-                        .filter(() => Math.random() * 2 > 1)
-                        .map(item => item.key);
+            getTargetKeys () {//当前已设置的用户
+                return ['4']
             },
             render1 (item) {
                 return item.label;
             },
             handleChange1 (newTargetKeys, direction, moveKeys) {
-                console.log(newTargetKeys);
+                console.log(newTargetKeys);//已经选择的用户
                 console.log(direction);
                 console.log(moveKeys);
                 this.targetKeys1 = newTargetKeys;
+                var infotypeid=this.infotypeid;
+                if(direction==='right'){//增加
+                	//console.log('增加');
+                	moveKeys.forEach((item,index)=>{
+	                	this.addpermission(item,infotypeid);
+	                	console.log(item,'添加用户')
+	                })
+                }else{//移除
+                	console.log('移除');                	
+                	moveKeys.forEach((item,index)=>{
+	                	this.delpermission(item,infotypeid);
+	                	console.log(item,'删除用户');
+	                })
+                }
+                
+            },
+            addpermission(userid,infotypeid){//添加信息管理权限
+            	var s = this;
+            	zmitiUtil.ajax({
+					remark:'addpermission',
+					data:{
+						action:infomanagerActions.addpermission.action,
+						info:{
+							userid,
+							productid:this.productid,
+							status:1,							
+							infotypeid
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							//s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						}
+					}
+				})
+            },
+            getpermission(infotypeid){//获取当前具有权限的用户列表
+            	var s = this;
+            	zmitiUtil.ajax({
+					remark:'getpermission',
+					data:{
+						action:infomanagerActions.getpermission.action,
+						condition:{
+							page_index:0,
+							page_size:20,
+							productid:this.productid,							
+							infotypeid:infotypeid
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							console.log(data.list,'获取当前具有权限的用户列表');
+							if(data.total>0){
+								data.list.forEach((item,index)=>{
+									s.targetKeys1.push(item.userid.toString());
+								})
+								console.log(s.targetKeys1,'s.targetKeys1-s.targetKeys1')							
+							}							
+						}
+					}
+				})
+            },
+            delpermission(userid,infotypeid){
+            	zmitiUtil.ajax({
+					remark:'delpermission',
+					data:{
+						action:infomanagerActions.delpermission.action,
+						info:{
+							productid:this.productid,							
+							infotypeid,
+							userid
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							console.log('获取当前具有权限的用户列表');
+						
+						}
+					}
+				})
             }
 
 		}
