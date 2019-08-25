@@ -403,6 +403,7 @@
 				this.formObj = {};
 				this.formObj.specialnum=this.specialnumVal;
 				this.formObj.isalluser="0";
+				this.formObj.status="1";
 				console.log(this.formObj,'this.formObj')
 				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
