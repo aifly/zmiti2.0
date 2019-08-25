@@ -44,9 +44,9 @@ import VueRouter from 'vue-router'
 import './components/css/index.css';
 import './components/css/theme.less';
 
-import './common/ueditor/ueditor.config'
-import './common/ueditor/ueditor.all'
-import './common/ueditor/lang/zh-cn/zh-cn'
+import './assets/ueditor/ueditor.config'
+import './assets/ueditor/ueditor.all'
+import './assets/ueditor/lang/zh-cn/zh-cn'
 
 import zmitiUtil from './common/lib/util';
 import iview from 'iview';

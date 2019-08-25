@@ -18,7 +18,7 @@
 					<div class="zmiti-select-column">
 						<label>类型标识：</label>
 						<RadioGroup @on-change="selectColumn" v-model="specialnumVal">
-					        <Radio v-for="(item,index) in specialnumData" :label="item.value" >{{item.label}}</Radio>
+					        <Radio v-for="(item,index) in specialnumData" :label="item.value" :key="index" >{{item.label}}</Radio>
 					    </RadioGroup>
 					</div>
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
