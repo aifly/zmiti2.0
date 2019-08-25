@@ -501,7 +501,7 @@
             },
             cancel () {
             	this.targetKeys1=[];//清空穿梭框
-                this.$Message.info('Clicked cancel');
+                //this.$Message.info('Clicked cancel');
             },
             /*穿梭框*/
             getMockData () {
