@@ -223,10 +223,10 @@
 							var status='';
 							if(params.row.status===0){
 								status='禁用'
-							}else if(params.row.status===1){
-								status='正常'
-							}else{
+							}else if(params.row.status===2){
 								status='已删除'
+							}else{								
+								status='正常'
 							}
 							return h('div',{},status);
 						}
@@ -361,10 +361,12 @@
 				console.log(ele,'多选');
 			},
 			changeUserStatus(ele){
-				if(ele==='1'){
-					this.showSelectUser=true;
+				console.log(this.infotypeid,'this.infotypeid')
+				if(ele==='1' && this.infotypeid===-1){
+					//当为添加状态时显示
+					this.showSelectUser=true;					
 				}else{
-					this.showSelectUser=false;
+					this.showSelectUser=false;					
 				}
 				console.log(ele,'element')
 			},
@@ -403,7 +405,7 @@
 				this.formObj = {};
 				this.formObj.specialnum=this.specialnumVal;
 				this.formObj.isalluser="0";
-				this.formObj.status="1";
+				//this.formObj.status="1";
 				console.log(this.formObj,'this.formObj')
 				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
@@ -604,13 +606,8 @@
 					},
 					success(data){
 						if(data.getret === 0){
-							console.log(data.list,'获取当前具有权限的用户列表');
-							if(data.total>0){
-								data.list.forEach((item,index)=>{
-									s.targetKeys1.push(item.userid.toString());
-								})
-								console.log(s.targetKeys1,'s.targetKeys1-s.targetKeys1')							
-							}							
+							console.log('获取当前具有权限的用户列表');
+						
 						}
 					}
 				})
