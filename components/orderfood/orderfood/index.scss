@@ -1,3 +1,142 @@
 ﻿@import "../../css/base.scss";
+$baseColor:#3390ff;
 
- 
+ .zmiti-orderfood-main-ui{
+	 width: 98%;
+	 height: 98%;
+	 left: 1%;
+	 top: 1%;
+	 @include displayFlex(row);
+	 .zmiti-orderfood-left-table-C{
+		flex:1;
+		height: 100%;
+		background: #fff;
+
+		header{
+			text-indent: 1em;
+			height: 50px;
+			line-height: 50px;
+			font-size:16px;
+			border-bottom: 1px solid #eee;
+
+		}
+		&>header{
+			@include displayFlex(row);
+			justify-content: space-between;
+			button{
+				margin-right: 1em;
+			}
+		}
+		.zmiti-orderfood-count{
+			text-align: right;
+			color:$baseColor;
+			padding-right: 1em;
+			border: none;
+		}
+
+
+		.zmiti-orderfood-table{
+			width: 98%;
+			margin: 0 auto;
+			border:1px solid #eee;
+			header{
+				width: 100%;
+				@include displayFlex(row);
+				justify-content:space-around;
+				span{
+					margin: 0 0px;
+					text-align: center;
+					text-indent:-.1em;
+					width: 50px;
+					cursor: pointer;
+					display: inline-block;
+					i{
+						width: 12px;
+						font-size:24px;
+					}
+				}
+			}
+
+			.zmiti-orderfood-datepicker{
+				@include displayFlex(row);
+				flex-wrap: wrap;
+				justify-content: space-between;
+				li{
+					text-align: center;
+					width: 14%;
+					height: 70px;
+					cursor: pointer;
+					line-height: 30px;
+					
+					span{
+						display: block;
+					}
+
+					&.active{
+						background: $baseColor;
+						color:#fff;
+						span{
+							color:#fff !important;
+						}
+					}
+
+					&:hover{
+						background: $baseColor;
+						color:#fff;
+						span{
+							color:#fff !important;
+						}
+					}
+					&.zmiti-orderfood-week{
+						&:hover{
+							background: transparent;
+							color:#888;
+							
+						}
+					}
+
+				}
+				li.disabled {
+					background-color: #eee;
+					border-color: #eee;
+					color: #57a3f3;
+					cursor: not-allowed;
+				}
+			}
+		}
+
+	 }
+	 .zmiti-orderfood-right-setting{
+		 width: 420px;
+		 margin-left: 10px;;
+		 background: #fff;
+
+		 &>header{
+			 height:50px;
+			 line-height: 50px;
+			 font-size:16px;
+			 text-indent: 1em;
+			 border-bottom: 1px solid #eee;
+			 .zmti_iconfont{
+				 font-size:20px;
+			 }
+		 }
+		 
+		 .zmiti-allow-orderfood{
+			 width: 90%;
+			 margin: 20px auto;
+			 &>div{
+				 margin: 2px 0;
+			 }
+
+		 }
+		
+		 .zmiti-admin-setting{
+			 width: 90%;
+			 margin: 20px auto;
+			 &>div{
+				 margin: 4px 0;
+			 }
+		 }
+	 }
+ }

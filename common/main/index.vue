@@ -13,7 +13,7 @@
                   <div v-else>
 					  <span><router-link to='/home'>单位端控制平台</router-link></span>
 					  <div class='zmiti-company-info'>
-						   <span style='margin:0 10px 0 20px' v-if='currentComapny'>当前单位： {{currentComapny.companyname}}</span>
+						   <span style='margin:0 10px 0 20px' v-if='currentComapny'>当前单位：{{currentComapny.companyname}}<span v-if='currentComapny.islead' style="font-size:12px;margin-left:10px;"> (管理员)</span> </span>
 					  <router-link style='font-size:12px;cursor:pointer;' to='/login' v-if='userinfo.info&&userinfo.info.company_list&&userinfo.info.company_list.length>1'></router-link>
 					  </div>
 				  </div>

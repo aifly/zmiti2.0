@@ -3,14 +3,16 @@
   height: 100%;
   position: absolute;
   left: 0;
-  top: 0; }
+  top: 0;
+}
 
 .zmiti-text-overflow {
   overflow: hidden;
   white-space: nowrap;
   word-break: break-all;
   text-overflow: ellipsis;
-  -webkit-text-overflow: ellipsis; }
+  -webkit-text-overflow: ellipsis;
+}
 
 .zmiti-play {
   width: .8rem;
@@ -19,228 +21,326 @@
   position: fixed;
   z-index: 1000;
   right: .5rem;
-  top: .5rem; }
-  .zmiti-play.rotate {
-    -webkit-animation: rotate 5s linear infinite;
-    animation: rotate 5s linear infinite; }
+  top: .5rem;
+}
+
+.zmiti-play.rotate {
+  -webkit-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
 
 .symbin-left {
-  float: left !important; }
+  float: left !important;
+}
 
 .symbin-right {
-  float: right !important; }
+  float: right !important;
+}
 
 @-webkit-keyframes rotate {
   to {
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
+    transform: rotate(360deg);
+  }
+}
+
 .zmiti-login-ui {
   display: flex;
   display: -webkit-flex;
-  flex-flow: row; }
-  .zmiti-login-ui > section {
-    width: 60%;
-    display: flex;
-    display: -webkit-flex;
-    flex-flow: row;
-    -webkit-justify-content: flex-start;
-    justify-content: flex-start;
-    -webkit-align-items: center;
-    align-items: center; }
-    .zmiti-login-ui > section .zmiti-login-C {
-      width: 504px;
-      min-height: 300px;
-      background: #fff;
-      padding: 0 0 30px 0;
-      border-radius: 16px;
-      position: relative;
-      left: 100px; }
-      .zmiti-login-ui > section .zmiti-login-C .zmiti-login-title {
-        margin-bottom: 7vh; }
-      .zmiti-login-ui > section .zmiti-login-C > h2 {
-        color: #ff6801;
-        font-size: 30px;
-        margin: 42px 0 38px 0;
-        text-align: center; }
-      .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form {
-        margin: 0 40px; }
-        .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account {
-          border-radius: 5px;
-          border: 1px solid #dddddd;
-          padding: 15px 0 10px 0; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1), .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2) {
-            padding: 0 10px; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1) label, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2) label {
-              display: flex;
-              display: -webkit-flex;
-              flex-flow: row; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1) .zmiti-login-error, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2) .zmiti-login-error {
-              color: #f00;
-              margin-top: -12px; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1).active input::-webkit-input-placeholder, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2).active input::-webkit-input-placeholder {
-              color: #ff6801; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1).active input, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2).active input {
-              color: #ff6801; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account span.zmiti-login-icon {
-            margin: 0 15px 0 8px; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account span.zmiti-login-icon img {
-              width: 23px;
-              margin: 10px 0 0 0; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account input {
-            border: none;
-            background: transparent;
-            outline: none;
-            height: 45px;
-            font-size: 16px;
-            flex: 1;
-            -webkit-flex: 1; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account input.zmiti-login-account-name {
-              border-bottom: 1px solid #f5f5f5; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account input:-webkit-autofill {
-              box-shadow: 0 0 0px 1000px white inset !important; }
-        .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-remember-pass {
-          margin: 20px 0;
-          line-height: 40px;
-          text-align: right;
-          display: flex;
-          display: -webkit-flex;
-          flex-flow: row;
-          justify-content: space-between;
-          -webkit-justify-content: space-between; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-remember-pass a {
-            color: #333;
-            text-decoration: underline; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-remember-pass label {
-            display: block; }
-        .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-btn {
-          background: #ff6801;
-          color: #fff;
-          text-align: center;
-          height: 44px;
-          line-height: 44px;
-          border-radius: 5px;
-          font-size: 20px;
-          cursor: pointer;
-          -webkit-user-select: none;
-          user-select: none; }
-        .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile {
-          border: 1px solid #dddddd;
-          padding: 15px 0 10px 0;
-          border-radius: 5px; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile .zmiti-login-number, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile .zmiti-login-code {
-            display: flex;
-            display: -webkit-flex;
-            flex-flow: row;
-            align-items: center; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile span.zmiti-login-icon {
-            margin: 0 15px 0 8px; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile span.zmiti-login-icon img {
-              width: 23px;
-              margin: 0; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile input {
-            border: none;
-            background: transparent;
-            outline: none;
-            height: 45px;
-            font-size: 16px;
-            flex: 1;
-            -webkit-flex: 1; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile input.zmiti-login-iptmobile {
-              border-bottom: 1px solid #f5f5f5; }
-            .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile input:-webkit-autofill {
-              box-shadow: 0 0 0px 1000px white inset !important; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile .zmiti-login-getcodebtn {
-            height: 30px;
-            margin-right: 10px; }
-        .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-btn2 {
-          margin: 30px 0; }
-        .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form #zmiti-login-accountname {
-          margin: 0; }
-        .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form h5 {
-          font-size: 16px;
-          color: #999;
-          text-align: center;
-          font-weight: normal;
-          position: relative;
-          height: 20px;
-          line-height: 1;
-          margin: 20px 0; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form h5 span {
-            background-color: #ffffff;
-            position: relative;
-            z-index: 2;
-            padding: 0 15px; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form h5:before {
-            width: 100%;
-            height: 1px;
-            display: block;
-            position: absolute;
-            z-index: 1;
-            top: 10px;
-            content: ' ';
-            background-color: #dddddd; }
-        .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-apibtn {
-          text-align: center; }
-          .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-apibtn img {
-            width: 36px;
-            margin: 0 10px;
-            cursor: pointer; }
-      .zmiti-login-ui > section .zmiti-login-C .zmiti-browner-tip {
-        text-align: center;
-        color: #fff;
-        margin-top: 30px;
-        font-size: 14px;
-        position: absolute;
-        top: -100px;
-        -webkit-animation: 1s flash infinite alternate;
-        animation: 1s flash infinite alternate; }
+  flex-flow: row;
+}
+
+.zmiti-login-ui > section {
+  width: 60%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.zmiti-login-ui > section .zmiti-login-C {
+  width: 504px;
+  min-height: 300px;
+  background: #fff;
+  padding: 0 0 30px 0;
+  border-radius: 16px;
+  position: relative;
+  left: 100px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-title {
+  margin-bottom: 7vh;
+}
+
+.zmiti-login-ui > section .zmiti-login-C > h2 {
+  color: #ff6801;
+  font-size: 30px;
+  margin: 42px 0 38px 0;
+  text-align: center;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form {
+  margin: 0 40px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account {
+  border-radius: 5px;
+  border: 1px solid #dddddd;
+  padding: 15px 0 10px 0;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1), .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2) {
+  padding: 0 10px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1) label, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2) label {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1) .zmiti-login-error, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2) .zmiti-login-error {
+  color: #f00;
+  margin-top: -12px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1).active input::-webkit-input-placeholder, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2).active input::-webkit-input-placeholder {
+  color: #ff6801;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(1).active input, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account > div:nth-of-type(2).active input {
+  color: #ff6801;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account span.zmiti-login-icon {
+  margin: 0 15px 0 8px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account span.zmiti-login-icon img {
+  width: 23px;
+  margin: 10px 0 0 0;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account input {
+  border: none;
+  background: transparent;
+  outline: none;
+  height: 45px;
+  font-size: 16px;
+  flex: 1;
+  -webkit-flex: 1;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account input.zmiti-login-account-name {
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-account input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-remember-pass {
+  margin: 20px 0;
+  line-height: 40px;
+  text-align: right;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-remember-pass a {
+  color: #333;
+  text-decoration: underline;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-remember-pass label {
+  display: block;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-btn {
+  background: #ff6801;
+  color: #fff;
+  text-align: center;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile {
+  border: 1px solid #dddddd;
+  padding: 15px 0 10px 0;
+  border-radius: 5px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile .zmiti-login-number, .zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile .zmiti-login-code {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile span.zmiti-login-icon {
+  margin: 0 15px 0 8px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile span.zmiti-login-icon img {
+  width: 23px;
+  margin: 0;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile input {
+  border: none;
+  background: transparent;
+  outline: none;
+  height: 45px;
+  font-size: 16px;
+  flex: 1;
+  -webkit-flex: 1;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile input.zmiti-login-iptmobile {
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-mobile .zmiti-login-getcodebtn {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-btn2 {
+  margin: 30px 0;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form #zmiti-login-accountname {
+  margin: 0;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form h5 {
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+  font-weight: normal;
+  position: relative;
+  height: 20px;
+  line-height: 1;
+  margin: 20px 0;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form h5 span {
+  background-color: #ffffff;
+  position: relative;
+  z-index: 2;
+  padding: 0 15px;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form h5:before {
+  width: 100%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  content: ' ';
+  background-color: #dddddd;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-apibtn {
+  text-align: center;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-login-form .zmiti-login-apibtn img {
+  width: 36px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.zmiti-login-ui > section .zmiti-login-C .zmiti-browner-tip {
+  text-align: center;
+  color: #fff;
+  margin-top: 30px;
+  font-size: 14px;
+  position: absolute;
+  top: -100px;
+  -webkit-animation: 1s flash infinite alternate;
+  animation: 1s flash infinite alternate;
+}
+
 @-webkit-keyframes flash {
   to {
-    opacity: .2; } }
+    opacity: .2;
+  }
+}
+
 @keyframes flash {
   to {
-    opacity: .2; } }
+    opacity: .2;
+  }
+}
+
 @-moz-keyframes flash {
   to {
-    opacity: .2; } }
-    .zmiti-login-ui > section .zmiti-copyright {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      height: 50px;
-      line-height: 50px;
-      color: #fff;
-      left: 0;
-      background: #cc0000; }
-  .zmiti-login-ui .zmiti-jigsaw {
-    position: absolute;
-    left: 50%;
-    z-index: 11;
-    margin-left: 145px;
-    background: #fff; }
-    .zmiti-login-ui .zmiti-jigsaw::before {
-      content: '';
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      border-radius: 2px;
-      top: 0;
-      background: #fff;
-      -webkit-transform: scale(1.1);
-      transform: scale(1.1);
-      z-index: -1;
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); }
-  .zmiti-login-ui.active::before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background: rgba(0, 0, 0, 0.5);
-    position: absolute;
-    z-index: 10; }
+    opacity: .2;
+  }
+}
+
+.zmiti-login-ui > section .zmiti-copyright {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+  left: 0;
+  background: #cc0000;
+}
+
+.zmiti-login-ui .zmiti-jigsaw {
+  position: absolute;
+  left: 50%;
+  z-index: 11;
+  margin-left: 145px;
+  background: #fff;
+}
+
+.zmiti-login-ui .zmiti-jigsaw::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  border-radius: 2px;
+  top: 0;
+  background: #fff;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  z-index: -1;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.zmiti-login-ui.active::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 10;
+}
 
 .zmiti-choose-company {
   position: absolute;
@@ -254,82 +354,107 @@
   display: -webkit-flex;
   flex-flow: row;
   justify-content: center;
-  align-items: center; }
-  .zmiti-choose-company > div {
-    position: relative;
-    width: 800px;
-    height: 300px;
-    z-index: 10;
-    color: #000; }
-  .zmiti-choose-company h1 {
-    text-align: center;
-    width: 150px;
-    margin: 10px auto;
-    position: relative; }
-    .zmiti-choose-company h1:before, .zmiti-choose-company h1:after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 1px;
-      background: #3390ff;
-      left: 0;
-      bottom: 0; }
-    .zmiti-choose-company h1:after {
-      height: 3px;
-      bottom: -4px; }
-  .zmiti-choose-company ul {
-    width: 100%;
-    margin-top: 20px;
-    display: flex;
-    display: -webkit-flex;
-    flex-flow: row;
-    justify-content: space-around; }
-    .zmiti-choose-company ul li {
-      display: inline-block;
-      border: 1px solid #ccc;
-      width: 180px;
-      height: 60px;
-      background: #eee;
-      margin-left: 13px;
-      font-size: 18px;
-      text-align: center;
-      line-height: 60px;
-      -webkit-transition: 0.2s;
-      transition: 0.2s; }
-      .zmiti-choose-company ul li:hover {
-        cursor: pointer;
-        background: #3390ff;
-        color: #fff;
-        transform: scale(1.1);
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); }
+  align-items: center;
+}
+
+.zmiti-choose-company > div {
+  position: relative;
+  width: 800px;
+  height: 300px;
+  z-index: 10;
+  color: #000;
+}
+
+.zmiti-choose-company h1 {
+  text-align: center;
+  width: 150px;
+  margin: 10px auto;
+  position: relative;
+}
+
+.zmiti-choose-company h1:before, .zmiti-choose-company h1:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #3390ff;
+  left: 0;
+  bottom: 0;
+}
+
+.zmiti-choose-company h1:after {
+  height: 3px;
+  bottom: -4px;
+}
+
+.zmiti-choose-company ul {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+
+.zmiti-choose-company ul li {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 0 20px;
+  height: 60px;
+  background: #eee;
+  margin-left: 13px;
+  font-size: 18px;
+  text-align: center;
+  line-height: 60px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.zmiti-choose-company ul li:hover {
+  cursor: pointer;
+  background: #3390ff;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
 
 .zmiti-login-linkspan {
   color: #ff6700;
   font-size: 16px;
-  padding-left: 15px; }
-  .zmiti-login-linkspan a {
-    color: #ff6700 !important;
-    text-decoration: none !important; }
+  padding-left: 15px;
+}
+
+.zmiti-login-linkspan a {
+  color: #ff6700 !important;
+  text-decoration: none !important;
+}
 
 .zmiti-login-check .ivu-checkbox-wrapper {
   color: #999;
-  font-size: 16px !important; }
+  font-size: 16px !important;
+}
 
 .zmiti-login-logo {
   justify-content: center;
-  align-items: center; }
-  .zmiti-login-logo img {
-    width: 105px;
-    height: 33px;
-    margin: -3px 12px 0 0; }
+  align-items: center;
+}
+
+.zmiti-login-logo img {
+  width: 105px;
+  height: 33px;
+  margin: -3px 12px 0 0;
+}
 
 .zmiti-login-code2 {
   width: 83px;
   position: absolute;
   right: 8px;
-  top: 8px; }
-  .zmiti-login-code2 img {
-    width: 83px; }
+  top: 8px;
+}
+
+.zmiti-login-code2 img {
+  width: 83px;
+}
 
 .zmiti-copyright {
   position: absolute;
@@ -337,18 +462,19 @@
   width: 100%;
   color: #ffffff;
   text-align: center;
-  font-size: 16px; }
+  font-size: 16px;
+}
 
 .disabled {
   background-color: #ddd;
   border-color: #ddd;
   color: #57a3f3;
-  cursor: not-allowed; }
+  cursor: not-allowed;
+}
 
 .zmiti-login-qrcode {
   display: flex;
   display: -webkit-flex;
   flex-flow: column;
-  align-items: center; }
-
-/*# sourceMappingURL=index.css.map */
+  align-items: center;
+}

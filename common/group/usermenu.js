@@ -170,15 +170,15 @@ let infomanager ={
 
 let orderFood ={
 	title: "订餐管理",
-	keys: ['orderfood','userconfig'],
+	keys: ['orderfood','orderfoodsubmit'],
 	tabs:[
 		{
-			name: '用户订餐',
+			name: '订餐预览表',
 			link: '/orderfood'
 		},
 		{
-			name:'设置订餐配置项',
-			link:'/userconfig'
+			name:'用户订餐',
+			link:'/orderfoodsubmit'
 		},
 		
 	]

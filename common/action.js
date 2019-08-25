@@ -461,6 +461,10 @@ let orderFoodActions = {
 		desc:'设置订餐配置项',
 		action:'2001800'
 	},
+	getOrderFoodConfigTop: {
+		desc: '获取订餐配置数据',
+		action: '2001805'
+	},
 	userOrderFood:{
 		desc:'用户订餐',
 		action:'2001801'
@@ -472,7 +476,10 @@ let orderFoodActions = {
 	getDateRangeOrderFoodCount:{
 		desc:'获取某个时间段内订餐人数',
 		action:'2001803'
-
+	},
+	getOrderFoodDetailByDate:{
+		desc:'获取某天订餐详细列表',
+		action:"2001804"
 	}
 
 }
