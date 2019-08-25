@@ -7,16 +7,15 @@
 			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>栏目配置</span>
+						 <span>信息</span>
 
 					 </div>
 					 <div>
-					 	<Button type="primary" @click='add()'>添加</Button>
+					 	<Button type="primary" @click='goback()'>返回</Button>
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :page-size='condition.page_size'  :total="total">
-					</ZmitiTable>
+					
 				 </div>
 			 </div>
 		</div>
@@ -34,7 +33,6 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import ZmitiTable from '../../../common/table';
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
@@ -66,23 +64,10 @@
 				title:'',
 				begin_time:0,
 				end_time:0,
-				columns:[
-					{
-						title:"编号",
-						key:'infotypeid',
-						align:'center'
-					},
-					{
-						title:"名称",
-						key:'typename',
-						align:'center',
-						width:180
-					}
-				]
 			}
 		},
 		components:{
-			ZmitiTable
+
 		},
 
 		beforeCreate(){
@@ -93,15 +78,17 @@
 			
 		},
 
-		watch:{
-
-			
+		watch:{	
 			
 		},
 		
 		methods:{
+			goback(){
+				this.$router.push({path:'infomanagermsg'})
+			},
 			add(){
-				this.$router.push({path:'infomanagerdetail'})				
+				this.formObj = {};
+				
 			},
 			getDataList(){
 				var s = this;
