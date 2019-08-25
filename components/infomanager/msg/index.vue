@@ -80,13 +80,36 @@
 						
 					},
 					{
+						title:"时间",
+						key:"createtime",
+						align:"center",
+						render:(h,params)=>{
+							return h('div',{},formatDate(params.row.createtime))
+						}
+					},
+					{
 						title:"操作",
 						key:"action",
 						align:"center",
+						width:180,
 						render:(h,params)=>{
 
 							return h('div', [
-                                h('Poptip',{
+                                
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginRight:'10px'
+									},
+									on:{
+										click:()=>{
+											this.formObj = params.row;
+											this.$router.push({name:'infomanagerdetail',params:{typeid:2,id:this.formObj.infoid}});
+										}
+									}
+								},'编辑'),
+								h('Poptip',{
 									props:{
 										confirm:true,
 										title:"确定要删除吗？",
@@ -114,20 +137,7 @@
 											}
 										}
 									}, '删除')
-								]),
-								h('span',{
-									style:{
-										cursor:'pointer',
-										color:"rgb(0, 102, 204)",
-										marginLeft:'10px'
-									},
-									on:{
-										click:()=>{
-											this.formObj = params.row;
-											this.$router.push({name:'infomanagerdetail',params:{id:this.formObj.infoid,typeid:2}});
-										}
-									}
-								},'详情')
+								])
                             ]);
 							
 							 
@@ -156,7 +166,7 @@
 		
 		methods:{
 			add(){
-				this.$router.push({path:'infomanagerdetail'})				
+				this.$router.push({name:'infomanagerdetail',params:{typeid:2}})				
 			},
 			getDataList(){
 				var s = this;

@@ -20,9 +20,6 @@
 							<FormItem label="标题：">
 								<Input v-model="formObj.title" placeholder="标题"></Input>
 							</FormItem>
-							<FormItem label="类型：">
-								<Input v-model="formObj.typeid"></Input>
-							</FormItem>
 							<FormItem label="状态：">
 							     <RadioGroup v-model="formObj.status">
 							        <Radio label="0">禁用</Radio>
@@ -129,6 +126,7 @@
 					page_size:10,
 				},
 				userinfo:{},
+				id:'',
 				typeid:1,
 				productid:1072203850,
 				title:'',
@@ -137,7 +135,6 @@
 				formObj:{
 					productid:1072203850,
 					title:'',
-					typeid:2,
 					status:'1',
 					content:'',
 					wordurl:'',
@@ -191,8 +188,10 @@
 			
 		},
 		mounted(){
-			
-			
+			this.id=this.$route.params.id;
+			this.typeid=this.$route.params.typeid;
+			console.log(this.id,'this.id');
+			console.log(this.typeid,'this.typeid');
 		},
 
 		watch:{	
@@ -209,17 +208,22 @@
 			},
 			adminAction(){
 				var s = this;
-				var action = infomanagerActions.addnews.action;
+				var action = this.formObj.id?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
-				//info.typeid=this.$roter.params.id
+				info.typeid=this.$route.params.typeid;
+				if(this.id!=undefined){
+					info.id=this.$route.params.id
+				}
+				console.log(info)
 				zmitiUtil.ajax({
-					remark:'addnews',
+					remark:this.id?'editnews':'addnews',
 					data:{
 						action,
 						info
 					},
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						s.$router.push({name:'infomanagermsg',params:{typeid:s.$route.params.typeid}})
 					}
 				})
 			},
