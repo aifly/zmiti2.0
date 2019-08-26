@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<div class='zmiti-user-table' >
-			<Table :border='border' @on-selection-change='selection' ref='selection'  :loading='loading' :data='dataSource' :columns='myColumns'></Table>
+			<Table :border='border' @on-selection-change='selection' ref='selection' :loading='loading' :data='dataSource' :columns='myColumns'></Table>
 		</div>
 		<div class='zmiti-pager'>
 			<div>
 				<Checkbox @on-change='selectAll'><span style="opacity:0">全</span></Checkbox>
 				<slot name='table-btns'></slot>
 			</div>
-			<Page @on-change='change' :page-size='pageSize' :total="total" show-total />
+			<Page @on-change='change' :current="current" :page-size='pageSize' :total="total" show-total />
 		</div>
 	</div>
 </template>
@@ -55,6 +55,10 @@
 <script>
 export default {
 	props:{
+		current:{
+			type:Number,
+			default:1
+		},
 		dataSource:{
 			type:Array,
 			default:[]

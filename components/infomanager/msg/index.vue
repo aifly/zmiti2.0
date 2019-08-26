@@ -30,7 +30,7 @@
 					        <Option v-for="item in selectStatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
 					    </Select>
 				 	</section>
-					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
+					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
 				 </div>
 			 </div>
@@ -85,9 +85,10 @@
 				viewW:window.innerWidth,
 				dataSource:[],				
 				showTable:false,
+				currentNumber:1,
 				condition:{
 					page_index:0,
-					page_size:10,
+					page_size:1,
 				},
 				userinfo:{},
 				typeDataList:[],
@@ -275,6 +276,7 @@
 		methods:{
 			change(e){
 				this.condition.page_index = e -1;
+				this.currentNumber=e;
 				this.getDataList();
 			},
 			add(){
@@ -368,10 +370,14 @@
 			},
 			currentTabs(val){//切换信息类型
 				this.typeid=parseInt(val);
+				this.condition.page_index=0;
+				this.currentNumber=1;
 				console.log(val,'当前标签');
 			},
 			infoStatus(val){//根据状态筛选
 				this.statusVal=val;
+				this.condition.page_index=0;
+				this.currentNumber=1;
 				console.log(this.statusVal,'选中的状态');
 			},
 			getUserList(){
