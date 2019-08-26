@@ -71,7 +71,9 @@
 							    </RadioGroup>
 							    <div>
 							    	<template v-if="parseInt(formObj.visit)===1">
-							    		指定人员
+							    		<Select v-model="selectUsers" @on-change="selectuserHandle" multiple style="width:260px">
+									        <Option v-for="item in userSource" :value="item.value" :key="item.value">{{ item.label }}</Option>
+									    </Select>
 							    	</template>
 							    </div>
 							</FormItem>
@@ -136,6 +138,7 @@
 				end_time:0,
 				companyid:'',
 				userSource:[],
+				selectUsers:'',
 				formObj:{
 					productid:1072203850,
 					title:'',
@@ -149,7 +152,7 @@
 					allowreply:'1',
 					visit:'0',
 					remarks:'',
-					users:[2,4,1]
+					users:[]
 				},
 				editorOption: {
 					initialFrameWidth:'100%',
@@ -225,10 +228,9 @@
 					success(data){
 						if(data.getret === 0){
 							data.list.forEach((item,index)=>{
-								s.userSource.push({
-									userid:item.userid,
-									realname:item.user.realname,
-									username:item.user.username
+								s.userSource.push({									
+									label:item.user.realname,
+									value:item.userid
 								})								
 							})
 							//console.log(s.userSource,'s.userSource')
@@ -249,8 +251,12 @@
 				var action = this.id!=undefined?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
 				info.typeid=this.$route.params.typeid;
-				if(this.id!=undefined){
+				if(this.id!=undefined){//当文章id不为空时
 					info.id=this.$route.params.id;
+				}
+
+				if(s.formObj.users.length>0){//当有选中的用户时
+					info.users=s.formObj.users;
 				}
 				console.log(info)
 				zmitiUtil.ajax({
@@ -295,6 +301,10 @@
 						}
 					}
 				})
+		    },
+		    selectuserHandle(val){//选中的用户		    	
+		    	this.formObj.users=val;
+		    	console.log(this.formObj.users,'选中的用户');
 		    }
 		}
 	}
