@@ -209,7 +209,7 @@
 			},
 			adminAction(){
 				var s = this;
-				var action = this.formObj.id?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
+				var action = this.id!=undefined?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
 				info.typeid=this.$route.params.typeid;
 				if(this.id!=undefined){
@@ -253,6 +253,7 @@
 							s.formObj.issecret=data.info.issecret.toString();
 							s.formObj.status=data.info.status.toString();
 							s.formObj.visit=data.info.visit.toString();
+							s.formObj.productid=s.productid;
 							console.log(s.formObj,'获取新闻详情s.formObj');			
 						}
 					}

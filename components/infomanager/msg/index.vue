@@ -15,6 +15,16 @@
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
+				 	<div class="zmiti-tabs-select">
+					 	<Tabs type="card" @on-click="currentTabs">
+			                <TabPane :label="item.typename" :name="item.infotypeid.toString()" v-for="(item,index) in typeDataList" :key="index"></TabPane>	               
+			            </Tabs>
+		            </div>
+				 	<section class="zmiti-list-where">
+				 		<Input placeholder="请输入标题" v-model="title" style="width: 200px;"></Input>
+				        <DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
+				        <Button icon="md-search" @click="searchHandle">搜索</Button>
+				 	</section>
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
 				 </div>
@@ -61,7 +71,8 @@
 					page_size:10,
 				},
 				userinfo:{},
-				typeid:1,
+				typeDataList:[],
+				typeid:-1,
 				productid:1072203850,
 				title:'',
 				begin_time:0,
@@ -78,6 +89,28 @@
 						key:'title',
 						align:'center',
 						
+					},
+					{
+						title:"状态",
+						key:'status',
+						align:'center',
+						render:(h,params)=>{
+							let status='';
+							switch(params.row.status){
+								case 0:
+									status='禁用'
+								break;
+								case 2:
+									status='通过'
+								break;
+								case 3:
+									status='拒绝'
+								break;
+								default:
+									status='待审'
+							}
+							return h('div',{},status)
+						}
 					},
 					{
 						title:"时间",
@@ -154,8 +187,10 @@
 			
 		},
 		mounted(){
-			this.getDataList();
-			
+			this.getTypeList(0);
+			setTimeout(()=>{
+				this.getDataList();
+			},100);					
 		},
 
 		watch:{
@@ -166,7 +201,7 @@
 		
 		methods:{
 			add(){
-				this.$router.push({name:'infomanagerdetail',params:{typeid:2}})				
+				this.$router.push({name:'infomanagerdetail',params:{typeid:this.typeid}})				
 			},
 			getDataList(){
 				var s = this;
@@ -217,6 +252,48 @@
 						s.getDataList();//更新列表
 					}
 				})
+			},
+			selectDates(val){//按时间段查询
+				console.log(val,'选择的时间');
+				this.begin_time=Date.parse(new Date(val[0]))/1000;
+				this.end_time=Date.parse(new Date(val[1]))/1000;
+				console.log(this.begin_time+' '+this.end_time,'选择的时间戳');
+			},
+			searchHandle(){//搜索
+				this.getDataList();
+			},
+			getTypeList(specialnum){//查询类型
+				specialnum=0;
+				var {condition} = this;
+				var s = this;
+
+				zmitiUtil.ajax({
+					remark:"gettypeList",
+					data:{
+						action:infomanagerActions.gettypeList.action,
+						condition:{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							specialnum:specialnum,
+							productid:s.productid,
+							page_index:0,
+							page_size:10
+						}
+					},
+					success(data){
+						console.log(data,'获取类型列表');
+						if(data.getret === 0){
+							if(data.total>0){
+								s.typeDataList=data.list;
+								s.typeid=data.list[0].infotypeid;
+							}
+						}
+					}
+				})
+			},
+			currentTabs(val){//切换信息类型
+				this.typeid=parseInt(val);
+				this.getDataList();
+				console.log(val,'当前标签');
 			}
 		}
 	}
