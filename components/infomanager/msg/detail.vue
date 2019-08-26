@@ -29,12 +29,14 @@
 							    </RadioGroup>
 							</FormItem>
 							<FormItem label="内容：">
+								<div style="line-height: 22px;">
 								<UE
-								:default-msg="formObj.content" 
-								id="editor" 
-								:config="editorOption" 
-								@contentChanged="contentChange">				
-								</UE>
+									:default-msg="formObj.content" 
+									id="editor" 
+									:config="editorOption" 
+									@contentChanged="contentChange">				
+									</UE>
+								</div>
 							</FormItem>
 							<FormItem label="WORD加密文件：">
 								<Input v-model="formObj.wordurl"></Input>
@@ -67,9 +69,11 @@
 							        <Radio label="0">全部人员</Radio>
 							        <Radio label="1">指定人员</Radio>
 							    </RadioGroup>
-							    <div>
+							    <div v-if="this.id===undefined">
 							    	<template v-if="parseInt(formObj.visit)===1">
-							    		指定人员
+							    		<Select v-model="selectUsers" @on-change="selectuserHandle" multiple style="width:260px">
+									        <Option v-for="item in userSource" :value="item.value" :key="item.value">{{ item.label }}</Option>
+									    </Select>
 							    	</template>
 							    </div>
 							</FormItem>
@@ -132,6 +136,9 @@
 				title:'',
 				begin_time:0,
 				end_time:0,
+				companyid:'',
+				userSource:[],
+				selectUsers:'',
 				formObj:{
 					productid:1072203850,
 					title:'',
@@ -145,7 +152,7 @@
 					allowreply:'1',
 					visit:'0',
 					remarks:'',
-					users:[2,4,1]
+					users:[]
 				},
 				editorOption: {
 					initialFrameWidth:'100%',
@@ -187,6 +194,9 @@
 		beforeCreate(){
 			
 		},
+		created(){
+			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
+		},
 		mounted(){
 			this.id=this.$route.params.id;
 			this.typeid=this.$route.params.typeid;
@@ -196,10 +206,39 @@
 		},
 
 		watch:{	
-			
+			companyid(){
+				this.getUserList();
+			}
 		},
 		
 		methods:{
+			getUserList(){
+				var s = this;			
+				zmitiUtil.ajax({
+					remark:'getUserList',
+					data:{
+						action:userActions.getCompanyUserList.action,
+						condition:{
+							page_index:0,
+							page_size:100,
+							companyid:this.companyid,
+							status:1
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							data.list.forEach((item,index)=>{
+								s.userSource.push({									
+									label:item.user.realname,
+									value:item.userid
+								})								
+							})
+							//console.log(s.userSource,'s.userSource')
+
+						}
+					}
+				})
+			},
 			goback(){
 				this.$router.push({name:'infomanagermsg'})
 			},
@@ -209,12 +248,17 @@
 			},
 			adminAction(){
 				var s = this;
-				var action = this.formObj.id?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
+				var action = this.id!=undefined?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
 				info.typeid=this.$route.params.typeid;
-				if(this.id!=undefined){
+				if(this.id!=undefined){//编辑
 					info.id=this.$route.params.id;
+				}else{//新增
+					if(s.formObj.users.length>0){//当有选中的用户时
+						info.users=s.formObj.users;
+					}
 				}
+				
 				console.log(info)
 				zmitiUtil.ajax({
 					remark:this.id?'editnews':'addnews',
@@ -253,10 +297,15 @@
 							s.formObj.issecret=data.info.issecret.toString();
 							s.formObj.status=data.info.status.toString();
 							s.formObj.visit=data.info.visit.toString();
+							s.formObj.productid=s.productid;
 							console.log(s.formObj,'获取新闻详情s.formObj');			
 						}
 					}
 				})
+		    },
+		    selectuserHandle(val){//选中的用户		    	
+		    	this.formObj.users=val;
+		    	console.log(this.formObj.users,'选中的用户');
 		    }
 		}
 	}

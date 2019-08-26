@@ -11,7 +11,23 @@
       background: #fff;
       margin: 0 auto;
   }
+  .zmiti-list-where{
+    font-size: 14px;
+    margin:0 10px 10px 10px;
+    @include displayFlex(row);
+    .zmiti-search-dates{
+      margin:0 10px;
+    }
+  }
+  .zmiti-search-icon{
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .zmiti-tabs-select{
+    margin:0 10px;
+  }
     .zmiti-submit-main {
+      margin-top: 10px;
       flex: 5;
     -webkit-flex: 5;
     width: 100%;
