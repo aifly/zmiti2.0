@@ -88,7 +88,7 @@
 				currentNumber:1,
 				condition:{
 					page_index:0,
-					page_size:1,
+					page_size:10,
 				},
 				userinfo:{},
 				typeDataList:[],
