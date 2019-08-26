@@ -221,9 +221,12 @@
 			///this.validate = validate;
 		},
 		mounted(){
-			window.s = this;
 
 			this.getDataList();
+
+			Vue[this.$route.name] = ()=>{
+				this.getDataList();
+			}
 			
 		},
 
@@ -240,9 +243,9 @@
 				}
 			},
 			$route:{
-				deep:true,
 				handler(){
-					this.getDataList()
+					var productid = this.productid;
+					productid && this.$router.push({path:'/tripreason/'+productid});
 				}
 			}
 			
@@ -364,6 +367,7 @@
 							
 						}
 						this.$router.push({path:'/tripreason/'+productid});
+						this.productid = productid;
 						var {condition} = this;
 						condition = Object.assign(condition,{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,

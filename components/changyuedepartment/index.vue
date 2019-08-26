@@ -281,6 +281,10 @@
 		mounted(){
 			window.s = this;
 			this.getDataList();
+
+			Vue[this.$route.name] = ()=>{
+				this.getDataList();
+			}
 			
 		},
 
@@ -294,6 +298,12 @@
 					}, 310);
 				}
 			},
+			 $route:{
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/changyuedepartment/'+productid});
+				}
+			}
 			
 			
 		},
@@ -478,6 +488,7 @@
 							})
 							
 						}
+
 						this.getAllUserList(productid);
 						var {condition} = this;
 						condition = Object.assign(condition,{
@@ -485,6 +496,7 @@
 							productid
 						});
 						this.$router.push({path:'/changyuedepartment/'+productid});
+						this.productid = productid;
 						var p = new Promise((resolve,reject)=>{
 							zmitiUtil.ajax({
 								remark:'getDepartmentList',

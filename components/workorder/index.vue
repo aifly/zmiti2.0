@@ -8,7 +8,7 @@
 
 		<div class='zmiti-workorder-choose'>
 			<header class='zmiti-workorder-header-bar'>
-				咨询类工单问题
+				{{formWorkOrder.workordertype === -2? '产品':'咨询'}}类工单问题
 			</header>
 			<template v-if='formWorkOrder.workordertype <= -1 && !formWorkOrder.productid'>
 				<ul >
@@ -151,8 +151,9 @@
 		methods:{
 			chooseOrderType(type){
 				
-				this.formWorkOrder.productid = type.productid
-				console.log(this.formWorkOrder,'this.formWorkOrder')
+				this.formWorkOrder.productid = type.productid;
+				this.formWorkOrder.workordertype = -2;
+				
 			},
 			getProductList(){
 				zmitiUtil.getProductList((data)=>{
@@ -163,7 +164,7 @@
 			},
 
 			submitWorkOrder(){//提交工单
-				if(this.formWorkOrder.workordertype === -1){
+				if(this.formWorkOrder.workordertype === -2){
 					delete this.formWorkOrder.workordertype;
 				}
 				var {$Message} = this;

@@ -53,6 +53,10 @@
 			status:{
 				type:Array,
 				default:Object.keys(orderStatus)
+			},
+			text:{
+				type:String,
+				default:'详情'
 			}
 		},
 		name:'zmitiindex',
@@ -138,7 +142,7 @@
 											
                                         }
                                     }
-                                }, '查看')
+                                }, this.text)
                                /*  h('Poptip',{
 									props:{
 										confirm:true,

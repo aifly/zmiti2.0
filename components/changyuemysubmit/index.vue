@@ -230,6 +230,9 @@
 
 			}
 			this.getDataList();
+			Vue[this.$route.name] = ()=>{
+				this.getDataList();
+			}
 
 			
 			
@@ -248,9 +251,9 @@
 				}
 			},
 			$route:{
-				deep:true,
 				handler(){
-					this.getDataList()
+					var productid = this.productid;
+					productid && this.$router.push({path:'/changyuemysubmit/'+productid});
 				}
 			}
 			
@@ -390,6 +393,7 @@
 							
 						}
 						this.$router.push({path:'/changyuemysubmit/'+productid});
+						this.productid = productid;
 						clearInterval(t);
 						var {condition} = this;
 						condition = Object.assign(condition,{

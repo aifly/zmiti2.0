@@ -5,6 +5,7 @@
 				<header class="zmiti-tab-header">
 					<div>工单列表</div>
 					<div>
+						<Button :loading='loading' type="primary" @click="getDataList">刷新</Button>
 					</div>
 				</header>
 				<section class='zmiti-list-where'>
@@ -236,7 +237,10 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			this.getDataList();
+			window.s = this;
+			Vue[this.$route.name] = ()=>{
+				this.getDataList();
+			}
 		},
 
 		watch:{
@@ -310,6 +314,7 @@
 					console.log('当前浏览器不支持Promise');
 					return;
 				}
+				this.loading = true;
 				var p = new Promise((resolve,reject)=>{
 					zmitiUtil.ajax({
 						remark:'getUserWorkOrderList',

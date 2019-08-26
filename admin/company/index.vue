@@ -52,13 +52,13 @@
 						<FormItem label="开户行账号：">
 							<Input v-model="formCompany.bankcode" placeholder="开户行账号：" />
 						</FormItem>
-						<FormItem label="单位合同扫描件：">
+						<FormItem label="单位合同扫描件：" v-if='false'>
 							<Input v-model="formCompany.contract" placeholder="单位合同扫描件：" />
 						</FormItem>
-						<FormItem label="营业执照：">
+						<FormItem label="营业执照："  v-if='false'>
 							<Input v-model="formCompany.businesslicensepath" placeholder="营业执照：" />
 						</FormItem>
-						<FormItem label="标识：">
+						<FormItem label="标识："  v-if='false'>
 							<RadioGroup v-model="formCompany.status">
 								<Radio :value='1' :label="1">正常使用</Radio>
 								<Radio :value='0' :label="0">禁用</Radio>
@@ -77,7 +77,7 @@
 						<FormItem label="备注：">
 							<Input v-model="formCompany.comment" placeholder="备注：" />
 						</FormItem>
-						<FormItem label="配置：">
+						<FormItem label="配置："  v-if='false'>
 							<Input v-model="formCompany.config" placeholder="配置：" />
 						</FormItem>
 
@@ -149,7 +149,6 @@
 				adminuserId:'',
 				currentUserid:'',
 				formCompany:{
-					isover:0,
 					avatar:'&#xe6a4;'
 				},
 				address:'',
@@ -181,7 +180,7 @@
 						
 					},{
 						title:"状态",
-						key:'isover',
+						key:'status',
 						align:'center',
 						render:(h,params)=>{
 							return h('div',{},params.row.status === 1 ? '正常使用' : params.row.status === 0 ? '已禁用':'已删除');
@@ -384,7 +383,6 @@
 				this.showDetail = true;
 				this.adminuserId = '';
 				this.formCompany = {
-					isover:0,
 					avatar:'&#xe6a4;'
 				};
 				Vue.obserable.trigger({type:'toggleMask',data:true});
@@ -446,7 +444,8 @@
 						if(data.getret === 0){
 							s.showDetail = false;
 							s.getCompanyList();
-							Vue.obserable.trigger({type:'toggleMask',data:false});
+							s.closeMaskPage();
+							
 						}
 					}
 				})

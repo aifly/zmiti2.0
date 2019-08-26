@@ -187,6 +187,13 @@
 
 		watch:{
 
+
+			$route:{
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/orderfood/'+productid});
+				}
+			}
 			
 			
 		},
@@ -307,7 +314,7 @@
 							})
 						}
 						this.$router.push({path:'/orderfood/'+productid});
-						
+						this.productid = productid;
 						fn && fn(productid)
 					}
 				}, 100);

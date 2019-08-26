@@ -160,8 +160,10 @@
 										s.showDetail = true;
 
 										var data1 = JSON.parse(JSON.stringify(data));
-										data.startdate = new Date(data.startdate)
-										data.enddate = new Date(data.enddate)
+										data.startdate = new Date(data.startdate*1000)
+										data.enddate = new Date(data.enddate*1000)
+										console.log(data.startdate);
+										
 										s.formUser = data;// JSON.parse(JSON.stringify(data));
 
 										Vue.obserable.trigger({type:'toggleMask',data:true});
@@ -529,8 +531,9 @@
 				if(!this.formUser.startdate||!this.formUser.enddate){
 					return;
 				}
-				var startdate = dataToNumber(this.formUser.startdate),
-					enddate = dataToNumber(this.formUser.enddate);
+				
+				var startdate = dataToNumber(this.formUser.startdate,1),
+					enddate = dataToNumber(this.formUser.enddate,1);
 
 			 	var info = {
 					 productid:s.formUser.productid,

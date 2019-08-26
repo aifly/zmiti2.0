@@ -96,7 +96,12 @@
 
 		watch:{
 		 
-			
+			$route:{
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/tripnotice/'+productid});
+				}
+			}
 		},
 		
 		methods:{
@@ -149,6 +154,7 @@
 							
 						}
 						this.$router.push({path:'/tripnotice/'+productid});
+						this.productid = productid;
 						var {condition} = this;
 						
 

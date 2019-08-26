@@ -129,6 +129,10 @@
 						<Radio :value='1' :label="1">否</Radio>
 						<Radio :value='0' :label="0">是</Radio>
 					</RadioGroup>
+					<Tooltip content="选择 共享  后，本栏目将在单位库中展现" placement="right">
+						<Icon type="md-help" />
+					</Tooltip>
+
 				</FormItem>
 				<FormItem label="备注：" prop='content'>
 					<Input type='textarea' v-model="formResource.content" placeholder="备注：" />
@@ -329,7 +333,7 @@ export default {
 			currentCateId:3,
 			currentCateIndex:2,
 			formResource:{
-				isshare:0
+				isshare:1
 			},
 			childCateId:-1,
 			ruleValidate:{
@@ -840,7 +844,7 @@ export default {
 				this.formResource = item;
 			}else{
 				this.formResource = {
-					isshare:0
+					isshare:1
 				};
 			}
 		},
