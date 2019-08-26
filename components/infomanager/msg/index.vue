@@ -187,16 +187,13 @@
 			
 		},
 		mounted(){
-			this.getTypeList(0);
-			setTimeout(()=>{
-				this.getDataList();
-			},100);					
+			this.getTypeList(0);			
 		},
 
 		watch:{
-
-			
-			
+			typeid(){
+				this.getDataList();
+			}			
 		},
 		
 		methods:{
@@ -292,7 +289,6 @@
 			},
 			currentTabs(val){//切换信息类型
 				this.typeid=parseInt(val);
-				this.getDataList();
 				console.log(val,'当前标签');
 			}
 		}
