@@ -36,7 +36,21 @@
 			 </div>
 		</div>
 
-
+		<Modal
+			v-model="modal1"
+			title="访问人员列表"
+			width="470"
+			@on-ok="ok"
+			@on-cancel="cancel">
+			<Transfer
+			:titles="['普通用户','可访问用户']"
+			:data="data1"
+			:target-keys="targetKeys1"
+			:render-format="render1"
+			@on-change="handleChange1">
+			</Transfer>
+			<div slot="footer"></div>
+		</Modal>
 
 
 	</div>
@@ -82,6 +96,10 @@
 				title:'',
 				begin_time:0,
 				end_time:0,
+				modal1: false,
+				data1:this.getMockData(),
+                targetKeys1:[],
+                mockData:[],
 				statusVal:'-1',
 				selectStatus:[{
                     value: '-1',
@@ -99,6 +117,9 @@
                     value: '3',
                     label: '拒绝'
                 }],
+                infoid:-1,
+                companyid:'',
+                userSource:[],
 				columns:[
 					{
 						title:"编号",
@@ -150,6 +171,9 @@
 								},
 								on: {
 									click: () => {
+										this.modal1=true;//打开弹窗
+										this.infoid=params.row.infoid;
+										this.getaddAccessibleList(params.row.infoid,this.companyid);//获取当前具有权限的用户
 									}
 								}
 							}, '查看')]
@@ -231,8 +255,12 @@
 		beforeCreate(){
 			
 		},
+		created(){
+			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
+		},
 		mounted(){
-			this.getTypeList(0);			
+			this.getTypeList(0);
+			this.getUserList();		
 		},
 
 		watch:{
@@ -340,10 +368,153 @@
 				this.typeid=parseInt(val);
 				console.log(val,'当前标签');
 			},
-			infoStatus(val){
+			infoStatus(val){//根据状态筛选
 				this.statusVal=val;
 				console.log(this.statusVal,'选中的状态');
-			}
+			},
+			getUserList(){
+				var s = this;			
+				zmitiUtil.ajax({
+					remark:'getUserList',
+					data:{
+						action:userActions.getCompanyUserList.action,
+						condition:{
+							page_index:0,
+							page_size:100,
+							companyid:this.companyid,
+							status:1
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							data.list.forEach((item,index)=>{
+								s.userSource.push({
+									userid:item.userid,
+									realname:item.user.realname,
+									username:item.user.username
+								})								
+							});
+							console.log(s.userSource,'用户列表');
+						}
+					}
+				})
+			},
+			/*用户权限设置*/
+			getMockData () {//左侧用户
+            	var s = this;
+            	let mockData = [];
+                setTimeout(()=>{
+            		s.userSource.forEach((item,index)=>{
+	                	mockData.push({
+	                        key: item.userid.toString(),
+	                        label: item.realname,
+	                        description: item.username
+	                    });
+	                })
+            	},1000)
+                return mockData;
+            },
+            render1 (item) {
+                return item.label;
+            },
+            handleChange1 (newTargetKeys, direction, moveKeys) {
+                console.log(newTargetKeys);
+                console.log(direction);
+                console.log(moveKeys);
+                this.targetKeys1 = newTargetKeys;
+            },
+            handleChange1 (newTargetKeys, direction, moveKeys) {
+                console.log(newTargetKeys);//已经选择的用户
+                console.log(direction);
+                console.log(moveKeys);
+                this.targetKeys1 = newTargetKeys;
+                var infoid=this.infoid;
+                if(direction==='right'){//增加
+                	//console.log('增加');
+                	moveKeys.forEach((item,index)=>{
+	                	this.addAccessible(item,infoid);
+	                	console.log(item,'添加用户')
+	                })
+                }else{//移除
+                	console.log('移除');                	
+                	moveKeys.forEach((item,index)=>{
+	                	this.delAccessible(item,infoid);
+	                	console.log(item,'删除用户');
+	                })
+                }
+                
+            },
+            getaddAccessibleList(infoid){//获取当前具有权限的用户列表
+            	var s = this;
+            	zmitiUtil.ajax({
+					remark:'getaddAccessibleList',
+					data:{
+						action:infomanagerActions.getaddAccessibleList.action,
+						condition:{
+							page_index:0,
+							page_size:20,
+							productid:this.productid,							
+							infoid:infoid
+						}
+					},
+					success(data){
+						if(data.getret === 0){//右侧用户
+							console.log(data.list,'获取当前具有权限的用户列表');
+							if(data.total>0){
+								data.list.forEach((item,index)=>{
+									s.targetKeys1.push(item.userid.toString());
+								})
+								console.log(s.targetKeys1,'s.targetKeys1-s.targetKeys1')							
+							}							
+						}
+					}
+				})
+            }, 
+            addAccessible(userid,infoid){//添加信息管理权限
+            	var s = this;
+            	zmitiUtil.ajax({
+					remark:'addAccessible',
+					data:{
+						action:infomanagerActions.addAccessible.action,
+						info:{
+							userid:Number(userid),
+							productid:this.productid,							
+							infoid
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							//s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						}
+					}
+				})
+            },
+             delAccessible(userid,infovisitid){
+            	zmitiUtil.ajax({
+					remark:'delAccessible',
+					data:{
+						action:infomanagerActions.delAccessible.action,
+						info:{
+							productid:this.productid,							
+							infovisitid,
+							userid
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							console.log('获取当前具有权限的用户列表');
+						
+						}
+					}
+				})
+            },           
+			ok () {
+                this.targetKeys1=[];//清空穿梭框
+            },
+            cancel () {
+            	this.targetKeys1=[];//清空穿梭框
+                this.$Message.info('Clicked cancel');
+            },
 		}
 	}
 </script>
