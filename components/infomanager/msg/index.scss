@@ -14,6 +14,10 @@
   .zmiti-list-where{
     font-size: 14px;
     margin:0 10px 10px 10px;
+    @include displayFlex(row);
+    .zmiti-search-dates{
+      margin:0 10px;
+    }
   }
   .zmiti-search-icon{
     font-size: 20px;
@@ -177,7 +181,4 @@
 }
 .zmiti-scroll{
   overflow: auto;
-}
-div.edui-box{
-  line-height: 20px;
 }

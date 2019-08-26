@@ -22,8 +22,13 @@
 		            </div>
 				 	<section class="zmiti-list-where">
 				 		<Input placeholder="请输入标题" v-model="title" style="width: 200px;"></Input>
-				        <DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
+				 		<div class="zmiti-search-dates">
+				        	<DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
+				        </div>
 				        <Button icon="md-search" @click="searchHandle">搜索</Button>
+				        <Select v-model="statusVal" @on-change="infoStatus" style="margin-left:auto;width:120px">
+					        <Option v-for="item in selectStatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
+					    </Select>
 				 	</section>
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
@@ -77,6 +82,23 @@
 				title:'',
 				begin_time:0,
 				end_time:0,
+				statusVal:'-1',
+				selectStatus:[{
+                    value: '-1',
+                    label: '全部'
+                },{
+                    value: '0',
+                    label: '禁用'
+                },{
+                    value: '1',
+                    label: '待审'
+                },{
+                    value: '2',
+                    label: '通过'
+                },{
+                    value: '3',
+                    label: '拒绝'
+                }],
 				columns:[
 					{
 						title:"编号",
@@ -138,7 +160,7 @@
 									on:{
 										click:()=>{
 											this.formObj = params.row;
-											this.$router.push({name:'infomanagerdetail',params:{typeid:2,id:this.formObj.infoid}});
+											this.$router.push({name:'infomanagerdetail',params:{typeid:this.typeid,id:this.formObj.infoid}});
 										}
 									}
 								},'编辑'),
@@ -193,7 +215,10 @@
 		watch:{
 			typeid(){//当typeid发生变化时重新加载信息列表
 				this.getDataList();
-			}			
+			},
+			statusVal(){//当status发生变化时重新加载信息列表
+				this.getDataList();
+			}
 		},
 		
 		methods:{
@@ -210,7 +235,8 @@
 					page_size:10,
 					title:s.title,
 					begin_time:s.begin_time,
-					end_time:s.end_time
+					end_time:s.end_time,
+					status:s.statusVal
 				})
 				zmitiUtil.ajax({
 					remark:"getnewsList",
@@ -290,6 +316,10 @@
 			currentTabs(val){//切换信息类型
 				this.typeid=parseInt(val);
 				console.log(val,'当前标签');
+			},
+			infoStatus(val){
+				this.statusVal=val;
+				console.log(this.statusVal,'选中的状态');
 			}
 		}
 	}

@@ -134,6 +134,8 @@
 				title:'',
 				begin_time:0,
 				end_time:0,
+				companyid:'',
+				userSource:[],
 				formObj:{
 					productid:1072203850,
 					title:'',
@@ -189,6 +191,9 @@
 		beforeCreate(){
 			
 		},
+		created(){
+			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
+		},
 		mounted(){
 			this.id=this.$route.params.id;
 			this.typeid=this.$route.params.typeid;
@@ -198,10 +203,40 @@
 		},
 
 		watch:{	
-			
+			companyid(){
+				this.getUserList();
+			}
 		},
 		
 		methods:{
+			getUserList(){
+				var s = this;			
+				zmitiUtil.ajax({
+					remark:'getUserList',
+					data:{
+						action:userActions.getCompanyUserList.action,
+						condition:{
+							page_index:0,
+							page_size:100,
+							companyid:this.companyid,
+							status:1
+						}
+					},
+					success(data){
+						if(data.getret === 0){
+							data.list.forEach((item,index)=>{
+								s.userSource.push({
+									userid:item.userid,
+									realname:item.user.realname,
+									username:item.user.username
+								})								
+							})
+							//console.log(s.userSource,'s.userSource')
+
+						}
+					}
+				})
+			},
 			goback(){
 				this.$router.push({name:'infomanagermsg'})
 			},

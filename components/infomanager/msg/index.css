@@ -10,7 +10,12 @@
     margin: 0 auto; }
   .zmiti-informanagernews-main-ui .zmiti-list-where {
     font-size: 14px;
-    margin: 0 10px 10px 10px; }
+    margin: 0 10px 10px 10px;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row; }
+    .zmiti-informanagernews-main-ui .zmiti-list-where .zmiti-search-dates {
+      margin: 0 10px; }
   .zmiti-informanagernews-main-ui .zmiti-search-icon {
     font-size: 20px;
     cursor: pointer; }
@@ -127,8 +132,5 @@
 
 .zmiti-scroll {
   overflow: auto; }
-
-div.edui-box {
-  line-height: 20px; }
 
 /*# sourceMappingURL=index.css.map */
