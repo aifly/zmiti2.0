@@ -29,12 +29,14 @@
 							    </RadioGroup>
 							</FormItem>
 							<FormItem label="内容：">
+								<div style="line-height: 22px;">
 								<UE
-								:default-msg="formObj.content" 
-								id="editor" 
-								:config="editorOption" 
-								@contentChanged="contentChange">				
-								</UE>
+									:default-msg="formObj.content" 
+									id="editor" 
+									:config="editorOption" 
+									@contentChanged="contentChange">				
+									</UE>
+								</div>
 							</FormItem>
 							<FormItem label="WORD加密文件：">
 								<Input v-model="formObj.wordurl"></Input>

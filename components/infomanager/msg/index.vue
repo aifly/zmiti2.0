@@ -191,7 +191,7 @@
 		},
 
 		watch:{
-			typeid(){
+			typeid(){//当typeid发生变化时重新加载信息列表
 				this.getDataList();
 			}			
 		},
@@ -277,7 +277,7 @@
 						}
 					},
 					success(data){
-						console.log(data,'获取类型列表');
+						//console.log(data,'获取类型列表');
 						if(data.getret === 0){
 							if(data.total>0){
 								s.typeDataList=data.list;
