@@ -104,7 +104,7 @@
 						title:"编号",
 						key:'infoid',
 						align:'center',
-						width:180
+						width:120
 					},
 					{
 						title:"标题",
@@ -135,9 +135,32 @@
 						}
 					},
 					{
+						title:"权限",
+						key:'visit',
+						align:'center',
+						render:(h,params)=>{
+							let viewother=[h('span', {
+								props: {
+									type: 'error',
+									size: 'small'
+								},
+								style:{
+									cursor:'pointer',
+									color:'#06C'
+								},
+								on: {
+									click: () => {
+									}
+								}
+							}, '查看')]
+							return h('div',{},params.row.visit===0?'全部':viewother)
+						}
+					},
+					{
 						title:"时间",
 						key:"createtime",
 						align:"center",
+						width:120,
 						render:(h,params)=>{
 							return h('div',{},formatDate(params.row.createtime))
 						}
@@ -146,7 +169,7 @@
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:180,
+						width:120,
 						render:(h,params)=>{
 
 							return h('div', [

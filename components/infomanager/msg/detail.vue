@@ -69,7 +69,7 @@
 							        <Radio label="0">全部人员</Radio>
 							        <Radio label="1">指定人员</Radio>
 							    </RadioGroup>
-							    <div>
+							    <div v-if="this.id===undefined">
 							    	<template v-if="parseInt(formObj.visit)===1">
 							    		<Select v-model="selectUsers" @on-change="selectuserHandle" multiple style="width:260px">
 									        <Option v-for="item in userSource" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -251,13 +251,15 @@
 				var action = this.id!=undefined?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
 				info.typeid=this.$route.params.typeid;
-				if(this.id!=undefined){//当文章id不为空时
+				if(this.id!=undefined){//编辑
 					info.id=this.$route.params.id;
+				}else{//新增
+					if(s.formObj.users.length>0){//当有选中的用户时
+						info.users=s.formObj.users;
+					}
 				}
 
-				if(s.formObj.users.length>0){//当有选中的用户时
-					info.users=s.formObj.users;
-				}
+				
 				console.log(info)
 				zmitiUtil.ajax({
 					remark:this.id?'editnews':'addnews',
