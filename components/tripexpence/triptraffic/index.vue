@@ -240,7 +240,12 @@
 
 		watch:{
 			
- 
+			$route:{
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/triptraffic/'+productid});
+				}
+			}
 			
 		},
 		
@@ -393,6 +398,7 @@
 							})
 						}
 						this.$router.push({path:'/triptraffic/'+productid});
+						this.productid = productid;
 						this.getbaseData(productid);
 						var {condition} = this;
 						condition = Object.assign(condition,{

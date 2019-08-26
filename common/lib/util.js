@@ -30,8 +30,8 @@ var zmitiUtil = {
 		qrcode.makeCode(url);
 	},
 
-	dataToNumber(date){
-		return new Date(date).getTime()/1000
+	dataToNumber(date,ms=1000){
+		return new Date(date).getTime() / ms
 	},
 
 
@@ -211,8 +211,8 @@ var zmitiUtil = {
 	getAdminUserInfo() {
 		return this.getUserInfo('adminlogin');
 	},
-	formatDate(time = +new Date()) {
-		var date = new Date(time*1000  + 8 * 3600 * 1000); // 增加8小时
+	formatDate(time = +new Date(),ms=1000) {
+		var date = new Date(time * ms  + 8 * 3600 * 1000); // 增加8小时
 		return date.toJSON().substr(0, 10).replace('T', ' ');
 	},
 	getProductListByAdmin(opt={}) {

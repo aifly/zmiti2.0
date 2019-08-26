@@ -12,7 +12,12 @@
 			</section>
 			
 			<div class='zmiti-mychecked-main zmiti-scroll ' :style="{height:viewH - 180+'px',overflow:'auto' }">
-				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total"></ZmitiTable>
+				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
+					<div slot='table-btns' style="display:inline-block">
+						<div class='zmiti-table-btn'>批量审核通过</div>
+						<div class='zmiti-table-btn'>批量审核拒绝</div>
+					</div>
+				</ZmitiTable>
 			</div>
 		</div>
 		<Modal v-model="visible" width="360" title='审核意见'>
@@ -166,8 +171,9 @@
 									},
 									domProps:{
 										innerHTML:`
-											<label title='${manuscriptStatus[params.row.status].name}' class='zmiti-cy-tag zmt_iconfont' style='color:${manuscriptStatus[params.row.status].color}'>
+											<label class='zmiti-cy-tag zmt_iconfont' style='color:${manuscriptStatus[params.row.status].color};font-size:16px;'>
 												${manuscriptStatus[params.row.status].icon}
+												${manuscriptStatus[params.row.status].name}
 											</label>
 										`
 									}
@@ -256,13 +262,21 @@
 		mounted(){
 			window.s = this;
 			
-
 			this.getDataList();
-			
+			Vue[this.$route.name] = ()=>{
+				this.getDataList();
+			}
 		},
 
 		watch:{
-			 
+			 $route:{
+				immediate:true,
+				handler(){
+					var productid = this.productid;
+					
+					productid && this.$router.push({path:'/changyuemycheck/'+productid});
+				}
+			}
 			
 		},
 		
@@ -355,6 +369,7 @@
 							
 						}
 						this.$router.push({path:'/changyuemycheck/'+productid});
+						this.productid = productid;
 						clearInterval(t);
 						var {condition} = this;
 						condition = Object.assign(condition,{

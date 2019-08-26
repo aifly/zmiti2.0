@@ -142,16 +142,20 @@
 			},
 
 			tab1(index,level){
-
+				
 				if(level && level.length){
 					this.tabs[index].status = !this.tabs[index].status;
 					this.tabs = this.tabs.concat([]);
 				}else{
 					this.tabIndex = [index,-1]
 				}
+				
+				!level && Vue[this.$route.name] && Vue[this.$route.name]();
 			},
 			tab2(i,k){
+				
 				this.tabIndex = [i,k];
+				Vue[this.$route.name] && Vue[this.$route.name]();
 			}
 		}
 	}

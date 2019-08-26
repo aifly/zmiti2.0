@@ -1,5 +1,5 @@
 <template>
-	 <WorkorderList :status='[3]'></WorkorderList>
+	 <WorkorderList :status='[3]' text='详情'></WorkorderList>
 </template>
 
 <style lang="scss" scoped>

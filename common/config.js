@@ -87,12 +87,12 @@ let manuscriptStatus = [
 	{
 		name: '待审核',
 		icon:'&#xe6bc;',
-		color:"#3390ff"
+		color:"#fbec00"
 	},
 	{
 		name: '审核通过',
 		icon: '&#xe61b;',
-		color: "#00c0de"
+		color: "#45b203"
 	},{
 		name: '拒绝',
 		icon: '&#xe61e;',

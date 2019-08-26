@@ -95,7 +95,7 @@
 		data(){
 			return{
 
-				visiable:true,
+				visiable:false,
 				targetKeys:[],
 				showAvatarModal:false,
 
@@ -491,11 +491,12 @@
 						info
 					},
 					success(data){
-						s.closeMaskPage();
+						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							s.showDetail = false;
 							s.getDataList();
+							s.closeMaskPage();
 						}
 					}
 				})

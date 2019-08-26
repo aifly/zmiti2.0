@@ -555,9 +555,12 @@
 		watch:{
 			
 
-			showDetail(val){
-				
-			},
+			$route:{
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/trip/'+productid});
+				}
+			}
 			
 			
 		},
@@ -798,6 +801,7 @@
 						}
 						this.$router.push({path:'/trip/'+productid});
 						var productid =  this.$route.params.id ;
+						this.productid = productid;
 
 						this.bindNewdata(productid);
 						this.getCascader();

@@ -223,9 +223,12 @@
 			var userinfo = zmitiUtil.getUserInfo();
 			if(!userinfo){
 				this.$router.push({path:'/login'})
-
 			}
+
 			this.getDataList();
+			Vue[this.$route.name] = ()=>{
+				this.getDataList();
+			}
 
 			
 			
@@ -233,7 +236,12 @@
 
 		watch:{
 			
- 
+			$route:{
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/tripost/'+productid});
+				}
+			}
 			
 		},
 		
@@ -339,6 +347,7 @@
 							
 						}
 						this.$router.push({path:'/tripost/'+productid});
+						this.productid = productid;
 						var {condition} = this;
 						condition = Object.assign(condition,{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
