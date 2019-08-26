@@ -355,7 +355,7 @@
 			},
 			change(e){
 				this.condition.page_index = e -1;
-				this.getDataList();
+				this.getDataList(this.specialnumVal);
 			},
 			changeUsers(ele){
 				console.log(ele,'多选');

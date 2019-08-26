@@ -30,7 +30,7 @@
 					        <Option v-for="item in selectStatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
 					    </Select>
 				 	</section>
-					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :page-size='condition.page_size'  :total="total">
+					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
 				 </div>
 			 </div>
@@ -273,6 +273,10 @@
 		},
 		
 		methods:{
+			change(e){
+				this.condition.page_index = e -1;
+				this.getDataList();
+			},
 			add(){
 				this.$router.push({name:'infomanagerdetail',params:{typeid:this.typeid}})				
 			},
@@ -282,8 +286,6 @@
 				condition = Object.assign(condition,{
 					typeid:s.typeid,
 					productid:s.productid,
-					page_index:0,
-					page_size:10,
 					title:s.title,
 					begin_time:s.begin_time,
 					end_time:s.end_time,
