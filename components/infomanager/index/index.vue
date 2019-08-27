@@ -15,13 +15,12 @@
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-					<div class="zmiti-select-column">
-						<label>类型标识：</label>
-						<RadioGroup @on-change="selectColumn" v-model="specialnumVal">
-					        <Radio v-for="(item,index) in specialnumData" :label="item.value" :key="index" >{{item.label}}</Radio>
-					    </RadioGroup>
+					<div class="zmiti-select-column">						
+					    <Tabs @on-click="currentTabs">
+			                <TabPane :label="item.label" :name="item.value.toString()" v-for="(item,index) in specialnumData" :key="index"></TabPane>	               
+			            </Tabs>
 					</div>
-					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
+					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
 				 </div>
 			 </div>
@@ -31,17 +30,16 @@
 				<transition name='detail'>
 					<section class='zmiti-add-form zmiti-scroll' >
 						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt=""  @click='closeMaskPage' >
+							<img :src="imgs.back" alt="">
 							<span>基础信息</span>
 						</header>
 					
 						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
-							<FormItem label="信息类型：">
+							<!-- <FormItem label="信息类型：">
 								<Select v-model="formObj.specialnum">
 									<Option :value="item.value" :lable='Number(item.label)' v-for="(item,i) in specialnumData" :key="i">{{item.label}}</Option>
-								</Select>
-								
-							</FormItem>
+								</Select>								
+							</FormItem> -->
 							<FormItem label="类型名称：">
 								<Input v-model="formObj.typename" placeholder="类型名称"></Input>
 							</FormItem>
@@ -56,14 +54,10 @@
 							        <Radio label="0">全部人员</Radio>
 							        <Radio label="1">指定人员</Radio>
 							    </RadioGroup>							    
-							    <div class="zmiti-inforuserlist-select" v-if="showSelectUser==true">
-							    	<CheckboxGroup v-model="formObj.users" @on-change="changeUsers">
-							    	<ul>
-								    	<li v-for="(item,index) in userSource" :key="index">
-								    		<div class="label-name"><Checkbox :label="item.userid">{{item.realname}}</Checkbox></div>
-								    	</li>
-							    	</ul>
-							    	</CheckboxGroup>
+							    <div class="zmiti-inforuserlist-select" v-if="showSelectUser==true">							    
+								    <Select v-model="formObj.users" multiple style="width:260px">
+								        <Option v-for="item in userSource" :value="item.userid" :key="item.userid">{{ item.realname }}</Option>
+								    </Select>
 							    </div>
 							</FormItem>
 						</Form>
@@ -123,6 +117,7 @@
 				showDetailPage:-1,
 				dataSource:[],				
 				showTable:false,
+				currentNumber:1,
 				condition:{
 					page_index:0,
 					page_size:10,
@@ -131,7 +126,7 @@
 				showSelectUser:false,
 				productid:1072203850,
 				userstatus:1,
-				infotypeid:-1,
+				infotypeid:undefined,
 				userList:[{
 					username:'songxian',
 					userid:4,
@@ -162,10 +157,7 @@
 					typename:'',
 					isalluser:0,
 					infotypeid:'',
-					users:[{
-						userid:0,
-						status:1
-					}],
+					users:[],
 					status:1
 				},
 				userSource:[],
@@ -246,6 +238,7 @@
 										console.log(params.row.infotypeid,'params.row.infotypeid');
 										this.modal1=true;//打开弹窗
 										this.infotypeid=params.row.infotypeid;
+										console.log(this.infotypeid,'infotypeid');
 										this.getpermission(params.row.infotypeid,params.row.companyid);//获取当前具有权限的用户
 									}
 								}
@@ -300,7 +293,10 @@
 											this.formObj = params.row;
 											this.formObj.isalluser=String(params.row.isalluser);
 											this.formObj.status=String(params.row.status);
-											console.log(this.formObj,'this.formObj')
+											console.log(this.formObj,'this.formObj');
+											this.infotypeid=params.row.infotypeid;
+											console.log(this.infotypeid,'infotypeid');
+											this.getpermission(params.row.infotypeid);//获取具有权限的用户
 											Vue.obserable.trigger({
 												type:'toggleMask',
 												data:true
@@ -346,26 +342,25 @@
 		},
 		
 		methods:{
-			selectColumn(e){
-				this.specialnumVal=e;
-				this.formObj.specialnum=e;
+			currentTabs(val){//切换信息类型
+				this.specialnumVal=parseInt(val);
+				this.formObj.specialnum=parseInt(val);
 				this.formObj.status=1;
+				this.condition.page_index=0;
+				this.currentNumber=1;
 				this.getDataList(this.specialnumVal);
-				console.log(this.formObj.specialnum,'选择栏目')
+				console.log(this.specialnumVal,'当前标签');
 			},
 			change(e){
 				this.condition.page_index = e -1;
+				this.currentNumber=e;
 				this.getDataList(this.specialnumVal);
 			},
-			changeUsers(ele){
-				console.log(ele,'多选');
-			},
-			changeUserStatus(ele){
+			changeUserStatus(ele){//切换用户权限类型，0为全部，1为指定人员
 				console.log(this.infotypeid,'this.infotypeid')
-				if(ele==='1' && this.infotypeid===-1){
-					//当为添加状态时显示
+				if(ele==='1' && this.infotypeid===undefined){//当为添加状态时显示
 					this.showSelectUser=true;					
-				}else{
+				}else{//编辑信息时不显示用户列表
 					this.showSelectUser=false;					
 				}
 				console.log(ele,'element')
@@ -398,6 +393,8 @@
 						})
 			},
 			closeMaskPage(){
+				this.showSelectUser=false;
+				console.log('关闭右侧');
 				Vue.obserable.trigger({type:'toggleMask',data:false});
 			},
 			add(){
@@ -406,15 +403,17 @@
 				this.formObj.specialnum=this.specialnumVal;
 				this.formObj.isalluser="0";
 				this.formObj.status="1";
+				this.infotypeid=undefined;
+				this.formObj.users=[];
 				console.log(this.formObj,'this.formObj')
 				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
 			adminAction(){
 				var s = this;
-				var action = this.formObj.infotypeid ? infomanagerActions.edittypeList.action:infomanagerActions.addtypeList.action;
+				var action = this.infotypeid ? infomanagerActions.edittypeList.action:infomanagerActions.addtypeList.action;
 
 				let info = {
-					specialnum:this.formObj.specialnum,
+					specialnum:this.specialnumVal,
 					isalluser:this.formObj.isalluser,
 					typename:this.formObj.typename,
 					infotypeid:this.formObj.infotypeid,
@@ -424,14 +423,19 @@
 				}
 				
 				if(this.formObj.isalluser==1){
-					info.users=[];	
-					this.formObj.users.forEach((item,index)=>{
-						info.users.push({
-							userid:item,
-							status:1
-						});
-					})
-					//console.log(info.users,'info.users');
+					info.users=[];
+					if(s.infotypeid==undefined){
+						this.formObj.users.forEach((item,index)=>{
+							info.users.push({
+								userid:item,
+								status:1
+							});
+						})
+					}else{
+						info.users=s.formObj.users;
+					}
+					
+					console.log(info.users,'info.users');
 				}
 				console.log(info,'info-info')
 				zmitiUtil.ajax({
@@ -494,16 +498,10 @@
 				})
 			},
 			ok () {
-                /*var infotypeid=this.infotypeid;
-                this.targetKeys1.forEach((item,index)=>{
-                	this.addpermission(item,infotypeid);
-                	console.log(item,'targetKeys1')
-                })*/
                 this.targetKeys1=[];//清空穿梭框
             },
             cancel () {
             	this.targetKeys1=[];//清空穿梭框
-                //this.$Message.info('Clicked cancel');
             },
             /*穿梭框*/
             getMockData () {
@@ -584,10 +582,17 @@
 						if(data.getret === 0){
 							console.log(data.list,'获取当前具有权限的用户列表');
 							if(data.total>0){
+								s.formObj.users=[];
+								s.targetKeys1=[];
 								data.list.forEach((item,index)=>{
 									s.targetKeys1.push(item.userid.toString());
+									s.formObj.users.push({
+										userid:item.user.userid,
+										status:1
+									})
 								})
-								console.log(s.targetKeys1,'s.targetKeys1-s.targetKeys1')							
+								console.log(s.targetKeys1,'s.targetKeys1');//穿梭框右侧用户列表
+								console.log(s.formObj.users,'s.formObj.users');	//编辑信息时用户列表						
 							}							
 						}
 					}
