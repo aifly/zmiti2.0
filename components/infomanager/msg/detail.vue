@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>信息</span>
+						 <span>编辑</span>
 
 					 </div>
 					 <div>
