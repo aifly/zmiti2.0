@@ -469,7 +469,7 @@
 								data.list.forEach((item,index)=>{
 									s.targetKeys1.push(item.userid.toString());
 								})
-								console.log(s.targetKeys1,'s.targetKeys1-s.targetKeys1')							
+								console.log(s.targetKeys1,'获取具有权限的userid');							
 							}							
 						}
 					}
