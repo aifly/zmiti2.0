@@ -133,7 +133,7 @@ let triptraffic ={
 
 let infomanager ={
 	title:"信息管理",
-	keys: ['infomanager','infomanagermsg','infomanagerdetail','infomanagerlist','infomanagernotice','infomanagerbox','infomanagernews','infomanagerdoc','infomanagercolumn','infomanagersetting'],
+	keys: ['infomanager','infomanagermsg','infomanagerdetail','infomanagerlist','infomanagernotice','infomanagerbox','infomanagernews','infomanagerdoc','infomanagersetting'],
 	tabs: [
 		{
 			name:"消息",
@@ -161,11 +161,11 @@ let infomanager ={
 		},
 		{
 			name:"配置管理",
-			link:'/infomanagercolumn',
+			link:'/infomanager',
 			children:[
 				{
 					name:'栏目配置',
-					link:'/infomanagercolumn'
+					link:'/infomanager'
 				},
 				{
 					name:'权限配置',

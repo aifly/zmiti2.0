@@ -1,23 +1,6 @@
 <template>
-	<div class="zmiti-tripexpence-main-ui">
-
-
-		 <div class='zmiti-tripexpence-table lt-full'>
-			 <header>
-				 <div>
-					 <span>新闻</span>
-
-				 </div>
-			 </header>
-			 <div class='zmiti-scroll' :style="{height:viewH - 110+'px'}">
-				
-				
-			 </div>
-		 </div>
-
-
-
-
+	<div>
+		<ininfor-manager columntitle="新闻" specialnum="4"></ininfor-manager>
 	</div>
 </template>
 
@@ -28,7 +11,8 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import ZmitiTable from '../../../common/table';
+	import IninforManager from '../list/news';
+	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -46,42 +30,30 @@
 				transX: 0,
 				transY: 0,
 				viewH:window.innerHeight,
-				viewW:window.innerWidth,
-				dataSource:[],				
-				showTable:false,
-				condition:{
-					page_index:0,
-					page_size:10,
-				},
-				userinfo:{},
-				productid:0,
+				viewW:window.innerWidth
 			}
 		},
 		components:{
-			ZmitiTable
+			IninforManager
 		},
 
 		beforeCreate(){
 			
 		},
+		created(){
+			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
+		},
 		mounted(){
-
-			setTimeout(() => {
-				//this.productid =  this.$route.params.id
-			}, 100);
-			
+				
 		},
 
 		watch:{
-
-			
 			
 		},
 		
 		methods:{
-
-
-
+			
+			
 		}
 	}
 </script>

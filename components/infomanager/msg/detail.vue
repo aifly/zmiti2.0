@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-informanagernews-main-ui">
+	<div class="zmiti-informanagerdetail-main-ui">
 
 		<div class="zmiti-list-main">
 			
@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>信息</span>
+						 <span>编辑</span>
 
 					 </div>
 					 <div>
@@ -42,10 +42,11 @@
 								<Input v-model="formObj.wordurl"></Input>
 							</FormItem>
 							<FormItem label="PDF加密文件：">
-								<Input v-model="formObj.wordurl"></Input>
+								<Input v-model="formObj.pdfurl"></Input>
 							</FormItem>
 							<FormItem label="附件：">
-								<Input v-model="formObj.wordurl"></Input>
+								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true">选择文件</Button></div>
+								<Input v-model="formObj.filearray"></Input>
 								<div>提示：最多添加5个文件</div>
 							</FormItem>
 							<FormItem label="父级ID：">
@@ -90,20 +91,27 @@
 			 </div>
 		</div>
 
-
+		<Modal v-model="showResource" title='资料库' width='800'>
+			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showResource=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseImg'>确定</Button>
+			</div> 
+		</Modal>
 
 
 	</div>
 </template>
 
 <style lang="scss" scoped>
-	@import './index.scss';
+	@import './detail.css';
 </style>
 <script>
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
 	import UE from '../../../common/ueditor' // 引入组件
+	import ResourceList from '../../../common/resourcelist'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
@@ -111,7 +119,9 @@
 		data(){
 			return{
 				targetKeys:[],
-				showAvatarModal:false,				
+				myfiles:[],
+				showAvatarModal:false,	
+				showResource:false,			
 				companyname:'',
 				addDataSource:[],
 				imgs:window.imgs,
@@ -123,6 +133,7 @@
 				transY: 0,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
+				currentChooseResource:{},
 				dataSource:[],				
 				showTable:false,
 				condition:{
@@ -146,7 +157,7 @@
 					content:'',
 					wordurl:'',
 					pdfurl:'',
-					filearray:[],
+					filearray:'',
 					fatherid:0,
 					issecret:'0',
 					allowreply:'1',
@@ -188,7 +199,8 @@
 			}
 		},
 		components:{
-			UE
+			UE,
+			ResourceList
 		},
 
 		beforeCreate(){
@@ -240,7 +252,8 @@
 				})
 			},
 			goback(){
-				this.$router.push({name:'infomanagermsg'})
+				//this.$router.push({name:'infomanagermsg'});
+				window.history.go(-1);
 			},
 			add(){
 				this.formObj = {};
@@ -306,7 +319,18 @@
 		    selectuserHandle(val){//选中的用户		    	
 		    	this.formObj.users=val;
 		    	console.log(this.formObj.users,'选中的用户');
-		    }
+		    },
+		    onFinished(item){
+				this.currentChooseResource = item;
+			},
+			chooseImg(){
+				this.showResource = false;
+				let filelist=this.currentChooseResource.filepath;
+				this.myfiles.push(this.currentChooseResource.filepath)
+				console.log(this.myfiles,'选择的文件');
+				this.formObj.filearray=this.myfiles.join(',');
+				console.log(this.formObj.filearray,'全部文件地址');
+			},
 		}
 	}
 </script>

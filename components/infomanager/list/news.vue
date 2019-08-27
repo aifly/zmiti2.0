@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>栏目配置</span>
+						 <span>{{columntitle}}</span>
 
 					 </div>
 					 <div>
@@ -66,7 +66,7 @@
 	import ZmitiTable from '../../../common/table';
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
-		props:['obserable'],
+		props:['columntitle','specialnum'],
 		name:'zmitiindex',
 		data(){
 			return{
@@ -261,8 +261,8 @@
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
 		},
 		mounted(){
-			var specialnum=3;//当前信息类型标识,0消息；1意见箱；2通知；3公告；4新闻；5资料
-			this.getTypeList(specialnum);
+			//var specialnum=3;//当前信息类型标识,0消息；1意见箱；2通知；3公告；4新闻；5资料
+			this.getTypeList(this.specialnum);
 			this.getUserList();		
 		},
 
@@ -355,7 +355,7 @@
 							specialnum:specialnum,
 							productid:s.productid,
 							page_index:0,
-							page_size:10
+							page_size:20
 						}
 					},
 					success(data){
@@ -390,7 +390,7 @@
 						action:userActions.getCompanyUserList.action,
 						condition:{
 							page_index:0,
-							page_size:50,
+							page_size:80,
 							companyid:this.companyid,
 							status:1
 						}
@@ -456,7 +456,7 @@
 						action:infomanagerActions.getaddAccessibleList.action,
 						condition:{
 							page_index:0,
-							page_size:20,
+							page_size:50,
 							productid:this.productid,							
 							infoid:infoid
 						}
