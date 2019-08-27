@@ -51,7 +51,7 @@
 								<div>
 									<ul>
 										<li v-for="(item,index) in myfiles" :key="index">
-											<Input :value="item" @on-change="filesHandle(index,item)"><Icon type="ios-trash-outline" size="20" slot="suffix" /></Input>
+											<Input :value="item"><Icon class="zmiti-remove-icon" type="ios-trash-outline" size="20" slot="suffix" @click="handleDelete(index)" /></Input>
 										</li>
 									</ul>
 								</div>
@@ -342,6 +342,12 @@
 			},
 			filesHandle(index,val){
 				console.log(index,val,'文件地址input')
+			},
+			handleDelete(index){//删除单个附件地址
+				this.myfiles.splice(index,1);
+				let newurl=this.myfiles.join(',');
+				this.formObj.filearray=newurl;
+				console.log(this.myfiles,'删除后地址',newurl);
 			}
 		}
 	}
