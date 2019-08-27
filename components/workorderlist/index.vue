@@ -218,7 +218,7 @@
 			
 				condition:{
 					page_index:0,
-					page_size:2,
+					page_size:10,
 				},
 				userinfo:{}
 			}
@@ -237,7 +237,7 @@
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
-			window.s = this;
+			this.getDataList();
 			Vue[this.$route.name] = ()=>{
 				this.getDataList();
 			}

@@ -52,7 +52,7 @@ let workorder_workorderlist = {
 
 let company = {
 	title:"单位管理",
-	keys: ['companyinfo', 'user', 'usercheck', 'checkproduct','companydetail','order','consume'],
+	keys: ['companyinfo', 'user', 'usercheck', 'checkproduct', 'companydetail', 'order', 'consume','rolegroup'],
 	tabs:[
 		{
 			name:'概览',
@@ -91,6 +91,15 @@ let company = {
 				{
 					name: '消费管理',
 					link: '/consume'
+				}
+			]
+		},{
+			name:"用户权限管理",
+			link:'',
+			children:[
+				{
+					name:'权限组管理',
+					link:'/rolegroup'
 				}
 			]
 		}

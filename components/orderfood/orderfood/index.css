@@ -22,6 +22,27 @@
   border-bottom: 1px solid #eee;
 }
 
+.zmiti-orderfood-main-ui .zmiti-orderfood-left-table-C header .zmt_iconfont {
+  font-size: 16px;
+  color: #ffdd8a;
+  position: relative;
+  margin-right: 10px;
+}
+
+.zmiti-orderfood-main-ui .zmiti-orderfood-left-table-C header .zmt_iconfont:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffdd8a;
+  opacity: .3;
+  position: absolute;
+  -webkit-transform: scale(1.8);
+  transform: scale(1.8);
+  left: 0;
+  top: 0;
+}
+
 .zmiti-orderfood-main-ui .zmiti-orderfood-left-table-C > header {
   display: flex;
   display: -webkit-flex;
@@ -132,8 +153,25 @@
   border-bottom: 1px solid #eee;
 }
 
-.zmiti-orderfood-main-ui .zmiti-orderfood-right-setting > header .zmti_iconfont {
-  font-size: 20px;
+.zmiti-orderfood-main-ui .zmiti-orderfood-right-setting > header .zmt_iconfont {
+  font-size: 16px;
+  color: #975ae0;
+  position: relative;
+  margin-right: 10px;
+}
+
+.zmiti-orderfood-main-ui .zmiti-orderfood-right-setting > header .zmt_iconfont:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #975ae0;
+  opacity: .2;
+  position: absolute;
+  -webkit-transform: scale(1.8);
+  transform: scale(1.8);
+  left: 0;
+  top: 0;
 }
 
 .zmiti-orderfood-main-ui .zmiti-orderfood-right-setting .zmiti-allow-orderfood {

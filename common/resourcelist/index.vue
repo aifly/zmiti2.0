@@ -851,8 +851,8 @@ export default {
 		getCateByChildId(item){
 			this.childCateId = item.type;
 			this.showPager = item.name === '全部';
-
-			item.type !== -1 && (this.filetype = item.type);
+			
+			item.type !== -1 && (this.filetype = item.name);
 			this.getResourceByClassId();
 
 			/* this.resourceList = this.defaultResourceList.filter(res=>{

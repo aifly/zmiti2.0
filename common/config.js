@@ -40,7 +40,7 @@ let resourceClass = [//资源分类
 		type:2
 	},
 	{
-		name:'文件',
+		name:'文本',
 		type:3
 	}
 ];

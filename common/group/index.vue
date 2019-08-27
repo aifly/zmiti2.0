@@ -150,13 +150,16 @@
 					this.tabIndex = [index,-1]
 				}
 				
-				!level && Vue[this.$route.name] && Vue[this.$route.name]();
+				window.lastRouteName === this.$route.name && !level && Vue[this.$route.name] && Vue[this.$route.name]();
+				window.lastRouteName = this.$route.name;
 			},
 			tab2(i,k){
-				
 				this.tabIndex = [i,k];
-				Vue[this.$route.name] && Vue[this.$route.name]();
-			}
+				//点击菜单重新触发刷新事件。
+				window.lastRouteName === this.$route.name &&  Vue[this.$route.name] && Vue[this.$route.name]();
+				window.lastRouteName = this.$route.name;
+			},
+			
 		}
 	}
 </script>

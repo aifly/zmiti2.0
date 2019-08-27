@@ -2,7 +2,7 @@
 	<div class="zmiti-orderfood-main-ui lt-full">
 		<div class='zmiti-orderfood-left-table-C'>
 			<header>
-				<div>订餐预览表</div>
+				<div> <span class='zmt_iconfont'>&#xe639;</span> 订餐预览表</div>
 				<div>
 					<Button :loading='loading' @click='refresh' type="primary">刷新</Button>
 				</div>
@@ -37,7 +37,7 @@
 		</div>
 		<div class='zmiti-orderfood-right-setting'>
 			<header>
-				<span class='zmt_iconfont'>&#xe7e8;</span>	基础设置
+				<span class='zmt_iconfont'>&#xe63e;</span>	基础设置
 			</header>
 			<div class='zmiti-allow-orderfood'>
 				<div>允许订餐时间：</div>
