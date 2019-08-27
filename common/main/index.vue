@@ -187,7 +187,6 @@
 			var obserable = Vue.obserable;
  
 			
-			
 			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();
 			
 			this.userinfo = userinfo||{info:{}};  

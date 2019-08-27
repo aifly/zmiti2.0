@@ -49,6 +49,7 @@ import './assets/ueditor/ueditor.config'
 import './assets/ueditor/ueditor.all'
 import './assets/ueditor/lang/zh-cn/zh-cn'
 
+import rolegroup from './components/rolegroup';
 import zmitiUtil from './common/lib/util';
 import iview from 'iview';
 Vue.use(VueRouter)
@@ -107,6 +108,7 @@ const router = new VueRouter({
 			{ path: "/tripreason/:id?", name: "tripreason", component: tripreason},
 			{ path: "/tripnotice/:id?", name: "tripnotice", component: tripnotice},
 			{ path: "/tripost/:id?", name: "tripost", component: tripost},
+			{ path: '/rolegroup/', name: 'rolegroup', component:  rolegroup},
 			{ path: "/infomanager", name: "infomanager", component: infomanager},
 			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
 			{path:"/infomanagerdetail/:typeid?/:id?",name:"infomanagerdetail",component:infomanagerdetail},
@@ -136,11 +138,16 @@ router.afterEach((to, from) => {
 	}
 
 	var userinfo = zmitiUtil.getUserInfo();
+
+
 	
 	//zmitiUtil.listener();
+
+	window.lastRouteName = from.name;
+
+	//window.lastRouteName = this.$route.name;
 	
 	if (!userinfo) {
-		alert(2)
 		//this.$router.push({ path: '/login' })
 	}
 	

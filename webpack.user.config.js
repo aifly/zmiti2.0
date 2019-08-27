@@ -4,6 +4,9 @@ var path = require('path');
 var port = 8001;
 //var webpack = require('webpack');
 //const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const glob = require('glob');
+const PurifyCSSPlugin = require('purifycss-webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
 	// 定义模块引用的绝对路径前缀
 	context: path.resolve(__dirname, './'),
@@ -91,13 +94,21 @@ module.exports = {
 				"css-loader", // translates CSS into CommonJS
 				"scss-loader" // compiles Sass to CSS, using Node Sass by default
 			]
-		}, {
-			// 文件匹配正则
-			test: /\.css$/,
-			// 加载器，从后向前倒序使用
-			exclude: /node_modules/,
-			loaders: ['style-loader', 'css-loader']
-		},
+			}, {
+				test: /\.css$/,
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader,
+						options: {
+							// you can specify a publicPath here
+							// by default it uses publicPath in webpackOptions.output
+							publicPath: './',
+							hmr: process.env.NODE_ENV === 'development',
+						},
+					},
+					'css-loader',
+				],
+			},
 		{
 			test: /\.less$/,
 			exclude: /node_modules/,
@@ -139,7 +150,19 @@ module.exports = {
           filename: 'index.html',
           title: '首页',
           hash: true,
-        })*/
+		})*/
+		// Make sure this is after ExtractTextPlugin!
+		/* new PurifyCSSPlugin({
+			// Give paths to parse for rules. These should be absolute!
+			paths: glob.sync(path.join(__dirname, './*.html')),
+		}), */
+		new MiniCssExtractPlugin({
+			// Options similar to the same options in webpackOptions.output
+			// all options are optional
+			filename: '[name].css',
+			chunkFilename: '[id].css',
+			ignoreOrder: false, // Enable to remove warnings about conflicting order
+		}),
 	],
 	// 使用 HtmlWebpackPlugin 将构建好的 js/css 嵌入到模板 index.html 中
 

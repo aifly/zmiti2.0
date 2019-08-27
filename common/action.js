@@ -363,6 +363,30 @@ let userActions = {
 	getWXFollow:{
 		desc:'定时刷新获取微信关注',
 		action:'2000098'
+	},
+	addUserRoleGroup:{
+		desc:'添加用户权限组',
+		action:'2001101'
+	},
+	delUserRoleGroup:{
+		desc: '删除用户权限组',
+		action: '2001102'
+	},
+	editUserRoleGroup: {
+		desc: '编辑用户权限组',
+		action: '2001105'
+	},
+	addUserForUserRoleGroup:{
+		desc:"添加权限组成员",
+		action:'2001104'
+	},
+	delUserForUserRoleGroup: {
+		desc: "删除权限组成员",
+		action: '2001106'
+	},
+	getUserRoleGroupUserList:{
+		desc:'获取权限组成员列表',
+		action:"2001107"
 	}
 
 };
