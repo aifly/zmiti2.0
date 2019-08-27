@@ -1,37 +1,37 @@
-.zmiti-informanagernews-main-ui {
+.zmiti-informanagerdetail-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
   width: 99%;
   margin: 0 auto; }
-  .zmiti-informanagernews-main-ui .zmiti-list-main {
+  .zmiti-informanagerdetail-main-ui .zmiti-list-main {
     box-sizing: border-box;
     background: #fff;
     margin: 0 auto; }
-  .zmiti-informanagernews-main-ui .zmiti-list-where {
+  .zmiti-informanagerdetail-main-ui .zmiti-list-where {
     font-size: 14px;
     width: 98%;
     margin: 0 auto 10px auto;
     display: flex;
     display: -webkit-flex;
     flex-flow: row; }
-    .zmiti-informanagernews-main-ui .zmiti-list-where .zmiti-search-dates {
+    .zmiti-informanagerdetail-main-ui .zmiti-list-where .zmiti-search-dates {
       margin: 0 10px; }
-  .zmiti-informanagernews-main-ui .zmiti-search-icon {
+  .zmiti-informanagerdetail-main-ui .zmiti-search-icon {
     font-size: 20px;
     cursor: pointer; }
-  .zmiti-informanagernews-main-ui .zmiti-tabs-select {
+  .zmiti-informanagerdetail-main-ui .zmiti-tabs-select {
     width: 98%;
     margin: 0 auto; }
-  .zmiti-informanagernews-main-ui .zmiti-submit-main {
+  .zmiti-informanagerdetail-main-ui .zmiti-submit-main {
     margin-top: 10px;
     flex: 5;
     -webkit-flex: 5;
     width: 100%; }
-    .zmiti-informanagernews-main-ui .zmiti-submit-main > div {
+    .zmiti-informanagerdetail-main-ui .zmiti-submit-main > div {
       -webkit-transition: 0.3s;
       transition: 0.3s; }
-    .zmiti-informanagernews-main-ui .zmiti-submit-main .zmiti-submit-table {
+    .zmiti-informanagerdetail-main-ui .zmiti-submit-main .zmiti-submit-table {
       width: 98%;
       margin: 0 auto; }
 
@@ -135,4 +135,4 @@
 .zmiti-scroll {
   overflow: auto; }
 
-/*# sourceMappingURL=index.css.map */
+/*# sourceMappingURL=detail.css.map */

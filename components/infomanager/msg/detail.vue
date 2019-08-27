@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-informanagernews-main-ui">
+	<div class="zmiti-informanagerdetail-main-ui">
 
 		<div class="zmiti-list-main">
 			
@@ -97,7 +97,7 @@
 </template>
 
 <style lang="scss" scoped>
-	@import './index.scss';
+	@import './detail.css';
 </style>
 <script>
 
@@ -240,7 +240,8 @@
 				})
 			},
 			goback(){
-				this.$router.push({name:'infomanagermsg'})
+				//this.$router.push({name:'infomanagermsg'});
+				window.history.go(-1);
 			},
 			add(){
 				this.formObj = {};
