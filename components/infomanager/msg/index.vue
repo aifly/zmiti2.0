@@ -16,7 +16,7 @@
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
 				 	<div class="zmiti-tabs-select">
-					 	<Tabs type="card" @on-click="currentTabs">
+					 	<Tabs @on-click="currentTabs">
 			                <TabPane :label="item.typename" :name="item.infotypeid.toString()" v-for="(item,index) in typeDataList" :key="index"></TabPane>	               
 			            </Tabs>
 		            </div>
@@ -260,7 +260,8 @@
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
 		},
 		mounted(){
-			this.getTypeList(0);
+			var specialnum=0;//当前信息类型标识,0消息；1意见箱；2通知；3公告；4新闻；5资料
+			this.getTypeList(specialnum);
 			this.getUserList();		
 		},
 
@@ -341,7 +342,6 @@
 				this.getDataList();
 			},
 			getTypeList(specialnum){//查询类型
-				specialnum=0;
 				var {condition} = this;
 				var s = this;
 
@@ -388,7 +388,7 @@
 						action:userActions.getCompanyUserList.action,
 						condition:{
 							page_index:0,
-							page_size:100,
+							page_size:50,
 							companyid:this.companyid,
 							status:1
 						}
@@ -521,7 +521,7 @@
             },
             cancel () {
             	this.targetKeys1=[];//清空穿梭框
-                this.$Message.info('Clicked cancel');
+                //this.$Message.info('Clicked cancel');
             },
 		}
 	}

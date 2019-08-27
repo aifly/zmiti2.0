@@ -10,7 +10,8 @@
     margin: 0 auto; }
   .zmiti-informanagernews-main-ui .zmiti-list-where {
     font-size: 14px;
-    margin: 0 10px 10px 10px;
+    width: 98%;
+    margin: 0 auto 10px auto;
     display: flex;
     display: -webkit-flex;
     flex-flow: row; }
@@ -20,7 +21,8 @@
     font-size: 20px;
     cursor: pointer; }
   .zmiti-informanagernews-main-ui .zmiti-tabs-select {
-    margin: 0 10px; }
+    width: 98%;
+    margin: 0 auto; }
   .zmiti-informanagernews-main-ui .zmiti-submit-main {
     margin-top: 10px;
     flex: 5;

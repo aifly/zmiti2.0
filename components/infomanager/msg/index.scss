@@ -13,7 +13,8 @@
   }
   .zmiti-list-where{
     font-size: 14px;
-    margin:0 10px 10px 10px;
+    width:98%;
+    margin:0 auto 10px auto;
     @include displayFlex(row);
     .zmiti-search-dates{
       margin:0 10px;
@@ -24,7 +25,8 @@
     cursor: pointer;
   }
   .zmiti-tabs-select{
-    margin:0 10px;
+    width:98%;
+    margin:0 auto;
   }
     .zmiti-submit-main {
       margin-top: 10px;
