@@ -101,6 +101,7 @@
 				data1:this.getMockData(),
                 targetKeys1:[],
                 mockData:[],
+                currUserList:[],
 				statusVal:'-1',
 				selectStatus:[{
                     value: '-1',
@@ -425,29 +426,24 @@
             render1 (item) {
                 return item.label;
             },
-            handleChange1 (newTargetKeys, direction, moveKeys) {
-                console.log(newTargetKeys);
+            handleChange1(newTargetKeys, direction, moveKeys) {
+                console.log(newTargetKeys,'newTargetKeys');//已经选择的用户
                 console.log(direction);
-                console.log(moveKeys);
-                this.targetKeys1 = newTargetKeys;
-            },
-            handleChange1 (newTargetKeys, direction, moveKeys) {
-                console.log(newTargetKeys);//已经选择的用户
-                console.log(direction);
-                console.log(moveKeys);
+                console.log(moveKeys,'moveKeys');
                 this.targetKeys1 = newTargetKeys;
                 var infoid=this.infoid;
                 if(direction==='right'){//增加
-                	//console.log('增加');
                 	moveKeys.forEach((item,index)=>{
 	                	this.addAccessible(item,infoid);
 	                	console.log(item,'添加用户')
 	                })
                 }else{//移除
-                	console.log('移除');                	
+                	console.log('移除'); 
                 	moveKeys.forEach((item,index)=>{
-	                	this.delAccessible(item,infoid);
-	                	console.log(item,'删除用户');
+	                	let newusers=this.currUserList.filter((ele)=>ele.userid==item).map(ele => ele.infovisitid);//通过userid过滤并得到infovisitid，其值为数组
+	                	this.delAccessible(Number(newusers));//删除可访问权限
+                		console.log(Number(newusers));//获取infovisitid
+	                	console.log(item,'删除的用户');
 	                })
                 }
                 
@@ -469,6 +465,7 @@
 						if(data.getret === 0){//右侧用户
 							console.log(data.list,'获取当前具有权限的用户列表');
 							if(data.total>0){
+								s.currUserList=data.list;
 								data.list.forEach((item,index)=>{
 									s.targetKeys1.push(item.userid.toString());
 								})
@@ -497,15 +494,14 @@
 					}
 				})
             },
-             delAccessible(userid,infovisitid){
+            delAccessible(infovisitid){
             	zmitiUtil.ajax({
 					remark:'delAccessible',
 					data:{
 						action:infomanagerActions.delAccessible.action,
 						info:{
 							productid:this.productid,							
-							infovisitid,
-							userid
+							infovisitid
 						}
 					},
 					success(data){
