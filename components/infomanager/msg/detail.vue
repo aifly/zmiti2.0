@@ -48,6 +48,13 @@
 								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true">选择文件</Button></div>
 								<Input v-model="formObj.filearray"></Input>
 								<div>提示：最多添加5个文件</div>
+								<div>
+									<ul>
+										<li v-for="(item,index) in myfiles" :key="index">
+											<Input :value="item" @on-change="filesHandle(index,item)"><Icon type="ios-trash-outline" size="20" slot="suffix" /></Input>
+										</li>
+									</ul>
+								</div>
 							</FormItem>
 							<FormItem label="父级ID：">
 								<Input v-model="formObj.fatherid" value="0"></Input>
@@ -208,6 +215,7 @@
 		},
 		created(){
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
+
 		},
 		mounted(){
 			this.id=this.$route.params.id;
@@ -311,6 +319,7 @@
 							s.formObj.status=data.info.status.toString();
 							s.formObj.visit=data.info.visit.toString();
 							s.formObj.productid=s.productid;
+							s.myfiles=data.info.filearray.split(',');//获取附件地址并拆分为数组
 							console.log(s.formObj,'获取新闻详情s.formObj');			
 						}
 					}
@@ -331,6 +340,9 @@
 				this.formObj.filearray=this.myfiles.join(',');
 				console.log(this.formObj.filearray,'全部文件地址');
 			},
+			filesHandle(index,val){
+				console.log(index,val,'文件地址input')
+			}
 		}
 	}
 </script>
