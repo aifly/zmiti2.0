@@ -355,7 +355,7 @@
 							specialnum:specialnum,
 							productid:s.productid,
 							page_index:0,
-							page_size:10
+							page_size:20
 						}
 					},
 					success(data){
@@ -390,7 +390,7 @@
 						action:userActions.getCompanyUserList.action,
 						condition:{
 							page_index:0,
-							page_size:50,
+							page_size:80,
 							companyid:this.companyid,
 							status:1
 						}
@@ -456,7 +456,7 @@
 						action:infomanagerActions.getaddAccessibleList.action,
 						condition:{
 							page_index:0,
-							page_size:20,
+							page_size:50,
 							productid:this.productid,							
 							infoid:infoid
 						}
