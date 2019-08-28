@@ -37,7 +37,17 @@
 									@contentChanged="contentChange">				
 									</UE>
 								</div>
-							</FormItem>						
+							</FormItem>
+							<FormItem label="父级ID：">
+								<Input v-model="formObj.fatherid" value="0"></Input>
+								<div>提示：评论或回复时出现，默认为0表示没有父级</div>
+							</FormItem>
+							<FormItem label="允许回复：">
+								<RadioGroup v-model="formObj.allowreply">
+							        <Radio label="1">是</Radio>
+							        <Radio label="0">否</Radio>
+							    </RadioGroup>
+							</FormItem>							
 							<FormItem label="访问权限：">
 								<RadioGroup v-model="formObj.visit">
 							        <Radio label="0">全部人员</Radio>

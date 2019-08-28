@@ -37,7 +37,42 @@
 									@contentChanged="contentChange">				
 									</UE>
 								</div>
-							</FormItem>						
+							</FormItem>
+							<FormItem label="WORD加密文件：">
+								<div><Button icon="ios-cloud-upload-outline" @click="showWord= true">选择word文件</Button></div>
+								<Input v-model="formObj.wordurl"></Input>
+							</FormItem>
+							<FormItem label="PDF加密文件：">
+								<div><Button icon="ios-cloud-upload-outline" @click="showPdf= true">选择pdf文件</Button></div>
+								<Input v-model="formObj.pdfurl"></Input>
+							</FormItem>
+							<FormItem label="附件：">
+								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true" :disabled="filedisabled">选择附件</Button> 提示：最多添加5个文件</div>
+								<!-- <Input v-model="formObj.filearray"></Input> -->
+								<div>
+									<ul>
+										<li v-for="(item,index) in myfiles" :key="index">
+											<Input :element-id="index.toString()" :value="item" @on-change="filesHandle"><Icon class="zmiti-remove-icon" type="ios-trash-outline" size="20" slot="suffix" @click="handleDelete(index)" /></Input>
+										</li>
+									</ul>
+								</div>
+							</FormItem>
+							<FormItem label="父级ID：">
+								<Input v-model="formObj.fatherid" value="0"></Input>
+								<div>提示：评论或回复时出现，默认为0表示没有父级</div>
+							</FormItem>
+							<FormItem label="加密：">
+								<RadioGroup v-model="formObj.issecret">
+							        <Radio label="0">否</Radio>
+							        <Radio label="1">是</Radio>
+							    </RadioGroup>
+							</FormItem>
+							<FormItem label="允许回复：">
+								<RadioGroup v-model="formObj.allowreply">
+							        <Radio label="1">是</Radio>
+							        <Radio label="0">否</Radio>
+							    </RadioGroup>
+							</FormItem>							
 							<FormItem label="访问权限：">
 								<RadioGroup v-model="formObj.visit">
 							        <Radio label="0">全部人员</Radio>
@@ -63,7 +98,30 @@
 				 </div>
 			 </div>
 		</div>
-
+		<!-- 选择WORD -->
+		<Modal v-model="showWord" title='资料库' width='800'>
+			<ResourceList v-if='showWord' :isAdmin='false' :isDialog='true' @onFinished='onFinishWord'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showWord=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseWord'>确定</Button>
+			</div> 
+		</Modal>
+		<!-- 选择PDF -->
+		<Modal v-model="showPdf" title='资料库' width='800'>
+			<ResourceList v-if='showPdf' :isAdmin='false' :isDialog='true' @onFinished='onFinishPdf'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showPdf=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='choosePdf'>确定</Button>
+			</div> 
+		</Modal>
+		<!-- 选择多个附件 -->
+		<Modal v-model="showResource" title='资料库' width='800'>
+			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showResource=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseImg'>确定</Button>
+			</div> 
+		</Modal>
 
 
 	</div>
@@ -192,6 +250,9 @@
 		watch:{	
 			companyid(){
 				this.getUserList();
+			},
+			myfiles(){
+				this.filedisabled=this.myfiles.length===5?true:false
 			}
 		},
 		
@@ -284,7 +345,7 @@
 							s.formObj.status=data.info.status.toString();
 							s.formObj.visit=data.info.visit.toString();
 							s.formObj.productid=s.productid;
-							//s.myfiles=data.info.filearray.split(',');//获取附件地址并拆分为数组
+							s.myfiles=data.info.filearray.split(',');//获取附件地址并拆分为数组
 							console.log(s.formObj,'获取新闻详情s.formObj');			
 						}
 					}
@@ -294,6 +355,49 @@
 		    	this.formObj.users=val;
 		    	console.log(this.formObj.users,'选中的用户');
 		    },
+		    /**以下为选择word**/
+		    onFinishWord(item){//选择word后
+				this.currentChooseWord = item;
+			},
+			chooseWord(){//选择word
+				this.showWord = false;
+				this.formObj.wordurl=this.currentChooseWord.filepath;
+			},
+			/**以下为选择pdf**/
+		    onFinishPdf(item){//选择word后
+				this.currentChoosePdf = item;
+			},
+			choosePdf(){//选择word
+				this.showPdf = false;
+				this.formObj.pdfurl=this.currentChoosePdf.filepath;
+			},
+		    /**以下为选择多个附件**/
+		    onFinished(item){//选择多个附件后
+				this.currentChooseResource = item;
+			},
+			chooseImg(){//选择多个附件
+				this.showResource = false;
+				let filelist=this.currentChooseResource.filepath;
+				this.myfiles.push(this.currentChooseResource.filepath)
+				console.log(this.myfiles,'选择的文件');
+				this.formObj.filearray=this.myfiles.join(',');
+				console.log(this.formObj.filearray,'全部文件地址');
+			},
+			filesHandle(ele){
+				let iptval=ele.target.value;//获取输入的内容
+				let iptid=Number(ele.target.id);//获取当前索引并转为数字
+				this.myfiles[iptid]=iptval;//根据索引更新当前第N个的值
+				//console.log(this.myfiles);
+				let newurl=this.myfiles.join(',');
+				this.formObj.filearray=newurl;
+				console.log(this.myfiles,'更新后地址',newurl);
+			},
+			handleDelete(index){//删除单个附件地址
+				this.myfiles.splice(index,1);
+				let newurl=this.myfiles.join(',');
+				this.formObj.filearray=newurl;
+				console.log(this.myfiles,'删除后地址',newurl);
+			}
 		}
 	}
 </script>

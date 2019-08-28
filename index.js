@@ -29,12 +29,15 @@ import workorderlist from './components/workorderlist';
 import Group from './common/group/index';
 import infomanager from './components/infomanager/index';
 import infomanagermsg from './components/infomanager/msg/index';
-import infomanagerdetail from './components/infomanager/msg/detail';
+import infomanagermsgdetail from './components/infomanager/msg/detail';
 import infomanagerlist from './components/infomanager/list/index';
+import infomanagerlistdetail from './components/infomanager/list/detail';
 import infomanagernotice from './components/infomanager/notice/index';
 import infomanagernews from './components/infomanager/news/index';
+import infomanagernewsdetail from './components/infomanager/news/detail';
 import infomanagerdoc from './components/infomanager/doc/index';
 import infomanagerbox from './components/infomanager/box/index';
+import infomanagerboxdetail from './components/infomanager/box/detail';
 import infomanagercolumn from './components/infomanager/column/index';
 import infomanagersetting from './components/infomanager/setting/index';
 
@@ -111,12 +114,15 @@ const router = new VueRouter({
 			{ path: '/rolegroup/', name: 'rolegroup', component:  rolegroup},
 			{ path: "/infomanager", name: "infomanager", component: infomanager},
 			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
-			{path:"/infomanagerdetail/:typeid?/:id?",name:"infomanagerdetail",component:infomanagerdetail},
+			{path:"/infomanagermsgdetail/:typeid?/:id?",name:"infomanagermsgdetail",component:infomanagermsgdetail},
 			{path: "/infomanagernotice/:id?", name: "infomanagernotice", component: infomanagernotice},
 			{path:"/infomanagerlist/:id?",name:"infomanagerlist",component:infomanagerlist},
+			{path:"/infomanagerlistdetail/:typeid?/:id?",name:"infomanagerlistdetail",component:infomanagerlistdetail},
 			{path:"/infomanagernews/:id?",name:"infomanagernews",component:infomanagernews},
+			{path:"/infomanagernewsdetail/:typeid?/:id?",name:"infomanagernewsdetail",component:infomanagernewsdetail},
 			{path:"/infomanagerdoc/:id?",name:"infomanagerdoc",component:infomanagerdoc},
 			{path:"/infomanagerbox/:id?",name:"infomanagerbox",component:infomanagerbox},
+			{path:"/infomanagerboxdetail/:typeid?/:id?",name:"infomanagerboxdetail",component:infomanagerboxdetail},
 			{path:"/infomanagercolumn/:id?",name:"infomanagercolumn",component:infomanagercolumn},
 			{path:"/infomanagersetting/:id?",name:"infomanagersetting",component:infomanagersetting},
 			{path:"/orderfood/:id?",name:"orderfood",component:OrderFood},

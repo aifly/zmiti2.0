@@ -11,7 +11,7 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import IninforManager from '../list/news';
+	import IninforManager from './list';
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
