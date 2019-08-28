@@ -114,7 +114,7 @@ const router = new VueRouter({
 			{ path: '/rolegroup/', name: 'rolegroup', component:  rolegroup},
 			{ path: "/infomanager", name: "infomanager", component: infomanager},
 			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
-			{path:"/infomanagermsgdetail/:typeid?/:id?",name:"infomanagermsgdetail",component:infomanagermsgdetail},
+			{path:"/infomanagermsgdetail/:productid?/:typeid?/:id?",name:"infomanagermsgdetail",component:infomanagermsgdetail},
 			{path: "/infomanagernotice/:id?", name: "infomanagernotice", component: infomanagernotice},
 			{path:"/infomanagerlist/:id?",name:"infomanagerlist",component:infomanagerlist},
 			{path:"/infomanagerlistdetail/:typeid?/:id?",name:"infomanagerlistdetail",component:infomanagerlistdetail},

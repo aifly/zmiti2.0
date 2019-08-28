@@ -66,7 +66,7 @@
 	import ZmitiTable from '../../../common/table';
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
-		props:['columntitle','specialnum'],
+		props:['productid','columntitle','specialnum'],
 		name:'zmitiindex',
 		data(){
 			return{
@@ -93,7 +93,7 @@
 				userinfo:{},
 				typeDataList:[],
 				typeid:-1,
-				productid:1072203850,
+				//productid:1072203850,
 				title:'',
 				begin_time:0,
 				end_time:0,
@@ -209,7 +209,7 @@
 									on:{
 										click:()=>{
 											this.formObj = params.row;
-											this.$router.push({name:'infomanagermsgdetail',params:{typeid:this.typeid,id:this.formObj.infoid}});
+											this.$router.push({name:'infomanagermsgdetail',params:{productid:this.productid,typeid:this.typeid,id:this.formObj.infoid}});
 										}
 									}
 								},'编辑'),
@@ -262,8 +262,9 @@
 		},
 		mounted(){
 			//var specialnum=3;//当前信息类型标识,0消息；1意见箱；2通知；3公告；4新闻；5资料
+			//console.log(this.productid);
 			this.getTypeList(this.specialnum);
-			this.getUserList();		
+			this.getUserList();	
 		},
 
 		watch:{
@@ -282,7 +283,7 @@
 				this.getDataList();
 			},
 			add(){
-				this.$router.push({name:'infomanagermsgdetail',params:{typeid:this.typeid}})				
+				this.$router.push({name:'infomanagermsgdetail',params:{productid:this.productid,typeid:this.typeid}})				
 			},
 			getDataList(){
 				var s = this;
