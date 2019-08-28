@@ -38,19 +38,12 @@
 							            @change="onEditorChange($event)">
 							        </quill-editor>
 							    </div>
-							</FormItem>						
-							<FormItem label="访问权限：">
-								<RadioGroup v-model="formObj.visit">
-							        <Radio label="0">全部人员</Radio>
-							        <Radio label="1">指定人员</Radio>
+							</FormItem>
+							<FormItem label="允许回复：">
+								<RadioGroup v-model="formObj.allowreply">
+							        <Radio label="1">是</Radio>
+							        <Radio label="0">否</Radio>
 							    </RadioGroup>
-							    <div v-if="this.id===undefined">
-							    	<template v-if="parseInt(formObj.visit)===1">
-							    		<Select v-model="selectUsers" @on-change="selectuserHandle" multiple style="width:260px">
-									        <Option v-for="item in userSource" :value="item.value" :key="item.value">{{ item.label }}</Option>
-									    </Select>
-							    	</template>
-							    </div>
 							</FormItem>
 							<FormItem label="备注：">
 								<Input v-model="formObj.remarks"></Input>
@@ -79,7 +72,6 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import ResourceList from '../../../common/resourcelist'
 	import { quillEditor } from 'vue-quill-editor'
 	import '../../../common/css/quill.css'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
@@ -133,7 +125,6 @@
 					wordurl:'',
 					pdfurl:'',
 					filearray:'',
-					fatherid:0,
 					issecret:'0',
 					allowreply:'1',
 					visit:'0',
@@ -170,7 +161,6 @@
 			}
 		},
 		components:{
-			ResourceList,
 			quillEditor
 		},
 
@@ -301,6 +291,7 @@
 	        onEditorBlur(){}, // 失去焦点事件
 	        onEditorFocus(){}, // 获得焦点事件
 	        onEditorChange(quill, html, text){
+	        	//console.log('editor change!', quill, html, text)
 	        } // 内容改变事件
 		}
 	}

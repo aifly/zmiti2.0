@@ -124,7 +124,7 @@
 				},
 				userinfo:{},
 				showSelectUser:false,
-				productid:1072203850,
+				productid:0,
 				userstatus:1,
 				infotypeid:undefined,
 				userList:[{
@@ -325,23 +325,46 @@
 			this.getUserList();
 		},
 		mounted(){
-			this.getDataList(0);
-			//this.getUserList();
+			this.init(()=>{
+				setTimeout(()=>{
+					this.getDataList(0);
+				},100)
+			})
 		},
 		computed:{
 			alluser:function(){			
 				return this.userSource
 			}
 		},
-		watch:{
-			
+		watch:{			
 			$route:{
-				deep:true
-			}
-			
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/infomanager/'+productid});
+				}
+			}			
 		},
 		
 		methods:{
+			init(fn){
+				var s = this;
+				var t = setInterval(() => {
+					if(Vue.productList){
+						clearInterval(t);
+						var productid =  this.$route.params.id ;
+						if(!productid){
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
+								}
+							})
+						}
+						this.$router.push({path:'/infomanager/'+productid});
+						this.productid = productid;
+						fn && fn(productid)
+					}
+				}, 100);
+			},
 			currentTabs(val){//切换信息类型
 				this.specialnumVal=parseInt(val);
 				this.formObj.specialnum=parseInt(val);

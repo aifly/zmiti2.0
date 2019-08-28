@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<ininfor-manager columntitle="通知" specialnum="2"></ininfor-manager>
+		<template v-if="showTemplate==true">
+		<ininfor-manager :productid="productid" columntitle="通知" specialnum="2"></ininfor-manager>
+		</template>
 	</div>
 </template>
 
@@ -11,7 +13,7 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import IninforManager from '../list/news';
+	import IninforManager from '../msg/list';
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
@@ -30,7 +32,9 @@
 				transX: 0,
 				transY: 0,
 				viewH:window.innerHeight,
-				viewW:window.innerWidth
+				viewW:window.innerWidth,
+				productid:0,
+				showTemplate:false
 			}
 		},
 		components:{
@@ -44,15 +48,43 @@
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
 		},
 		mounted(){
-				
+			this.init(()=>{
+				//console.log(this.productid,'this.productid')
+			})	
 		},
 
 		watch:{
-			
+			$route:{
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/infomanagernotice/'+productid});
+				}
+			},
+			productid(){
+				this.showTemplate=true;
+			}
 		},
 		
 		methods:{
-			
+			init(fn){
+				var s = this;
+				var t = setInterval(() => {
+					if(Vue.productList){
+						clearInterval(t);
+						var productid =  this.$route.params.id ;
+						if(!productid){
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
+								}
+							})
+						}
+						this.$router.push({path:'/infomanagernotice/'+productid});
+						this.productid = productid;
+						fn && fn(productid)
+					}
+				}, 100);
+			}
 			
 		}
 	}

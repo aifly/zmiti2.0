@@ -20,14 +20,14 @@
 							<FormItem label="标题：">
 								<Input v-model="formObj.title" placeholder="标题"></Input>
 							</FormItem>
-							<FormItem label="状态：">
+							<!-- <FormItem label="状态：">
 							     <RadioGroup v-model="formObj.status">
 							        <Radio label="0">禁用</Radio>
 							        <Radio label="1">待审</Radio>
 							        <Radio label="2">通过</Radio>
 							        <Radio label="3">拒绝</Radio>
 							    </RadioGroup>
-							</FormItem>
+							</FormItem> -->
 							<FormItem label="内容：">
 								<div class="edit_container">
 							        <quill-editor 
@@ -37,9 +37,9 @@
 							            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
 							            @change="onEditorChange($event)">
 							        </quill-editor>
-							    </div>
+							    </div>  
 							</FormItem>						
-							<FormItem label="访问权限：">
+							<!-- <FormItem label="访问权限：">
 								<RadioGroup v-model="formObj.visit">
 							        <Radio label="0">全部人员</Radio>
 							        <Radio label="1">指定人员</Radio>
@@ -51,10 +51,7 @@
 									    </Select>
 							    	</template>
 							    </div>
-							</FormItem>
-							<FormItem label="备注：">
-								<Input v-model="formObj.remarks"></Input>
-							</FormItem>
+							</FormItem> -->
 							<FormItem label="">
 								<Button type="primary" @click="adminAction">提交</Button>
 							</FormItem>
@@ -117,7 +114,7 @@
 				userinfo:{},
 				id:'',
 				typeid:1,
-				productid:0,
+				productid:1072203850,
 				title:'',
 				begin_time:0,
 				end_time:0,
@@ -126,9 +123,9 @@
 				selectUsers:'',
 				filedisabled:false,
 				formObj:{
-					productid:0,
+					productid:1072203850,
 					title:'',
-					status:'1',
+					status:'2',
 					content:'',
 					wordurl:'',
 					pdfurl:'',
@@ -137,7 +134,6 @@
 					issecret:'0',
 					allowreply:'1',
 					visit:'0',
-					remarks:'',
 					users:[]
 				},
 				editorQuillOption: {
@@ -184,8 +180,6 @@
 		mounted(){
 			this.id=this.$route.params.id;
 			this.typeid=this.$route.params.typeid;
-			this.productid=this.$route.params.productid;
-			this.formObj.productid=this.$route.params.productid;
 			console.log(this.id,'this.id');
 			console.log(this.typeid,'this.typeid');
 			this.getnewsDetail();
@@ -196,7 +190,11 @@
 				this.getUserList();
 			}
 		},
-		
+		computed:{
+			editor() {
+	            return this.$refs.myQuillEditor.quill;
+	        }
+		},		
 		methods:{
 			getUserList(){
 				var s = this;			
@@ -301,6 +299,7 @@
 	        onEditorBlur(){}, // 失去焦点事件
 	        onEditorFocus(){}, // 获得焦点事件
 	        onEditorChange(quill, html, text){
+	        	//console.log('editor change!', quill, html, text)
 	        } // 内容改变事件
 		}
 	}
