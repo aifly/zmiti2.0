@@ -29,14 +29,15 @@
 							    </RadioGroup>
 							</FormItem>
 							<FormItem label="内容：">
-								<div style="line-height: 22px;">
-								<UE
-									:default-msg="formObj.content" 
-									id="editor" 
-									:config="editorOption" 
-									@contentChanged="contentChange">				
-									</UE>
-								</div>
+								<div class="edit_container">
+							        <quill-editor 
+							            v-model="formObj.content" 
+							            ref="myQuillEditor" 
+							            :options="editorQuillOption" 
+							            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+							            @change="onEditorChange($event)">
+							        </quill-editor>
+							    </div>
 							</FormItem>						
 							<FormItem label="访问权限：">
 								<RadioGroup v-model="formObj.visit">
@@ -68,7 +69,9 @@
 
 	</div>
 </template>
-
+<style type="text/css">
+	.ql-container{min-height: 200px;}
+</style>
 <style lang="scss" scoped>
 	@import './detail.css';
 </style>
@@ -76,8 +79,9 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import UE from '../../../common/ueditor' // 引入组件
 	import ResourceList from '../../../common/resourcelist'
+	import { quillEditor } from 'vue-quill-editor'
+	import '../../../common/css/quill.css'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
@@ -136,24 +140,20 @@
 					remarks:'',
 					users:[]
 				},
-				editorOption: {
-					initialFrameWidth:'100%',
-					initialFrameHeight:300,
-					enableAutoSave:false,
-					autoHeightEnabled:false,
-					toolbars:[[
-					'bold', 'italic', 'underline',  '|',
-					'forecolor', 'backcolor', '|',
-					'paragraph', 'fontfamily', 'fontsize', 'lineheight', '|',
-					'insertorderedlist', 'insertunorderedlist', '|',
-					'removeformat', 'blockquote', 'indent', '|',
-					'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
-					'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-					'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', '|',
-					'source',
-					'fullscreen'
-					]]
-		        },
+				editorQuillOption: {
+					modules: {
+			            toolbar: [
+			              ['bold', 'italic', 'underline'],
+			              [{ 'indent': '-1' }, { 'indent': '+1' }],
+			              [{ 'color': [] }, { 'background': [] }],
+			              [{ 'align': [] }],
+			              ['clean']
+			            ],
+			            syntax: {
+			              highlight: text => hljs.highlightAuto(text).value
+			            }
+			        }
+				},
 		        statusList:[{
                     value: 0,
                     label: '禁用'
@@ -170,8 +170,8 @@
 			}
 		},
 		components:{
-			UE,
-			ResourceList
+			ResourceList,
+			quillEditor
 		},
 
 		beforeCreate(){
@@ -296,6 +296,12 @@
 		    	this.formObj.users=val;
 		    	console.log(this.formObj.users,'选中的用户');
 		    },
+		    onEditorReady(editor) { // 准备编辑器
+	        },
+	        onEditorBlur(){}, // 失去焦点事件
+	        onEditorFocus(){}, // 获得焦点事件
+	        onEditorChange(quill, html, text){
+	        } // 内容改变事件
 		}
 	}
 </script>

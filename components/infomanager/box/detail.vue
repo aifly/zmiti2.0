@@ -29,37 +29,21 @@
 							    </RadioGroup>
 							</FormItem>
 							<FormItem label="内容：">
-								<div style="line-height: 22px;">
-								<UE
-									:default-msg="formObj.content" 
-									id="editor" 
-									:config="editorOption" 
-									@contentChanged="contentChange">				
-									</UE>
-								</div>
-							</FormItem>
-							<FormItem label="父级ID：">
-								<Input v-model="formObj.fatherid" value="0"></Input>
-								<div>提示：评论或回复时出现，默认为0表示没有父级</div>
+								<div class="edit_container">
+							        <quill-editor 
+							            v-model="formObj.content" 
+							            ref="myQuillEditor" 
+							            :options="editorQuillOption" 
+							            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+							            @change="onEditorChange($event)">
+							        </quill-editor>
+							    </div>
 							</FormItem>
 							<FormItem label="允许回复：">
 								<RadioGroup v-model="formObj.allowreply">
 							        <Radio label="1">是</Radio>
 							        <Radio label="0">否</Radio>
 							    </RadioGroup>
-							</FormItem>							
-							<FormItem label="访问权限：">
-								<RadioGroup v-model="formObj.visit">
-							        <Radio label="0">全部人员</Radio>
-							        <Radio label="1">指定人员</Radio>
-							    </RadioGroup>
-							    <div v-if="this.id===undefined">
-							    	<template v-if="parseInt(formObj.visit)===1">
-							    		<Select v-model="selectUsers" @on-change="selectuserHandle" multiple style="width:260px">
-									        <Option v-for="item in userSource" :value="item.value" :key="item.value">{{ item.label }}</Option>
-									    </Select>
-							    	</template>
-							    </div>
 							</FormItem>
 							<FormItem label="备注：">
 								<Input v-model="formObj.remarks"></Input>
@@ -78,7 +62,9 @@
 
 	</div>
 </template>
-
+<style type="text/css">
+	.ql-container{min-height: 200px;}
+</style>
 <style lang="scss" scoped>
 	@import './detail.css';
 </style>
@@ -86,8 +72,8 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import UE from '../../../common/ueditor' // 引入组件
-	import ResourceList from '../../../common/resourcelist'
+	import { quillEditor } from 'vue-quill-editor'
+	import '../../../common/css/quill.css'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
@@ -139,31 +125,26 @@
 					wordurl:'',
 					pdfurl:'',
 					filearray:'',
-					fatherid:0,
 					issecret:'0',
 					allowreply:'1',
 					visit:'0',
 					remarks:'',
 					users:[]
 				},
-				editorOption: {
-					initialFrameWidth:'100%',
-					initialFrameHeight:300,
-					enableAutoSave:false,
-					autoHeightEnabled:false,
-					toolbars:[[
-					'bold', 'italic', 'underline',  '|',
-					'forecolor', 'backcolor', '|',
-					'paragraph', 'fontfamily', 'fontsize', 'lineheight', '|',
-					'insertorderedlist', 'insertunorderedlist', '|',
-					'removeformat', 'blockquote', 'indent', '|',
-					'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
-					'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-					'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', '|',
-					'source',
-					'fullscreen'
-					]]
-		        },
+				editorQuillOption: {
+					modules: {
+			            toolbar: [
+			              ['bold', 'italic', 'underline'],
+			              [{ 'indent': '-1' }, { 'indent': '+1' }],
+			              [{ 'color': [] }, { 'background': [] }],
+			              [{ 'align': [] }],
+			              ['clean']
+			            ],
+			            syntax: {
+			              highlight: text => hljs.highlightAuto(text).value
+			            }
+			        }
+				},
 		        statusList:[{
                     value: 0,
                     label: '禁用'
@@ -180,8 +161,7 @@
 			}
 		},
 		components:{
-			UE,
-			ResourceList
+			quillEditor
 		},
 
 		beforeCreate(){
@@ -306,6 +286,13 @@
 		    	this.formObj.users=val;
 		    	console.log(this.formObj.users,'选中的用户');
 		    },
+		    onEditorReady(editor) { // 准备编辑器
+	        },
+	        onEditorBlur(){}, // 失去焦点事件
+	        onEditorFocus(){}, // 获得焦点事件
+	        onEditorChange(quill, html, text){
+	        	//console.log('editor change!', quill, html, text)
+	        } // 内容改变事件
 		}
 	}
 </script>

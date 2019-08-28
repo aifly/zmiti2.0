@@ -26,9 +26,6 @@
 				        	<DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
 				        </div>
 				        <Button icon="md-search" @click="searchHandle">搜索</Button>
-				        <Select v-model="statusVal" @on-change="infoStatus" style="margin-left:auto;width:120px">
-					        <Option v-for="item in selectStatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
-					    </Select>
 				 	</section>
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
@@ -133,53 +130,6 @@
 						key:'title',
 						align:'center',
 						
-					},
-					{
-						title:"状态",
-						key:'status',
-						align:'center',
-						render:(h,params)=>{
-							let status='';
-							switch(params.row.status){
-								case 0:
-									status='禁用'
-								break;
-								case 2:
-									status='通过'
-								break;
-								case 3:
-									status='拒绝'
-								break;
-								default:
-									status='待审'
-							}
-							return h('div',{},status)
-						}
-					},
-					{
-						title:"权限",
-						key:'visit',
-						align:'center',
-						render:(h,params)=>{
-							let viewother=[h('span', {
-								props: {
-									type: 'error',
-									size: 'small'
-								},
-								style:{
-									cursor:'pointer',
-									color:'#06C'
-								},
-								on: {
-									click: () => {
-										this.modal1=true;//打开弹窗
-										this.infoid=params.row.infoid;
-										this.getaddAccessibleList(params.row.infoid,this.companyid);//获取当前具有权限的用户
-									}
-								}
-							}, '查看')]
-							return h('div',{},params.row.visit===0?'全部':viewother)
-						}
 					},
 					{
 						title:"时间",
