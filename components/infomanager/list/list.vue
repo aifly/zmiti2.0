@@ -66,7 +66,7 @@
 	import ZmitiTable from '../../../common/table';
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
-		props:['columntitle','specialnum'],
+		props:['productid','columntitle','specialnum'],
 		name:'zmitiindex',
 		data(){
 			return{
@@ -93,7 +93,6 @@
 				userinfo:{},
 				typeDataList:[],
 				typeid:-1,
-				productid:1072203850,
 				title:'',
 				begin_time:0,
 				end_time:0,
@@ -209,7 +208,7 @@
 									on:{
 										click:()=>{
 											this.formObj = params.row;
-											this.$router.push({name:'infomanagerlistdetail',params:{typeid:this.typeid,id:this.formObj.infoid}});
+											this.$router.push({name:'infomanagerlistdetail',params:{productid:this.productid,typeid:this.typeid,id:this.formObj.infoid}});
 										}
 									}
 								},'编辑'),
@@ -282,7 +281,7 @@
 				this.getDataList();
 			},
 			add(){
-				this.$router.push({name:'infomanagerboxdetail',params:{typeid:this.typeid}})				
+				this.$router.push({name:'infomanagerlistdetail',params:{productid:this.productid,typeid:this.typeid}})				
 			},
 			getDataList(){
 				var s = this;

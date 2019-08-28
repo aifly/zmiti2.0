@@ -171,7 +171,7 @@
 				userinfo:{},
 				id:'',
 				typeid:1,
-				productid:1072203850,
+				productid:0,
 				title:'',
 				begin_time:0,
 				end_time:0,
@@ -180,7 +180,7 @@
 				selectUsers:'',
 				filedisabled:false,
 				formObj:{
-					productid:1072203850,
+					productid:0,
 					title:'',
 					status:'1',
 					content:'',
@@ -242,6 +242,8 @@
 		mounted(){
 			this.id=this.$route.params.id;
 			this.typeid=this.$route.params.typeid;
+			this.productid=this.$route.params.productid;
+			this.formObj.productid=this.$route.params.productid;
 			console.log(this.id,'this.id');
 			console.log(this.typeid,'this.typeid');
 			this.getnewsDetail();

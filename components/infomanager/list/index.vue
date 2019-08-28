@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<ininfor-manager columntitle="公告" specialnum="3"></ininfor-manager>
+		<template v-if="showTemplate==true">
+		<ininfor-manager :productid="productid" columntitle="公告" specialnum="3"></ininfor-manager>
+		</template>
 	</div>
 </template>
 
@@ -42,7 +44,8 @@
 				userinfo:{},
 				typeDataList:[],
 				typeid:-1,
-				productid:1072203850,
+				productid:0,
+				showTemplate:false,
 				title:'',
 				begin_time:0,
 				end_time:0,
@@ -84,15 +87,43 @@
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
 		},
 		mounted(){
-			
+			this.init(()=>{
+				//console.log(this.productid,'this.productid')
+			})
 		},
 
 		watch:{
-			
+			$route:{
+				handler(){
+					var productid = this.productid;
+					productid && this.$router.push({path:'/infomanagerlist/'+productid});
+				}
+			},
+			productid(){
+				this.showTemplate=true;
+			}
 		},
 		
 		methods:{
-			
+			init(fn){
+				var s = this;
+				var t = setInterval(() => {
+					if(Vue.productList){
+						clearInterval(t);
+						var productid =  this.$route.params.id ;
+						if(!productid){
+							Vue.productList.forEach(p=>{
+								if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+									productid  = p.productid;
+								}
+							})
+						}
+						this.$router.push({path:'/infomanagerlist/'+productid});
+						this.productid = productid;
+						fn && fn(productid)
+					}
+				}, 100);
+			}
 		}
 	}
 </script>
