@@ -45,13 +45,12 @@
 								<Input v-model="formObj.pdfurl"></Input>
 							</FormItem>
 							<FormItem label="附件：">
-								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true">选择文件</Button></div>
-								<Input v-model="formObj.filearray"></Input>
-								<div>提示：最多添加5个文件</div>
+								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true" :disabled="filedisabled">选择文件</Button> 提示：最多添加5个文件</div>
+								<!-- <Input v-model="formObj.filearray"></Input> -->
 								<div>
 									<ul>
 										<li v-for="(item,index) in myfiles" :key="index">
-											<Input :value="item"><Icon class="zmiti-remove-icon" type="ios-trash-outline" size="20" slot="suffix" @click="handleDelete(index)" /></Input>
+											<Input :element-id="index.toString()" :value="item" @on-change="filesHandle"><Icon class="zmiti-remove-icon" type="ios-trash-outline" size="20" slot="suffix" @click="handleDelete(index)" /></Input>
 										</li>
 									</ul>
 								</div>
@@ -157,6 +156,7 @@
 				companyid:'',
 				userSource:[],
 				selectUsers:'',
+				filedisabled:false,
 				formObj:{
 					productid:1072203850,
 					title:'',
@@ -228,6 +228,9 @@
 		watch:{	
 			companyid(){
 				this.getUserList();
+			},
+			myfiles(){
+				this.filedisabled=this.myfiles.length===5?true:false
 			}
 		},
 		
@@ -280,7 +283,7 @@
 					}
 				}
 				
-				console.log(info)
+				console.log(info);
 				zmitiUtil.ajax({
 					remark:this.id?'editnews':'addnews',
 					data:{
@@ -332,7 +335,7 @@
 		    onFinished(item){
 				this.currentChooseResource = item;
 			},
-			chooseImg(){
+			chooseImg(){//选择文件后
 				this.showResource = false;
 				let filelist=this.currentChooseResource.filepath;
 				this.myfiles.push(this.currentChooseResource.filepath)
@@ -340,8 +343,14 @@
 				this.formObj.filearray=this.myfiles.join(',');
 				console.log(this.formObj.filearray,'全部文件地址');
 			},
-			filesHandle(index,val){
-				console.log(index,val,'文件地址input')
+			filesHandle(ele){
+				let iptval=ele.target.value;//获取输入的内容
+				let iptid=Number(ele.target.id);//获取当前索引并转为数字
+				this.myfiles[iptid]=iptval;//根据索引更新当前第N个的值
+				//console.log(this.myfiles);
+				let newurl=this.myfiles.join(',');
+				this.formObj.filearray=newurl;
+				console.log(this.myfiles,'更新后地址',newurl);
 			},
 			handleDelete(index){//删除单个附件地址
 				this.myfiles.splice(index,1);
