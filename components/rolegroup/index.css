@@ -219,6 +219,36 @@
   border-radius: 10px !important;
 }
 
+.zmiti-companyuser-list {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
+.zmiti-companyuser-list li {
+  margin: 10px;
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: #ddd;
+  padding: 0 10px;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.zmiti-companyuser-list li.active {
+  background: #3390ff;
+  color: #fff;
+}
+
+.zmiti-companyuser-list li:hover {
+  background: #3390ff;
+  color: #fff;
+}
+
 .zmiti-action-list .zmiti-action-title {
   font-size: 14px;
 }

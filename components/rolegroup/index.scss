@@ -232,6 +232,30 @@
 	border-radius: 10px !important;
 } 
 
+	@at-root.zmiti-companyuser-list{
+		@include displayFlex(row);
+		flex-wrap: wrap;
+		li{
+			margin:10px;
+			width: 100px;
+			height: 30px;
+			text-align: center;
+			line-height: 30px;
+			background: #ddd;
+			padding: 0 10px;
+			cursor: pointer;
+			@include transition(.2s);
+			&.active{
+				background: #3390ff;
+				color:#fff;
+			}
+			&:hover{
+
+				background: #3390ff;
+				color:#fff;
+			}
+		}
+	}
 
 
 .zmiti-action-list{

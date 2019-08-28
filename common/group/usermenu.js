@@ -7,6 +7,7 @@ let changyue = {
 		'changyuecompany',
 		'changyuedepartment',
 		'changyuedepartmentuser',
+		'changyuerole'
 	],
 	tabs: [
 		{
@@ -18,6 +19,10 @@ let changyue = {
 		}, {
 			name: '我的审核',
 			link: '/changyuemycheck'
+		},
+		{
+			name: '权限管理',
+			link: '/changyuerole'
 		},{
 			name:"产品设置",
 			link:'/changyuecompany',
@@ -108,7 +113,7 @@ let company = {
 
 let triptraffic ={
 	title:"出差宝",
-	keys: ['trip', 'triptraffic', 'tripnotice', 'tripreason','tripost'],
+	keys: ['trip', 'triptraffic', 'tripnotice', 'tripreason', 'tripost','triprole'],
 	tabs: [
 		{
 			name:'交通工具',
@@ -127,6 +132,10 @@ let triptraffic ={
 		},{
 			name:"职务",
 			link:'/tripost'
+		
+		},{
+			name:"权限管理",
+			link:'/triprole'
 		}
 	]
 }
@@ -179,7 +188,7 @@ let infomanager ={
 
 let orderFood ={
 	title: "订餐管理",
-	keys: ['orderfood','orderfoodsubmit'],
+	keys: ['orderfood', 'orderfoodsubmit','orderfoodrole'],
 	tabs:[
 		{
 			name: '订餐预览表',
@@ -189,9 +198,24 @@ let orderFood ={
 			name:'用户订餐',
 			link:'/orderfoodsubmit'
 		},
+		{
+			name: '权限管理',
+			link: '/orderfoodrole'
+		},
 		
 	]
 }
+
+let  meetingRoom = {
+	title:"会议室预定",
+	keys: ['meetingroom'],
+	tabs:[
+		{
+			name:'会议室预定',
+			link:"/meetingroom"
+		}
+	]
+};
 
 export {
 	changyue,
@@ -199,5 +223,6 @@ export {
 	workorder_workorderlist,
 	triptraffic,
 	infomanager,
-	orderFood
+	orderFood,
+	meetingRoom
 }

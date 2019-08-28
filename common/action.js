@@ -328,10 +328,6 @@ let userActions = {
 		desc: '获取用户产品权限列表',
 		action:"2001100"
 	},
-	modifyUserRole:{
-		desc:"用户产品权限修改",
-		action:"2001102"
-	},
 	getDepartmentUserList:{
 		desc:'获取部门用户列表',
 		action:"2001916"
@@ -374,7 +370,7 @@ let userActions = {
 	},
 	editUserRoleGroup: {
 		desc: '编辑用户权限组',
-		action: '2001105'
+		action: '2001103'
 	},
 	addUserForUserRoleGroup:{
 		desc:"添加权限组成员",

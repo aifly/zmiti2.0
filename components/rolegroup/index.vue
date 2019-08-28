@@ -12,9 +12,7 @@
 			</section>
 			
 			<div class='zmiti-rolegroup-main zmiti-scroll ' :style="{height:viewH - 180+'px' }">
-				<div class='zmiti-rolegroup-table' :class="{'active':showDetail}">
-					<Table  :data='groupList' :columns='columns'></Table>
-				</div>
+				<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total"></ZmitiTable>
 			</div>
 			<section @mousedown='showDetail = false' v-if='showDetail && false' class='zmiti-add-form-close lt-full'></section>
 		</div>
@@ -36,17 +34,7 @@
 										<Radio :value='0' :label="0">是</Radio>
 										<Radio :value='1' :label="1">否</Radio>
 									</RadioGroup>
-								</FormItem>
-
-
-								<FormItem label="是否为默认：">
-									<Select v-model="formRoleGroup.productid">
-										<Option v-for="(product,i) in productList" :key="i" :value="product.productid" :label="product.productname">
-											{{product.productname}}
-										</Option>
-									</Select>
-								</FormItem>
-								
+								</FormItem> 
 								<FormItem label="actions列表：">
 									<div class='zmiti-action-list' v-for='(item,i) of actions' :key='i'>
 										<div class='zmiti-action-title'>{{(i+1 ) + '.' + item.name}}：</div>
@@ -60,7 +48,7 @@
 							</Form>
 							
 							<div class='zmiti-add-form-item zmiti-add-btns'>
-								<Button size='large' type='primary' @click='roleGroupAction'>{{formRoleGroup.id?'保存':'确定'}}</Button>
+								<Button size='large' type='primary' @click='roleGroupAction'>{{formRoleGroup.groupid?'保存':'确定'}}</Button>
 							</div>
 						</section>
 					</transition>
@@ -68,11 +56,13 @@
 			</ZmitiMask>
 			 
 
-		<Modal title='权限设置' v-model="visible">
-			<Table :data='roleList' :columns='roleCol'></Table>
+		<Modal title='权限设置' v-model="visible" @on-ok='addUserForUserRoleGroup'>
+			<ul class='zmiti-companyuser-list'>
+				<li @click="chooseUser(user)" v-for='(user,i) in userList' :key="i" :class="{'active':currentUser.some(item=>{return item.user.userid === user.user.userid})}">
+					{{user.user.realname||user.user.username}}
+				</li>
+			</ul>
 		</Modal>
-
- 
 	</div>
 </template>
 
@@ -84,111 +74,97 @@
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
 	import ZmitiMask from '../../common/mask/';
-import { clearInterval } from 'timers';
-	var  {resourceActions,orderFoodActions,userActions,companyActions,tripActions,resourceActions,changYueAcions} = zmitiUtil;
+	import ZmitiTable from '../../common/table';
+	let {resourceActions,orderFoodActions,userActions,companyActions,tripActions,changYueAcions} = zmitiUtil;
 	var	actions = [
 		{
 			name:'畅阅',
+			id:"1946048392",
 			actions:Object.values(changYueAcions)
 		},
 		{
+			id:"8044104590",
 			name:'出差宝',
 			actions:Object.values(tripActions)
 		},
 		{
+			id:'7450479310',
 			name:'食堂订餐',
 			actions:Object.values(orderFoodActions)
 		}
 	];
 	export default {
-		props:['obserable'],
+		props:['productid'],
 		name:'zmitiindex',
 		data(){
 			return{
 				actions,
+				currentUser:[],
 				tabIndex:[0,-1],
 				visible:false,
-				avatarList:[
-					'&#xe6a5;',
-					'&#xe6a4;',
-					'&#xe6a3;',
-					'&#xe6a2;',
-					'&#xe6a0;'
-				],
-				roleList:[],
+				userList:[],
 				imgs:window.imgs,
-				isLoading:false,
+				loading:false,
 				showDetail:false,
 				showDetailPage:-1,
 				currentClassId:-1, 
-				adminuserId:'',
-				currentUserid:'',
 				formRoleGroup:{
 					actions:[],
-					
 				},
-				address:'',
-				showPass:false,
-				showMap:false,
+				total:0,
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
-				companyList:[],
-				adminList:[],
-				groupList:[],
-				hideMenu:false,
-				roleCol:[
-
-					{
-						title:"产品名称",
-						key:'productname',
-						align:'center',
-					},
-					{
-						title:"访问权限",
-						key:'role',
-						align:'center',
-						render:(h,params)=>{
-							console.log(params.row)
-							return h('Checkbox',{
-								props:{
-									checked:true,
-									value:params.row.authstatus === 1
-								},
-								on:{
-									'on-change':(e)=>{
-										var s = this;
-										zmitiUtil.ajax({
-											url:window.config.baseUrl+'admin/setuserauth',
-											data:{
-												setuserid:s.currentUserid,
-												productids:params.row.productid,
-												isdel:params.row.authstatus === 1 ? 1:2
-											}
-										})
-									}
-								}
-							},'访问权限')
-						}
-					}
-				],
-				
+				dataSource:[],
+			
 				columns:[
 					{
 						title:"权限组名称",
-						key:'groupname',
+						key:'title',
 						align:'center',
 					},
 					{
-						title:"描述",
-						key:'describes',
-						align:'center'
+						title:"是否为默认",
+						key:'isdefault',
+						align:'center',
+						render:(h,params)=>{
+							return h('div',{},params.row.isdefault?'否':"是");
+						}
 						
 					},
 					{
-						title:"用户列表",
-						key:'grouptype',
-						align:'center'
-						
+						title:"权限列表",
+						key:'actions',
+						width:300,
+						render:(h,params)=> {
+							
+							return h('div',{},params.row.actions.map(item=>{
+								var res = [];
+
+							
+								this.actions.filter(it=>{
+									return it.id === this.$route.params.id;
+								}).forEach((ac)=>{
+									ac.actions.forEach(a=>{
+										if(a.action === item){
+											res.push(h('span',{
+												style:{
+													display:'inline-block',
+													border:'1px solid #f90',
+													margin:'5px',
+													border:'1px solid #ccc',
+													lineHeight:'16px',
+													height:'24px',
+													padding:'4px',
+													background:'#fff'
+												}
+											},a.desc));
+											//res.push(a.desc);
+										}
+									})
+								});
+								return res;
+							}));
+						},
 					}, 
 					{
 						title:'操作',
@@ -199,41 +175,14 @@ import { clearInterval } from 'timers';
 
 							return h('div', [
                                
-                                h('span', {
-                                  
-                                    style: {
-										border:'none',
-										fontSize: '12px',
-										cursor:'pointer',
-										color:'#06C'
-										
-                                    },
-                                    on: {
-                                        click: () => {
-											
-											this.visible = true;
-											var s = this;
-											this.currentUserid = params.row.userid;
-											zmitiUtil.ajax({
-												url:window.config.baseUrl+'admin/getuserauth',
-												data:{
-													setuserid:params.row.userid
-												},
-												success(data){
-													s.roleList = data.list;									
-													console.log(data);
-												}
-											})
-                                        }
-                                    }
-								}, '权限'),
+                               
 								h('span', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
                                     },
                                     style: {
-										margin: '2px 0 2px 10px',
+										margin: '2px 10px 2px 0',
 										border:'none',
 										fontSize: '12px',
 										cursor:'pointer',
@@ -242,10 +191,12 @@ import { clearInterval } from 'timers';
                                     },
                                     on: {
                                         click: () => {
-											
+											this.visible = true;
+											this.groupid = params.row.groupid;
+											this.getUserRoleGroupUserList();
                                         }
                                     }
-                                }, '用户'),
+                                }, '用户管理'),
 								 h('span', {
                                     props: {
                                         type: 'primary',
@@ -262,21 +213,27 @@ import { clearInterval } from 'timers';
                                     on: {
                                         click: () => {
 											var s = this;
-											s.showDetail = true;
+											
 											s.formRoleGroup = params.row;
-											s.adminuserId = params.row.adminuserid;
-											console.log( params.row);
+											this.showDetail = true;
+											Vue.obserable.trigger({
+												type:'toggleMask',
+												data:true
+											})
+											
+											
                                         }
                                     }
                                 }, '详情'),
                                 h('Poptip',{
 									props:{
 										confirm:true,
-										title:"确定要删除吗？"
+										title:"确定要删除吗？",
+										placement:'left'
 									},
 									on:{
 										'on-ok':()=>{
-											this.delGroup(params.row.id);
+											this.delUserRoleGroup(params.row.groupid);
 										},
 										
 									}
@@ -322,20 +279,16 @@ import { clearInterval } from 'timers';
 			}
 		},
 		components:{
-			ZmitiMask
+			ZmitiMask,
+			ZmitiTable
 		},
-
-		beforeCreate(){
-			//var validate = sysbinVerification.validate(this);
-			//zmitiUtil.clearCookie('login');
-
-			///this.validate = validate;
-		},
+ 
 		mounted(){
 			window.s = this;
 			this.userinfo = zmitiUtil.getUserInfo();
 			this.getGroupList();
 			this.init(); 
+			this.getUserList();
 		},
 
 		watch:{
@@ -352,14 +305,149 @@ import { clearInterval } from 'timers';
 		},
 		
 		methods:{
+			addUserForUserRoleGroup(){
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'addUserForUserRoleGroup',
+					data:{
+						action:userActions.addUserForUserRoleGroup.action,
+						groupid:s.groupid,
+						users:s.currentUser.map(item=>{return item.user.userid})
 
+					},
+					success(data){
+						console.log(data,'data');
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+							//s.currentUser = data.list;
+						}
+					}
+				})
+			},
+			getUserRoleGroupUserList(){
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'getUserRoleGroupUserList',
+					data:{
+						action:userActions.getUserRoleGroupUserList.action,
+						condition:{
+							page_size:100,
+							page_index:0,
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid:s.$route.params.id
+						},
+
+					},
+					success(data){
+						
+						if(data.getret === 0){
+							s.currentUser = data.list;
+						}
+					}
+				})
+			},
+			chooseUser(user){
+				
+				if(this.currentUser.some((item)=>{
+					return item.user.userid  === user.user.userid;
+				})){
+					this.currentUser.forEach((item,i)=>{
+						if(item.user.userid === user.user.userid){
+							this.currentUser.splice(i,1);
+							
+							item.id && this.delUserForUserRoleGroup(item.id);
+						}
+					})
+				}
+				else{
+					this.currentUser.push(user);
+				}
+				this.$forceUpdate()
+				 
+			},
+			delUserRoleGroup(id){
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'delUserRoleGroup',
+					data:{
+						action:userActions.delUserRoleGroup.action,
+						id
+					},
+					success(data){
+						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+						}
+					}
+				})
+			},
+			delUserForUserRoleGroup(id){
+				var s = this;
+				zmitiUtil.ajax({
+					remark:'delUserForUserRoleGroup',
+					data:{
+						action:userActions.delUserForUserRoleGroup.action,
+						id
+					},
+					success(data){
+						console.log(data,'data');
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
+						if(data.getret === 0){
+							
+						}
+					}
+				})
+			},
+			getUserList(){
+				var s = this;
+				this.loading = true;
+				var {condition} = this;
+				condition = Object.assign(condition,{
+					companyid:zmitiUtil.getCurrentCompanyId().companyid
+				})
+				zmitiUtil.ajax({
+					remark:"getCompanyUserList",
+					data:{
+						action:userActions.getCompanyUserList.action,
+						condition
+					},
+					error(){
+					} ,
+					success(data){
+						if(data.getret === 0){
+							s.userList = data.list;
+						}
+					}
+				})
+			},
+			change(e){
+				this.condition.page_index = e -1;
+				this.getGroupList();
+			},
+			closeMaskPage(){
+				Vue.obserable.trigger({
+					type:'toggleMask',
+					data:false
+				})
+			},
+		    
+			filterAction(){
+				this.actions = this.actions.filter(item=>{
+					return item.id === this.$route.params.id;
+				})
+			},
 			init(){
 				this.t = setInterval(() => {
 					if(Vue.productList){
 						window.clearInterval(this.t);
+						this.filterAction();
 						this.productList = Vue.productList;
 					}
+
 				}, 100);
+
 			},
 			closeMaskPage(){
 				Vue.obserable.trigger({
@@ -389,49 +477,16 @@ import { clearInterval } from 'timers';
 				this.$forceUpdate();
 			
 			},
-			initPassword(){//初始化密码
-				var {$Message} = this;
-				zmitiUtil.adminAjax({
-					data:{
-						action:zmitiActions.modifyAdminPassword.action,
-						adminuserid:this.formRoleGroup.adminuserid,
-						adminpwd:window.config.defaultPass
-					},
-					success(data){
-						$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							
-						}
-					}
-				});
-			},
+		 
 			addAdmin(){
 				this.showDetail = true;
-				this.adminuserId = '';
 				this.formRoleGroup = {
 				
 				};
 				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
 
-			delGroup(id){
-				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'delGroup',
-					data:{
-						action:zmitiActions.delGroup.action,
-						id
-					},
-					success(data){
-						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
-						if(data.getret === 0){
-							
-							s.getGroupList();
-							///s.adminList = data.list;	 
-						}
-					}
-				})
-			},
+		 
 
 
 			help(){
@@ -463,7 +518,7 @@ import { clearInterval } from 'timers';
  
 			getGroupList(){
 				var s = this;
-				
+				s.loading = true;
 				var p = new Promise((resolve,reject)=>{
 					var condition = this.condition;
 					zmitiUtil.ajax({
@@ -471,11 +526,17 @@ import { clearInterval } from 'timers';
 						data:{
 							action:userActions.getRoleList.action,
 							condition,
+							productid:s.$route.params.id,
 							companyid:zmitiUtil.getCurrentCompanyId().companyid
 						},
+						error(){
+							s.loading = false;
+						},
 						success(data){
+							s.loading = false;
 							if(data.getret === 0){
-								s.groupList = data.list;	 
+								s.dataSource = data.list;	 
+								s.total = data.total || data.list.length;
 								resolve();
 							}
 						}
@@ -499,12 +560,17 @@ import { clearInterval } from 'timers';
 			 
 			roleGroupAction(){
 				var s = this;
-				var action = this.formRoleGroup.id ? userActions.editUserRoleGroup.action:userActions.addUserRoleGroup.action;
+			
+				var action = this.formRoleGroup.groupid ? userActions.editUserRoleGroup.action:userActions.addUserRoleGroup.action;
 				var info = this.formRoleGroup;
-				info.companyid = zmitiUtil.getCurrentCompanyId().companyid;
 
+				info.companyid = zmitiUtil.getCurrentCompanyId().companyid;
+				info.productid = this.$route.params.id;
+				if(this.formRoleGroup.groupid){
+					info.groupid = this.formRoleGroup.groupid;
+				}
 				zmitiUtil.ajax({
-					remark:this.formRoleGroup.id ?　'editUserRoleGroup':'addUserRoleGroup',
+					remark:this.formRoleGroup.groupid ?　'editUserRoleGroup':'addUserRoleGroup',
 					data:{
 						action,
 						info:this.formRoleGroup
@@ -513,6 +579,10 @@ import { clearInterval } from 'timers';
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
 							s.getGroupList();
+							Vue.obserable.trigger({
+								type:'toggleMask',
+								data:false
+							})
 						}
 					}
 				})

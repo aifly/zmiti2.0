@@ -13,6 +13,7 @@ import ChangYueMyCheck from './components/changyuemycheck';
 import ChangYueDetail from './components/changyuedetail';
 import changyuecompany from './components/changyuecompany';
 import changyuedepartment from './components/changyuedepartment';
+import changyuerole from './components/changyuerole';
 import user from './components/user';
 import usercheck from './components/usercheck';
 import checkproduct from './components/checkproduct';
@@ -24,9 +25,11 @@ import triptraffic from './components/tripexpence/triptraffic/index.vue';
 import tripreason from './components/tripexpence/tripreason/index.vue';
 import tripnotice from './components/tripexpence/tripnotice/index.vue';
 import tripost from './components/tripexpence/tripost/index.vue';
+import triprole from './components/tripexpence/triprole/index.vue';
 import consume from './components/consume';
 import workorderlist from './components/workorderlist';
 import Group from './common/group/index';
+
 import infomanager from './components/infomanager/index';
 import infomanagermsg from './components/infomanager/msg/index';
 import infomanagerdetail from './components/infomanager/msg/detail';
@@ -40,6 +43,9 @@ import infomanagersetting from './components/infomanager/setting/index';
 
 import OrderFood from './components/orderfood/orderfood';
 import orderfoodsubmit from './components/orderfood/orderfoodsubmit';
+import orderFoodRole from './components/orderfood/orderfoodrole';
+
+import MeetingRoom from './components/meetingroom/index/'
 
 import VueRouter from 'vue-router'
 import './components/css/index.css';
@@ -95,6 +101,7 @@ const router = new VueRouter({
 			{ path: "/changyuedetail/:manuscriptid/:id/", name: "changyuedetail", component: ChangYueDetail},
 			{ path: "/changyuecompany/:id?", name: "changyuecompany", component:changyuecompany},
 			{ path: "/changyuedepartment/:id?", name: "changyuedepartment", component:changyuedepartment},
+			{ path: "/changyuerole/:id?", name: "changyuerole", component:changyuerole},
 			{ path: "/user", name: "user", component:user},
 			{ path: "/usercheck/:id?", name: "usercheck", component:usercheck},
 			{ path: "/checkproduct/:id?", name: "checkproduct", component: checkproduct},
@@ -108,8 +115,10 @@ const router = new VueRouter({
 			{ path: "/tripreason/:id?", name: "tripreason", component: tripreason},
 			{ path: "/tripnotice/:id?", name: "tripnotice", component: tripnotice},
 			{ path: "/tripost/:id?", name: "tripost", component: tripost},
+			{ path: "/triprole/:id?", name: "triprole", component: triprole},
 			{ path: '/rolegroup/', name: 'rolegroup', component:  rolegroup},
-			{ path: "/infomanager", name: "infomanager", component: infomanager},
+			{ path: '/meetingroom/:id?', name: 'meetingroom', component:  MeetingRoom},
+			{ path: "/infomanager/:id?", name: "infomanager", component: infomanager},
 			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
 			{path:"/infomanagerdetail/:typeid?/:id?",name:"infomanagerdetail",component:infomanagerdetail},
 			{path: "/infomanagernotice/:id?", name: "infomanagernotice", component: infomanagernotice},
@@ -121,6 +130,7 @@ const router = new VueRouter({
 			{path:"/infomanagersetting/:id?",name:"infomanagersetting",component:infomanagersetting},
 			{path:"/orderfood/:id?",name:"orderfood",component:OrderFood},
 			{ path: "/orderfoodsubmit/:id?", name: "orderfoodsubmit", component: orderfoodsubmit},
+			{ path: "/orderfoodrole/:id?", name: "orderfoodrole", component: orderFoodRole},
 		]
 	},
    /*  {

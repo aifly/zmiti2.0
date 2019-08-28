@@ -13,7 +13,11 @@
                   <div v-else>
 					  <span><router-link to='/home'>单位端控制平台</router-link></span>
 					  <div class='zmiti-company-info'>
-						   <span style='margin:0 10px 0 20px' v-if='currentComapny'>当前单位：{{currentComapny.companyname}}<span v-if='currentComapny.islead' style="font-size:12px;margin-left:10px;"> (管理员)</span> </span>
+						   <span style='margin:0 10px 0 20px' v-if='currentComapny'>
+							   <keep-alive>
+							   		<span>当前单位：{{currentComapny.companyname}}</span>
+							   </keep-alive>
+							<span v-if='currentComapny.islead' style="font-size:12px;margin-left:10px;"> (管理员)</span> </span>
 					  <router-link style='font-size:12px;cursor:pointer;' to='/login' v-if='userinfo.info&&userinfo.info.company_list&&userinfo.info.company_list.length>1'></router-link>
 					  </div>
 				  </div>
@@ -75,24 +79,26 @@
             <Layout class="zmiti-main-layout" :style='{height:(viewH - 50)+"px"}'>
                 <div class="zmiti-tab-C" :class="{'active':showMenu}" :style='{height:(viewH - 50)+"px"}' @mouseover='mouseover' @mouseout="mouseout">
                    <div>
-                       <ul>
-                           <li class='zmiti-menu-title' v-if='!isAdmin'>
-                               <div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
-                            </li>
-                           <li @click='mouseout' class='zmiti-text-overflow zmiti-menu-item1' :class='{"active":$route.name.indexOf(item.producturl.substring(1))>-1}' :key='i' v-for="(item,i) in productList" :name="item.productid">
-						  		 <div><router-link :to='item.producturl'><span class='zmt_iconfont' v-html='item.icon || "&#xe609;"'></span></router-link> </div>
-                                <div>
-                                    <router-link  :to='item.producturl'> {{item.productname}} </router-link>
-                                </div>
-                           </li>
-                           <template v-if='isAdmin'>
-                                <li @click='mouseout'  class='zmiti-menu-item1' :class="{'active':menu.active.some(ar=>ar === $route.name)}" v-for="(menu,i) in menus" :key='i'>
-									
-                                    <div><router-link :to="menu.link"><span class='zmt_iconfont' v-html='menu.icon'></span></router-link> </div>
-                                    <div><router-link :to="menu.link">{{menu.name}}</router-link></div>
-                                </li>
-                           </template>
-                       </ul>
+					   <keep-alive>
+							<ul>
+								<li class='zmiti-menu-title' v-if='!isAdmin'>
+									<div><img :src="imgs.zmiti" alt=""></div><div>{{isAdmin?"系统管理":"产品与服务"}}</div>
+									</li>
+								<li @click='mouseout' class='zmiti-text-overflow zmiti-menu-item1' :class='{"active":$route.name.indexOf(item.producturl.substring(1))>-1}' :key='i' v-for="(item,i) in productList" :name="item.productid">
+										<div><router-link :to='item.producturl+"/"+item.productid'><span class='zmt_iconfont' v-html='item.icon || "&#xe609;"'></span></router-link> </div>
+										<div>
+											<router-link  :to='item.producturl+"/"+item.productid'> {{item.productname}} </router-link>
+										</div>
+								</li>
+								<template v-if='isAdmin'>
+										<li @click='mouseout'  class='zmiti-menu-item1' :class="{'active':menu.active.some(ar=>ar === $route.name)}" v-for="(menu,i) in menus" :key='i'>
+											
+											<div><router-link :to="menu.link"><span class='zmt_iconfont' v-html='menu.icon'></span></router-link> </div>
+											<div><router-link :to="menu.link">{{menu.name}}</router-link></div>
+										</li>
+								</template>
+							</ul>
+					   </keep-alive>
                    </div>
                 </div>
 
@@ -185,7 +191,7 @@
 		mounted(){
            ///this.menus = this.defaultMenu.concat([]);
 			var obserable = Vue.obserable;
- 
+	
 			
 			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();
 			

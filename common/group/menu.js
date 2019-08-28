@@ -1,15 +1,15 @@
 
 if (!window.isAdmin){
-	var { changyue, company, workorder_workorderlist, triptraffic, infomanager, orderFood} = require('./usermenu');
+	var { changyue, company, workorder_workorderlist, triptraffic, infomanager, orderFood, meetingRoom} = require('./usermenu');
 	var menuObj = {
 		changyue,
 		company,
 		workorder_workorderlist,
 		triptraffic,
 		infomanager,
-		orderFood
+		orderFood,
+		meetingRoom
 	};
-
 }else{
 	
 	var { user_company,
