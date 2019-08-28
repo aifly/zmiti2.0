@@ -39,13 +39,15 @@
 								</div>
 							</FormItem>
 							<FormItem label="WORD加密文件：">
+								<div><Button icon="ios-cloud-upload-outline" @click="showWord= true">选择word文件</Button></div>
 								<Input v-model="formObj.wordurl"></Input>
 							</FormItem>
 							<FormItem label="PDF加密文件：">
+								<div><Button icon="ios-cloud-upload-outline" @click="showPdf= true">选择pdf文件</Button></div>
 								<Input v-model="formObj.pdfurl"></Input>
 							</FormItem>
 							<FormItem label="附件：">
-								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true" :disabled="filedisabled">选择文件</Button> 提示：最多添加5个文件</div>
+								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true" :disabled="filedisabled">选择附件</Button> 提示：最多添加5个文件</div>
 								<!-- <Input v-model="formObj.filearray"></Input> -->
 								<div>
 									<ul>
@@ -96,7 +98,23 @@
 				 </div>
 			 </div>
 		</div>
-
+		<!-- 选择WORD -->
+		<Modal v-model="showWord" title='资料库' width='800'>
+			<ResourceList v-if='showWord' :isAdmin='false' :isDialog='true' @onFinished='onFinishWord'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showWord=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseWord'>确定</Button>
+			</div> 
+		</Modal>
+		<!-- 选择PDF -->
+		<Modal v-model="showPdf" title='资料库' width='800'>
+			<ResourceList v-if='showPdf' :isAdmin='false' :isDialog='true' @onFinished='onFinishPdf'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showPdf=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='choosePdf'>确定</Button>
+			</div> 
+		</Modal>
+		<!-- 选择多个附件 -->
 		<Modal v-model="showResource" title='资料库' width='800'>
 			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
 			<div class="zmiti-resourcelist-footer"  slot='footer'>
@@ -127,7 +145,9 @@
 				targetKeys:[],
 				myfiles:[],
 				showAvatarModal:false,	
-				showResource:false,			
+				showResource:false,
+				showWord:false,
+				showPdf:false,			
 				companyname:'',
 				addDataSource:[],
 				imgs:window.imgs,
@@ -140,6 +160,8 @@
 				viewH:window.innerHeight,
 				viewW:window.innerWidth,
 				currentChooseResource:{},
+				currentChooseWord:{},
+				currentChoosePdf:{},
 				dataSource:[],				
 				showTable:false,
 				condition:{
@@ -332,10 +354,27 @@
 		    	this.formObj.users=val;
 		    	console.log(this.formObj.users,'选中的用户');
 		    },
-		    onFinished(item){
+		    /**以下为选择word**/
+		    onFinishWord(item){//选择word后
+				this.currentChooseWord = item;
+			},
+			chooseWord(){//选择word
+				this.showWord = false;
+				this.formObj.wordurl=this.currentChooseWord.filepath;
+			},
+			/**以下为选择pdf**/
+		    onFinishPdf(item){//选择word后
+				this.currentChoosePdf = item;
+			},
+			choosePdf(){//选择word
+				this.showPdf = false;
+				this.formObj.pdfurl=this.currentChoosePdf.filepath;
+			},
+		    /**以下为选择多个附件**/
+		    onFinished(item){//选择多个附件后
 				this.currentChooseResource = item;
 			},
-			chooseImg(){//选择文件后
+			chooseImg(){//选择多个附件
 				this.showResource = false;
 				let filelist=this.currentChooseResource.filepath;
 				this.myfiles.push(this.currentChooseResource.filepath)
