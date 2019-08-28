@@ -75,7 +75,7 @@
 	import zmitiUtil from '../../common/lib/util';
 	import ZmitiMask from '../../common/mask/';
 	import ZmitiTable from '../../common/table';
-	let {resourceActions,orderFoodActions,userActions,companyActions,tripActions,changYueAcions} = zmitiUtil;
+	let {resourceActions,orderFoodActions,userActions,companyActions,tripActions,changYueAcions,infomanagerActions} = zmitiUtil;
 	var	actions = [
 		{
 			name:'畅阅',
@@ -91,6 +91,10 @@
 			id:'7450479310',
 			name:'食堂订餐',
 			actions:Object.values(orderFoodActions)
+		},{
+			id:'1072203850',
+			name:"信息管理",
+			actions:Object.values(infomanagerActions)
 		}
 	];
 	export default {

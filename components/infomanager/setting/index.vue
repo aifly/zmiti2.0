@@ -1,88 +1,52 @@
 <template>
-	<div class="zmiti-tripexpence-main-ui">
-
-
-		 <div class='zmiti-tripexpence-table lt-full'>
-			 <header>
-				 <div>
-					 <span>权限设置</span>
-
-				 </div>
-			 </header>
-			 <div class='zmiti-scroll' :style="{height:viewH - 110+'px'}">
-				
-				
-			 </div>
-		 </div>
-
-
-
-
-	</div>
+	<RoleGroup v-if='productid' :productid='productid'></RoleGroup>
 </template>
 
-<style lang="scss" scoped>
-	@import './index.scss';
-</style>
 <script>
-
-	import Vue from 'vue';
-	import zmitiUtil from '../../../common/lib/util';
-	import ZmitiTable from '../../../common/table';
-	export default {
-		props:['obserable'],
-		name:'zmitiindex',
-		data(){
-			return{
-				targetKeys:[],
-				showAvatarModal:false,				
-				companyname:'',
-				addDataSource:[],
-				imgs:window.imgs,
-				total:0,
-				loading:true,
-				currentCityIndex: -1,
-				currentCityId: -1,
-				transX: 0,
-				transY: 0,
-				viewH:window.innerHeight,
-				viewW:window.innerWidth,
-				dataSource:[],				
-				showTable:false,
-				condition:{
-					page_index:0,
-					page_size:10,
-				},
-				userinfo:{},
-				productid:0,
-			}
-		},
-		components:{
-			ZmitiTable
-		},
-
-		beforeCreate(){
-			
-		},
-		mounted(){
-
-			setTimeout(() => {
-				//this.productid =  this.$route.params.id
-			}, 100);
-			
-		},
-
-		watch:{
-
-			
-			
-		},
-		
-		methods:{
-
-
-
+import RoleGroup from '../../rolegroup';
+import Vue from 'vue';
+export default {
+	data(){
+		return {
+			productid:""
 		}
-	}
+	},
+	components:{
+		RoleGroup
+	},
+	mounted() {
+
+		this.init();
+		
+	
+	},
+	watch: {
+		$route:{
+			handler(){
+				var productid = this.productid;
+				productid && this.$router.push({path:'/infomanagersetting/'+productid});
+			}
+		}
+	},
+	methods: {
+		init(){
+			var s = this;
+			var t = setInterval(() => {
+				if(Vue.productList){
+					clearInterval(t);
+					var productid =  this.$route.params.id ;
+					if(!productid){
+						Vue.productList.forEach(p=>{
+							if(s.$route.name.indexOf(p.producturl.substr(1))>-1){
+								productid  = p.productid;
+							}
+						})
+					}
+					this.$router.push({path:'/infomanagersetting/'+productid});
+					this.productid = productid;
+				}
+			}, 100);
+		}
+	},
+}
 </script>
- 
