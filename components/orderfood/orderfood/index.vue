@@ -4,6 +4,7 @@
 			<header>
 				<div> <span class='zmt_iconfont'>&#xe639;</span> 订餐预览表</div>
 				<div>
+					<Button :loading='loading' @click='goToToday' type="primary">回到今天</Button>
 					<Button :loading='loading' @click='refresh' type="primary">刷新</Button>
 				</div>
 			</header>
@@ -155,30 +156,14 @@
 		beforeCreate(){
 			
 		},
+		
 		mounted(){
 
-			this.setMonth(2019,8);
+			this.goToToday();
 
 			this.today = new Date().getDate();
 
-			this.init(()=>{
-
-				this.monthdateCount = this.getDateByMonth();
-				
-	
-				this.currentWeekIndex = this.getCurrentWeekIndex();
-	
-				this.weekIndexOfFirstDay = this.getCurrentWeekIndex(1);//获取月份第一天是周几
-	
-				this.getDataList();
-				this.getOrderFoodConfigTop();
-
-				this.statisticsOrderFoodUserCount(()=>{
-
-					this.getDateRangeOrderFoodCount();
-				});
-
-			})
+			
 			
  
 			//
@@ -199,6 +184,11 @@
 		},
 		
 		methods:{
+
+			goToToday(){
+				this.setMonth(new Date().getFullYear(),new Date().getMonth()+1);
+				this.refresh()
+			},
 
 			refresh(){
 				this.init(()=>{
@@ -341,6 +331,8 @@
 							s.configid =data.list.configid;
 							s.isalluser = data.list.isalluser;
 							s.users = data.list.users.map((item)=>{return item.userid});
+						}else{
+							s.$Message.error(data.msg);
 						}
 					}
 				})
@@ -387,6 +379,7 @@
 					},
 					success(data){
 						s.loading = false;
+						
 						if(data.getret === 0){
 							s.dataSource = data.list;
 							s.dataSource.forEach((item)=>{
@@ -395,6 +388,8 @@
 									s.todayNumber = item.number;
 								}
 							})
+						}else{
+							s.$Message.error(data.msg);
 						}
 					}
 				})
@@ -414,8 +409,12 @@
 						}
 					},
 					success(data){
+						
 						if(data.getret === 0){
 							fn && fn();
+						}
+						else{
+							s.$Message.error(data.msg);
 						}
 					}
 				})

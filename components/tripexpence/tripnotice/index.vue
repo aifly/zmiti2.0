@@ -113,6 +113,7 @@
             onEditorChange(){//内容改变事件
 			},
 			addNotice(){
+				
 				var s = this;
 				var productid =  this.$route.params.id;		
 

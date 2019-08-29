@@ -111,7 +111,7 @@
 .layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type {
   cursor: pointer;
   text-align: center;
-  width: 50px;
+  width: 100px;
   position: relative;
 }
 
@@ -161,6 +161,8 @@
   line-height: 20px;
   padding: 0 4px;
   color: #777;
+  flex: 1;
+  margin: 0 4px;
 }
 
 .layout .ivu-layout-header > div.zmiti-user-info > span:last-of-type ul li.zmiti-hover-tab > div:hover {

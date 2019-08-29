@@ -267,6 +267,7 @@
 							})
 							
 						}
+						this.productid = productid;
 						var {condition} = this;
 						condition = Object.assign(condition,{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
@@ -322,18 +323,20 @@
 
 			adminAction(){
 				var s = this;
-				var action = this.formObj.jobid ? tripActions.editTraffic.action:tripActions.addTraffic.action;
+				var action = this.formObj.traffic ? tripActions.editTraffic.action:tripActions.addTraffic.action;
 
 				let info = {
+
+					productid:s.productid,
 					jobid:this.formObj.jobid,
 					transportid:this.formObj.transportid,
 					companyid:zmitiUtil.getCurrentCompanyId().companyid
 				}
-				if(this.formObj.jobid){
+				if(this.formObj.traffic){
 					info.traffic = this.formObj.traffic
 				}
 				zmitiUtil.ajax({
-					remark:this.formObj.jobid ?　'editTraffic':'addTraffic',
+					remark:this.formObj.traffic ?　'editTraffic':'addTraffic',
 					data:{
 						action,
 						info
@@ -363,7 +366,9 @@
 					data:{
 						action:tripActions.delTraffic.action,
 						condition:{
-							traffic
+							traffic,
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							productid:s.productid
 						}
 					},
 					success(data){

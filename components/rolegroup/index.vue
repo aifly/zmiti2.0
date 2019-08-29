@@ -237,7 +237,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delUserRoleGroup(params.row.groupid);
+											this.delUserRoleGroup(params.row.groupid,params.index);
 										},
 										
 									}
@@ -370,7 +370,7 @@
 				this.$forceUpdate()
 				 
 			},
-			delUserRoleGroup(id){
+			delUserRoleGroup(id,index){
 				var s = this;
 				zmitiUtil.ajax({
 					remark:'delUserRoleGroup',
@@ -382,7 +382,7 @@
 						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
 						if(data.getret === 0){
-							
+							s.dataSource.splice(index,1);
 						}
 					}
 				})

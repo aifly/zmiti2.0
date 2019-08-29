@@ -223,7 +223,6 @@
 		mounted(){
 
 			this.getDataList();
-
 			Vue[this.$route.name] = ()=>{
 				this.getDataList();
 			}
@@ -259,71 +258,7 @@
 			closeMaskPage(){
 				Vue.obserable.trigger({type:'toggleMask',data:false});
 			},
-			handleChange2(ids,index,companyids){
-				var s = this;
-				companyids.forEach((companyid,i)=>{
-					zmitiUtil.adminAjax({
-						remark:index === 'left'?"exitCompany":"joinCompany",
-						data:{
-							action:companyActions[index === 'left'?"exitCompany":"joinCompany"].action,
-							userid:s.currentUserid,
-							companyid
-						},
-						success(data){
-							s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg);
-							s.getJoinedCompany();
-						}
-					});
-				})
-
-			},
-			filterMethod (data, query) {
-                return data.label.indexOf(query) > -1;
-            },
-			getJoinedCompany(){
-				var s = this;
-				zmitiUtil.adminAjax({
-					remark:'getJoinedCompany',
-					data:{
-						action:companyActions.getJoinedCompany.action,
-						condition:{
-							userid:s.currentUserid,
-							page_index:0,
-							page_size:20,
-						}
-					},
-					success(data){
-						if(data.getret === 0){
-							s.targetKeys = [];
-							data.list.forEach(dt=>{
-								s.targetKeys .push(dt.companyid)
-							})
-						}
-					}
-				});
-			},
-			 
-			 
-			checkUser(){
-				var username = this.formObj.username;
-				var {$Message} = this;
-				zmitiUtil.adminAjax({
-					remark:'checkUserName',
-					data:{
-						action:zmitiActions.checkUserName.action,
-						username
-					},
-					success(data){
-						$Message[data.getret === 0 ? data.used  ? 'error':'success':'error'](data.msg);
-					}
-				})
-			},
-			getAvatar(avatar){
-				this.formObj.avatar = avatar;
-			},
-		 
-			 
-
+			
 			delete(tripcode){
 				var s = this;
 				zmitiUtil.ajax({
@@ -343,6 +278,7 @@
 					}
 				})
 			},
+
 			change(e){
 				this.condition.page_index = e -1;
 				this.getDataList();
@@ -356,7 +292,6 @@
 					var productid =  this.$route.params.id ;
 					if(Vue.productList){
 						clearInterval(t);
-
 						if(!productid){
 
 							Vue.productList.forEach(p=>{
@@ -373,7 +308,6 @@
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
 							productid
 						})
-						
 						zmitiUtil.ajax({
 							remark:"searchBusinesstripList",
 							data:{
@@ -393,7 +327,6 @@
 						})
 					}
 				}, 100);
-				
 			},
 			adminAction(){
 				var s = this;

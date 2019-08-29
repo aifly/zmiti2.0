@@ -48,10 +48,8 @@
 							<router-link :to='isAdmin?"/unworkorder":"/workorderlist"'>工单处理</router-link> 
 						</span>
 					</template>
-                   <span class="zmiti-text-overflow">
-					   {{userinfo.username}}
-					</span>
 					<span class='zmiti-user-avatar'>
+ 						{{userinfo.username}}
 						<span class='zmt_iconfont' v-html='userinfo.info && userinfo.info.avatar||"&#xe6a4;"'>
 							
 						</span>
@@ -61,7 +59,7 @@
 							</li>
 							<li class='zmiti-hover-tab'>
 								<div>基本信息</div>
-								<div>安全管理</div>
+								<div @click="showModifyPass=true">安全管理</div>
 							</li>
 							<li class='zmiti-hover-company'>
 								<span class='zmt_iconfont'>&#xe6a1;</span> 单位信息
@@ -112,6 +110,17 @@
         <div v-else>
             <router-view></router-view>
         </div>
+
+		<Modal v-model="showModifyPass" title='修改密码' @on-ok='modifyPass'>
+			<Form>
+				<FormItem label='原始密码：' :label-width='100'>
+					<Input @on-keydown.13='modifyPass' v-model="oldpwd"/>
+				</FormItem>
+				<FormItem label='新密码：' :label-width='100'>
+					<Input @on-keydown.13='modifyPass' v-model="newpwd"/>
+				</FormItem>
+			</Form>
+		</Modal>
     </div>
 </template>
 <style lang='scss' scoped>
@@ -121,7 +130,8 @@
 
 <script>
     import Vue from 'vue';
-    import zmitiUtil from '../lib/util';
+	import zmitiUtil from '../lib/util';
+	let {userActions} = zmitiUtil;
 	export default {
 		props:['isAdmin'],
 		name:'zmitiindex',
@@ -129,8 +139,11 @@
 			return{
 				imgs:window.imgs,
 				showMenu:false,
+				showModifyPass:false,
                 viewH:document.documentElement.clientHeight,
 				tabIndex:0,
+				newpwd:'',
+				oldpwd:'',
 				isLead:zmitiUtil.getCurrentCompanyId().islead,
                 userinfo:{
 					info:{
@@ -241,6 +254,39 @@
             }
         },
 		methods:{
+			modifyPass(){
+				var s = this;
+				if(!this.oldpwd){
+					this.$Message.error('旧密码不能为空');
+					return;
+				};
+				if(!this.newpwd){
+					this.$Message.error('新密码不能为空');
+					return;
+				}
+				zmitiUtil.ajax({
+					remark:"userModifyPassword",
+					data:{
+						action:userActions.userModifyPassword.action,
+						oldpwd:s.oldpwd,
+						newpwd:s.newpwd,
+					},
+					success(data){
+						s.showModifyPass = false;
+						if(data.getret === 0 ){
+							s.$Modal.success({
+								title:"修改密码成功",
+								content:"即将退出重新登录",
+								onOk:()=>{
+									window.localStorage.clear();
+									s.$router.push({path:'/login'});
+								}
+							});
+							
+						}
+					}
+				})
+			},
 			mouseout(){
 				this.showMenu = false;
 			},
@@ -256,9 +302,6 @@
             tab(index){
                 this.tabIndex = index;
             },
-         
-           
-         
           
 		}
 	}

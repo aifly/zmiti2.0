@@ -262,7 +262,8 @@
 				let info = {
 					jobname:this.formObj.jobname,
 					level:this.formObj.level,
-					companyid:zmitiUtil.getCurrentCompanyId().companyid
+					companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					productid:s.productid,
 				}
 				if(this.formObj.jobid){
 					info.jobid = this.formObj.jobid
@@ -311,7 +312,9 @@
 					data:{
 						action:tripActions.delJob.action,
 						condition:{
-							jobid
+							jobid,
+							productid:s.productid,
+							companyid:zmitiUtil.getCurrentCompanyId().companyid
 						}
 					},
 					success(data){
