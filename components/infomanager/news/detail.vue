@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>编辑</span>
+						 <span>{{columntitle}}</span>
 
 					 </div>
 					 <div>
@@ -20,23 +20,16 @@
 							<FormItem label="标题：">
 								<Input v-model="formObj.title" placeholder="标题"></Input>
 							</FormItem>
-							<FormItem label="状态：">
-							     <RadioGroup v-model="formObj.status">
-							        <Radio label="0">禁用</Radio>
-							        <Radio label="1">待审</Radio>
-							        <Radio label="2">通过</Radio>
-							        <Radio label="3">拒绝</Radio>
-							    </RadioGroup>
-							</FormItem>
 							<FormItem label="内容：">
-								<div style="line-height: 22px;">
-								<UE
-									:default-msg="formObj.content" 
-									id="editor" 
-									:config="editorOption" 
-									@contentChanged="contentChange">				
-									</UE>
-								</div>
+								<div class="edit_container">
+							        <quill-editor 
+							            v-model="formObj.content" 
+							            ref="myQuillEditor" 
+							            :options="editorQuillOption" 
+							            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+							            @change="onEditorChange($event)">
+							        </quill-editor>
+							    </div>
 							</FormItem>
 							<FormItem label="WORD加密文件：">
 								<div><Button icon="ios-cloud-upload-outline" @click="showWord= true">选择word文件</Button></div>
@@ -56,10 +49,6 @@
 										</li>
 									</ul>
 								</div>
-							</FormItem>
-							<FormItem label="父级ID：">
-								<Input v-model="formObj.fatherid" value="0"></Input>
-								<div>提示：评论或回复时出现，默认为0表示没有父级</div>
 							</FormItem>
 							<FormItem label="加密：">
 								<RadioGroup v-model="formObj.issecret">
@@ -126,7 +115,11 @@
 
 	</div>
 </template>
-
+<style type="text/css">
+.ql-container{min-height: 200px;}
+.ql-snow{line-height: 24px!important;}
+.edit_container{background: #ffffff;}
+</style>
 <style lang="scss" scoped>
 	@import './detail.css';
 </style>
@@ -134,7 +127,8 @@
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
-	import UE from '../../../common/ueditor' // 引入组件
+	import { quillEditor } from 'vue-quill-editor'
+	import '../../../common/css/quill.css'
 	import ResourceList from '../../../common/resourcelist'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
 	export default {
@@ -142,6 +136,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				columntitle:'',
 				targetKeys:[],
 				myfiles:[],
 				showAvatarModal:false,	
@@ -182,7 +177,7 @@
 				formObj:{
 					productid:0,
 					title:'',
-					status:'1',
+					status:'2',
 					content:'',
 					wordurl:'',
 					pdfurl:'',
@@ -194,24 +189,16 @@
 					remarks:'',
 					users:[]
 				},
-				editorOption: {
-					initialFrameWidth:'100%',
-					initialFrameHeight:300,
-					enableAutoSave:false,
-					autoHeightEnabled:false,
-					toolbars:[[
-					'bold', 'italic', 'underline',  '|',
-					'forecolor', 'backcolor', '|',
-					'paragraph', 'fontfamily', 'fontsize', 'lineheight', '|',
-					'insertorderedlist', 'insertunorderedlist', '|',
-					'removeformat', 'blockquote', 'indent', '|',
-					'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
-					'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-					'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', '|',
-					'source',
-					'fullscreen'
-					]]
-		        },
+				editorQuillOption: {
+					modules: {
+			            toolbar: [
+			              ['bold',{ 'indent': '-1' }, { 'indent': '+1' },{ 'color': [] },{ 'align': [] },'clean']
+			            ],
+			            syntax: {
+			              highlight: text => hljs.highlightAuto(text).value
+			            }
+			        }
+				},
 		        statusList:[{
                     value: 0,
                     label: '禁用'
@@ -228,7 +215,7 @@
 			}
 		},
 		components:{
-			UE,
+			quillEditor,
 			ResourceList
 		},
 
@@ -244,6 +231,7 @@
 			this.typeid=this.$route.params.typeid;
 			this.productid=this.$route.params.productid;
 			this.formObj.productid=this.$route.params.productid;
+			this.columntitle=this.$route.params.typename;
 			console.log(this.id,'this.id');
 			console.log(this.typeid,'this.typeid');
 			this.getnewsDetail();
@@ -399,7 +387,14 @@
 				let newurl=this.myfiles.join(',');
 				this.formObj.filearray=newurl;
 				console.log(this.myfiles,'删除后地址',newurl);
-			}
+			},
+			onEditorReady(editor) { // 准备编辑器
+	        },
+	        onEditorBlur(){}, // 失去焦点事件
+	        onEditorFocus(){}, // 获得焦点事件
+	        onEditorChange(quill, html, text){
+	        	//console.log('editor change!', quill, html, text)
+	        } // 内容改变事件
 		}
 	}
 </script>

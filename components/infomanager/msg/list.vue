@@ -25,10 +25,7 @@
 				 		<div class="zmiti-search-dates">
 				        	<DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
 				        </div>
-				        <Button icon="md-search" @click="searchHandle">搜索</Button>
-				        <Select v-model="statusVal" @on-change="infoStatus" style="margin-left:auto;width:120px">
-					        <Option v-for="item in selectStatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
-					    </Select>
+				        <Button icon="md-search" @click="searchHandle">搜索</Button>				        
 				 	</section>
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
@@ -70,6 +67,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				typename:'',
 				targetKeys:[],
 				showAvatarModal:false,				
 				companyname:'',
@@ -136,31 +134,10 @@
 						
 					},
 					{
-						title:"状态",
-						key:'status',
-						align:'center',
-						render:(h,params)=>{
-							let status='';
-							switch(params.row.status){
-								case 0:
-									status='禁用'
-								break;
-								case 2:
-									status='通过'
-								break;
-								case 3:
-									status='拒绝'
-								break;
-								default:
-									status='待审'
-							}
-							return h('div',{},status)
-						}
-					},
-					{
 						title:"权限",
 						key:'visit',
 						align:'center',
+						width:120,
 						render:(h,params)=>{
 							let viewother=[h('span', {
 								props: {
@@ -209,7 +186,15 @@
 									on:{
 										click:()=>{
 											this.formObj = params.row;
-											this.$router.push({name:'infomanagermsgdetail',params:{productid:this.productid,typeid:this.typeid,id:this.formObj.infoid}});
+											this.$router.push({
+												name:'infomanagermsgdetail',
+												params:{
+													productid:this.productid,
+													typeid:this.typeid,
+													id:this.formObj.infoid,
+													typename:this.typename
+												}
+											});
 										}
 									}
 								},'编辑'),
@@ -283,7 +268,14 @@
 				this.getDataList();
 			},
 			add(){
-				this.$router.push({name:'infomanagermsgdetail',params:{productid:this.productid,typeid:this.typeid}})				
+				this.$router.push({
+					name:'infomanagermsgdetail',
+					params:{
+						productid:this.productid,
+						typeid:this.typeid,
+						typename:this.typename
+					}
+				})				
 			},
 			getDataList(){
 				var s = this;
@@ -348,9 +340,9 @@
 				var s = this;
 
 				zmitiUtil.ajax({
-					remark:"gettypeList",
+					remark:"getusertypeinfolist",
 					data:{
-						action:infomanagerActions.gettypeList.action,
+						action:infomanagerActions.getusertypeinfolist.action,
 						condition:{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
 							specialnum:specialnum,
@@ -366,6 +358,7 @@
 							if(data.total>0){
 								s.typeDataList=data.list;
 								s.typeid=data.list[0].infotypeid;
+								s.typename=data.list[0].typename;
 							}
 						}
 					}
@@ -375,6 +368,7 @@
 				this.typeid=parseInt(val);
 				this.condition.page_index=0;
 				this.currentNumber=1;
+				this.typename=this.typeDataList.filter((item)=>item.infotypeid==val).map((item)=>item.typename).toString();
 				console.log(val,'当前标签');
 			},
 			infoStatus(val){//根据状态筛选

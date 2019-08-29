@@ -732,6 +732,14 @@ let infomanagerActions = {
 		desc:'获取查看列表详细',
 		action:"2001320"
 	},
+	addcomment:{
+		desc:'发布评论信息',
+		action:"2001321"
+	},
+	getusertypeinfolist:{
+		desc:'获取用户信息类型列表',
+		action:"2001304"
+	},
 }
 
 //天气预报

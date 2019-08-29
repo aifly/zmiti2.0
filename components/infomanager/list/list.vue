@@ -67,6 +67,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				typename:'',
 				targetKeys:[],
 				showAvatarModal:false,				
 				companyname:'',
@@ -158,7 +159,15 @@
 									on:{
 										click:()=>{
 											this.formObj = params.row;
-											this.$router.push({name:'infomanagerlistdetail',params:{productid:this.productid,typeid:this.typeid,id:this.formObj.infoid}});
+											this.$router.push({
+												name:'infomanagerlistdetail',
+												params:{
+													productid:this.productid,
+													typeid:this.typeid,
+													id:this.formObj.infoid,
+													typename:this.typename
+												}
+											});
 										}
 									}
 								},'编辑'),
@@ -231,7 +240,7 @@
 				this.getDataList();
 			},
 			add(){
-				this.$router.push({name:'infomanagerlistdetail',params:{productid:this.productid,typeid:this.typeid}})				
+				this.$router.push({name:'infomanagerlistdetail',params:{productid:this.productid,typeid:this.typeid,typename:this.typename}})				
 			},
 			getDataList(){
 				var s = this;
@@ -296,9 +305,9 @@
 				var s = this;
 
 				zmitiUtil.ajax({
-					remark:"gettypeList",
+					remark:"getusertypeinfolist",
 					data:{
-						action:infomanagerActions.gettypeList.action,
+						action:infomanagerActions.getusertypeinfolist.action,
 						condition:{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
 							specialnum:specialnum,
@@ -314,6 +323,7 @@
 							if(data.total>0){
 								s.typeDataList=data.list;
 								s.typeid=data.list[0].infotypeid;
+								s.typename=data.list[0].typename;
 							}
 						}
 					}
@@ -323,6 +333,7 @@
 				this.typeid=parseInt(val);
 				this.condition.page_index=0;
 				this.currentNumber=1;
+				this.typename=this.typeDataList.filter((item)=>item.infotypeid==val).map((item)=>item.typename).toString();
 				console.log(val,'当前标签');
 			},
 			infoStatus(val){//根据状态筛选

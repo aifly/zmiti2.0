@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>编辑</span>
+						 <span>{{columntitle}}</span>
 
 					 </div>
 					 <div>
@@ -68,6 +68,8 @@
 </template>
 <style type="text/css">
 	.ql-container{min-height: 200px;}
+	.ql-snow{line-height: 24px!important;}
+	.edit_container{background: #ffffff;}
 </style>
 <style lang="scss" scoped>
 	@import './detail.css';
@@ -85,6 +87,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				columntitle:'',
 				targetKeys:[],
 				myfiles:[],
 				showAvatarModal:false,	
@@ -139,11 +142,7 @@
 				editorQuillOption: {
 					modules: {
 			            toolbar: [
-			              ['bold', 'italic', 'underline'],
-			              [{ 'indent': '-1' }, { 'indent': '+1' }],
-			              [{ 'color': [] }, { 'background': [] }],
-			              [{ 'align': [] }],
-			              ['clean']
+			              ['bold',{ 'indent': '-1' }, { 'indent': '+1' },{ 'color': [] },{ 'align': [] },'clean']
 			            ],
 			            syntax: {
 			              highlight: text => hljs.highlightAuto(text).value
@@ -180,6 +179,7 @@
 		mounted(){
 			this.id=this.$route.params.id;
 			this.typeid=this.$route.params.typeid;
+			this.columntitle=this.$route.params.typename;
 			console.log(this.id,'this.id');
 			console.log(this.typeid,'this.typeid');
 			this.getnewsDetail();

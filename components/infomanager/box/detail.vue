@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>编辑</span>
+						 <span>{{columntitle}}</span>
 
 					 </div>
 					 <div>
@@ -20,14 +20,14 @@
 							<FormItem label="标题：">
 								<Input v-model="formObj.title" placeholder="标题"></Input>
 							</FormItem>
-							<FormItem label="状态：">
+							<!-- <FormItem label="状态：">
 							     <RadioGroup v-model="formObj.status">
 							        <Radio label="0">禁用</Radio>
 							        <Radio label="1">待审</Radio>
 							        <Radio label="2">通过</Radio>
 							        <Radio label="3">拒绝</Radio>
 							    </RadioGroup>
-							</FormItem>
+							</FormItem> -->
 							<FormItem label="内容：">
 								<div class="edit_container">
 							        <quill-editor 
@@ -63,7 +63,9 @@
 	</div>
 </template>
 <style type="text/css">
-	.ql-container{min-height: 200px;}
+.ql-container{min-height: 200px;}
+.ql-snow{line-height: 24px!important;}
+.edit_container{background: #ffffff;}
 </style>
 <style lang="scss" scoped>
 	@import './detail.css';
@@ -80,6 +82,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				columntitle:'',
 				targetKeys:[],
 				myfiles:[],
 				showAvatarModal:false,	
@@ -120,7 +123,7 @@
 				formObj:{
 					productid:0,
 					title:'',
-					status:'1',
+					status:'2',
 					content:'',
 					wordurl:'',
 					pdfurl:'',
@@ -134,11 +137,7 @@
 				editorQuillOption: {
 					modules: {
 			            toolbar: [
-			              ['bold', 'italic', 'underline'],
-			              [{ 'indent': '-1' }, { 'indent': '+1' }],
-			              [{ 'color': [] }, { 'background': [] }],
-			              [{ 'align': [] }],
-			              ['clean']
+			              ['bold',{ 'indent': '-1' }, { 'indent': '+1' },{ 'color': [] },{ 'align': [] },'clean']
 			            ],
 			            syntax: {
 			              highlight: text => hljs.highlightAuto(text).value
@@ -176,6 +175,7 @@
 			this.typeid=this.$route.params.typeid;
 			this.productid=this.$route.params.productid;
 			this.formObj.productid=this.$route.params.productid;
+			this.columntitle=this.$route.params.typename;
 			console.log(this.id,'this.id');
 			console.log(this.typeid,'this.typeid');
 			this.getnewsDetail();
