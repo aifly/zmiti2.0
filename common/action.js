@@ -725,7 +725,7 @@ let infomanagerActions = {
 		action:"2001318"
 	},
 	getViewList:{
-		desc:'获取查看列表',
+		desc:'获取评论列表',
 		action:"2001319"
 	},
 	getViewDetail:{
