@@ -30,7 +30,7 @@
 				<transition name='detail'>
 					<section class='zmiti-add-form zmiti-scroll' >
 						<header class='zmiti-add-header'>
-							<img :src="imgs.back" alt="">
+							<img :src="imgs.back" alt="" @click='closeMaskPage'>
 							<span>基础信息</span>
 						</header>
 					
@@ -43,25 +43,27 @@
 							<FormItem label="类型名称：">
 								<Input v-model="formObj.typename" placeholder="类型名称"></Input>
 							</FormItem>
-							<FormItem label="状态：">
-								<RadioGroup v-model="formObj.status">
-							        <Radio label="1">启用</Radio>
-							        <Radio label="0">禁用</Radio>
-							    </RadioGroup>
-							</FormItem>
 							<FormItem label="权限人员：">
 								<RadioGroup v-model="formObj.isalluser" @on-change="changeUserStatus">
 							        <Radio label="0">全部人员</Radio>
 							        <Radio label="1">指定人员</Radio>
 							    </RadioGroup>							    
 							    <div class="zmiti-inforuserlist-select" v-if="showSelectUser==true">							    
-								    <Select v-model="formObj.users" multiple style="width:260px">
+								    <Select v-model="formObj.users" multiple style="width:370px">
 								        <Option v-for="item in userSource" :value="item.userid" :key="item.userid">{{ item.realname }}</Option>
 								    </Select>
-							    </div>
+							    </div>							    
 							</FormItem>
 						</Form>
-						
+						<div class="zmiti-transfer-userlist" v-if="showTransferUserlist==true">
+					    	<Transfer
+					        :titles="['选择用户','已分配用户']"
+					        :data="data1"
+					        :target-keys="targetKeys1"
+					        :render-format="render1"
+					        @on-change="handleChange1">
+					        </Transfer>
+					    </div>
 						<div class='zmiti-add-form-item zmiti-add-btns'>
 							<Button size='large' type='primary' @click='adminAction'>{{formObj.jobid?'保存':'确定'}}</Button>
 						</div>
@@ -70,7 +72,7 @@
 			</div>
 		</ZmitiMask>
 
-		<Modal
+		<!-- <Modal
 	        v-model="modal1"
 	        title="信息管理权限"
 	        width="470"
@@ -85,7 +87,7 @@
 		        </Transfer>
 		        <div slot="footer"></div>
 	    </Modal>
-
+ -->
 
 	</div>
 </template>
@@ -105,6 +107,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				showTransferUserlist:false,
 				targetKeys:[],
 				showAvatarModal:false,
 				companyid:'',			
@@ -224,26 +227,16 @@
 						}
 					},
 					{
-						title:"权限",
+						title:"权限人员",
 						key:"isalluser",
 						align:"center",
 						render:(h,params)=>{
 							const viewuser=[h('span',{
 								style:{
-									cursor:'pointer',
-									color:"rgb(0, 102, 204)"
-								},
-								on:{
-									click:()=>{
-										console.log(params.row.infotypeid,'params.row.infotypeid');
-										this.modal1=true;//打开弹窗
-										this.infotypeid=params.row.infotypeid;
-										console.log(this.infotypeid,'infotypeid');
-										this.getpermission(params.row.infotypeid,params.row.companyid);//获取当前具有权限的用户
-									}
+									color:"#ff0000"
 								}
-							},'查看')];
-							return h('div',{},params.row.isalluser==0?'全部':viewuser);
+							},'指定人员')];
+							return h('div',{},params.row.isalluser==0?'全部人员':viewuser);
 						}
 					},
 					{
@@ -297,6 +290,9 @@
 											this.infotypeid=params.row.infotypeid;
 											console.log(this.infotypeid,'infotypeid');
 											this.getpermission(params.row.infotypeid);//获取具有权限的用户
+											if(params.row.isalluser==='1'){
+												this.showTransferUserlist=true;//显示穿梭框
+											}
 											Vue.obserable.trigger({
 												type:'toggleMask',
 												data:true
@@ -381,10 +377,18 @@
 			},
 			changeUserStatus(ele){//切换用户权限类型，0为全部，1为指定人员
 				console.log(this.infotypeid,'this.infotypeid')
-				if(ele==='1' && this.infotypeid===undefined){//当为添加状态时显示
-					this.showSelectUser=true;					
-				}else{//编辑信息时不显示用户列表
-					this.showSelectUser=false;					
+				if(this.infotypeid===undefined){//当为添加状态时可显示select
+					if(ele==='1'){
+						this.showSelectUser=true;
+					}else{
+						this.showSelectUser=false;
+					}										
+				}else{//编辑信息时可显示穿梭框
+					if(ele==='1'){
+						this.showTransferUserlist=true;
+					}else{
+						this.showTransferUserlist=false;
+					}								
 				}
 				console.log(ele,'element')
 			},
@@ -428,6 +432,7 @@
 				this.formObj.status="1";
 				this.infotypeid=undefined;
 				this.formObj.users=[];
+				this.showTransferUserlist=false;//隐藏穿梭框
 				console.log(this.formObj,'this.formObj')
 				Vue.obserable.trigger({type:'toggleMask',data:true});
 			},
@@ -547,25 +552,51 @@
             render1 (item) {
                 return item.label;
             },
-            handleChange1 (newTargetKeys, direction, moveKeys) {
-                console.log(newTargetKeys);//已经选择的用户
-                console.log(direction);
-                console.log(moveKeys);
-                this.targetKeys1 = newTargetKeys;
-                var infotypeid=this.infotypeid;
-                if(direction==='right'){//增加
-                	//console.log('增加');
+            handleChange1 (newTargetKeys, direction, moveKeys) {                
+                /*if(direction==='right'){
+                	console.log('增加');
                 	moveKeys.forEach((item,index)=>{
 	                	this.addpermission(item,infotypeid);
 	                	console.log(item,'添加用户')
 	                })
-                }else{//移除
+	                
+                }else{
                 	console.log('移除');                	
                 	moveKeys.forEach((item,index)=>{
 	                	this.delpermission(item,infotypeid);
 	                	console.log(item,'删除用户');
 	                })
-                }
+                }*/
+                this.$Modal.confirm({
+                    title: '是否更改用户权限',
+                    onOk: () => {                    	
+		                setTimeout(() => {
+	                        console.log(newTargetKeys);
+			                console.log(direction);
+			                console.log(moveKeys);
+			                this.targetKeys1 = newTargetKeys;
+			                var infotypeid=this.infotypeid;
+			                if(direction==='right'){
+			                	console.log('增加');
+			                	moveKeys.forEach((item,index)=>{
+				                	this.addpermission(item,infotypeid);
+				                	console.log(item,'添加用户')
+				                })
+				                
+			                }else{
+			                	console.log('移除');                	
+			                	moveKeys.forEach((item,index)=>{
+				                	this.delpermission(item,infotypeid);
+				                	console.log(item,'删除用户');
+				                })
+
+				                
+			                }
+			                this.$Modal.remove();
+	                    }, 300);
+                        
+                    }
+                });
                 
             },
             addpermission(userid,infotypeid){//添加信息管理权限
@@ -596,7 +627,7 @@
 						action:infomanagerActions.getpermission.action,
 						condition:{
 							page_index:0,
-							page_size:20,
+							page_size:100,
 							productid:this.productid,							
 							infotypeid:infotypeid
 						}

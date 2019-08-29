@@ -272,6 +272,9 @@
 							}else{
 								s.dataSource =[]
 							}							
+						}else{
+							s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+							s.dataSource =[]
 						}
 					}
 				})
