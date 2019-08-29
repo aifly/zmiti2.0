@@ -75,7 +75,6 @@
 	import zmitiUtil from '../../../common/lib/util';
 	import ResourceList from '../../../common/resourcelist'
 	import {Quill,quillEditor } from 'vue-quill-editor'
-	import quillConfig from '../../../assets/js/quill-config'
 	import '../../../common/css/quill.css'
 	
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
@@ -85,7 +84,6 @@
 		data(){
 			return{
 				columntitle:'',
-				quillOption: quillConfig,
 				targetKeys:[],
 				myfiles:[],
 				showAvatarModal:false,	
