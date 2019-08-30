@@ -490,7 +490,7 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						s.closeMaskPage();//关闭右侧
 						s.getDataList();//重新加载信息列表
-						window.location.reload();
+						window.location.reload();//刷新
 					}
 				})
 			},
