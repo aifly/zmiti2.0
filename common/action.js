@@ -781,6 +781,39 @@ let cityActions = {
 	}
 };
 
+//获取活动列表
+let partyActions = {
+	addParty:{
+		desc:'新增活动',
+		action:'2001704'
+	},
+	delParty: {
+		desc: '删除活动',
+		action: '2001705'
+	},
+	getPartyList:{
+		desc:'获取活动列表',
+		action:'2001707'
+	},
+	addPartyEntered:{
+		desc:'提交活动报名',
+		action:'2001708'
+	},
+	delPartyEntered:{
+		desc:'删除活动报名',
+		action:'2001709'
+	},
+	updatePartyEntered:{
+		desc:'修改活动报名',
+		action:"2001710"
+	},
+	getPartyEnteredList:{
+		desc:'获取活动报名列表',
+		action:"2001711"
+	}
+
+};
+
 var zmitiActions =   /*#__PURE__*/{
 	userActions,
 	resourceActions,
@@ -794,7 +827,8 @@ var zmitiActions =   /*#__PURE__*/{
 	newsActions,
 	tripActions,
 	infomanagerActions,
-	orderFoodActions
+	orderFoodActions,
+	partyActions
 }
 
 export  default zmitiActions;
