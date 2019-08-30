@@ -60,13 +60,23 @@
 							    </div>
 							</FormItem>
 							<FormItem label="word文件：">
+								<div><Button icon="ios-cloud-upload-outline" @click="showWord= true">选择word文件</Button></div>
 								<Input v-model="formObj.wordurl" placeholder="请输入word文件地址"></Input>								
 							</FormItem>
 							<FormItem label="pdf文件：">
+								<div><Button icon="ios-cloud-upload-outline" @click="showPdf= true">选择pdf文件</Button></div>
 								<Input v-model="formObj.pdfurl" placeholder="请输入pdf文件地址"></Input>
 							</FormItem>
 							<FormItem label="附件：">
 								<Input v-model="formObj.filearray" placeholder="请输入附件地址"></Input>
+								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true" :disabled="filedisabled">选择附件</Button> 提示：最多添加5个文件</div>
+								<div>
+									<ul>
+										<li v-for="(item,index) in myfiles" :key="index">
+											<Input :element-id="index.toString()" :value="item" @on-change="filesHandle"><Icon class="zmiti-remove-icon" type="ios-trash-outline" size="20" slot="suffix" @click="handleDelete(index)" /></Input>
+										</li>
+									</ul>
+								</div>
 							</FormItem>
 							<FormItem label="状态：">
 							     <RadioGroup v-model="formObj.status">
@@ -84,7 +94,30 @@
 				</transition>
 			</div>
 		</ZmitiMask>
-
+		<!-- 选择WORD -->
+		<Modal v-model="showWord" title='资料库' width='800'>
+			<ResourceList v-if='showWord' :isAdmin='false' :isDialog='true' @onFinished='onFinishWord'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showWord=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseWord'>确定</Button>
+			</div> 
+		</Modal>
+		<!-- 选择PDF -->
+		<Modal v-model="showPdf" title='资料库' width='800'>
+			<ResourceList v-if='showPdf' :isAdmin='false' :isDialog='true' @onFinished='onFinishPdf'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showPdf=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='choosePdf'>确定</Button>
+			</div> 
+		</Modal>
+		<!-- 选择多个附件 -->
+		<Modal v-model="showResource" title='资料库' width='800'>
+			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showResource=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseImg'>确定</Button>
+			</div> 
+		</Modal>
 	</div>
 </template>
 <style type="text/css">
@@ -101,6 +134,7 @@
 	import zmitiUtil from '../../../common/lib/util';
 	import ZmitiTable from '../../../common/table';
 	import ZmitiMask from '../../../common/mask/';
+	import ResourceList from '../../../common/resourcelist'
 	import { quillEditor } from 'vue-quill-editor'
 	import '../../../common/css/quill.css'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
@@ -318,6 +352,7 @@
 		components:{
 			ZmitiTable,
 			ZmitiMask,
+			ResourceList,
 			quillEditor
 		},
 
@@ -513,7 +548,50 @@
 	        onEditorFocus(){}, // 获得焦点事件
 	        onEditorChange(quill, html, text){
 	        	//console.log('editor change!', quill, html, text)
-	        } // 内容改变事件
+	        }, // 内容改变事件
+	        /**以下为选择word**/
+		    onFinishWord(item){//选择word后
+				this.currentChooseWord = item;
+			},
+			chooseWord(){//选择word
+				this.showWord = false;
+				this.formObj.wordurl=this.currentChooseWord.filepath;
+			},
+			/**以下为选择pdf**/
+		    onFinishPdf(item){//选择word后
+				this.currentChoosePdf = item;
+			},
+			choosePdf(){//选择word
+				this.showPdf = false;
+				this.formObj.pdfurl=this.currentChoosePdf.filepath;
+			},
+		    /**以下为选择多个附件**/
+		    onFinished(item){//选择多个附件后
+				this.currentChooseResource = item;
+			},
+			chooseImg(){//选择多个附件
+				this.showResource = false;
+				let filelist=this.currentChooseResource.filepath;
+				this.myfiles.push(this.currentChooseResource.filepath)
+				console.log(this.myfiles,'选择的文件');
+				this.formObj.filearray=this.myfiles.join(',');
+				console.log(this.formObj.filearray,'全部文件地址');
+			},
+			filesHandle(ele){
+				let iptval=ele.target.value;//获取输入的内容
+				let iptid=Number(ele.target.id);//获取当前索引并转为数字
+				this.myfiles[iptid]=iptval;//根据索引更新当前第N个的值
+				//console.log(this.myfiles);
+				let newurl=this.myfiles.join(',');
+				this.formObj.filearray=newurl;
+				console.log(this.myfiles,'更新后地址',newurl);
+			},
+			handleDelete(index){//删除单个附件地址
+				this.myfiles.splice(index,1);
+				let newurl=this.myfiles.join(',');
+				this.formObj.filearray=newurl;
+				console.log(this.myfiles,'删除后地址',newurl);
+			},
 		}
 	}
 </script>
