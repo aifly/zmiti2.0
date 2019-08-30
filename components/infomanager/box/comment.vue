@@ -11,7 +11,7 @@
 					 </div>
 					 <div>
 					 	<Button type="primary" @click='add()'>添加</Button>
-					 	<Button type="primary" @click='goback()'>返回</Button>
+					 	<Button type="default" @click='goback()'>返回</Button>
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
@@ -61,14 +61,14 @@
 							</FormItem>
 							<FormItem label="word文件：">
 								<div><Button icon="ios-cloud-upload-outline" @click="showWord= true">选择word文件</Button></div>
-								<Input v-model="formObj.wordurl" placeholder="请输入word文件地址"></Input>								
+								<Input v-model="formObj.wordurl" placeholder="请输入word文件地址" clearable></Input>								
 							</FormItem>
 							<FormItem label="pdf文件：">
 								<div><Button icon="ios-cloud-upload-outline" @click="showPdf= true">选择pdf文件</Button></div>
-								<Input v-model="formObj.pdfurl" placeholder="请输入pdf文件地址"></Input>
+								<Input v-model="formObj.pdfurl" placeholder="请输入pdf文件地址" clearable></Input>
 							</FormItem>
 							<FormItem label="附件：">
-								<Input v-model="formObj.filearray" placeholder="请输入附件地址"></Input>
+								<!-- <Input v-model="formObj.filearray" placeholder="请输入附件地址"></Input> -->
 								<div><Button icon="ios-cloud-upload-outline" @click="showResource= true" :disabled="filedisabled">选择附件</Button> 提示：最多添加5个文件</div>
 								<div>
 									<ul>
@@ -380,6 +380,9 @@
 		watch:{	
 			statusVal(){//当status发生变化时重新加载信息列表
 				this.getDataList();
+			},
+			myfiles(){
+				this.filedisabled=this.myfiles.length===5?true:false
 			}
 		},
 		
@@ -411,17 +414,7 @@
 				console.log('关闭右侧');
 				Vue.obserable.trigger({type:'toggleMask',data:false});
 			},
-			add(){
-				/*this.$router.push({
-					name:'infomanagerboxdetail',
-					params:{
-						productid:this.productid,
-						typeid:this.typeid,
-						fatherid:this.$route.params.id,
-						typename:this.typename
-					}
-				})*/
-				console.log(this.formObj,'this.formObj');
+			add(){				
 				this.formObj={
 					title:'',
 					productid:this.$route.params.productid,
@@ -432,7 +425,7 @@
 					filearray:''					
 				}
 				Vue.obserable.trigger({type:'toggleMask',data:true});
-				
+				console.log(this.formObj,'this.formObj');
 			},
 			getDataList(){
 				var s = this;
@@ -468,12 +461,13 @@
 						}else{
 							s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 							s.dataSource =[];
-						}
+						}						
 					}
 				})
 			},
 			adminAction(){
 				var s = this;
+				s.closeMaskPage();//关闭右侧
 				var action = this.formObj.infoid!=undefined?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
 				info.fatherid=this.$route.params.id;
@@ -496,6 +490,7 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						s.closeMaskPage();//关闭右侧
 						s.getDataList();//重新加载信息列表
+						window.location.reload();
 					}
 				})
 			},
@@ -521,6 +516,7 @@
 								s.formObj.status=data.info.status.toString();
 								s.formObj.productid=s.productid;
 								s.formObj.infoid=id;
+								s.myfiles=data.info.filearray.split(',');//获取附件地址并拆分为数组
 								console.log(s.formObj,'this.formObj')
 							}							
 						}
