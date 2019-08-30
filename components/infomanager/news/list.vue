@@ -195,11 +195,31 @@
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:120,
+						width:180,
 						render:(h,params)=>{
 
 							return h('div', [
-                                
+                                h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginRight:'10px'
+									},
+									on:{
+										click:()=>{
+											this.formObj = params.row;
+											this.$router.push({
+												name:'infomanagerboxcomment',
+												params:{
+													productid:this.productid,
+													typeid:this.typeid,
+													id:this.formObj.infoid,
+													typename:this.typename
+												}
+											});
+										}
+									}
+								},'查看评论'),
 								h('span',{
 									style:{
 										cursor:'pointer',
@@ -307,6 +327,7 @@
 				var s = this;
 				var {condition} = this;
 				condition = Object.assign(condition,{
+					fatherid:0,
 					typeid:s.typeid,
 					productid:s.productid,
 					title:s.title,
