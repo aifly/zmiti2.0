@@ -136,53 +136,6 @@
 						
 					},
 					{
-						title:"状态",
-						key:'status',
-						align:'center',
-						render:(h,params)=>{
-							let status='';
-							switch(params.row.status){
-								case 0:
-									status='禁用'
-								break;
-								case 2:
-									status='通过'
-								break;
-								case 3:
-									status='拒绝'
-								break;
-								default:
-									status='待审'
-							}
-							return h('div',{},status)
-						}
-					},
-					{
-						title:"权限",
-						key:'visit',
-						align:'center',
-						render:(h,params)=>{
-							let viewother=[h('span', {
-								props: {
-									type: 'error',
-									size: 'small'
-								},
-								style:{
-									cursor:'pointer',
-									color:'#06C'
-								},
-								on: {
-									click: () => {
-										this.modal1=true;//打开弹窗
-										this.infoid=params.row.infoid;
-										this.getaddAccessibleList(params.row.infoid,this.companyid);//获取当前具有权限的用户
-									}
-								}
-							}, '查看')]
-							return h('div',{},params.row.visit===0?'全部':viewother)
-						}
-					},
-					{
 						title:"时间",
 						key:"createtime",
 						align:"center",
