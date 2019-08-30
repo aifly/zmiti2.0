@@ -75,7 +75,7 @@
 	import zmitiUtil from '../../common/lib/util';
 	import ZmitiMask from '../../common/mask/';
 	import ZmitiTable from '../../common/table';
-	let {resourceActions,orderFoodActions,userActions,companyActions,tripActions,changYueAcions,infomanagerActions} = zmitiUtil;
+	let {resourceActions,orderFoodActions,userActions,companyActions,tripActions,changYueAcions,infomanagerActions,partyActions} = zmitiUtil;
 	var	actions = [
 		{
 			name:'畅阅',
@@ -95,6 +95,10 @@
 			id:'1072203850',
 			name:"信息管理",
 			actions:Object.values(infomanagerActions)
+		},{
+			id:'8773475502',
+			name:"活动管理",
+			actions:Object.values(partyActions)
 		}
 	];
 	export default {
@@ -125,11 +129,13 @@
 						title:"权限组名称",
 						key:'title',
 						align:'center',
+						width:200,
 					},
 					{
-						title:"是否为默认",
+						title:"默认",
 						key:'isdefault',
 						align:'center',
+						width:80,
 						render:(h,params)=>{
 							return h('div',{},params.row.isdefault?'否':"是");
 						}
@@ -138,7 +144,6 @@
 					{
 						title:"权限列表",
 						key:'actions',
-						width:300,
 						render:(h,params)=> {
 							
 							return h('div',{},params.row.actions.map(item=>{

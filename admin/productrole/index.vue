@@ -482,7 +482,7 @@
 							if(data.getret === 0){
 								s.dataSource = data.list;	 
 								resolve();
-								console.log(s.dataSource,'dataSource')
+								//console.log(s.dataSource,'dataSource')
 							}
 						}
 					})
@@ -532,8 +532,8 @@
 					return;
 				}
 				
-				var startdate = dataToNumber(this.formUser.startdate,1),
-					enddate = dataToNumber(this.formUser.enddate,1);
+				var startdate = dataToNumber(this.formUser.startdate/1000,1),
+					enddate = dataToNumber(this.formUser.enddate/1000,1);
 
 			 	var info = {
 					 productid:s.formUser.productid,

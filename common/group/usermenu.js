@@ -215,6 +215,21 @@ let  meetingRoom = {
 			link:"/meetingroom"
 		}
 	]
+}
+
+let  Party = {
+	title:"活动管理",
+	keys: ['party','partyrole'],
+	tabs:[
+		{
+			name:'活动列表',
+			link:"/party"
+		},
+		{
+			name:'活动权限设置',
+			link:"/partyrole"
+		}
+	]
 };
 
 export {
@@ -224,5 +239,6 @@ export {
 	triptraffic,
 	infomanager,
 	orderFood,
-	meetingRoom
+	meetingRoom,
+	Party
 }
