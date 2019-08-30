@@ -468,7 +468,6 @@
 			},
 			adminAction(){
 				var s = this;
-				s.closeMaskPage();//关闭右侧
 				var action = this.formObj.infoid!=undefined?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
 				info.fatherid=this.$route.params.id;
