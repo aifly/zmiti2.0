@@ -29,7 +29,10 @@ import triprole from './components/tripexpence/triprole/index.vue';
 import consume from './components/consume';
 import workorderlist from './components/workorderlist';
 import Group from './common/group/index';
-
+//--2019.8.30--bmyuan--
+import Party from './components/party/index/index.vue';
+import Partyrole from './components/party/partyrole';
+//--2019.8.30-bmyuan end--
 import infomanager from './components/infomanager/index';
 import infomanagermsg from './components/infomanager/msg/index';
 import infomanagermsgdetail from './components/infomanager/msg/detail';
@@ -139,6 +142,10 @@ const router = new VueRouter({
 			{path:"/orderfood/:id?",name:"orderfood",component:OrderFood},
 			{ path: "/orderfoodsubmit/:id?", name: "orderfoodsubmit", component: orderfoodsubmit},
 			{ path: "/orderfoodrole/:id?", name: "orderfoodrole", component: orderFoodRole},
+			//--2019.8.30--bmyuan--
+			{ path: "/party/:id?", name: "party", component: Party},
+			{ path: "/partyrole/:id?", name: "partyrole", component: Partyrole},
+			//--2019.8.30-bmyuan end--
 		]
 	},
    /*  {
