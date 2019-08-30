@@ -59,6 +59,15 @@
 							        </quill-editor>
 							    </div>
 							</FormItem>
+							<FormItem label="word文件：">
+								<Input v-model="formObj.wordurl" placeholder="请输入word文件地址"></Input>								
+							</FormItem>
+							<FormItem label="pdf文件：">
+								<Input v-model="formObj.pdfurl" placeholder="请输入pdf文件地址"></Input>
+							</FormItem>
+							<FormItem label="附件：">
+								<Input v-model="formObj.filearray" placeholder="请输入附件地址"></Input>
+							</FormItem>
 							<FormItem label="状态：">
 							     <RadioGroup v-model="formObj.status">
 							        <Radio label="0">禁用</Radio>
