@@ -25,10 +25,7 @@
 				 		<div class="zmiti-search-dates">
 				        	<DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
 				        </div>
-				        <Button icon="md-search" @click="searchHandle">搜索</Button>
-				        <Select v-model="statusVal" @on-change="infoStatus" style="margin-left:auto;width:120px">
-					        <Option v-for="item in selectStatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
-					    </Select>
+				        <Button icon="md-search" @click="searchHandle">搜索</Button>				        
 				 	</section>
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
