@@ -7,7 +7,8 @@
 			 <div class='zmiti-informanagernews-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>{{typename}}</span>
+						 <!-- <span>{{typename}}</span> -->
+						 {{articletitle | filterFun}}
 					 </div>
 					 <div>
 					 	<Button type="primary" @click='add()'>添加</Button>
@@ -15,10 +16,10 @@
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-				 	<div class="zmiti-parent-info">
+				 	<!-- <div class="zmiti-parent-info">
 				 		<label>信息标题：</label>
-				 		<section>{{articletitle}}</section>
-				 	</div>
+				 		<section>{{articletitle | filterFun}}</section>
+				 	</div> -->
 					<section class="zmiti-list-where">
 				 		<Input placeholder="请输入评论标题" v-model="title" style="width: 200px;"></Input>
 				 		<div class="zmiti-search-dates">
@@ -588,7 +589,16 @@
 				this.formObj.filearray=newurl;
 				console.log(this.myfiles,'删除后地址',newurl);
 			},
-		}
+		},
+		filters: {
+	        filterFun: function(value) {
+	          if (value && value.length > 20) {
+	            value = value.substring(0, 20) + "...";
+	          }
+	    
+	          return value;
+	        }
+	    }
 	}
 </script>
  
