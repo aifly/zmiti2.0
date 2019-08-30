@@ -33,7 +33,6 @@ import Group from './common/group/index';
 import Party from './components/party/index/index.vue';
 import Partyrole from './components/party/partyrole';
 //--2019.8.30-bmyuan end--
-
 import infomanager from './components/infomanager/index';
 import infomanagermsg from './components/infomanager/msg/index';
 import infomanagermsgdetail from './components/infomanager/msg/detail';
@@ -44,6 +43,7 @@ import infomanagernews from './components/infomanager/news/index';
 import infomanagernewsdetail from './components/infomanager/news/detail';
 import infomanagerdoc from './components/infomanager/doc/index';
 import infomanagerbox from './components/infomanager/box/index';
+import infomanagerboxcomment from './components/infomanager/box/comment';
 import infomanagerboxdetail from './components/infomanager/box/detail';
 import infomanagercolumn from './components/infomanager/column/index';
 import infomanagersetting from './components/infomanager/setting/index';
@@ -136,6 +136,7 @@ const router = new VueRouter({
 			{path:"/infomanagerdoc/:id?",name:"infomanagerdoc",component:infomanagerdoc},
 			{path:"/infomanagerbox/:id?",name:"infomanagerbox",component:infomanagerbox},
 			{path:"/infomanagerboxdetail/:productid?/:typeid?/:id?/:typename?",name:"infomanagerboxdetail",component:infomanagerboxdetail},
+			{path:"/infomanagerboxcomment/:productid?/:typeid?/:id?/:typename?",name:"infomanagerboxcomment",component:infomanagerboxcomment},
 			{path:"/infomanagercolumn/:id?",name:"infomanagercolumn",component:infomanagercolumn},
 			{path:"/infomanagersetting/:id?",name:"infomanagersetting",component:infomanagersetting},
 			{path:"/orderfood/:id?",name:"orderfood",component:OrderFood},

@@ -725,11 +725,11 @@ let infomanagerActions = {
 		action:"2001318"
 	},
 	getViewList:{
-		desc:'获取评论列表',
+		desc:'普通用户查看评论列表',
 		action:"2001319"
 	},
 	getViewDetail:{
-		desc:'获取查看列表详细',
+		desc:'普通用户查看评论详细',
 		action:"2001320"
 	},
 	addcomment:{
@@ -812,7 +812,7 @@ let partyActions = {
 		action:"2001711"
 	}
 
-}
+};
 
 var zmitiActions =   /*#__PURE__*/{
 	userActions,
