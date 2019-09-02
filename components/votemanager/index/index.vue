@@ -149,7 +149,47 @@
 						render:(h,params)=>{
 
 							return h('div', [
-                                h('Poptip',{
+                                
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginLeft:'10px'
+									},
+									on:{
+										click:()=>{
+											/*this.formObj = params.row;
+											this.formObj.isalluser=String(params.row.isalluser);
+											this.formObj.status=String(params.row.status);
+											console.log(this.formObj,'this.formObj');
+											this.voteid=params.row.voteid;*/
+											Vue.obserable.trigger({
+												type:'toggleMask',
+												data:true
+											})
+										}
+									}
+								},'编辑'),
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginLeft:'10px',
+										marginRight:'10px',
+									},
+									on:{
+										click:()=>{
+											this.$router.push({
+												name:'votemanagerview',
+												params:{
+													id:this.productid,
+													voteid:params.row.voteid
+												}
+											})
+										}
+									}
+								},'投票项管理'),
+								h('Poptip',{
 									props:{
 										confirm:true,
 										title:"确定要删除吗？",
@@ -177,45 +217,7 @@
 											}
 										}
 									}, '删除')
-								]),
-								h('span',{
-									style:{
-										cursor:'pointer',
-										color:"rgb(0, 102, 204)",
-										marginLeft:'10px'
-									},
-									on:{
-										click:()=>{
-											/*this.formObj = params.row;
-											this.formObj.isalluser=String(params.row.isalluser);
-											this.formObj.status=String(params.row.status);
-											console.log(this.formObj,'this.formObj');
-											this.voteid=params.row.voteid;*/
-											Vue.obserable.trigger({
-												type:'toggleMask',
-												data:true
-											})
-										}
-									}
-								},'编辑'),
-								h('span',{
-									style:{
-										cursor:'pointer',
-										color:"rgb(0, 102, 204)",
-										marginLeft:'10px'
-									},
-									on:{
-										click:()=>{
-											this.$router.push({
-												name:'votemanagerview',
-												params:{
-													id:this.productid,
-													voteid:params.row.voteid
-												}
-											})
-										}
-									}
-								},'问题管理')
+								])
                             ]);
 							
 							 
@@ -302,18 +304,18 @@
 							success(data){
 								s.loading = false;
 								console.log(data,'获取列表');
-								s.dataSource=[{
+								s.dataSource=data.list;
+								
+							}
+						})
+						/*var s = this;
+						s.loading = false;
+					s.dataSource=[{
 									voteid:1,
 									votetitle:'标题',
 									begintime:1567382400,
 									endtime:1568678400
-								}]
-								/*if(data.getret === 0){
-									s.total = data.total;
-									s.dataSource = data.list;
-								}*/
-							}
-						})
+								}]*/
 			},
 			closeMaskPage(){
 				console.log('关闭右侧');

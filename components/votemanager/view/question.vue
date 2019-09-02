@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanager-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>问题管理</span>
+						 <span>选项管理</span>
 
 					 </div>
 					 <div>
