@@ -7,67 +7,263 @@ $color: #be0000;
 
 .zmiti-home-main-ui{
 	background:#f2f2f2;
-	padding: 10px;
+	padding: 20px;
+	height: 100%;
 	.zmiti-home-main-content{
-		
-		width: 100%;
-		height: 100%;
-		@include displayFlex(column);
 		&>header{
-			width: 100%;
-			height: 100px;
 			@include displayFlex(row);
-			justify-content: space-around;
-			-webkit-justify-content: space-around;
+			align-items: flex-end;
+			justify-content: space-between;
+			-webkit-justify-content: space-between;
 			&>div{
-				
+				height: 60px;
 				img{
 					margin-right: 10px;
+					height: 60px;
 				}
 			}
 			.zmiti-user-info{
-				flex: 1;
-				-webkit-flex:1;
-				@include displayFlex(column);
-				justify-content: space-around;
-				-webkit-justify-content: space-around;
- 
-			}
-			.zmiti-weather-ui{
-				width: 150px;
 				@include displayFlex(row);
 				justify-content:center;
-				div{
-					flex:1;
-					line-height: 30px;
-					height: 30px;
-					span{
-						&:nth-of-type(2){
-							color:#3390ff;
+				font-size: 12px;
+				.zmiti-user-text{
+					line-height: 20px;
+					overflow: hidden;
+					margin: 10px 0;
+				}
+				.zmiti-user-name{
+					font-size: 14px;
+				}
+				.zmiti-user-time{					
+					color:#2d8cf0;
+				}
+			}
+			.zmiti-message{
+				@include displayFlex(row);
+				justify-content:center;
+				align-items: flex-end;
+				color: grey;
+				span{
+					font-weight: 600;
+					color: $color
+				}
+			}
+			.zmiti-weather-ui{				
+				justify-content:center;
+				&>div {
+					@include displayFlex(row);					
+				}
+				.zmiti-weather-pic {
+					@include displayFlex(column);
+					text-align: center;
+					font-size: 11px;
+					img {
+						height: 40px;
+						width: 40px;
+					}	
+				}
+				.zmiti-weather-degree{
+					&>div{
+						@include displayFlex(row);
+						height: 40px;
+						align-items: flex-start;
+						.zmiti-weather-num{
+							color: #3390ff;
+							font-size: 35px;
+							line-height: 40px;
+							span {
+								font-size: 28px;
+							}
+						}
+						div:nth-of-type(2) {
+							height: 30px;
+							width: 1px;
+							background-color: #ccc;
+							margin: 0 8px;
+						}
+						div:nth-of-type(3) {
+							@include displayFlex(column);
+							span{
+								background-color: green;
+								color: #fff;
+								border-radius: 3px;
+								padding: 0 5px;
+							}
 						}
 					}
-
-					&:nth-of-type(1){
-						@include pos(r);
-						top: 6px;
-						height:40px;
+					p {
+						font-size: 10px;
 					}
 				}
 			}
 			img{
-				width:80px;
+				width:60px;
 				@include br();
 			}
-
-
 		}
 		&>section{
 			width: 100%;
-			margin-top: 10px;;
-			flex: 1;
-			-webkit-flex:1;
-			@include displayFlex(row);
-			 
+			margin-top: 20px;
+			.zmiti-company-info{
+				@include displayFlex(row);
+				justify-content: space-between;
+				width: 100%;
+				height: 165px;
+				.zmiti-company-info-item{
+					background-color: #fff;
+					flex-grow: 1;
+					margin-right: 20px;
+					padding-top: 15px;
+					text-align: center;
+					&>div{
+						&:first-child {
+							height: 35px;							
+						}
+						&:last-child{
+							height: 40px;
+							padding: 0 15px;
+							font-size: 14px;
+							font-weight: 600;
+							color: #069359;
+						}
+						&:nth-of-type(2){
+							font-size: 35px;
+							height: 40px;
+							line-height: 40px;
+							font-weight: 600;
+						}
+						&:nth-of-type(3){
+							font-size: 14px;
+							overflow: hidden;
+							height: 35px;
+							line-height: 30px;
+						}
+					}
+					&:first-child{
+						&>div:last-child {
+							@include displayFlex(row);
+							padding: 5px 0 0 0;
+							justify-content: space-around;
+							align-items: center;
+							a {
+								color: #333;
+								font-weight: normal;
+								font-size: 13px;
+								width: 100%;
+								height: 35px;
+								line-height: 35px;
+								border-top: 1px solid #ccc;
+								&:first-child {
+									border-right: 1px solid #ccc;
+								}
+							}
+						}
+					}
+					&:last-child{
+						margin-right: 0;
+					}
+					img {
+						width: 30px;
+						height: 30px;
+						margin-left: -8px;
+						border-radius: 50%;
+					}
+
+				}
+				
+			}
+			.zmiti-company-list{
+				@include displayFlex(row);
+				justify-content: space-between;				
+				min-height: 200px;
+				&>div {
+					width: 50%;
+					header {
+						height: 50px;
+						line-height: 50px;
+						font-size: 14px;
+						padding-left: 10px;
+						font-weight: bold;
+						border-bottom: 1px solid #f2f2f2;
+						i{
+							margin-right: 5px;
+						}
+					}
+				}				
+			}
+			.zmiti-myproduct{
+				&>div {
+					background-color: #fff;
+					margin-right: 5px;					
+					ul {						
+						@include displayFlex(row);
+						flex-wrap: wrap;
+						align-content:flex-start;
+						min-height: 220px;
+						li {
+							width: 30%;
+							margin: 10px;
+							background: #f2f2f2;
+							text-indent: 10px;
+							cursor: pointer;
+							height: 30px;
+							line-height: 30px;
+						}
+					}
+				}
+			}
+			.zmiti-message {
+				&>div {
+					margin-left: 15px;
+					@include displayFlex(row);
+					.zmiti-news {
+						width: 50%;	
+						&:first-child div{
+							margin-right: 20px;
+						}
+						&:last-child{													
+							ul {
+								li {
+									height: 50px;
+									line-height: 20px;
+									margin-top: 5px;
+									div{
+										color: #ccc;
+										span{
+											background-color: #ececec;
+											padding: 2px 8px;
+											border-radius: 10px;
+											font-size: 11px;
+											color: #2a7e9f;
+										}
+									}
+								}
+							}
+						}
+						&>div{
+							background-color: #fff;								
+							ul {
+								margin: 10px auto;
+								width: 90%;
+								li {
+									height: 30px;
+									line-height: 30px;
+									a {
+										color: #333;
+										&:hover {
+											color: #3390ff;
+											text-decoration: underline;
+										}
+									}
+								}
+							}
+						}
+						.zmiti-news-more{
+							color: #2d8cf0;
+						}
+					}
+				}
+			}
 			.zmiti-company-product{
 				flex:1;
 				-webkit-flex:1;
@@ -93,10 +289,8 @@ $color: #be0000;
 					ul{
 						flex:1;
 						-webkit-flex:1;
-						width: 100%;
-						
-						height: 300px;
-						
+						width: 100%;						
+						height: 300px;						
 						overflow:auto;
 						li{
 							float: left;
@@ -113,216 +307,166 @@ $color: #be0000;
 						
 					}
 				}
-				.zmiti-company{
-					height: 390px;
-					@include displayFlex(column);
-					header{
+				// .zmiti-company{
+				// 	height: 390px;
+				// 	@include displayFlex(column);
+				// 	header{
 						
-						width: 100%;
-						height: 40px;
-						@include displayFlex(row);
-						-webkit-align-items: flex-end;
-						align-items: flex-end;
-						border-bottom: 1px solid #f1f1f1;
-						padding-bottom: 6px;
-						font-size:16px;
-						div{
-							margin:0 10px;
-							cursor: pointer;
-							&.active{
-								color:#3390ff;
-								font-weight: bold;
-							}
-						}
-						@include pos(r);
+				// 		width: 100%;
+				// 		height: 40px;
+				// 		@include displayFlex(row);
+				// 		-webkit-align-items: flex-end;
+				// 		align-items: flex-end;
+				// 		border-bottom: 1px solid #f1f1f1;
+				// 		padding-bottom: 6px;
+				// 		font-size:16px;
+				// 		div{
+				// 			margin:0 10px;
+				// 			cursor: pointer;
+				// 			&.active{
+				// 				color:#3390ff;
+				// 				font-weight: bold;
+				// 			}
+				// 		}
+				// 		@include pos(r);
 
-						.zmiti-joincompany-btn{
-							@include pos(a);
-							right:0;
-							top: 0;
-							height: 100%;
-							line-height: 40px;
-							cursor: pointer;
-						}
+				// 		.zmiti-joincompany-btn{
+				// 			@include pos(a);
+				// 			right:0;
+				// 			top: 0;
+				// 			height: 100%;
+				// 			line-height: 40px;
+				// 			cursor: pointer;
+				// 		}
 
-						.zmiti-create-company-btn{
-							@include pos(a);
-							top: 0;
-							left: 130px;
-							height: 100%;
-							line-height: 40px;
-							cursor: pointer;
-						}
+				// 		.zmiti-create-company-btn{
+				// 			@include pos(a);
+				// 			top: 0;
+				// 			left: 130px;
+				// 			height: 100%;
+				// 			line-height: 40px;
+				// 			cursor: pointer;
+				// 		}
 
-						span{
-							@include pos(r);
-						}
-						img{
-							height: 20px;
-							width: auto;
-							vertical-align: bottom;
-						}
+				// 		span{
+				// 			@include pos(r);
+				// 		}
+				// 		img{
+				// 			height: 20px;
+				// 			width: auto;
+				// 			vertical-align: bottom;
+				// 		}
 
-					}
-					.zmiti-companyinfo{
-						@include displayFlex(row);
-						flex:1;
-						-webkit-flex:1;
-						&>aside{
+				// 	}
+				// 	.zmiti-companyinfo{
+				// 		@include displayFlex(row);
+				// 		flex:1;
+				// 		-webkit-flex:1;
+				// 		&>aside{
 						
-							&:nth-of-type(1){
-								flex:2
-							}
-							&:nth-of-type(2){
-								flex:3
-							}
-						}
-					}
-					.zmiti-company-item{
-						margin: 10px 0 0  10px;
-						label{
-							font-size:14px;
-							font-weight: bold;
-						}
-					}
-					.zmiti-company-file{
-						@include displayFlex(row);
-						margin:20px 30px;
-						-webkit-justify-content:space-around;
-						justify-content:space-around;
-						text-align: center;
-					}
-					.zmiti-company-img{
-						width: 100px;
-						height: 160px;
-						overflow: hidden;
-						margin-bottom: 5px;
-						background-color: #f2f2f2 !important;
-						cursor: pointer;
+				// 			&:nth-of-type(1){
+				// 				flex:2
+				// 			}
+				// 			&:nth-of-type(2){
+				// 				flex:3
+				// 			}
+				// 		}
+				// 	}
+				// 	.zmiti-company-item{
+				// 		margin: 10px 0 0  10px;
+				// 		label{
+				// 			font-size:14px;
+				// 			font-weight: bold;
+				// 		}
+				// 	}
+				// 	.zmiti-company-file{
+				// 		@include displayFlex(row);
+				// 		margin:20px 30px;
+				// 		-webkit-justify-content:space-around;
+				// 		justify-content:space-around;
+				// 		text-align: center;
+				// 	}
+				// 	.zmiti-company-img{
+				// 		width: 100px;
+				// 		height: 160px;
+				// 		overflow: hidden;
+				// 		margin-bottom: 5px;
+				// 		background-color: #f2f2f2 !important;
+				// 		cursor: pointer;
 						
 						
 						
-						@include displayFlex(row);
-						-webkit-align-items:flex-end;
-						align-items: flex-end;
-						@include pos(r);
-						span{
+				// 		@include displayFlex(row);
+				// 		-webkit-align-items:flex-end;
+				// 		align-items: flex-end;
+				// 		@include pos(r);
+				// 		span{
 							
-							@include pos(a);
-							left: 50%;
-							color:#ccc;
-							top:50%;
-							@include transform(translate(-50%,-50%));
-							font-size:30px;
-						}
-					}
+				// 			@include pos(a);
+				// 			left: 50%;
+				// 			color:#ccc;
+				// 			top:50%;
+				// 			@include transform(translate(-50%,-50%));
+				// 			font-size:30px;
+				// 		}
+				// 	}
 
 					
 					 
-					.zmiti-company-user-C{
-						border-left: 1px solid #f2f2f2;
-						@include pos(r);
-						height: 100%;
+					// .zmiti-company-user-C{
+					// 	border-left: 1px solid #f2f2f2;
+					// 	@include pos(r);
+					// 	height: 100%;
 						
-						.zmiti-company-user-more{
-							@include pos(a);
-							bottom: 10px;
-							color:#3390ff;
-							font-weight: bold;
-							cursor: pointer;
-							font-size:14px;
-							left:3%;
-							&:hover{
-								color:#be0000;
-								text-decoration: underline;
-							}
+					// 	.zmiti-company-user-more{
+					// 		@include pos(a);
+					// 		bottom: 10px;
+					// 		color:#3390ff;
+					// 		font-weight: bold;
+					// 		cursor: pointer;
+					// 		font-size:14px;
+					// 		left:3%;
+					// 		&:hover{
+					// 			color:#be0000;
+					// 			text-decoration: underline;
+					// 		}
 
-						}
-						ul{
+					// 	}
+					// 	ul{
 							
-							li{
-								margin: 5px auto;
+					// 		li{
+					// 			margin: 5px auto;
 
-								.zmt_iconfont{
-									color:#3390ff;
-									font-size:30px;
-								}
+					// 			.zmt_iconfont{
+					// 				color:#3390ff;
+					// 				font-size:30px;
+					// 			}
 
-								@include displayFlex(row);
-								div{
-									flex: 1;
-									text-align: center;
-									height: 44px;
-									line-height: 44px;
-									&:first-of-type{
-										width: 60px;
-										flex:none;
-									}
-								}
-							}
-						}
-					}
-				}
+					// 			@include displayFlex(row);
+					// 			div{
+					// 				flex: 1;
+					// 				text-align: center;
+					// 				height: 44px;
+					// 				line-height: 44px;
+					// 				&:first-of-type{
+					// 					width: 60px;
+					// 					flex:none;
+					// 				}
+					// 			}
+					// 		}
+					// 	}
+					// }
+				// }
 			}
-			.zmiti-news-ui{
-				width: 300px;
-				.zmiti-news-C,.zmiti-news-product{
-					width: 100%;
-					height: 30vh;
-					background: #fff;
-					@include pos(r);
-					&>div{
-						@include pos(a);
-						bottom: 10px;
-						left: 5%;
-						color:#3390ff;
-					}
-					header{
-						font-size:14px;
-						font-weight: bold;
-						height: 40px;
-						line-height: 40px;
-						text-indent: 1em;
-						border-bottom: 1px solid #f2f2f2;
-					}
-					ul{
-						margin: 10px auto;
-						width: 90%;
-						li{
-							height: 33px;
-							line-height: 33px;
-							margin-top: 3px;
-							a{
-								color:#333;
-								&:hover{
-									color:#3390ff;
-									text-decoration: underline;
-								}
-							}
-						}
-					}
-
-				}
-				.zmiti-news-product{
-					background: #fff;
-					height: 30vh;
-					margin-top: 10px;
-					ul{
-						li{
-							height: 60px;
-							margin-top: 8px;
-							line-height: 20px;
-						}
-					}
-				}
-			}
+			
 		}
 	}
 }
 .zmiti-choose-company-list{
 	@include displayFlex(row);
+	flex-wrap: wrap;
 	li{
-		margin: 0 10px;
+		margin: 0 10px 10px 10px;
 		height: 30px;
 		line-height: 30px;
 		background: #ddd;

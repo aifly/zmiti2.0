@@ -1,32 +1,117 @@
 <template>
-	<div class="zmiti-home-main-ui lt-full">
+	<div class="zmiti-home-main-ui">
 		<div class='zmiti-home-main-content'>
 			<header>
 				<div class='zmiti-user-info'>
-					<h2>
-						<img :src="imgs.zmiti1" alt="">
-						<span>{{userinfo.username}} </span>
+					<div><img :src="imgs.zmiti1" alt=""></div>
+					<div class="zmiti-user-text">
+						<div>
+							<span class="zmiti-user-name">{{userinfo.username}}</span>
+							<Icon type="logo-android" color="#2d8cf0" size="22"/>
+							<Icon type="logo-github" color="#87d068" size="22"/>
+							<span class="zmiti-user-time">{{curTime}}</span>
+						</div>
+						<div>欢迎回到智媒体2.0单位控制平台</div>
+					</div>
+					<div>
 						<span style="color:#f00;font-size:14px" v-if='false && !companyInfo.companyname'>您当前没有加入任何单位，请
 							<a href='javascript:void(0)' @click="visiable = true" style="color:#00f;font-size:20px">选择一个单位</a>
 						</span>
-					</h2>
-					<div>{{date}}</div>
+					</div>					
 				</div>
+				<div class="zmiti-message"><span>公告：</span>{{date}}</div>
 				<div class='zmiti-weather-ui'>
 					<div>
-						<div>
-							<span>{{weatherObj.aqi.cityName}}</span>
+						<div class="zmiti-weather-pic">
+							<img :src='imgs["W"+weatherObj.briefcondition.icon]' alt="">
+							<p>{{weatherObj.briefcondition.condition}}</p>
 						</div>
-						<div>
-							<span>{{weatherObj.briefcondition.temp}}度</span>
+						<div class="zmiti-weather-degree">
+							<div>
+								<div class="zmiti-weather-num">{{weatherObj.briefcondition.temp}}<span>℃</span></div>
+								<div></div>
+								<div>
+									<p><span>{{weatherObj.briefcondition.quality}}</span></p>
+									<p>{{weatherObj.briefcondition.windDir}}+{{weatherObj.briefcondition.windLevel}}级</p>
+								</div>
+							</div>
+							<p>{{weatherObj.aqi.cityName}} | {{weatherObj.aqi.cityInfo}}</p>
 						</div>
-					</div>
-					<div>
-						<img :src='imgs["W"+weatherObj.briefcondition.icon]' alt="">
 					</div>
 				</div>
 			</header>
 			<section>
+				<div class="zmiti-company-info">
+					<div class="zmiti-company-info-item">
+						<div><Icon type="ios-home-outline" color="#2d8cf0" size="28"/></div>
+						<div>32</div>
+						<div>单位数量</div>
+						<div><a @click="visiable=true;">加入单位</a><a @click="showAddCompanyPanel">创建单位</a></div>
+					</div>
+					<div class="zmiti-company-info-item">
+						<div><Icon type="ios-contacts-outline" color="rgb(248, 155, 56)" size="28"/></div>
+						<div>322</div>
+						<div>单位成员总数</div>
+						<div><img :src="imgs.zmiti1" alt=""><img :src="imgs.zmiti1" alt=""></div>
+					</div>
+					<div class="zmiti-company-info-item">
+						<div><Icon type="ios-list-box-outline" color="#87d068" size="28"/></div>
+						<div>3e22</div>
+						<div>我的工单总数</div>
+						<div>已读121</div>
+					</div>
+					<div class="zmiti-company-info-item">
+						<div><Icon type="ios-chatboxes-outline" color="rgb(129, 30, 178)" size="28"/></div>
+						<div>35422</div>
+						<div>站内信息总数</div>
+						<div>已读32121</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<div class="zmiti-company-list">
+					<div class="zmiti-myproduct">
+						<div>
+							<header><Icon type="ios-cube-outline" color="#dddd21" size="25"/>我的产品</header>
+							<ul class='zmiti-scroll'>
+								<li v-for='(p,i) in myProductList' :key="i">
+									<span class='zmt_iconfont' v-html='p.icon'></span>
+									<span>{{p.productname}}</span>
+									<span v-if='p.isChecked'><Icon style="color:green;font-size:30px;" type="ios-checkmark" /></span>
+								</li>
+							</ul>
+						</div>
+					</div>				
+					<div class="zmiti-message">
+						<div>
+							<div class="zmiti-news">
+								<div>
+									<header><Icon type="ios-globe-outline" color="#c61010" size="25"/>新闻</header>
+									<ul>
+										<li class='zmiti-text-overflow' v-for='(news,i) in zmitiNews' :key="i">
+											<a :href='news.href' target="_blank">{{news.title}}</a>
+										</li>
+										<li><a class="zmiti-news-more">更多>></a></li>
+									</ul>								
+								</div>
+							</div>
+							<div class='zmiti-news'>
+								<div>
+									<header><Icon type="md-star-outline" color="#f220f3" size="25"/>新品消息</header>
+									<ul>
+										<li class='zmiti-text-overflow' v-for='(news,i) in productNews' :key="i">
+											<a :href='news.href' target="_blank">{{news.title}}</a>
+											<div>{{news.date}} <span>新功能</span></div>
+										</li>
+										<li><a class="zmiti-news-more">更多>></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- <section style="display:none;">
 				<aside class='zmiti-company-product'>
 					<div class='zmiti-company'>
 						<header>
@@ -116,7 +201,7 @@
 								<a :href='news.href' target="_blank">{{news.title}}</a>
 							</li>
 						</ul>
-						<div >更多>></div>
+						<a class="zmiti-news-more">更多>></a>
 
 					</div>
 					<div class='zmiti-news-product'>
@@ -127,10 +212,10 @@
 								<div>{{news.date}} <Button size='small'>新功能</Button></div>
 							</li>
 						</ul>
-						<div >更多>></div>
+						<a class="zmiti-news-more">更多>></a>
 					</div>
 				</aside>
-			</section>
+			</section> -->
 		</div>
 		<Modal title='选择单位' v-model="visiable" @on-ok='joinCompany' :loading="loadingCompanyModal">
 			<ul class='zmiti-choose-company-list'>
@@ -240,7 +325,8 @@
 					username:'一位巨蟹',
 					avatar:window.imgs.zmiti1,
 					info:{}
-				},	
+				},
+				curTime:'',
 				allCompanyList:[],
 				currentCompanyIndex:0,
 				showDetailPage:-1,
@@ -386,9 +472,10 @@
 				},
 				date:"",
 				weatherObj:{
-					briefcondition:"",
-					aqi:'',
-					
+					briefcondition:{						
+					},
+					aqi:{					
+					}					
 				},
 				checkedProductList:[],
 				tasks:[]
@@ -423,7 +510,7 @@
 
 
 			this.date = '今日，'+year+'年'+month+'月'+date+'日 '+ day + ' ，欢迎回到智媒体2.0单位控制平台';
-
+			this.curTime = year+'年'+month+'月'+date+'日 '+ day;
 
 			this.getWeatherData();
 
@@ -625,7 +712,7 @@
 					},
 					success(data){
 						if(data.getret === 0){
-							s.weatherObj = data.data
+							s.weatherObj = data.data;
 						}
 					}
 				})
