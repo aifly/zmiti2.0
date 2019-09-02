@@ -47,7 +47,9 @@ import infomanagerboxcomment from './components/infomanager/box/comment';
 import infomanagerboxdetail from './components/infomanager/box/detail';
 import infomanagercolumn from './components/infomanager/column/index';
 import infomanagersetting from './components/infomanager/setting/index';
-
+import votemanager from './components/votemanager/index';
+import votemanagerview from './components/votemanager/view';
+import votemanagerviewquestion from './components/votemanager/view/question';
 import OrderFood from './components/orderfood/orderfood';
 import orderfoodsubmit from './components/orderfood/orderfoodsubmit';
 import orderFoodRole from './components/orderfood/orderfoodrole';
@@ -139,6 +141,9 @@ const router = new VueRouter({
 			{path:"/infomanagerboxcomment/:productid?/:typeid?/:id?/:typename?",name:"infomanagerboxcomment",component:infomanagerboxcomment},
 			{path:"/infomanagercolumn/:id?",name:"infomanagercolumn",component:infomanagercolumn},
 			{path:"/infomanagersetting/:id?",name:"infomanagersetting",component:infomanagersetting},
+			{path:"/votemanager/:id?",name:"votemanager",component:votemanager},
+			{path:"/votemanagerview/:id?/:voteid?",name:"votemanagerview",component:votemanagerview},
+			{path:"/votemanagerviewquestion/:id?/:voteid?/:questionid?",name:"votemanagerviewquestion",component:votemanagerviewquestion},
 			{path:"/orderfood/:id?",name:"orderfood",component:OrderFood},
 			{ path: "/orderfoodsubmit/:id?", name: "orderfoodsubmit", component: orderfoodsubmit},
 			{ path: "/orderfoodrole/:id?", name: "orderfoodrole", component: orderFoodRole},

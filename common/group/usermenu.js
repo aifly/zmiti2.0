@@ -186,6 +186,17 @@ let infomanager ={
 	]
 }
 
+let voteManager={
+	title: "投票管理",
+	keys: ['votemanager','votemanagerview','votemanagerviewquestion'],
+	tabs:[
+		{
+			name:'投票管理',
+			link:'/votemanager'
+		}
+	]
+}
+
 let orderFood ={
 	title: "订餐管理",
 	keys: ['orderfood', 'orderfoodsubmit','orderfoodrole'],
@@ -240,5 +251,6 @@ export {
 	infomanager,
 	orderFood,
 	meetingRoom,
-	Party
+	Party,
+	voteManager
 }

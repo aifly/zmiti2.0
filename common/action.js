@@ -740,8 +740,54 @@ let infomanagerActions = {
 		desc:'获取用户信息类型列表',
 		action:"2001304"
 	},
-}
-
+};
+//投票管理
+let voteActions={
+	addVote:{
+		desc:"新增投票",
+		action:"2001400"
+	},
+	editVote:{
+		desc:"修改投票",
+		action:"2001401"
+	},
+	deleteVote:{
+		desc:"删除投票",
+		action:"2001402"
+	},
+	getVoteList:{
+		desc:"获取投票列表(管理)",
+		action:"2001403"
+	},
+	addquesion:{
+		desc:"新增投票问题",
+		action:"2001405"
+	},
+	editquesion:{
+		desc:"修改投票问题",
+		action:"2001406"
+	},
+	deletequesion:{
+		desc:"删除投票问题",
+		action:"2001407"
+	},
+	getquesionList:{
+		desc:"获取投票问题列表（管理）",
+		action:"2001408"
+	},
+	addQuesionOption:{
+		desc:"新增投票问题选项",
+		action:"2001409"
+	},
+	editQuesionOption:{
+		desc:"修改投票问题选项",
+		action:"2001410"
+	},
+	getuservoteList:{
+		desc:"获取用户投票列表（管理）",
+		action:"2001412"
+	}
+};
 //天气预报
 let weatherActions = {
 	viewTrafficdata:{
@@ -828,7 +874,8 @@ var zmitiActions =   /*#__PURE__*/{
 	tripActions,
 	infomanagerActions,
 	orderFoodActions,
-	partyActions
+	partyActions,
+	voteActions
 }
 
 export  default zmitiActions;
