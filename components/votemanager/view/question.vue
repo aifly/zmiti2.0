@@ -60,10 +60,10 @@
 
 								
 							</FormItem>
+							<FormItem label="">
+								<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
+							</FormItem>
 						</Form>
-						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='adminAction'>{{formObj.jobid?'保存':'确定'}}</Button>
-						</div>
 					</div>
 				 </div>
 			 </div>
