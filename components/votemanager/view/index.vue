@@ -114,7 +114,7 @@
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:200,
+						width:120,
 						render:(h,params)=>{
 
 							return h('div', [
@@ -155,12 +155,14 @@
 									},
 									on:{
 										click:()=>{
-											/*this.formObj = params.row;
-											this.formObj.isalluser=String(params.row.isalluser);
-											this.formObj.status=String(params.row.status);
-											console.log(this.formObj,'this.formObj');
-											this.voteid=params.row.voteid;*/
-											
+											this.$router.push({
+												name:'votemanagerviewquestion',
+												params:{
+													id:this.$route.params.id,
+													voteid:this.$route.params.voteid,
+													questionid:params.row.questionid
+												}
+											})
 										}
 									}
 								},'编辑')
