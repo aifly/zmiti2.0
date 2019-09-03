@@ -132,7 +132,7 @@ const router = new VueRouter({
 			{path:"/infomanagermsgdetail/:productid?/:typeid?/:id?/:typename?",name:"infomanagermsgdetail",component:infomanagermsgdetail},
 			{path: "/infomanagernotice/:id?", name: "infomanagernotice", component: infomanagernotice},
 			{path:"/infomanagerlist/:id?",name:"infomanagerlist",component:infomanagerlist},
-			{path:"/infomanagerlistdetail/:productid?/:typeid?/:id?/:typename?",name:"infomanagerlistdetail",component:infomanagerlistdetail},
+			{path:"/infomanagerlistdetail/:productid?/:typeid?/:typename?/:id?",name:"infomanagerlistdetail",component:infomanagerlistdetail},
 			{path:"/infomanagernews/:id?",name:"infomanagernews",component:infomanagernews},
 			{path:"/infomanagernewsdetail/:productid?/:typeid?/:id?/:typename?",name:"infomanagernewsdetail",component:infomanagernewsdetail},
 			{path:"/infomanagerdoc/:id?",name:"infomanagerdoc",component:infomanagerdoc},

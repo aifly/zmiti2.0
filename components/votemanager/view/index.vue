@@ -1,14 +1,10 @@
 <template>
 	<div class="zmiti-votemanagerview-main-ui">
-
 		<div class="zmiti-list-main">
-			
-		
 			 <div class='zmiti-informanager-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
 						 <span>投票项管理</span>
-
 					 </div>
 					 <div>
 					 	<Button type="default" @click='goback()'>返回</Button>

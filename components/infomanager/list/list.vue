@@ -127,10 +127,12 @@
 						width:120
 					},
 					{
-						title:"标题",
+						title:"内容",
 						key:'title',
 						align:'center',
-						
+						render:(h,params)=>{
+							return h('div',{},this.$options.filters.filterFun(params.row.title))
+						}
 					},
 					{
 						title:"时间",
@@ -482,7 +484,18 @@
             	this.targetKeys1=[];//清空穿梭框
                 //this.$Message.info('Clicked cancel');
             },
-		}
+		},
+		filters:{
+			msg:function(msg){
+	　　　　　　return msg.replace(/<[^<>]+>/g,'')
+			},
+			filterFun: function(value) {
+	          if (value && value.length > 25) {
+	            value = value.substring(0, 25) + "...";
+	          }	    
+	          return value;
+	        }
+	　　},
 	}
 </script>
  
