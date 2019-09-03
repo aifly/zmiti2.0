@@ -42,7 +42,7 @@
 			return{
 				companyid:'',			
 				companyname:'',
-				votetitle:'',
+				questionlabe:'',
 				imgs:window.imgs,
 				total:0,
 				loading:true,
@@ -57,6 +57,7 @@
 				},
 				userinfo:{},
 				productid:0,
+				voteid:0,
 				questionid:undefined,
 				formObj:{
 					questionlabe:'',
@@ -181,16 +182,17 @@
 		},
 		created(){
 			this.formObj.voteid=this.$route.params.voteid;
+			this.productid=this.$route.params.id;
+			this.voteid=this.$route.params.voteid;
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
 
 		},
 		mounted(){
-			/*this.init(()=>{
-				setTimeout(()=>{
-					this.getDataList();
-				},100)
-			})*/
-			this.getDataList();
+
+			setTimeout(()=>{
+				this.getDataList();
+			},100)
+
 		},
 		computed:{
 
@@ -220,12 +222,13 @@
 						condition = Object.assign(condition,{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
 							productid:s.productid,
-							votetitle:s.votetitle
+							voteid:s.voteid,
+							questionlabe:s.questionlabe
 						})
 						zmitiUtil.ajax({
-							remark:"getVoteList",
+							remark:"getquesionList",
 							data:{
-								action:voteActions.getVoteList.action,
+								action:voteActions.getquesionList.action,
 								condition:condition
 							},
 							error(){

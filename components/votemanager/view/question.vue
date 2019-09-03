@@ -358,7 +358,7 @@
 					}
 				})
 			},
-			addoptions(index){
+			addoptions(index){//添加选项
 				/*this.formObj.options.push({
 					options:this.optionsData.options,
 					optionsurl:this.optionsData.optionsurl,
@@ -394,7 +394,7 @@
 					},
 					"ui":{"userid":4,"token":"da3d04b382d1d4ccec8b22f666c29ee2"}}
 			},
-			removeoptions(index){
+			removeoptions(index){//移除选项
 				this.formObj.options.splice(index);
 			}
             
