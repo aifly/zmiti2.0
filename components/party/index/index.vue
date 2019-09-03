@@ -76,6 +76,13 @@ export default {
           title: "活动描述",
           key: 'abstract',
           align: 'left',
+          render:(h,params)=>{            
+            return h('div',{
+              domProps:{
+                innerHTML:params.row.abstract
+              }
+            });
+          }
         },
         {
           title: "开始时间",

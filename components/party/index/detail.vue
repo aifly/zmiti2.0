@@ -16,8 +16,9 @@
               <FormItem label="活动名称：" prop="partyname">
                 <Input v-model="formObj.partyname" placeholder="活动名称"></Input>
               </FormItem>
-              <FormItem label="活动链接：" prop="partyurl">
-                <Input v-model="formObj.partyurl" placeholder="活动链接"></Input>
+              <FormItem label="活动Banner图片：" prop="partyurl">
+                <div><Button icon="ios-cloud-upload-outline" @click="showImg= true">选择图片</Button></div>
+                <Input v-model="formObj.partyurl" placeholder="活动Banner图片"></Input>
               </FormItem>
               <FormItem label="开始时间：" prop="begintime">
                 <DatePicker
@@ -55,6 +56,14 @@
         </div>
       </div>
     </div>
+    <!-- 选择图片 -->
+		<Modal v-model="showImg" title='资料库' width='800'>
+			<ResourceList v-if='showImg' :isAdmin='false' :isDialog='true' @onFinished='onFinishChoose'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showImg=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseImg'>确定</Button>
+			</div> 
+		</Modal>
   </div>
 </template>
 <style type="text/css">
@@ -73,6 +82,7 @@
 </style>
 <script>
 import Vue from 'vue';
+import ResourceList from '../../../common/resourcelist'
 import zmitiUtil from '../../../common/lib/util';
 import { quillEditor } from 'vue-quill-editor'
 import '../../../common/css/quill.css'
@@ -94,6 +104,8 @@ export default {
       return callback();
     }
     return {
+      showImg:false,
+      currentChooseImg:{},
       isedit: '',
       columntitle: '',
       imgs: window.imgs,
@@ -129,7 +141,8 @@ export default {
     }
   },
   components: {
-    quillEditor
+    quillEditor,
+    ResourceList
   },
   created () {
   },
@@ -214,6 +227,13 @@ export default {
           }
         }
       })
+    },
+    onFinishChoose(item){//选择word后
+				this.currentChooseImg = item;
+		},
+    chooseImg(){//选择多个附件
+      this.showImg = false;
+			this.formObj.partyurl=this.currentChooseImg.filepath;
     },
     onEditorReady (editor) { }, // 准备编辑器
     onEditorBlur () { }, // 失去焦点事件
