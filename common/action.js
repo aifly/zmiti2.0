@@ -833,6 +833,10 @@ let partyActions = {
 		desc:'新增活动',
 		action:'2001704'
 	},
+	editParty: {
+		desc: '修改活动',
+		action: '2001706'
+	},
 	delParty: {
 		desc: '删除活动',
 		action: '2001705'
@@ -856,6 +860,10 @@ let partyActions = {
 	getPartyEnteredList:{
 		desc:'获取活动报名列表',
 		action:"2001711"
+	},
+	getPartyDetail:{
+		desc:'获取活动详情',
+		action:"2001713"
 	}
 
 };

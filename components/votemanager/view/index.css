@@ -123,4 +123,13 @@
 .zmiti-submit-main {
   overflow: auto; }
 
+.zmiti-votemanagerview-options {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  align-items: center;
+  margin-bottom: 5px; }
+  .zmiti-votemanagerview-options .ivu-icon {
+    cursor: pointer; }
+
 /*# sourceMappingURL=index.css.map */

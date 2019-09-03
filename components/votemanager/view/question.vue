@@ -29,7 +29,29 @@
 							        <Radio label="1">多选</Radio>
 							    </RadioGroup>
 							</FormItem>
+							<FormItem label="选项：">
+								<!-- <div class="zmiti-votemanagerview-options">
+									<Input v-model="optionsData.sort" placeholder="排序" style="width:80px;margin-right: 5px;"></Input>
+									<Input v-model="optionsData.options" placeholder="选项内容" style="margin-right: 5px;"></Input>									
+									<Input v-model="optionsData.optionsurl" placeholder="图片地址">
+									</Input>
+									<Icon type="ios-image-outline" size="20" />
+									<Icon type="ios-add-circle-outline" size="20" @click="addoptions" />							
+								</div> -->
 
+								<template v-if="formObj.options.length>0">
+									<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
+										<Input v-model="item.sort" placeholder="排序" style="width:80px;margin-right: 5px;"></Input>
+										<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>										
+										<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
+										<Icon type="ios-image-outline" size="20" />
+										<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="btnoptions==index"  />
+										<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
+									</div>
+								</template>			
+
+								
+							</FormItem>
 						</Form>
 						<div class='zmiti-add-form-item zmiti-add-btns'>
 							<Button size='large' type='primary' @click='adminAction'>{{formObj.jobid?'保存':'确定'}}</Button>
@@ -65,6 +87,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				btnoptions:true,
 				companyid:'',			
 				companyname:'',
 				votetitle:'',
@@ -83,14 +106,20 @@
 				userinfo:{},
 				productid:0,
 				questionid:undefined,
+				optionsData:{
+					options:'',
+					optionsurl:'',
+					sort:0
+				},
 				formObj:{
 					questionlabe:'',
 					questiontype:0,//0为单选；1为多选
-					options:{
+					sort:0,
+					options:[{
 						options:'',
 						optionsurl:'',
 						sort:0
-					}
+					}]
 				},
 				columns:[
 					{
@@ -207,7 +236,9 @@
 		created(){
 			this.formObj.voteid=this.$route.params.voteid;
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
-
+			this.productid=this.$route.params.id;
+			this.questionid=this.$route.params.questionid;
+			console.log(this.questionid,'this.questionid')
 		},
 		mounted(){
 			/*this.init(()=>{
@@ -278,26 +309,26 @@
 			},
 			adminAction(){//添加并修改
 				var s = this;
-				var action = this.voteid ? voteActions.editVote.action:voteActions.addVote.action;
+				var action = this.questionid ? voteActions.editquesion.action:voteActions.addquesion.action;
 
 				let info = {
-					votetitle:this.formObj.votetitle,
+					voteid:this.$route.params.voteid,
 					companyid:this.companyid,
 					productid:this.productid,
-					isrealname:this.formObj.isrealname,
-					begintime:Date.parse(new Date(s.formObj.begintime))/1000,
-					endtime:Date.parse(new Date(s.formObj.endtime))/1000,
-					abstract:this.formObj.abstract					
+					questionlabe:this.formObj.questionlabe,
+					questiontype:this.formObj.questiontype,
+					sort:this.formObj.sort,
+					options:this.formObj.options				
 				}
 				
 
-				if(s.voteid!=undefined){
-					info.voteid=s.voteid
+				if(s.questionid!=undefined){
+					info.questionid=s.questionid
 				}
 
-				console.log(info,'info-info')
-				zmitiUtil.ajax({
-					remark:this.voteid ?　'editVote':'addVote',
+				console.log(info,'info-info',s.questionid)
+				/*zmitiUtil.ajax({
+					remark:this.voteid ?　'editquesion':'addquesion',
 					data:{
 						action,
 						info
@@ -309,7 +340,7 @@
 							s.getDataList();
 						}
 					}
-				})
+				})*/
 			},
 			delete(voteid){//删除投票
 				console.log(voteid,'voteid');
@@ -326,6 +357,23 @@
 						s.getDataList();//更新列表
 					}
 				})
+			},
+			addoptions(){
+				/*this.formObj.options.push({
+					options:this.optionsData.options,
+					optionsurl:this.optionsData.optionsurl,
+					sort:this.optionsData.sort
+				})*/
+				this.formObj.options.push({
+					options:'',
+					optionsurl:'',
+					sort:0
+				})
+				this.btnoptions=formObj.options.length;
+				//console.log(this.formObj.options.length-1,'this.formObj.options===this.formObj.options')
+			},
+			removeoptions(index){
+				this.formObj.options.splice(index);
 			}
             
 

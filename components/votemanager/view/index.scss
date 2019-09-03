@@ -170,3 +170,11 @@
 .zmiti-submit-main{
   overflow: auto;
 }
+.zmiti-votemanagerview-options{
+  @include displayFlex(row);
+  align-items:center;
+  margin-bottom: 5px;
+  .ivu-icon{
+    cursor: pointer;
+  }
+}
