@@ -21,7 +21,7 @@
 			            </Tabs>
 		            </div>
 				 	<section class="zmiti-list-where">
-				 		<Input placeholder="请输入标题" v-model="title" style="width: 200px;"></Input>
+				 		<Input placeholder="请输入内容" v-model="title" style="width: 200px;"></Input>
 				 		<div class="zmiti-search-dates">
 				        	<DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
 				        </div>
