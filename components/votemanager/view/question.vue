@@ -115,6 +115,7 @@
 					questionlabe:'',
 					questiontype:0,//0为单选；1为多选
 					sort:0,
+					questionurl:'',
 					options:[{
 						options:'',
 						optionsurl:'',
