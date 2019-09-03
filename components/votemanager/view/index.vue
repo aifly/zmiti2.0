@@ -59,55 +59,25 @@
 				productid:0,
 				voteid:0,
 				questionid:undefined,
-				formObj:{
-					questionlabe:'',
-					questiontype:0,//0为单选；1为多选
-					options:{
-						options:'',
-						optionsurl:'',
-						sort:0
-					}
-				},
 				columns:[
 					{
 						title:"编号",
 						key:'voteid',
-						align:'center'
+						align:'center',
+						width:120
 					},
 					{
-						title:"投票标题",
-						key:'votetitle',
-						align:'center',
-						width:180
+						title:"投票项",
+						key:'questionlabe',
+						align:'center'						
 					},					
 					{
 						title:"创建时间",
 						key:"createtime",
 						align:"center",
-						render:(h,params)=>{
-							return h('div',{},zmitiUtil.formatDate(params.row.createtime));
-						}
-					},
-					{
-						title:"投票时间",
-						key:"begintime",
-						align:"center",
 						width:180,
 						render:(h,params)=>{
-							return h('div',{},zmitiUtil.formatDate(params.row.begintime)+'~'+zmitiUtil.formatDate(params.row.endtime));
-						}
-					},
-					{
-						title:"允许匿名",
-						key:"isrealname",
-						align:"center",
-						render:(h,params)=>{
-							const viewuser=[h('span',{
-								style:{
-									color:"#ff0000"
-								}
-							},'是')];
-							return h('div',{},params.row.isalluser==0?viewuser:'否');
+							return h('div',{},zmitiUtil.formatDate(params.row.createtime));
 						}
 					},
 					{
@@ -127,7 +97,7 @@
 									},
 									on:{
 										'on-ok':()=>{
-											this.delete(params.row.infotypeid);
+											this.delete(params.row.questionid);
 										},
 										
 									}
@@ -183,18 +153,15 @@
 			
 		},
 		created(){
-			this.formObj.voteid=this.$route.params.voteid;
 			this.productid=this.$route.params.id;
 			this.voteid=this.$route.params.voteid;
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
 
 		},
 		mounted(){
-
 			setTimeout(()=>{
 				this.getDataList();
 			},100)
-
 		},
 		computed:{
 
@@ -239,30 +206,14 @@
 							success(data){
 								s.loading = false;
 								console.log(data,'获取列表');
-								s.dataSource=[{
-									voteid:1,
-									votetitle:'标题',
-									begintime:1567382400,
-									endtime:1568678400
-								}]
-								/*if(data.getret === 0){
+								if(data.getret === 0){
 									s.total = data.total;
 									s.dataSource = data.list;
-								}*/
+								}
 							}
 						})
 			},
-			closeMaskPage(){
-				console.log('关闭右侧');
-				Vue.obserable.trigger({type:'toggleMask',data:false});
-			},
-			selectDatesBegin(val){//开始日期
-				this.formObj.begintime=val;
-			},
-			selectDatesEnd(val){//结束日期
-				this.formObj.endtime=val;
-			},
-			add(){//添加投票
+			add(){//添加投票项
 				this.$router.push({
 					name:'votemanagerviewquestion',
 					params:{
@@ -271,49 +222,13 @@
 					}
 				})
 			},
-			adminAction(){//添加并修改
-				var s = this;
-				var action = this.voteid ? voteActions.editVote.action:voteActions.addVote.action;
-
-				let info = {
-					votetitle:this.formObj.votetitle,
-					companyid:this.companyid,
-					productid:this.productid,
-					isrealname:this.formObj.isrealname,
-					begintime:Date.parse(new Date(s.formObj.begintime))/1000,
-					endtime:Date.parse(new Date(s.formObj.endtime))/1000,
-					abstract:this.formObj.abstract					
-				}
-				
-
-				if(s.voteid!=undefined){
-					info.voteid=s.voteid
-				}
-
-				console.log(info,'info-info')
-				zmitiUtil.ajax({
-					remark:this.voteid ?　'editVote':'addVote',
-					data:{
-						action,
-						info
-					},
-					success(data){						
-						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
-						s.closeMaskPage();
-						if(data.getret === 0){
-							s.getDataList();
-						}
-					}
-				})
-			},
-			delete(voteid){//删除投票
-				console.log(voteid,'voteid');
+			delete(questionid){//删除投票项
 				var s = this;
 				zmitiUtil.ajax({
-					remark:'deltypeList',
+					remark:'deletequesion',
 					data:{
-						action:voteActions.deleteVote.action,
-						voteid,
+						action:voteActions.deletequesion.action,
+						questionid,
 						productid:s.productid
 					},
 					success(data){						
