@@ -45,7 +45,7 @@
 										<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>										
 										<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
 										<Icon type="ios-image-outline" size="20" />
-										<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="btnoptions==index"  />
+										<Icon type="ios-add-circle-outline" size="20" @click="addoptions" />
 										<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
 									</div>
 								</template>			
@@ -56,14 +56,6 @@
 						<div class='zmiti-add-form-item zmiti-add-btns'>
 							<Button size='large' type='primary' @click='adminAction'>{{formObj.jobid?'保存':'确定'}}</Button>
 						</div>
-						<ul>
-							<li>
-								选项1
-							</li>
-							<li>
-								选项2
-							</li>
-						</ul>
 					</div>
 				 </div>
 			 </div>
@@ -327,8 +319,8 @@
 				}
 
 				console.log(info,'info-info',s.questionid)
-				/*zmitiUtil.ajax({
-					remark:this.voteid ?　'editquesion':'addquesion',
+				zmitiUtil.ajax({
+					remark:this.questionid ?　'editquesion':'addquesion',
 					data:{
 						action,
 						info
@@ -337,10 +329,10 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						s.closeMaskPage();
 						if(data.getret === 0){
-							s.getDataList();
+							//s.getDataList();
 						}
 					}
-				})*/
+				})
 			},
 			delete(voteid){//删除投票
 				console.log(voteid,'voteid');
@@ -369,8 +361,32 @@
 					optionsurl:'',
 					sort:0
 				})
-				this.btnoptions=formObj.options.length;
+				this.btnoptions=this.formObj.options.length;
 				//console.log(this.formObj.options.length-1,'this.formObj.options===this.formObj.options')
+				let my={
+					"action":"2001405",
+					"info":{
+						"voteid":"1",
+						"companyid":1,
+						"productid":"1599125954",
+						"questionlabe":"国庆活动",
+						"questiontype":"0",
+						"sort":0,
+						"options":[{
+							"options":"选项1",
+							"optionsurl":"1",
+							"sort":0
+						},{
+							"options":"选项2",
+							"optionsurl":"2222",
+							"sort":0
+						},{
+							"options":"选项3",
+							"optionsurl":"3333333",
+							"sort":0
+						}]
+					},
+					"ui":{"userid":4,"token":"da3d04b382d1d4ccec8b22f666c29ee2"}}
 			},
 			removeoptions(index){
 				this.formObj.options.splice(index);
