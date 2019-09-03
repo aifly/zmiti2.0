@@ -41,12 +41,20 @@
 
 								<template v-if="formObj.options.length>0">
 									<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
-										<Input v-model="item.sort" placeholder="排序" style="width:80px;margin-right: 5px;"></Input>
-										<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>										
-										<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
-										<Icon type="ios-image-outline" size="20" />
-										<Icon type="ios-add-circle-outline" size="20" @click="addoptions" />
-										<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
+										<div style="width:80px;margin-right: 5px;">
+											<Input v-model="item.sort" placeholder="排序" ></Input>
+										</div>
+										<div class="zmiti-options-item" style="margin-right: 5px;">
+											<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+										</div>
+										<div class="zmiti-options-item zmiti-options-item-imgurl">
+											<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
+											<Icon type="ios-image-outline" size="20" />
+										</div>
+										<div class="zmiti-options-btns">
+											<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
+											<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
+										</div>
 									</div>
 								</template>			
 
@@ -350,7 +358,7 @@
 					}
 				})
 			},
-			addoptions(){
+			addoptions(index){
 				/*this.formObj.options.push({
 					options:this.optionsData.options,
 					optionsurl:this.optionsData.optionsurl,
@@ -361,8 +369,6 @@
 					optionsurl:'',
 					sort:0
 				})
-				this.btnoptions=this.formObj.options.length;
-				//console.log(this.formObj.options.length-1,'this.formObj.options===this.formObj.options')
 				let my={
 					"action":"2001405",
 					"info":{

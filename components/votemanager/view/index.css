@@ -129,6 +129,15 @@
   flex-flow: row;
   align-items: center;
   margin-bottom: 5px; }
+  .zmiti-votemanagerview-options .zmiti-options-item {
+    flex: 1; }
+    .zmiti-votemanagerview-options .zmiti-options-item.zmiti-options-item-imgurl {
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      align-items: center; }
+  .zmiti-votemanagerview-options .zmiti-options-btns {
+    width: 80px; }
   .zmiti-votemanagerview-options .ivu-icon {
     cursor: pointer; }
 
