@@ -129,7 +129,68 @@
   flex-flow: row;
   align-items: center;
   margin-bottom: 5px; }
+  .zmiti-votemanagerview-options .zmiti-options-item {
+    flex: 1; }
+    .zmiti-votemanagerview-options .zmiti-options-item.zmiti-options-item-imgurl {
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      align-items: center; }
+  .zmiti-votemanagerview-options .zmiti-options-btns {
+    width: 80px; }
   .zmiti-votemanagerview-options .ivu-icon {
     cursor: pointer; }
+
+.zmiti-question-items {
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  margin: 10px 20px;
+  background-color: #ffffff;
+  padding: 10px; }
+  .zmiti-question-items .zmiti-question-ulist ul {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row;
+    flex-wrap: wrap; }
+    .zmiti-question-items .zmiti-question-ulist ul li {
+      width: 200px;
+      margin-right: 20px; }
+      .zmiti-question-items .zmiti-question-ulist ul li img {
+        width: 200px;
+        height: 200px; }
+
+.zmiti-question-h1 {
+  border-bottom: 1px solid #cccccc;
+  padding-bottom: 8px;
+  margin-bottom: 8px; }
+
+.zmiti-question-h2 {
+  padding: 8px 0; }
+
+.zmiti-question-img1 {
+  padding-bottom: 8px; }
+
+.zmiti-question-sub {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  line-height: 25px; }
+  .zmiti-question-sub label {
+    margin-right: 5px; }
+
+.zmiti-question-foot {
+  margin: 8px 0 0 0;
+  border-top: 1px solid #cccccc;
+  padding: 8px 0 0 0;
+  line-height: 20px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row; }
+  .zmiti-question-foot .zmiti-question-oper {
+    margin-left: auto;
+    text-align: right; }
+    .zmiti-question-foot .zmiti-question-oper .zmiti-question-operbtn {
+      margin: 0 12px;
+      cursor: pointer; }
 
 /*# sourceMappingURL=index.css.map */

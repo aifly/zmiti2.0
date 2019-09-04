@@ -27,7 +27,7 @@
 						<div class='zmiti-remember-pass'>
 							<label class="zmiti-login-check"><Checkbox v-model="checked">记住密码</Checkbox></label>						
 							<label v-if='errMsg' style="color:#f00;font-weight:bold;">{{errMsg}}</label>
-							<label><span class="zmiti-login-linkspan"><router-link to='register'>免费注册</router-link></span><span class="zmiti-login-linkspan"><router-link to='login'>忘记密码？</router-link></span></label>
+							<label><span class="zmiti-login-linkspan"><router-link to='register'>免费注册</router-link></span><span class="zmiti-login-linkspan"><router-link to='passwordfind'>忘记密码？</router-link></span></label>
 						</div>
 						<div class='zmiti-login-btn' v-press>
 							<div @click="login" ref='login'>立即登录 <Icon v-if='showLoading' type="ios-loading" class="demo-spin-icon-load"></Icon></div>

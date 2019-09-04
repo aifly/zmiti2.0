@@ -1,37 +1,39 @@
-.zmiti-party-main-ui {
+.zmiti-partydetail-main-ui {
   background: #f2f2f2;
   box-sizing: border-box;
   height: 100%;
   width: 99%;
   margin: 0 auto; }
-  .zmiti-party-main-ui .zmiti-list-main {
+  .zmiti-partydetail-main-ui .zmiti-list-main {
     box-sizing: border-box;
     background: #fff;
     margin: 0 auto; }
-  .zmiti-party-main-ui .zmiti-list-where {
+  .zmiti-partydetail-main-ui .zmiti-list-where {
     font-size: 14px;
     width: 98%;
     margin: 0 auto 10px auto;
     display: flex;
     display: -webkit-flex;
     flex-flow: row; }
-    .zmiti-party-main-ui .zmiti-list-where .zmiti-search-dates {
+    .zmiti-partydetail-main-ui .zmiti-list-where .zmiti-search-dates {
       margin: 0 10px; }
-  .zmiti-party-main-ui .zmiti-search-icon {
+    .zmiti-partydetail-main-ui .zmiti-list-where .zmiti-search-input {
+      margin: 0 10px; }
+  .zmiti-partydetail-main-ui .zmiti-search-icon {
     font-size: 20px;
     cursor: pointer; }
-  .zmiti-party-main-ui .zmiti-tabs-select {
+  .zmiti-partydetail-main-ui .zmiti-tabs-select {
     width: 98%;
     margin: 0 auto; }
-  .zmiti-party-main-ui .zmiti-submit-main {
+  .zmiti-partydetail-main-ui .zmiti-submit-main {
     margin-top: 10px;
     flex: 5;
     -webkit-flex: 5;
     width: 100%; }
-    .zmiti-party-main-ui .zmiti-submit-main > div {
+    .zmiti-partydetail-main-ui .zmiti-submit-main > div {
       -webkit-transition: 0.3s;
       transition: 0.3s; }
-    .zmiti-party-main-ui .zmiti-submit-main .zmiti-submit-table {
+    .zmiti-partydetail-main-ui .zmiti-submit-main .zmiti-submit-table {
       width: 98%;
       margin: 0 auto; }
 
@@ -131,8 +133,15 @@
 
 .zmiti-partydetail-form {
   padding: 20px; }
+  .zmiti-partydetail-form img {
+    width: auto;
+    height: 100px;
+    margin-bottom: 10px; }
 
 .zmiti-scroll {
   overflow: auto; }
 
-/*# sourceMappingURL=index.css.map */
+.zmiti-remove-icon {
+  cursor: pointer; }
+
+/*# sourceMappingURL=detail.css.map */

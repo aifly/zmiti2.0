@@ -231,7 +231,7 @@
 				let info = this.formObj;
 				info.typeid=this.$route.params.typeid;
 				if(this.id!=undefined){//编辑
-					info.id=this.$route.params.id;
+					info.infoid=this.$route.params.id;
 				}else{//新增
 					if(s.formObj.users.length>0){//当有选中的用户时
 						info.users=s.formObj.users;

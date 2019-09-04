@@ -387,6 +387,10 @@ let userActions = {
 	getUserRoleGroupUserList:{
 		desc:'获取权限组成员列表',
 		action:"2001107"
+	},
+	passwordFind:{
+		desc:'找回密码',
+		action:"2000001"
 	}
 
 };
@@ -509,7 +513,6 @@ let orderFoodActions = {
 		desc:'获取我的订餐列表',
 		action:'2001809'
 	}
-
 }
 
 let tripActions = {

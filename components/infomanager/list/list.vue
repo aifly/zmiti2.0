@@ -21,7 +21,7 @@
 			            </Tabs>
 		            </div>
 				 	<section class="zmiti-list-where">
-				 		<Input placeholder="请输入标题" v-model="title" style="width: 200px;"></Input>
+				 		<Input placeholder="请输入内容" v-model="title" style="width: 200px;"></Input>
 				 		<div class="zmiti-search-dates">
 				        	<DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
 				        </div>
@@ -127,10 +127,12 @@
 						width:120
 					},
 					{
-						title:"标题",
+						title:"内容",
 						key:'title',
 						align:'center',
-						
+						render:(h,params)=>{
+							return h('div',{},this.$options.filters.filterFun(params.row.title))
+						}
 					},
 					{
 						title:"时间",
@@ -482,7 +484,18 @@
             	this.targetKeys1=[];//清空穿梭框
                 //this.$Message.info('Clicked cancel');
             },
-		}
+		},
+		filters:{
+			msg:function(msg){
+	　　　　　　return msg.replace(/<[^<>]+>/g,'')
+			},
+			filterFun: function(value) {
+	          if (value && value.length > 25) {
+	            value = value.substring(0, 25) + "...";
+	          }	    
+	          return value;
+	        }
+	　　},
 	}
 </script>
  

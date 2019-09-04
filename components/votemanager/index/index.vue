@@ -34,7 +34,7 @@
 								<Input v-model="formObj.votetitle" placeholder="投票标题"></Input>
 							</FormItem>
 							<FormItem label="摘要：">
-								<Input v-model="formObj.abstract" placeholder="摘要"></Input>
+								<Input v-model="formObj.abstract" type="textarea" placeholder="摘要"></Input>
 							</FormItem>
 							<FormItem label="实名：">
 								<RadioGroup v-model="formObj.isrealname">

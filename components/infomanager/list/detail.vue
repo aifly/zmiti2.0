@@ -17,17 +17,6 @@
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
 					<div class="zmiti-informanagerdetail-form">					
 						<Form :model="formObj" :label-width="120">
-							<FormItem label="标题：">
-								<Input v-model="formObj.title" placeholder="标题"></Input>
-							</FormItem>
-							<!-- <FormItem label="状态：">
-							     <RadioGroup v-model="formObj.status">
-							        <Radio label="0">禁用</Radio>
-							        <Radio label="1">待审</Radio>
-							        <Radio label="2">通过</Radio>
-							        <Radio label="3">拒绝</Radio>
-							    </RadioGroup>
-							</FormItem> -->
 							<FormItem label="内容：">
 								<div class="edit_container">
 							        <quill-editor 
@@ -39,19 +28,6 @@
 							        </quill-editor>
 							    </div>  
 							</FormItem>						
-							<!-- <FormItem label="访问权限：">
-								<RadioGroup v-model="formObj.visit">
-							        <Radio label="0">全部人员</Radio>
-							        <Radio label="1">指定人员</Radio>
-							    </RadioGroup>
-							    <div v-if="this.id===undefined">
-							    	<template v-if="parseInt(formObj.visit)===1">
-							    		<Select v-model="selectUsers" @on-change="selectuserHandle" multiple style="width:260px">
-									        <Option v-for="item in userSource" :value="item.value" :key="item.value">{{ item.label }}</Option>
-									    </Select>
-							    	</template>
-							    </div>
-							</FormItem> -->
 							<FormItem label="">
 								<Button type="primary" @click="adminAction">提交</Button>
 							</FormItem>
@@ -130,14 +106,7 @@
 					title:'',
 					status:'2',
 					content:'',
-					wordurl:'',
-					pdfurl:'',
-					filearray:'',
-					fatherid:0,
-					issecret:'0',
-					allowreply:'1',
-					visit:'0',
-					users:[]
+					fatherid:0
 				},
 				editorQuillOption: {
 					modules: {
@@ -178,11 +147,14 @@
 		},
 		mounted(){
 			this.id=this.$route.params.id;
+			this.productid=this.$route.params.productid;
 			this.typeid=this.$route.params.typeid;
 			this.columntitle=this.$route.params.typename;
 			console.log(this.id,'this.id');
-			console.log(this.typeid,'this.typeid');
-			this.getnewsDetail();
+			console.log(this.columntitle,'this.typename');
+			if(this.$route.params.id!=undefined){
+				this.getnewsDetail();
+			}			
 		},
 
 		watch:{	
@@ -194,7 +166,7 @@
 			editor() {
 	            return this.$refs.myQuillEditor.quill;
 	        }
-		},		
+		},	
 		methods:{
 			getUserList(){
 				var s = this;			
@@ -234,13 +206,10 @@
 				var s = this;
 				var action = this.id!=undefined?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
+				info.title=this.$options.filters.msg(this.formObj.content);//内容赋值给标题并过淲
 				info.typeid=this.$route.params.typeid;
 				if(this.id!=undefined){//编辑
-					info.id=this.$route.params.id;
-				}else{//新增
-					if(s.formObj.users.length>0){//当有选中的用户时
-						info.users=s.formObj.users;
-					}
+					info.infoid=this.$route.params.id;
 				}
 				
 				console.log(info);
@@ -278,13 +247,9 @@
 
 						console.log(data.info,'获取新闻详情');
 						if(data.getret === 0){
-							s.formObj=data.info;
-							s.formObj.allowreply=data.info.allowreply.toString();
-							s.formObj.issecret=data.info.issecret.toString();
-							s.formObj.status=data.info.status.toString();
-							s.formObj.visit=data.info.visit.toString();
+							s.formObj.title=data.info.title;
+							s.formObj.content=data.info.content;							
 							s.formObj.productid=s.productid;
-							//s.myfiles=data.info.filearray.split(',');//获取附件地址并拆分为数组
 							console.log(s.formObj,'获取新闻详情s.formObj');			
 						}
 					}
@@ -301,7 +266,18 @@
 	        onEditorChange(quill, html, text){
 	        	//console.log('editor change!', quill, html, text)
 	        } // 内容改变事件
-		}
+		},
+		filters:{
+			msg:function(msg){
+	　　　　　　return msg.replace(/<[^<>]+>/g,'')
+			},
+			filterFun: function(value) {
+	          if (value && value.length > 25) {
+	            value = value.substring(0, 25) + "...";
+	          }	    
+	          return value;
+	        }
+	　　},
 	}
 </script>
  

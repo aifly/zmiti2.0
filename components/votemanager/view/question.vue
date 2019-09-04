@@ -17,10 +17,11 @@
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
 				 	<div class="zmiti-votemanagerviewquestion-list">
 						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
-							<FormItem label="问题项：">
-								<Input v-model="formObj.questionlabe" placeholder="问题项"></Input>
+							<FormItem label="投票项：">
+								<Input v-model="formObj.questionlabe" placeholder="投票项"></Input>
 							</FormItem>
 							<FormItem label="图片：">
+								<div><Button icon="ios-cloud-upload-outline" @click="showPicture= true">选择图片</Button></div>
 								<Input v-model="formObj.questionurl" placeholder="图片地址"></Input>
 							</FormItem>
 							<FormItem label="类型：">
@@ -30,45 +31,53 @@
 							    </RadioGroup>
 							</FormItem>
 							<FormItem label="选项：">
-								<!-- <div class="zmiti-votemanagerview-options">
-									<Input v-model="optionsData.sort" placeholder="排序" style="width:80px;margin-right: 5px;"></Input>
-									<Input v-model="optionsData.options" placeholder="选项内容" style="margin-right: 5px;"></Input>									
-									<Input v-model="optionsData.optionsurl" placeholder="图片地址">
-									</Input>
-									<Icon type="ios-image-outline" size="20" />
-									<Icon type="ios-add-circle-outline" size="20" @click="addoptions" />							
-								</div> -->
-
 								<template v-if="formObj.options.length>0">
 									<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
-										<Input v-model="item.sort" placeholder="排序" style="width:80px;margin-right: 5px;"></Input>
-										<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>										
-										<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
-										<Icon type="ios-image-outline" size="20" />
-										<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="btnoptions==index"  />
-										<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
+										<div style="width:80px;margin-right: 5px;">
+											<Input v-model="item.sort" placeholder="排序" ></Input>
+										</div>
+										<div class="zmiti-options-item" style="margin-right: 5px;">
+											<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+										</div>
+										<div class="zmiti-options-item zmiti-options-item-imgurl">
+											<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
+											<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
+										</div>
+										<div class="zmiti-options-btns">
+											<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
+											<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
+										</div>
+
 									</div>
+									
 								</template>			
 
 								
 							</FormItem>
+							<FormItem label="">
+								<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
+							</FormItem>
 						</Form>
-						<div class='zmiti-add-form-item zmiti-add-btns'>
-							<Button size='large' type='primary' @click='adminAction'>{{formObj.jobid?'保存':'确定'}}</Button>
-						</div>
-						<ul>
-							<li>
-								选项1
-							</li>
-							<li>
-								选项2
-							</li>
-						</ul>
 					</div>
 				 </div>
 			 </div>
 		</div>
-
+		<!-- 选择配图 -->
+		<Modal v-model="showPicture" title='资料库' width='800'>
+			<ResourceList v-if='showPicture' :isAdmin='false' :isDialog='true' @onFinished='onFinishPicture'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showPicture=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='choosePicture'>确定</Button>
+			</div> 
+		</Modal>
+		<!-- 选择子项图片 -->
+		<Modal v-model="showSubimg" title='资料库' width='800'>
+			<ResourceList v-if='showSubimg' :isAdmin='false' :isDialog='true' @onFinished='onFinishSubimg'></ResourceList>
+			<div class="zmiti-resourcelist-footer"  slot='footer'>
+				<Button style='width:100px;' @click="showSubimg=false;">取消</Button>
+				<Button style='width:100px;' type='primary' @click='chooseSubimg(currentOptionIndex)'>确定</Button>
+			</div> 
+		</Modal>
 	</div>
 </template>
 
@@ -81,12 +90,18 @@
 	import zmitiUtil from '../../../common/lib/util';
 	import ZmitiTable from '../../../common/table';
 	import ZmitiMask from '../../../common/mask/';
+	import ResourceList from '../../../common/resourcelist'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions,voteActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
 			return{
+				showPicture:false,
+				currentChoosePicture:{},
+				currentOptionIndex:0,
+				showSubimg:false,
+				currentChooseSubimg:{},
 				btnoptions:true,
 				companyid:'',			
 				companyname:'',
@@ -113,8 +128,9 @@
 				},
 				formObj:{
 					questionlabe:'',
-					questiontype:0,//0为单选；1为多选
+					questiontype:'0',//0为单选；1为多选
 					sort:0,
+					questionurl:'',
 					options:[{
 						options:'',
 						optionsurl:'',
@@ -167,7 +183,7 @@
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:200,
+						width:120,
 						render:(h,params)=>{
 
 							return h('div', [
@@ -227,7 +243,8 @@
 		},
 		components:{
 			ZmitiMask,
-			ZmitiTable
+			ZmitiTable,
+			ResourceList
 		},
 
 		beforeCreate(){
@@ -317,6 +334,7 @@
 					productid:this.productid,
 					questionlabe:this.formObj.questionlabe,
 					questiontype:this.formObj.questiontype,
+					questionurl:this.formObj.questionurl,
 					sort:this.formObj.sort,
 					options:this.formObj.options				
 				}
@@ -327,20 +345,19 @@
 				}
 
 				console.log(info,'info-info',s.questionid)
-				/*zmitiUtil.ajax({
-					remark:this.voteid ?　'editquesion':'addquesion',
+				zmitiUtil.ajax({
+					remark:this.questionid ?　'editquesion':'addquesion',
 					data:{
 						action,
 						info
 					},
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
-						s.closeMaskPage();
 						if(data.getret === 0){
-							s.getDataList();
+							window.history.back();
 						}
 					}
-				})*/
+				})
 			},
 			delete(voteid){//删除投票
 				console.log(voteid,'voteid');
@@ -358,23 +375,38 @@
 					}
 				})
 			},
-			addoptions(){
-				/*this.formObj.options.push({
-					options:this.optionsData.options,
-					optionsurl:this.optionsData.optionsurl,
-					sort:this.optionsData.sort
-				})*/
+			addoptions(index){//添加选项
 				this.formObj.options.push({
 					options:'',
 					optionsurl:'',
 					sort:0
 				})
-				this.btnoptions=formObj.options.length;
-				//console.log(this.formObj.options.length-1,'this.formObj.options===this.formObj.options')
 			},
-			removeoptions(index){
+			removeoptions(index){//移除选项
 				this.formObj.options.splice(index);
-			}
+			},
+			/**以下为选择配图**/
+		    onFinishPicture(item){
+				this.currentChoosePicture = item;
+			},
+			choosePicture(){
+				this.showPicture = false;
+				this.formObj.questionurl=this.currentChoosePicture.filepath;
+			},
+			/**以下为子选项图片**/
+			openUploadImg(index){
+				this.currentOptionIndex=index;
+				this.showSubimg = true;
+			},
+		    onFinishSubimg(item){
+				this.currentChooseSubimg = item;
+			},
+			chooseSubimg(){
+				this.showSubimg = false;
+				let currentOptionIndex=this.currentOptionIndex;
+				let filepath=this.currentChooseSubimg.filepath;
+				this.formObj.options[currentOptionIndex].optionsurl=filepath;
+			},
             
 
 		}

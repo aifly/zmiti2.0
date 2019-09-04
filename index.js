@@ -4,7 +4,7 @@ import Main from './common/main';
 import Login from './components/login'
 import Home from './components/home'
 import WorkOrder from './components/workorder'
-
+import PasswordFind from './components/passwordfind';
 import Register from './components/register';
 import ResourceList from './components/resourcelist';
 import ChangYue from './components/changyue';
@@ -95,6 +95,11 @@ const router = new VueRouter({
 		name: "register",
 		component: Register
 	},
+	{
+		path: "/passwordfind",
+		name: "passwordfind",
+		component: PasswordFind
+	},
     {
 		path: "/home",
 		name: "home",
@@ -129,15 +134,15 @@ const router = new VueRouter({
 			{ path: '/meetingroom/:id?', name: 'meetingroom', component:  MeetingRoom},
 			{ path: "/infomanager/:id?", name: "infomanager", component: infomanager},
 			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
-			{path:"/infomanagermsgdetail/:productid?/:typeid?/:id?/:typename?",name:"infomanagermsgdetail",component:infomanagermsgdetail},
+			{path:"/infomanagermsgdetail/:productid?/:typeid?/:typename?/:id?",name:"infomanagermsgdetail",component:infomanagermsgdetail},
 			{path: "/infomanagernotice/:id?", name: "infomanagernotice", component: infomanagernotice},
 			{path:"/infomanagerlist/:id?",name:"infomanagerlist",component:infomanagerlist},
-			{path:"/infomanagerlistdetail/:productid?/:typeid?/:id?/:typename?",name:"infomanagerlistdetail",component:infomanagerlistdetail},
+			{path:"/infomanagerlistdetail/:productid?/:typeid?/:typename?/:id?",name:"infomanagerlistdetail",component:infomanagerlistdetail},
 			{path:"/infomanagernews/:id?",name:"infomanagernews",component:infomanagernews},
-			{path:"/infomanagernewsdetail/:productid?/:typeid?/:id?/:typename?",name:"infomanagernewsdetail",component:infomanagernewsdetail},
+			{path:"/infomanagernewsdetail/:productid?/:typeid?/:typename?/:id?",name:"infomanagernewsdetail",component:infomanagernewsdetail},
 			{path:"/infomanagerdoc/:id?",name:"infomanagerdoc",component:infomanagerdoc},
 			{path:"/infomanagerbox/:id?",name:"infomanagerbox",component:infomanagerbox},
-			{path:"/infomanagerboxdetail/:productid?/:typeid?/:id?/:typename?",name:"infomanagerboxdetail",component:infomanagerboxdetail},
+			{path:"/infomanagerboxdetail/:productid?/:typeid?/:typename?/:id?",name:"infomanagerboxdetail",component:infomanagerboxdetail},
 			{path:"/infomanagerboxcomment/:productid?/:typeid?/:id?/:typename?",name:"infomanagerboxcomment",component:infomanagerboxcomment},
 			{path:"/infomanagercolumn/:id?",name:"infomanagercolumn",component:infomanagercolumn},
 			{path:"/infomanagersetting/:id?",name:"infomanagersetting",component:infomanagersetting},
@@ -163,7 +168,7 @@ const router = new VueRouter({
 });
 
 router.afterEach((to, from) => {
-	if (to.name === 'login' || to.name === 'register'){
+	if (to.name === 'login' || to.name === 'register' || to.name === 'passwordfind'){
 		return;
 	}
 

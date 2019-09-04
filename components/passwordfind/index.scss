@@ -1,0 +1,211 @@
+﻿@import "../css/base.scss";
+
+$baseColor: #fcffb4;
+$viewW: 750px;
+$color: #373d41;
+.zmiti-pwdfind{
+  header {
+    @include displayFlex(row);
+    justify-content: flex-start;
+    background:$color;
+    padding: 0 10px;
+    height: 50px;
+    line-height: 50px;
+    color:#fff;
+    &>div:nth-of-type(2) {
+        font-size: 16px;
+        margin: 0 20px;
+    }
+    &>div:nth-of-type(1) {
+      width: 120px;
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      color: #fff;
+    }
+    .zmiti-title {
+      height: 50px;
+      line-height: 50px;
+      @include pos(r);
+      img {
+        width: 80px;
+        vertical-align: middle;
+      }
+      span {
+        @include pos(a);
+        left: 110%;
+        bottom: 14px;
+        height: 30px;
+      }
+    }
+    .login{
+      flex-grow: 1;
+      text-align: right;
+      a {
+        color: #fff;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  .zmiti-pwdfing-main{
+    margin: 20px auto;
+    padding-top: 80px;
+    width: 1000px;
+    .step-box{
+      height: 8px;
+      @include displayFlex(row);
+      .item{
+        background-color: #cfcfcf;
+        height: 100%;
+        flex-grow: 1;
+        position: relative;
+        &:first-child{
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+        }
+        &:last-child{
+           border-top-right-radius: 4px;
+           border-bottom-right-radius: 4px;
+        }
+        &>div:first-child{
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          font-size: 16px;
+          color: #fff;
+          background-color: #cfcfcf;
+          right: -15px;
+          z-index: 1;
+          text-align: center;
+          line-height: 30px;
+          top: -10px;
+          border-radius: 50%;
+          box-shadow: 0px 0px 1px 2px #f1f1f1;
+        }        
+        &>div:last-child{
+          position: absolute;
+          color: #cfcfcf;
+          font-size: 16px;
+          text-align: center;
+          width: 100%;
+          right: -50%;
+          bottom: -50px;
+        }
+      }
+      .active{
+        background-color: #00c1de;
+        &>div:first-child{
+          background-color: #00c1de;
+          box-shadow: 0px 0px 1px 2px #b2ecf5;
+        }
+        &>div:last-child {
+          color: #00c1de;
+        }
+      }
+      .pass{
+        background-color: #87e3f1;
+        &>div:first-child {
+          background-color: #87e3f1;
+          box-shadow: 0px 0px 1px 2px #b2ecf5;
+        }
+        &>div:last-child {
+          color: #87e3f1;
+        }
+      }
+    }
+    .validate-box{
+      margin-top:100px;
+      color: #525b6e;
+      .validate-tip{
+        font-size: 18px;
+        margin-bottom: 25px;
+      }
+      .validate-first{
+        font-size: 14px;
+        @include displayFlex(row);
+        justify-content: space-between;
+        align-items: center;
+        height: 90px;
+        padding: 0 25px;
+        border: 1px solid #dddddd;
+        margin-bottom: 45px;
+        p{
+          font-size: 18px;
+          font-weight: bold;
+          padding: 5px 0;
+        }
+      }
+      .validate-second{
+        @include displayFlex(row);
+        align-items: center;
+        font-size: 14px;
+        height: 90px;
+        padding: 0 25px;
+        border: 1px solid #dddddd;
+        margin-bottom: 45px;
+        p {
+          font-size: 18px;
+          font-weight: bold;
+          padding: 5px 0;
+        }
+        strong{
+          color: #00c1de;
+        }
+      }      
+      .bottom-tips{
+        background-color: #fffbed;
+        border: 1px solid #f9efd3;
+        padding: 30px 30px 15px;
+        .bottom-tips-title {
+          color: #646565;
+          font-size: 14px;
+          line-height: 14px;
+          font-weight: 700;
+        }        
+        .ui-list {
+          margin: 0;
+          padding: 10px 0;
+          list-style: none;
+        }
+        .ui-list-item {
+          font-size: 9px;
+          line-height: 22px;
+          color: #737373;
+          .ui-list-item-text {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+    .zmiti-form {
+      width: 400px;
+      margin: 100px auto 50px auto;
+      text-align: center;
+    }
+    .zmiti-form-success{
+      @include displayFlex(row);
+      align-items: center;
+      justify-content:space-between;
+      margin: 100px auto;
+      height: 95px;
+      border: 1px solid #9fd563;
+      background-color: #f5fbef;
+      padding: 0 20px;
+      img{
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+      }
+      p{
+        font-size: 22px;
+        color: #9fd563;
+      }
+      a{
+        color: #ff4401;
+        font-size: 16px;
+      }
+    }
+  }
+}
