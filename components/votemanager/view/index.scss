@@ -225,14 +225,18 @@
     margin-right: 5px;
   }
 }
-.zmiti-question-oper{
+.zmiti-question-foot{
   margin: 8px 0 0 0;
-  border-top:1px solid #cccccc;
-  text-align: right;
+  border-top:1px solid #cccccc;  
   padding:8px 0 0 0;
   line-height: 20px;
-  .zmiti-question-operbtn{    
-    margin:0 12px;
-    cursor: pointer;
+  @include displayFlex(row);
+  .zmiti-question-oper{ 
+    margin-left: auto;
+    text-align: right; 
+    .zmiti-question-operbtn{    
+      margin:0 12px;
+      cursor: pointer;
+    }
   }
 }

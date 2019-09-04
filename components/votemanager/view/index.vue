@@ -59,7 +59,7 @@
 					<!-- <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable> -->
 					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
-						<div class="zmiti-question-h1">投票项：{{item.questionlabe}}</div>
+						<div class="zmiti-question-h1">{{item.questionlabe}}</div>
 						<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>						
 						<template v-if="item.questionurl!=''">
 							<div class="zmiti-question-sub">
@@ -90,15 +90,18 @@
 								</ul>
 							</div>
 						</div>
-						<div class="zmiti-question-oper">							
-							<Poptip
-						        confirm
-						        title="您确认删除这条内容吗?"
-						        @on-ok="deletequestion(item.questionid)"
-						        @on-cancel="cancelpoptip">
-						        <span class="zmiti-question-operbtn">删除</span>
-						    </Poptip>
-						    |<span class="zmiti-question-operbtn">编辑</span>
+						<div class="zmiti-question-foot">
+							<div class="zmiti-question-num">编号：{{item.questionid}}</div>						
+							<div class="zmiti-question-oper">							
+								<Poptip
+							        confirm
+							        title="您确认删除这条内容吗?"
+							        @on-ok="deletequestion(item.questionid)"
+							        @on-cancel="cancelpoptip">
+							        <span class="zmiti-question-operbtn">删除</span>
+							    </Poptip>
+							    |<span class="zmiti-question-operbtn">编辑</span>
+							</div>
 						</div>
 					</div>
 				 </div>
@@ -388,7 +391,7 @@
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
-							//window.history.back();
+							s.getDataList();
 						}
 					}
 				})
