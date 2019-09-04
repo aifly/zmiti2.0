@@ -31,15 +31,6 @@
 							    </RadioGroup>
 							</FormItem>
 							<FormItem label="选项：">
-								<!-- <div class="zmiti-votemanagerview-options">
-									<Input v-model="optionsData.sort" placeholder="排序" style="width:80px;margin-right: 5px;"></Input>
-									<Input v-model="optionsData.options" placeholder="选项内容" style="margin-right: 5px;"></Input>									
-									<Input v-model="optionsData.optionsurl" placeholder="图片地址">
-									</Input>
-									<Icon type="ios-image-outline" size="20" />
-									<Icon type="ios-add-circle-outline" size="20" @click="addoptions" />							
-								</div> -->
-
 								<template v-if="formObj.options.length>0">
 									<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
 										<div style="width:80px;margin-right: 5px;">
@@ -385,40 +376,11 @@
 				})
 			},
 			addoptions(index){//添加选项
-				/*this.formObj.options.push({
-					options:this.optionsData.options,
-					optionsurl:this.optionsData.optionsurl,
-					sort:this.optionsData.sort
-				})*/
 				this.formObj.options.push({
 					options:'',
 					optionsurl:'',
 					sort:0
 				})
-				let my={
-					"action":"2001405",
-					"info":{
-						"voteid":"1",
-						"companyid":1,
-						"productid":"1599125954",
-						"questionlabe":"国庆活动",
-						"questiontype":"0",
-						"sort":0,
-						"options":[{
-							"options":"选项1",
-							"optionsurl":"1",
-							"sort":0
-						},{
-							"options":"选项2",
-							"optionsurl":"2222",
-							"sort":0
-						},{
-							"options":"选项3",
-							"optionsurl":"3333333",
-							"sort":0
-						}]
-					},
-					"ui":{"userid":4,"token":"da3d04b382d1d4ccec8b22f666c29ee2"}}
 			},
 			removeoptions(index){//移除选项
 				this.formObj.options.splice(index);
@@ -443,7 +405,6 @@
 				this.showSubimg = false;
 				let currentOptionIndex=this.currentOptionIndex;
 				let filepath=this.currentChooseSubimg.filepath;
-				//console.log(filepath,'选择的图片地址',currentOptionIndex);
 				this.formObj.options[currentOptionIndex].optionsurl=filepath;
 			},
             

@@ -147,6 +147,17 @@
   margin: 10px 20px;
   background-color: #ffffff;
   padding: 10px; }
+  .zmiti-question-items .zmiti-question-ulist ul {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row;
+    flex-wrap: wrap; }
+    .zmiti-question-items .zmiti-question-ulist ul li {
+      width: 200px;
+      margin-right: 20px; }
+      .zmiti-question-items .zmiti-question-ulist ul li img {
+        width: 200px;
+        height: 200px; }
 
 .zmiti-question-h1 {
   border-bottom: 1px solid #cccccc;
