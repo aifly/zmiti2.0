@@ -147,7 +147,7 @@ export default {
             },
             success (data) {
               s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg || data.getmsg);
-              data.getret === 0 && (this.currentStep = 3);
+              data.getret === 0 && (s.currentStep = 3);
             }
           })
         }
