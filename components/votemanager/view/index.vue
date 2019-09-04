@@ -12,8 +12,48 @@
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
-					</ZmitiTable>
+					<!-- <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
+					</ZmitiTable> -->
+					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
+						<div class="zmiti-question-h1">投票项：{{item.questionlabe}}</div>
+						<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>
+						<div class="zmiti-question-sub"><label>配图：</label><div>{{item.questionurl}}</div></div>
+						<div class="zmiti-question-sub">
+							<label>选项：</label>
+							<div class="zmiti-question-ulist">
+								<ul>
+									<li v-for="(ele,idx) in item.options" :key="idx">
+										<div class="zmiti-votemanagerview-options">
+											<div style="width:80px;margin-right: 5px;">
+												<Input v-model="ele.sort" placeholder="序号" ></Input>
+											</div>
+											<div class="zmiti-options-item" style="margin-right: 5px;">
+												<Input v-model="ele.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+											</div>
+											<div class="zmiti-options-item zmiti-options-item-imgurl">
+												<Input v-model="ele.optionsurl" placeholder="图片地址"></Input>
+												<Icon type="ios-image-outline" size="20" />
+											</div>
+											<div class="zmiti-options-btns">
+												<!-- <Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
+												<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" /> -->
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="zmiti-question-oper">							
+							<Poptip
+						        confirm
+						        title="您确认删除这条内容吗?"
+						        @on-ok="deletequestion(item.questionid)"
+						        @on-cancel="cancelpoptip">
+						        <span class="zmiti-question-operbtn">删除</span>
+						    </Poptip>
+						    |<span class="zmiti-question-operbtn">编辑</span>
+						</div>
+					</div>
 				 </div>
 			 </div>
 		</div>
@@ -58,7 +98,7 @@
 				columns:[
 					{
 						title:"编号",
-						key:'voteid',
+						key:'questionid',
 						align:'center',
 						width:120
 					},
@@ -218,22 +258,28 @@
 					}
 				})
 			},
-			delete(questionid){//删除投票项
+			deletequestion(questionid){//删除投票项
 				var s = this;
+				//this.$Message.info('You click cancel');
 				zmitiUtil.ajax({
 					remark:'deletequesion',
 					data:{
 						action:voteActions.deletequesion.action,
-						questionid,
-						productid:s.productid
+						info:{
+							companyid:zmitiUtil.getCurrentCompanyId().companyid,
+							questionid,
+							productid:s.productid
+						}
 					},
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
-						s.getDataList();//更新列表
+						s.getDataList();
 					}
 				})
-			}
-            
+			},
+            cancelpoptip(){
+            	//this.$Message.info('You click cancel');
+            }
 
 		}
 	}

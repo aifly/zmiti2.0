@@ -188,3 +188,39 @@
     cursor: pointer;
   }
 }
+.zmiti-question-items{
+  @include br(5px);
+  border:1px solid #cccccc;
+  margin:10px 20px;
+  background-color: #ffffff;
+  padding:10px;
+}
+.zmiti-question-h1{
+  border-bottom:1px solid #cccccc;
+  padding-bottom:8px;
+  margin-bottom: 8px;
+}
+.zmiti-question-h2{
+  padding:8px 0;
+}
+.zmiti-question-img1{
+  padding-bottom:8px;
+}
+.zmiti-question-sub{
+  @include displayFlex(row);
+  line-height: 25px;
+  label{
+    margin-right: 5px;
+  }
+}
+.zmiti-question-oper{
+  margin: 8px 0 0 0;
+  border-top:1px solid #cccccc;
+  text-align: right;
+  padding:8px 0 0 0;
+  line-height: 20px;
+  .zmiti-question-operbtn{    
+    margin:0 12px;
+    cursor: pointer;
+  }
+}
