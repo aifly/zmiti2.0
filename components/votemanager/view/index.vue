@@ -8,7 +8,7 @@
 					 </div>
 					 <div>
 					 	<Button type="default" @click='goback()'>返回</Button>
-					 	<Button type="primary" @click='add()'>添加</Button>
+					 	<!-- <Button type="primary" @click='add()'>添加</Button> -->
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
@@ -60,8 +60,13 @@
 					</ZmitiTable> -->
 					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
 						<div class="zmiti-question-h1">投票项：{{item.questionlabe}}</div>
-						<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>
-						<div class="zmiti-question-sub"><label>配图：</label><div>{{item.questionurl}}</div></div>
+						<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>						
+						<template v-if="item.questionurl!=''">
+							<div class="zmiti-question-sub">
+								<label>配图：</label>
+								<div><img :src="item.questionurl"></div>
+							</div>
+						</template>
 						<div class="zmiti-question-sub">
 							<label>选项：</label>
 							<div class="zmiti-question-ulist">
@@ -71,8 +76,11 @@
 											{{ele.options}}
 										</div>
 										<div>
-											<template v-if="ele.optionsurl!=undefined">
+											<template v-if="ele.optionsurl!=''">
 												<img :src="ele.optionsurl">
+											</template>
+											<template v-else>
+												<img :src="imgs.defaultImg">
 											</template>
 										</div>
 										<div>
