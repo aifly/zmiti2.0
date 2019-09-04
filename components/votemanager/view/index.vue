@@ -27,30 +27,28 @@
 							        <Radio label="1">多选</Radio>
 							    </RadioGroup>
 							</FormItem>
-							<FormItem label="选项：">
-								<template v-if="formObj.options.length>0">
-									<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
-										<div style="width:80px;margin-right: 5px;">
-											<Input v-model="item.sort" placeholder="排序" ></Input>
-										</div>
-										<div class="zmiti-options-item" style="margin-right: 5px;">
-											<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
-										</div>
-										<div class="zmiti-options-item zmiti-options-item-imgurl">
-											<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
-											<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
-										</div>
-										<div class="zmiti-options-btns">
-											<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
-											<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
-										</div>
-
-									</div>
-									
-								</template>			
-
-								
-							</FormItem>
+							<template v-if="showFormOptions==true">
+								<FormItem label="选项：">
+									<template v-if="formObj.options.length>0">
+										<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
+											<div style="width:80px;margin-right: 5px;">
+												<Input v-model="item.sort" placeholder="排序" ></Input>
+											</div>
+											<div class="zmiti-options-item" style="margin-right: 5px;">
+												<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+											</div>
+											<div class="zmiti-options-item zmiti-options-item-imgurl">
+												<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
+												<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
+											</div>
+											<div class="zmiti-options-btns">
+												<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
+												<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
+											</div>
+										</div>									
+									</template>								
+								</FormItem>
+							</template>
 							<FormItem label="">
 								<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
 							</FormItem>
@@ -146,6 +144,7 @@
 				currentOptionIndex:0,
 				showSubimg:false,
 				currentChooseSubimg:{},
+				showFormOptions:true,
 				companyid:'',			
 				companyname:'',
 				questionlabe:'',
@@ -344,6 +343,7 @@
 				this.formObj=currentDatas[0];
 				this.formObj.questiontype=currentDatas[0].questiontype.toString();
 				console.log(this.formObj,'当前的数据');
+				this.showFormOptions=false;//编辑时隐藏选项
 			},
 			deletequestion(questionid){//删除投票项
 				var s = this;
@@ -384,7 +384,7 @@
 				
 
 				if(s.questionid!=undefined){
-					info.questionid=s.questionid;					
+					info.questionid=s.questionid;										
 				}
 
 				console.log(info,'info-info',s.questionid)
