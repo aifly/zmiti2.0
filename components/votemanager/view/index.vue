@@ -100,7 +100,7 @@
 							        @on-cancel="cancelpoptip">
 							        <span class="zmiti-question-operbtn">删除</span>
 							    </Poptip>
-							    |<span class="zmiti-question-operbtn">编辑</span>
+							    |<span class="zmiti-question-operbtn" @click="editQuestion(item.questionid)">编辑</span>
 							</div>
 						</div>
 					</div>
@@ -339,6 +339,12 @@
 					}
 				})
 			},
+			editQuestion(questionid){//编辑投票项
+				let currentDatas=this.dataSource.filter((item)=>questionid==item.questionid);
+				this.formObj=currentDatas[0];
+				this.formObj.questiontype=currentDatas[0].questiontype.toString();
+				console.log(this.formObj,'当前的数据');
+			},
 			deletequestion(questionid){//删除投票项
 				var s = this;
 				zmitiUtil.ajax({
@@ -378,7 +384,7 @@
 				
 
 				if(s.questionid!=undefined){
-					info.questionid=s.questionid
+					info.questionid=s.questionid;					
 				}
 
 				console.log(info,'info-info',s.questionid)
