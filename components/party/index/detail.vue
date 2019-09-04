@@ -17,8 +17,9 @@
                 <Input v-model="formObj.partyname" placeholder="活动名称"></Input>
               </FormItem>
               <FormItem label="活动Banner图片：" prop="partyurl">
+                <img :src="formObj.partyurl||imgs.defaultImg" alt="">
                 <div><Button icon="ios-cloud-upload-outline" @click="showImg= true">选择图片</Button></div>
-                <Input v-model="formObj.partyurl" placeholder="活动Banner图片"></Input>
+                <input v-model="formObj.partyurl" placeholder="活动Banner图片" type="hidden" />
               </FormItem>
               <FormItem label="开始时间：" prop="begintime">
                 <DatePicker
@@ -162,7 +163,7 @@ export default {
       window.history.go(-1);
     },
     adminAction () {
-      this.$refs.ruleForm.validate((valid) => {
+      this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           let action = this.formObj.partyid ? this.partyActions.editParty.action : this.partyActions.addParty.action;
           var s = this;

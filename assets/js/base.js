@@ -17,6 +17,8 @@ var imgs = {
 	adminLoginBg:'./assets/images/adminlogin-bg.jpg',
 	adminUser:'./assets/images/admin-user.png',
 	adminLock:'./assets/images/admin-lock.png',
+	success:'./assets/images/success.png',
+	defaultImg:'./assets/images/default-img.png',
 
 
 	W0:'./assets/images/weather/W0.png',

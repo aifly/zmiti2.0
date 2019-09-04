@@ -383,6 +383,10 @@ let userActions = {
 	getUserRoleGroupUserList:{
 		desc:'获取权限组成员列表',
 		action:"2001107"
+	},
+	passwordFind:{
+		desc:'找回密码',
+		action:"2000001"
 	}
 
 };

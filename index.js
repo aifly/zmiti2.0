@@ -4,7 +4,7 @@ import Main from './common/main';
 import Login from './components/login'
 import Home from './components/home'
 import WorkOrder from './components/workorder'
-
+import PasswordFind from './components/passwordfind';
 import Register from './components/register';
 import ResourceList from './components/resourcelist';
 import ChangYue from './components/changyue';
@@ -95,6 +95,11 @@ const router = new VueRouter({
 		name: "register",
 		component: Register
 	},
+	{
+		path: "/passwordfind",
+		name: "passwordfind",
+		component: PasswordFind
+	},
     {
 		path: "/home",
 		name: "home",
@@ -163,7 +168,7 @@ const router = new VueRouter({
 });
 
 router.afterEach((to, from) => {
-	if (to.name === 'login' || to.name === 'register'){
+	if (to.name === 'login' || to.name === 'register' || to.name === 'passwordfind'){
 		return;
 	}
 

@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <Layout v-if='$route.name !== "login" && $route.name !== "register"'>
+        <Layout v-if='$route.name !== "login" && $route.name !== "register" && $route.name !== "passwordfind"'>
             <Header>
                <div>
                     <div class="zmiti-title">
