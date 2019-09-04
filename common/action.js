@@ -17,6 +17,10 @@ let adminActions = {
 		desc: '管理员编辑',
 		action: '1000102'
 	},
+	initUserPass:{
+		desc:'修改用户密码',
+		action:'1000804'
+	},
 	delAdmin: {
 		desc: '管理员删除',
 		action: '1000103'
@@ -500,6 +504,10 @@ let orderFoodActions = {
 	getOrderFoodDetailByDate:{
 		desc:'获取某天订餐详细列表',
 		action:"2001804"
+	},
+	getMyFoodOrderList:{
+		desc:'获取我的订餐列表',
+		action:'2001809'
 	}
 
 }

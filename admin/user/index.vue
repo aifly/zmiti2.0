@@ -128,7 +128,7 @@
 	import zmitiUtil from '../../common/lib/util';
 	import Avatar from '../../common/avatar';
 	import ZmitiMask from '../../common/mask/';
-	var {companyActions,zmitiActions} = zmitiUtil;
+	var {companyActions,zmitiActions,adminActions} = zmitiUtil;
 
 	export default {
 		props:['obserable'],
@@ -341,7 +341,7 @@
 				},
 				condition:{
 					page_index:0,
-					page_size:10,
+					page_size:20,
 				},
 				userinfo:{}
 			}
@@ -503,11 +503,12 @@
 			},
 			initPassword(){//初始化密码
 				var {$Message} = this;
+				var s = this;
 				zmitiUtil.adminAjax({
 					data:{
-						action:companyActions.modifyAdminPassword.action,
-						adminuserid:this.formUser.adminuserid,
-						adminpwd:window.config.defaultPass
+						action:adminActions.initUserPass.action,
+						userid:s.formUser.userid,
+						userpwd:window.config.defaultPass
 					},
 					success(data){
 						$Message[data.getret === 0 ? 'success':'error'](data.msg);

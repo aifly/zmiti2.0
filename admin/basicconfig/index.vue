@@ -188,32 +188,45 @@
 							<Radio :value='0' :label="0">禁用</Radio>
 						</RadioGroup>
 					</FormItem>
-					<FormItem label='模板类型 ：'>
-						<RadioGroup v-model="formBasicConfig.info.smtp_config.smtp_template.type">
-							<Radio :value='1' :label="1">找回密码 </Radio>
-						</RadioGroup>
+
+					
+
+					<div v-for='(item,i) in formBasicConfig.info.smtp_config.smtp_template' :key="i" >
+						<FormItem label='模板类型 ：' >
+							<RadioGroup v-model="item.type">
+								<Radio :value='1' :label="1">找回密码 </Radio>
+							</RadioGroup>
+						</FormItem>
+
+						<FormItem label='邮件标题：' >
+							<Input type="textarea" v-model="item.smtp_title" placeholder="邮件标题：" />
+						</FormItem>
+						<FormItem label='邮件内容：' >
+							<quill-editor 
+								v-model="item.smtp_body" 
+								ref="myQuillEditor" 
+								aria-placeholder="123"
+								:options="editorOption" 
+								@blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
+								@change="onEditorChange($event)">
+								</quill-editor>
+						</FormItem>
+
+						<FormItem label='是否启用加密链接：' >
+							<RadioGroup v-model="item.status">
+								<Radio :value='1' :label="1">启用</Radio>
+								<Radio :value='0' :label="0">禁用</Radio>
+							</RadioGroup>
+						</FormItem>
+					
+					</div>
+					<FormItem label="">
+						<Button @click='emailAction(formBasicConfig.info.smtp_config.smtp_template,"add")' type='primary'>添加</Button>
+						<Button @click="emailAction(formBasicConfig.info.smtp_config.smtp_template,'delete')" :disabled='formBasicConfig.info.smtp_config.smtp_template.length<=1'>删除</Button>
 					</FormItem>
 
-					<FormItem label='邮件标题：'>
-						<Input type="textarea" v-model="formBasicConfig.info.smtp_config.smtp_template.smtp_title" placeholder="邮件标题：" />
-					</FormItem>
-					<FormItem label='邮件内容：'>
-						<quill-editor 
-							v-model="formBasicConfig.info.smtp_config.smtp_template.smtp_body" 
-							ref="myQuillEditor" 
-							aria-placeholder="123"
-							:options="editorOption" 
-							@blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
-							@change="onEditorChange($event)">
-							</quill-editor>
-					</FormItem>
 
-					<FormItem label='是否启用加密链接：'>
-						<RadioGroup v-model="formBasicConfig.info.smtp_config.smtp_template.status">
-							<Radio :value='1' :label="1">启用</Radio>
-							<Radio :value='0' :label="0">禁用</Radio>
-						</RadioGroup>
-					</FormItem>
+
 					<!--
 
 
@@ -242,6 +255,8 @@
 </style>
 
 <script>
+
+
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../common/lib/util';
@@ -287,13 +302,15 @@
 							smtp_user:"",
 							smtp_password:'',
 							smtp_ssl:"",
-							smtp_template:{
+							smtp_template:[
+								{
 								type:1,
 								smtp_body:'',
 								smtp_title:'',
 								status:1
 
 							}
+							]
 
 
 						}
@@ -385,7 +402,7 @@
 				}
 			},
 
-			serverAction(data,type){
+			emailAction(data,type){
 				switch (type) {
 					case 'add':
 						data.push({
@@ -394,6 +411,27 @@
 							endpoint: '',
 							idx: '',
 							region: '',
+						});
+						break;
+					case 'delete':
+					if(data.length>1){
+						data.pop();
+					}
+					break;
+					default:
+						break;
+				}
+			},
+
+			serverAction(data,type){
+				switch (type) {
+					case 'add':
+						data.push({
+							type:1,
+							smtp_body:'',
+							smtp_title:'',
+							status:1
+
 						});
 						break;
 					case 'delete':
@@ -460,13 +498,15 @@
 						smtp_user:"",
 						smtp_password:'',
 						smtp_ssl:"",
-						smtp_template:{
-							type:1,
-							smtp_body:'',
-							smtp_title:'',
-							status:1
+						smtp_template:[
+							{
+								type:1,
+								smtp_body:'',
+								smtp_title:'',
+								status:1
 
-						}
+							}
+						]
 					};
 					s.formBasicConfig.info.oss_selected = s.formBasicConfig.info.oss_selected || 1;
 
