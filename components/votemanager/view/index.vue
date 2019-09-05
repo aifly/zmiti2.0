@@ -11,7 +11,64 @@
 					 	<!-- <Button type="primary" @click='add()'>添加</Button> -->
 					 </div>
 				 </header>
-				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
+				 <div class='zmiti-submit-main zmiti-scroll' ref="zmitiscroll" :style="{height:viewH - 110+'px'}">
+
+					<!-- <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
+					</ZmitiTable> -->
+					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
+						<div class="zmiti-question-h1">
+							<div class="zmiti-h1-txt">{{item.questionlabe}}</div>
+							<div class="zmiti-block-oper"><span @click="currentQuestionStatus(index)">{{item.show==true?'展开':'收起'}}</span></div>
+						</div>
+						<div class="zmiti-question-inner" :ref="index" >
+							<div>123-
+							{{item.status}}</div>
+							<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>						
+							<template v-if="item.questionurl!=''">
+								<div class="zmiti-question-sub">
+									<label>配图：</label>
+									<div><img :src="item.questionurl"></div>
+								</div>
+							</template>
+							<div class="zmiti-question-sub">
+								<label>选项：</label>
+								<div class="zmiti-question-ulist">
+									<ul>
+										<li v-for="(ele,idx) in item.options" :key="idx">										
+											<div>
+												{{ele.options}}
+											</div>
+											<div>
+												<template v-if="ele.optionsurl!=''">
+													<img :src="ele.optionsurl">
+												</template>
+												<template v-else>
+													<img :src="imgs.defaultImg">
+												</template>
+											</div>
+											<div>
+												序号：{{ele.sort}}
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="zmiti-question-foot">
+								<div class="zmiti-question-num">编号：{{item.questionid}}</div>						
+								<div class="zmiti-question-oper">							
+									<Poptip
+								        confirm
+								        title="您确认删除这条内容吗?"
+								        @on-ok="deletequestion(item.questionid)"
+								        @on-cancel="cancelpoptip">
+								        <span class="zmiti-question-operbtn">删除</span>
+								    </Poptip>
+								    |<span class="zmiti-question-operbtn" @click="editQuestion(item.questionid)">编辑</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 添加和修改 -->
 				 	<div class="zmiti-votemanagerviewquestion-list">
 						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
 							<FormItem label="投票项：">
@@ -76,54 +133,6 @@
 								<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
 							</FormItem>
 						</Form>
-					</div>
-					<!-- <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
-					</ZmitiTable> -->
-					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
-						<div class="zmiti-question-h1">{{item.questionlabe}}</div>
-						<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>						
-						<template v-if="item.questionurl!=''">
-							<div class="zmiti-question-sub">
-								<label>配图：</label>
-								<div><img :src="item.questionurl"></div>
-							</div>
-						</template>
-						<div class="zmiti-question-sub">
-							<label>选项：</label>
-							<div class="zmiti-question-ulist">
-								<ul>
-									<li v-for="(ele,idx) in item.options" :key="idx">										
-										<div>
-											{{ele.options}}
-										</div>
-										<div>
-											<template v-if="ele.optionsurl!=''">
-												<img :src="ele.optionsurl">
-											</template>
-											<template v-else>
-												<img :src="imgs.defaultImg">
-											</template>
-										</div>
-										<div>
-											序号：{{ele.sort}}
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="zmiti-question-foot">
-							<div class="zmiti-question-num">编号：{{item.questionid}}</div>						
-							<div class="zmiti-question-oper">							
-								<Poptip
-							        confirm
-							        title="您确认删除这条内容吗?"
-							        @on-ok="deletequestion(item.questionid)"
-							        @on-cancel="cancelpoptip">
-							        <span class="zmiti-question-operbtn">删除</span>
-							    </Poptip>
-							    |<span class="zmiti-question-operbtn" @click="editQuestion(item.questionid)">编辑</span>
-							</div>
-						</div>
 					</div>
 				 </div>
 			 </div>
@@ -371,6 +380,7 @@
 				console.log(this.formObj,'当前的数据');
 				this.showFormOptions=false;//编辑时隐藏选项
 				this.questionid=questionid;
+				this.scrollthis();
 			},
 			deletequestion(questionid){//删除投票项
 				var s = this;
@@ -438,7 +448,7 @@
 				this.optionsid=undefined;
 			},
 			removeoptions(index){//移除选项
-				this.formObj.options.splice(index);
+				this.formObj.options.splice(index,1);
 			},
 			/*以下为选项的修改和删除*/
 			editOptions(optionsid,index){//修改选项
@@ -503,10 +513,20 @@
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
-
+							s.formObj.options.splice(index,1);
+							console.log(s.formObj.options[index],'s.formObj.options[index]===',index)
 						}
 					}
 				})
+			},
+			currentQuestionStatus(index){//切换显示与隐藏
+				this.dataSource[index].show=!this.dataSource[index].show;
+				this.dataSource[index].status=this.dataSource[index].show;
+				console.log(this.dataSource[index].status)
+			},
+			scrollthis(){//滚动到底部
+				var div = this.$refs.zmitiscroll;
+				div.scrollTop = div.scrollHeight;
 			},
 			/**以下为选择配图**/
 		    onFinishPicture(item){

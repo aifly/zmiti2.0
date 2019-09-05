@@ -209,8 +209,18 @@
 }
 .zmiti-question-h1{
   border-bottom:1px solid #cccccc;
-  padding-bottom:8px;
+  padding-bottom:6px;
   margin-bottom: 8px;
+  @include displayFlex(row);
+  .zmiti-block-oper{
+    width: 40px;
+    color: #2d8cf0;
+    text-align: center;  
+    margin-left:auto;
+    span{
+      cursor: pointer;
+    }
+  }
 }
 .zmiti-question-h2{
   padding:8px 0;
@@ -223,6 +233,10 @@
   line-height: 25px;
   label{
     margin-right: 5px;
+  }
+  img{
+    width: 100px;
+    height: 100px;
   }
 }
 .zmiti-question-foot{
