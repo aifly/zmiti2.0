@@ -25,29 +25,28 @@
 							<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>						
 							<template v-if="item.questionurl!=''">
 								<div class="zmiti-question-sub">
-									<label>配图：</label>
-									<div><img :src="item.questionurl"></div>
+									<label>图片：</label>
+									<div><img :src="item.questionurl" class="zmiti-suboption-img"></div>
 								</div>
 							</template>
 							<div class="zmiti-question-sub">
 								<label>选项：</label>
 								<div class="zmiti-question-ulist">
 									<ul>
-										<li v-for="(ele,idx) in item.options" :key="idx">										
-											<div>
-												{{ele.options}}
-											</div>
-											<div>
+										<li v-for="(ele,idx) in item.options" :key="idx">
+											
+											<div class="zmiti-question-suboption">
 												<template v-if="ele.optionsurl!=''">
-													<img :src="ele.optionsurl">
+													<img :src="ele.optionsurl" class="zmiti-suboption-img">
 												</template>
-												<template v-else>
+												<!-- <template v-else>
 													<img :src="imgs.defaultImg">
-												</template>
+												</template> -->
+												<div class="zmiti-question-suboption-txt">
+													{{ele.options}}
+												</div>
 											</div>
-											<div>
-												序号：{{ele.sort}}
-											</div>
+											
 										</li>
 									</ul>
 								</div>
