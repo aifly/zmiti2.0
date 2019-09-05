@@ -8,7 +8,7 @@
 					 </div>
 					 <div>
 					 	<Button type="default" @click='goback()'>返回</Button>
-					 	<!-- <Button type="primary" @click='add()'>添加</Button> -->
+					 	<Button type="primary" @click='add()'>添加</Button>
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' ref="zmitiscroll" :style="{height:viewH - 110+'px'}">
@@ -68,70 +68,74 @@
 						</div>
 					</div>
 					<!-- 添加和修改 -->
+
 				 	<div class="zmiti-votemanagerviewquestion-list">
-						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
-							<FormItem label="投票项：">
-								<Input v-model="formObj.questionlabe" placeholder="投票项"></Input>
-							</FormItem>
-							<FormItem label="图片：">
-								<div><Button icon="ios-cloud-upload-outline" @click="showPicture= true">选择图片</Button></div>
-								<Input v-model="formObj.questionurl" placeholder="图片地址"></Input>
-							</FormItem>
-							<FormItem label="类型：">
-								<RadioGroup v-model="formObj.questiontype">
-							        <Radio label="0">单选</Radio>
-							        <Radio label="1">多选</Radio>
-							    </RadioGroup>
-							</FormItem>
-							<template v-if="showFormOptions==true">
-								<FormItem label="选项：">
-									<template v-if="formObj.options.length>0">
-										<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
-											<div style="width:80px;margin-right: 5px;">
-												<Input v-model="item.sort" placeholder="排序" ></Input>
-											</div>
-											<div class="zmiti-options-item" style="margin-right: 5px;">
-												<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
-											</div>
-											<div class="zmiti-options-item zmiti-options-item-imgurl">
-												<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
-												<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
-											</div>
-											<div class="zmiti-options-btns">
-												<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
-												<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
-											</div>
-										</div>									
-									</template>								
+				 		<Card :bordered="false">
+				            <p slot="title">{{questionid?'编辑':'新增'}}</p>
+							<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
+								<FormItem label="投票项：">
+									<Input v-model="formObj.questionlabe" placeholder="投票项"></Input>
 								</FormItem>
-							</template>
-							<template v-else>
-								<FormItem label="选项：">
-									<template v-if="formObj.options.length>0">
-										<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
-											<div style="width:80px;margin-right: 5px;">
-												<Input v-model="item.sort" placeholder="排序" ></Input>
-											</div>
-											<div class="zmiti-options-item" style="margin-right: 5px;">
-												<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
-											</div>
-											<div class="zmiti-options-item zmiti-options-item-imgurl">
-												<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
-												<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
-											</div>
-											<div class="zmiti-options-btns">
-												<Icon type="md-open" size="20" @click="editOptions(item.optionsid,index)" />
-												<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
-												<Icon type="ios-remove-circle-outline" size="20" @click="deleteQuestionOptions(item.optionsid,index)" />
-											</div>
-										</div>									
-									</template>								
+								<FormItem label="图片：">
+									<div><Button icon="ios-cloud-upload-outline" @click="showPicture= true">选择图片</Button></div>
+									<Input v-model="formObj.questionurl" placeholder="图片地址"></Input>
 								</FormItem>
-							</template>
-							<FormItem label="">
-								<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
-							</FormItem>
-						</Form>
+								<FormItem label="类型：">
+									<RadioGroup v-model="formObj.questiontype">
+								        <Radio label="0">单选</Radio>
+								        <Radio label="1">多选</Radio>
+								    </RadioGroup>
+								</FormItem>
+								<template v-if="showFormOptions==true">
+									<FormItem label="选项：">
+										<template v-if="formObj.options.length>0">
+											<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
+												<div style="width:80px;margin-right: 5px;">
+													<Input v-model="item.sort" placeholder="排序" ></Input>
+												</div>
+												<div class="zmiti-options-item" style="margin-right: 5px;">
+													<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+												</div>
+												<div class="zmiti-options-item zmiti-options-item-imgurl">
+													<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
+													<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
+												</div>
+												<div class="zmiti-options-btns">
+													<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
+													<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
+												</div>
+											</div>									
+										</template>								
+									</FormItem>
+								</template>
+								<template v-else>
+									<FormItem label="选项：">
+										<template v-if="formObj.options.length>0">
+											<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
+												<div style="width:80px;margin-right: 5px;">
+													<Input v-model="item.sort" placeholder="排序" ></Input>
+												</div>
+												<div class="zmiti-options-item" style="margin-right: 5px;">
+													<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+												</div>
+												<div class="zmiti-options-item zmiti-options-item-imgurl">
+													<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
+													<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
+												</div>
+												<div class="zmiti-options-btns">
+													<Icon type="md-open" size="20" @click="editOptions(item.optionsid,index)" />
+													<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
+													<Icon type="ios-remove-circle-outline" size="20" @click="deleteQuestionOptions(item.optionsid,index)" />
+												</div>
+											</div>									
+										</template>								
+									</FormItem>
+								</template>
+								<FormItem label="">
+									<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
+								</FormItem>
+							</Form>
+						</Card>
 					</div>
 				 </div>
 			 </div>
@@ -365,13 +369,27 @@
 						})
 			},
 			add(){//添加投票项
-				this.$router.push({
+				/*this.$router.push({
 					name:'votemanagerviewquestion',
 					params:{
 						id:this.$route.params.id,
 						voteid:this.$route.params.voteid
 					}
-				})
+				})*/
+				this.questionid=undefined;
+				this.optionsid=undefined;
+				this.showFormOptions=true;
+				this.formObj={
+					questionlabe:'',
+					questiontype:'0',//0为单选；1为多选
+					sort:0,
+					questionurl:'',
+					options:[{
+						options:'',
+						optionsurl:'',
+						sort:0
+					}]
+				}
 			},
 			editQuestion(questionid){//编辑投票项
 				let currentDatas=this.dataSource.filter((item)=>questionid==item.questionid);
