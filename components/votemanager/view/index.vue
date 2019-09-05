@@ -18,7 +18,7 @@
 					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
 						<div class="zmiti-question-h1">
 							<div class="zmiti-h1-txt">{{item.questionlabe}}</div>
-							<div class="zmiti-block-oper"><span @click="currentQuestionStatus(index)">{{item.show==true?'展开':'收起'}}</span></div>
+							<div class="zmiti-block-oper"  @click="currentQuestionStatus(index)"><span>{{item.status==true?'收起':'展开'}}</span></div>
 						</div>
 						<div class="zmiti-question-inner" v-show="item.status">
 							<div style="display: none;">{{show}}</div>
