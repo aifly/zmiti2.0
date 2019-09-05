@@ -156,6 +156,7 @@
 	import zmitiUtil from '../../../common/lib/util';
 	import ZmitiTable from '../../../common/table';
 	import ZmitiMask from '../../../common/mask/';
+	import ResourceList from '../../../common/resourcelist'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions,voteActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
@@ -286,7 +287,8 @@
 		},
 		components:{
 			ZmitiMask,
-			ZmitiTable
+			ZmitiTable,
+			ResourceList
 		},
 
 		beforeCreate(){
@@ -472,11 +474,11 @@
 					datainfo.info.optionsurl=formObj.optionsurl
 					datainfo.info.sort=formObj.sort					
 				}else{
-					datainfo.list={
+					datainfo.list=[{
 						options:formObj.options,
 						optionsurl:formObj.optionsurl,
 						sort:formObj.sort
-					}
+					}]
 				}
 				//console.log(datainfo,'editOptions');
 				zmitiUtil.ajax({
