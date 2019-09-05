@@ -213,6 +213,26 @@
   flex: 1;
 }
 
+.layout .zmiti-main-page .zmiti-unrole {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}
+
+.layout .zmiti-main-page .zmiti-unrole img {
+  width: 400px;
+}
+
+.layout .zmiti-main-page .zmiti-unrole > div:nth-of-type(2) {
+  margin-left: 20px;
+  font-size: 20px;
+  padding-top: 100px;
+  line-height: 40px;
+}
+
 .layout .zmiti-company-info {
   position: absolute;
   top: 0;
