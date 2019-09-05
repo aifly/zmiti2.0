@@ -457,12 +457,6 @@
 					optionsurl:formObj.optionsurl,
 					sort:formObj.sort
 				}
-				/*if(s.optionsid!=undefined){
-					info.optionsid=formObj.optionsid;
-					info.options=formObj.options
-					info.optionsurl=formObj.optionsurl
-					info.sort=formObj.sort					
-				}*/
 
 				var datainfo={
 					action:action,
