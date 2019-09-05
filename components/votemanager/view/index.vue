@@ -369,15 +369,7 @@
 						})
 			},
 			add(){//添加投票项
-				/*this.$router.push({
-					name:'votemanagerviewquestion',
-					params:{
-						id:this.$route.params.id,
-						voteid:this.$route.params.voteid
-					}
-				})*/
-				this.questionid=undefined;
-				this.optionsid=undefined;
+				this.questionid=undefined;				
 				this.showFormOptions=true;
 				this.formObj={
 					questionlabe:'',
