@@ -391,6 +391,10 @@ let userActions = {
 	passwordFind:{
 		desc:'找回密码',
 		action:"2000001"
+	},
+	getUserRole:{
+		desc:'通过公司ID获取公司下相关权限组信息',
+		action:'2000116'
 	}
 
 };

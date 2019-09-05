@@ -36,12 +36,28 @@
 									</RadioGroup>
 								</FormItem> 
 								<FormItem label="actions列表：">
+									
 									<div class='zmiti-action-list' v-for='(item,i) of actions' :key='i'>
 										<div class='zmiti-action-title'>{{(i+1 ) + '.' + item.name}}：</div>
 										<div class='zmiti-action-content' >
 											<div v-for='(action,k) of item.actions' :key='k' :class="{'active':formRoleGroup.actions&& formRoleGroup.actions.some(ac=> ac*1 === action.action*1)}" @click="toggleAction(action)" > 
 												{{action.desc}}
 											</div>
+										</div>
+									</div>
+								</FormItem>
+								<FormItem label="视图权限列表：">
+									<div class='zmiti-action-list' v-for='(item,i) of pageRoles' :key='i'>
+										<div class='zmiti-action-title' v-if='$route.name.indexOf(item.route)>-1'>{{(i + 1 ) + '、' + item.title}}：</div>
+										<div class='zmiti-action-content' v-if='$route.name.indexOf(item.route)>-1'>
+											<div v-for='(tab,k) of item.tabs.filter(item=> !item.children )' :key='k' :class="{'active':formRoleGroup.pages&& formRoleGroup.pages.some(ac=> ac === tab.link)}" @click="togglePages(tab)" > 
+												{{tab.name}}
+											</div>
+											<template v-for='(tab) of item.tabs.filter(item=>item.children && $route.name.indexOf(item.route)>-1)'  :class="{'active':formRoleGroup.pages&& formRoleGroup.pages.some(ac=> ac === tab.link)}" @click="togglePages(tab)" >
+												<div :class="{'active':formRoleGroup.pages&& formRoleGroup.pages.some(ac=> ac === child.link)}" @click="togglePages(child)" :key='child.link' v-for='(child) in tab.children'>
+													{{child.name}}
+												</div>
+											</template>
 										</div>
 									</div>
 								</FormItem>
@@ -75,30 +91,36 @@
 	import zmitiUtil from '../../common/lib/util';
 	import ZmitiMask from '../../common/mask/';
 	import ZmitiTable from '../../common/table';
+	import menuObj from '../../common/group/menu';
 	let {resourceActions,orderFoodActions,userActions,companyActions,tripActions,changYueAcions,infomanagerActions,partyActions} = zmitiUtil;
 	var	actions = [
 		{
 			name:'畅阅',
-			id:"1946048392",
-			actions:Object.values(changYueAcions)
+			//id:"1946048392",
+			actions:Object.values(changYueAcions),
+			route:'changyue'
 		},
 		{
-			id:"8044104590",
+			//id:"8044104590",
 			name:'出差宝',
-			actions:Object.values(tripActions)
+			actions:Object.values(tripActions),
+			route:'trip'
 		},
 		{
-			id:'7450479310',
+			//id:'7450479310',
 			name:'食堂订餐',
-			actions:Object.values(orderFoodActions)
+			actions:Object.values(orderFoodActions),
+			route:'orderfood'
 		},{
-			id:'1072203850',
+			//id:'1072203850',
 			name:"信息管理",
-			actions:Object.values(infomanagerActions)
+			actions:Object.values(infomanagerActions),
+			route:'infomanager'
 		},{
-			id:'8773475502',
+			//id:'8773475502',
 			name:"活动管理",
-			actions:Object.values(partyActions)
+			actions:Object.values(partyActions),
+			route:'party'
 		}
 	];
 	export default {
@@ -151,7 +173,7 @@
 
 							
 								this.actions.filter(it=>{
-									return it.id === this.$route.params.id;
+									return this.$route.name.indexOf(it.route)>-1;
 								}).forEach((ac)=>{
 									ac.actions.forEach(a=>{
 										if(a.action === item){
@@ -224,6 +246,8 @@
 											var s = this;
 											
 											s.formRoleGroup = params.row;
+											console.log(s.formRoleGroup)
+											!(s.formRoleGroup.pages instanceof Array )&&( s.formRoleGroup.pages =( s.formRoleGroup.pages||'').split(','));
 											this.showDetail = true;
 											Vue.obserable.trigger({
 												type:'toggleMask',
@@ -284,7 +308,8 @@
 					page_index:0,
 					page_size:10,
 				},
-				userinfo:{}
+				userinfo:{},
+				pageRoles:[]
 			}
 		},
 		components:{
@@ -298,6 +323,16 @@
 			this.getGroupList();
 			this.init(); 
 			this.getUserList();
+			
+			for(var menu in menuObj){
+				this.pageRoles.push({
+					route:menuObj[menu].route,
+					title:menuObj[menu].title,
+					tabs:menuObj[menu].tabs
+				})
+			}
+	
+			
 		},
 
 		watch:{
@@ -444,7 +479,7 @@
 		    
 			filterAction(){
 				this.actions = this.actions.filter(item=>{
-					return item.id === this.$route.params.id;
+					return this.$route.name.indexOf(item.route)>-1
 				})
 			},
 			init(){
@@ -463,6 +498,27 @@
 					type:'toggleMask',
 					data:false
 				})
+			},
+			togglePages(tab){
+				this.formRoleGroup.pages = this.formRoleGroup.pages ||[];
+				var tabs = this.formRoleGroup.pages;
+
+				tabs = tabs||[];
+				if(tabs.some((item)=>{
+					return item  === tab.link;
+				})){
+					tabs.forEach((item,i)=>{
+						if(item === tab.link){
+							this.formRoleGroup.pages.splice(i,1);
+						}
+					})
+				}
+				else{
+					this.formRoleGroup.pages.push(tab.link);
+						
+				}
+				this.$forceUpdate();
+			
 			},
 			toggleAction(tag){
 				this.formRoleGroup.actions = this.formRoleGroup.actions ||[];
@@ -571,18 +627,20 @@
 				var s = this;
 			
 				var action = this.formRoleGroup.groupid ? userActions.editUserRoleGroup.action:userActions.addUserRoleGroup.action;
-				var info = this.formRoleGroup;
+				var info = JSON.parse(JSON.stringify(this.formRoleGroup));
 
 				info.companyid = zmitiUtil.getCurrentCompanyId().companyid;
 				info.productid = this.$route.params.id;
 				if(this.formRoleGroup.groupid){
 					info.groupid = this.formRoleGroup.groupid;
 				}
+				info.pages = this.formRoleGroup.pages.join(',');
+			
 				zmitiUtil.ajax({
 					remark:this.formRoleGroup.groupid ?　'editUserRoleGroup':'addUserRoleGroup',
 					data:{
 						action,
-						info:this.formRoleGroup
+						info
 					},
 					success(data){
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg);
