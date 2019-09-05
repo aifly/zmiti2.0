@@ -103,7 +103,8 @@
                 <div style="width:50px;height:100%;"></div>
                 
                 <Layout class='zmiti-main-page' :style="{height:viewH - 50+'px'}">
-                   <router-view></router-view>
+                   <router-view  v-if='!isAdmin || (isLead || pages.indexOf($route.name)>-1)'></router-view>
+				   <div v-else>您没有权限</div>
                 </Layout>
             </Layout>
         </Layout>
@@ -140,6 +141,7 @@
 				imgs:window.imgs,
 				showMenu:false,
 				showModifyPass:false,
+
                 viewH:document.documentElement.clientHeight,
 				tabIndex:0,
 				newpwd:'',
@@ -190,7 +192,8 @@
 						icon:'&#xe60f;',
 						active:'basicconfig_admin_rolegroup_setrole_pv_form'.split('_') 
 					}
-				]
+				],
+				pages:''
 			}
 		},
 		components:{
@@ -236,6 +239,8 @@
 				}
 			});
 
+			this.getUserRole();
+
 
 			
 			setTimeout(() => {
@@ -254,6 +259,27 @@
             }
         },
 		methods:{
+			getUserRole(){
+				if(!this.isAdmin){
+					var s = this;
+					zmitiUtil.ajax({
+						remark:"getUserRole",
+						data:{
+							action:userActions.getUserRole.action,
+							companyid:zmitiUtil.getCurrentCompanyId().companyid
+						},
+						success(data){
+							console.log(data);
+							if(data.getret === 0){
+								s.pages = data.list.map((item)=>{
+									return item.pages
+								}).join('');
+								
+							}
+						}
+					})
+				}
+			},
 			modifyPass(){
 				var s = this;
 				if(!this.oldpwd){

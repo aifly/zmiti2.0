@@ -1,5 +1,6 @@
 let changyue = {
 	title: '畅阅',
+	route:"changyue",
 	keys:[
 		'changyue',
 		'changyuemysubmit',
@@ -39,6 +40,7 @@ let changyue = {
 
 let workorder_workorderlist = {
 	title: "工单管理",
+	route: "workorder",
 	keys:[
 		'workorder',
 		'workorderlist'
@@ -113,6 +115,7 @@ let company = {
 
 let triptraffic ={
 	title:"出差宝",
+	route: "trip",
 	keys: ['trip', 'triptraffic', 'tripnotice', 'tripreason', 'tripost','triprole'],
 	tabs: [
 		{
@@ -142,6 +145,7 @@ let triptraffic ={
 
 let infomanager ={
 	title:"信息管理",
+	route: "infomanager",
 	keys: ['infomanager','infomanagermsg','infomanagermsgdetail','infomanagerlist','infomanagerlistdetail','infomanagernotice','infomanagerbox','infomanagerboxdetail','infomanagerboxcomment','infomanagernews','infomanagernewsdetail','infomanagerdoc','infomanagersetting'],
 	tabs: [
 		{
@@ -188,6 +192,7 @@ let infomanager ={
 
 let voteManager={
 	title: "投票管理",
+	route: "votemanager",
 	keys: ['votemanager','votemanagerview','votemanagerviewquestion'],
 	tabs:[
 		{
@@ -199,6 +204,7 @@ let voteManager={
 
 let orderFood ={
 	title: "订餐管理",
+	route: "orderfood",
 	keys: ['orderfood', 'orderfoodsubmit','orderfoodrole'],
 	tabs:[
 		{
@@ -219,6 +225,7 @@ let orderFood ={
 
 let  meetingRoom = {
 	title:"会议室预定",
+	route: "meetingroom",
 	keys: ['meetingroom'],
 	tabs:[
 		{
@@ -230,6 +237,7 @@ let  meetingRoom = {
 
 let  Party = {
 	title:"活动管理",
+	route: "party",
 	keys: ['party','partyrole'],
 	tabs:[
 		{
