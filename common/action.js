@@ -794,6 +794,10 @@ let voteActions={
 		desc:"修改投票问题选项",
 		action:"2001410"
 	},
+	deleteQuesionOption:{
+		desc:"删除投票问题选项",
+		action:"2001411"
+	},
 	getuservoteList:{
 		desc:"获取用户投票列表（管理）",
 		action:"2001412"

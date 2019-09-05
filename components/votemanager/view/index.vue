@@ -49,6 +49,29 @@
 									</template>								
 								</FormItem>
 							</template>
+							<template v-else>
+								<FormItem label="选项：">
+									<template v-if="formObj.options.length>0">
+										<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
+											<div style="width:80px;margin-right: 5px;">
+												<Input v-model="item.sort" placeholder="排序" ></Input>
+											</div>
+											<div class="zmiti-options-item" style="margin-right: 5px;">
+												<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+											</div>
+											<div class="zmiti-options-item zmiti-options-item-imgurl">
+												<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
+												<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
+											</div>
+											<div class="zmiti-options-btns">
+												<Icon type="md-open" size="20" @click="editOptions(item.optionsid,index)" />
+												<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
+												<Icon type="ios-remove-circle-outline" size="20" @click="deleteQuestionOptions(item.optionsid,index)" />
+											</div>
+										</div>									
+									</template>								
+								</FormItem>
+							</template>
 							<FormItem label="">
 								<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
 							</FormItem>
@@ -411,6 +434,54 @@
 			},
 			removeoptions(index){//移除选项
 				this.formObj.options.splice(index);
+			},
+			/*以下为选项的修改和删除*/
+			editOptions(optionsid,index){//修改选项
+				var s = this;
+				var info=s.formObj.options[index];//获取第N个选项的内容
+				info.productid=s.productid;
+				zmitiUtil.ajax({
+					remark:'editQuesionOption',
+					data:{
+						action:voteActions.editQuesionOption.action,
+						info:{
+							companyid:info.companyid,
+							productid:s.productid,
+							optionsid:optionsid,
+							options:info.options,
+							optionsurl:info.optionsurl,
+							sort:info.sort
+						}
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						if(data.getret === 0){
+
+						}
+					}
+				})
+			},
+			deleteQuestionOptions(optionsid,index){//删除选项
+				var s = this;
+				var info=s.formObj.options[index];//获取第N个选项的内容
+				info.productid=s.productid;
+				zmitiUtil.ajax({
+					remark:'deleteQuesionOption',
+					data:{
+						action:voteActions.deleteQuesionOption.action,
+						info:{
+							companyid:info.companyid,
+							productid:s.productid,
+							optionsid:optionsid
+						}
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						if(data.getret === 0){
+
+						}
+					}
+				})
 			},
 			/**以下为选择配图**/
 		    onFinishPicture(item){
