@@ -187,6 +187,7 @@
 				productid:0,
 				voteid:0,
 				questionid:undefined,
+				optionsid:undefined,
 				formObj:{
 					questionlabe:'',
 					questiontype:'0',//0为单选；1为多选
@@ -367,6 +368,7 @@
 				this.formObj.questiontype=currentDatas[0].questiontype.toString();
 				console.log(this.formObj,'当前的数据');
 				this.showFormOptions=false;//编辑时隐藏选项
+				this.questionid=questionid;
 			},
 			deletequestion(questionid){//删除投票项
 				var s = this;
@@ -431,32 +433,59 @@
 					optionsurl:'',
 					sort:0
 				})
+				this.optionsid=undefined;
 			},
 			removeoptions(index){//移除选项
 				this.formObj.options.splice(index);
 			},
 			/*以下为选项的修改和删除*/
 			editOptions(optionsid,index){//修改选项
-				var s = this;
-				var info=s.formObj.options[index];//获取第N个选项的内容
-				info.productid=s.productid;
+				var s = this;				
+				var formObj=s.formObj.options[index];//获取第N个选项的内容
+				s.optionsid=s.formObj.options[index].optionsid;
+				var action = s.optionsid ? voteActions.editQuesionOption.action:voteActions.addQuesionOption.action;
+				let info={
+					voteid:s.voteid,
+					companyid:s.companyid,
+					productid:s.productid,
+					questionid:s.questionid					
+				}
+				let listinfo={
+					options:formObj.options,
+					optionsurl:formObj.optionsurl,
+					sort:formObj.sort
+				}
+				/*if(s.optionsid!=undefined){
+					info.optionsid=formObj.optionsid;
+					info.options=formObj.options
+					info.optionsurl=formObj.optionsurl
+					info.sort=formObj.sort					
+				}*/
+
+				var datainfo={
+					action:action,
+					info:info
+				}
+				if(s.optionsid!=undefined){
+					datainfo.info.optionsid=formObj.optionsid;
+					datainfo.info.options=formObj.options
+					datainfo.info.optionsurl=formObj.optionsurl
+					datainfo.info.sort=formObj.sort					
+				}else{
+					datainfo.list={
+						options:formObj.options,
+						optionsurl:formObj.optionsurl,
+						sort:formObj.sort
+					}
+				}
+				//console.log(datainfo,'editOptions');
 				zmitiUtil.ajax({
-					remark:'editQuesionOption',
-					data:{
-						action:voteActions.editQuesionOption.action,
-						info:{
-							companyid:info.companyid,
-							productid:s.productid,
-							optionsid:optionsid,
-							options:info.options,
-							optionsurl:info.optionsurl,
-							sort:info.sort
-						}
-					},
+					remark:s.optionsid ?　'editQuesionOption':'addQuesionOption',
+					data:datainfo,
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
-
+							s.getDataList();
 						}
 					}
 				})
