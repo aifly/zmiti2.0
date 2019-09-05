@@ -20,9 +20,8 @@
 							<div class="zmiti-h1-txt">{{item.questionlabe}}</div>
 							<div class="zmiti-block-oper"><span @click="currentQuestionStatus(index)">{{item.show==true?'展开':'收起'}}</span></div>
 						</div>
-						<div class="zmiti-question-inner" :ref="index" >
-							<div>123-
-							{{item.status}}</div>
+						<div class="zmiti-question-inner" v-show="item.status">
+							<div style="display: none;">{{show}}</div>
 							<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>						
 							<template v-if="item.questionurl!=''">
 								<div class="zmiti-question-sub">
@@ -172,6 +171,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				show:false,
 				showPicture:false,
 				currentChoosePicture:{},
 				currentOptionIndex:0,
@@ -520,9 +520,8 @@
 				})
 			},
 			currentQuestionStatus(index){//切换显示与隐藏
-				this.dataSource[index].show=!this.dataSource[index].show;
-				this.dataSource[index].status=this.dataSource[index].show;
-				console.log(this.dataSource[index].status)
+				this.show=!this.show;
+				this.dataSource[index].status=this.show;
 			},
 			scrollthis(){//滚动到底部
 				var div = this.$refs.zmitiscroll;

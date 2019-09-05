@@ -193,7 +193,7 @@
   border:1px solid #cccccc;
   margin:10px 20px;
   background-color: #ffffff;
-  padding:10px;
+  padding:10px 10px 0 10px;
   .zmiti-question-ulist ul{
     @include displayFlex(row);
     flex-wrap: wrap;
@@ -206,10 +206,13 @@
       }
     }
   }
+  .zmiti-question-inner{
+    border-top: 1px solid #cccccc;
+    padding-top:12px;
+    padding-bottom:10px;
+  }
 }
 .zmiti-question-h1{
-  border-bottom:1px solid #cccccc;
-  padding-bottom:6px;
   margin-bottom: 8px;
   @include displayFlex(row);
   .zmiti-block-oper{
