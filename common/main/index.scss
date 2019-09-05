@@ -204,6 +204,24 @@ $primary-color: #00c1de;
 		-webkit-flex:1;
 		flex:1;
 		
+
+		.zmiti-unrole{
+
+			@include displayFlex(row);
+			justify-content: center;
+			height: 100%;
+			align-items: center;
+			img{
+				width:400px;
+			}
+			&>div:nth-of-type(2){
+				margin-left: 20px;
+				font-size:20px;
+				padding-top: 100px;
+				line-height: 40px;
+			}
+		}
+		
 	}
 
 	.zmiti-company-info{

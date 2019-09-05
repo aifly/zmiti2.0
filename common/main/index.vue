@@ -103,8 +103,16 @@
                 <div style="width:50px;height:100%;"></div>
                 
                 <Layout class='zmiti-main-page' :style="{height:viewH - 50+'px'}">
-                   <router-view  v-if='!isAdmin || (isLead || pages.indexOf($route.name)>-1)'></router-view>
-				   <div v-else>您没有权限</div>
+                   <router-view  v-if='isAdmin || (isLead || pages.indexOf($route.name)>-1) || defaultRolePages.some(item => item === $route.name)'></router-view>
+				   <div v-else class='zmiti-unrole'>
+					   <div>
+						   <img :src="'./assets/images/icon-404.svg'" alt="">
+					   </div>
+					   <div>
+						   <div>抱歉，您可能没权限浏览这张页面</div>
+						   <Button type='primary' to='/home'>返回首页</Button>
+					   </div>
+				   </div>
                 </Layout>
             </Layout>
         </Layout>
@@ -132,12 +140,14 @@
 <script>
     import Vue from 'vue';
 	import zmitiUtil from '../lib/util';
+	import {defaultRolePages} from '../config';
 	let {userActions} = zmitiUtil;
 	export default {
 		props:['isAdmin'],
 		name:'zmitiindex',
 		data(){
 			return{
+				defaultRolePages,
 				imgs:window.imgs,
 				showMenu:false,
 				showModifyPass:false,
@@ -260,7 +270,8 @@
         },
 		methods:{
 			getUserRole(){
-				if(!this.isAdmin){
+				var {$route} = this;
+				if(!this.isAdmin && $route.name !== "login" && $route.name !== "register" && $route.name !== "passwordfind"){
 					var s = this;
 					zmitiUtil.ajax({
 						remark:"getUserRole",

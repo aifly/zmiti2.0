@@ -136,7 +136,19 @@ let timeRange = [
 ];
 
 
+
+//配置哪些页面不需要通过权限判断
+let defaultRolePages = [
+	'resourcelist',
+	'workorder',
+	'workorderlist',
+	'home'
+	
+]
+
+
  export {
+	defaultRolePages,
 	workOrderType,
 	orderStatus,
 	defaultClass,
