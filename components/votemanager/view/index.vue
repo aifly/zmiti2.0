@@ -66,8 +66,15 @@
 							</div>
 						</div>
 					</div>
+					<!-- 翻页 -->
+					<div class="zmiti-page-question" v-if="total>10">
+						<Page :total="total" 
+						size="small" 
+						@on-change="change"
+						:page-size='condition.page_size'
+						show-total />
+					</div>
 					<!-- 添加和修改 -->
-
 				 	<div class="zmiti-votemanagerviewquestion-list">
 				 		<Card :bordered="false">
 				            <p slot="title">{{questionid?'编辑':'新增'}}</p>
@@ -77,7 +84,8 @@
 								</FormItem>
 								<FormItem label="图片：">
 									<div><Button icon="ios-cloud-upload-outline" @click="showPicture= true">选择图片</Button></div>
-									<Input v-model="formObj.questionurl" placeholder="图片地址"></Input>
+									<div class="zmiti-question-thumbimg" v-if="formObj.questionurl"><img :src="formObj.questionurl"></div>									
+									<!-- <Input v-model="formObj.questionurl" placeholder="图片地址"></Input> -->
 								</FormItem>
 								<FormItem label="类型：">
 									<RadioGroup v-model="formObj.questiontype">
@@ -383,9 +391,11 @@
 				}
 			},
 			editQuestion(questionid){//编辑投票项
+				console.log(this.dataSource,'当前的dataSource');
 				let currentDatas=this.dataSource.filter((item)=>questionid==item.questionid);
 				this.formObj=currentDatas[0];
 				this.formObj.questiontype=currentDatas[0].questiontype.toString();
+
 				console.log(this.formObj,'当前的数据');
 				this.showFormOptions=false;//编辑时隐藏选项
 				this.questionid=questionid;
@@ -501,6 +511,18 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
 							s.getDataList();
+							if(s.optionsid){
+								s.formObj.options.push({
+									options:'',
+									optionsurl:'',
+									sort:0
+								})
+							}else{
+								/*重新获取当前投票项的数据*/
+								setTimeout(()=>{
+									s.editQuestion(s.questionid);
+								},1000)
+							}
 						}
 					}
 				})
@@ -509,24 +531,32 @@
 				var s = this;
 				var info=s.formObj.options[index];//获取第N个选项的内容
 				info.productid=s.productid;
-				zmitiUtil.ajax({
-					remark:'deleteQuesionOption',
-					data:{
-						action:voteActions.deleteQuesionOption.action,
-						info:{
-							companyid:info.companyid,
-							productid:s.productid,
-							optionsid:optionsid
+				//console.log(optionsid,'optionsid')
+				if(optionsid){
+					zmitiUtil.ajax({
+						remark:'deleteQuesionOption',
+						data:{
+							action:voteActions.deleteQuesionOption.action,
+							info:{
+								companyid:info.companyid,
+								productid:s.productid,
+								optionsid:optionsid
+							}
+						},
+						success(data){						
+							s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+							if(data.getret === 0){
+								console.log(s.formObj.options[index],'s.formObj.options[index]===',index)
+								setTimeout(()=>{
+									s.formObj.options.splice(index,1);
+								},100)
+								
+							}
 						}
-					},
-					success(data){						
-						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
-						if(data.getret === 0){
-							s.formObj.options.splice(index,1);
-							console.log(s.formObj.options[index],'s.formObj.options[index]===',index)
-						}
-					}
-				})
+					})
+				}else{//没有新选项写入时的移除
+					s.removeoptions(index);
+				}
 			},
 			currentQuestionStatus(index){//切换显示与隐藏
 				this.show=!this.show;

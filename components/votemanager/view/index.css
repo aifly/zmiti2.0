@@ -227,4 +227,14 @@
       margin: 0 12px;
       cursor: pointer; }
 
+.zmiti-page-question {
+  margin: 20px 0 0 0;
+  text-align: center; }
+
+.zmiti-question-thumbimg {
+  margin: 5px 0 0 0; }
+  .zmiti-question-thumbimg img {
+    width: 100px;
+    height: 100px; }
+
 /*# sourceMappingURL=index.css.map */

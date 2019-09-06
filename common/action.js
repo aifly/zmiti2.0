@@ -890,6 +890,44 @@ let partyActions = {
 	}
 
 };
+//会议室action
+let mettingroomActions = {
+	addMettingroom: {
+		desc: '新增会议室',
+		action: '2001704'
+	},
+	editMettingroom: {
+		desc: '修改会议室',
+		action: '2001704'
+	},
+	delMettingroom: {
+		desc: '删除会议室',
+		action: '2001704'
+	},
+	getMettingroomList: {
+		desc: '获取会议室列表',
+		action: '2001704'
+	}
+}
+//问卷调查action
+let inquireActions = {
+	addInquire: {
+		desc: '新增问卷调查',
+		action: '2001704'
+	},
+	editInquire: {
+		desc: '修改问卷调查',
+		action: '2001704'
+	},
+	delInquire: {
+		desc: '删除问卷调查',
+		action: '2001704'
+	},
+	getInquireList: {
+		desc: '获取问卷调查列表',
+		action: '2001503'
+	}
+}
 
 var zmitiActions =   /*#__PURE__*/{
 	userActions,
@@ -906,7 +944,9 @@ var zmitiActions =   /*#__PURE__*/{
 	infomanagerActions,
 	orderFoodActions,
 	partyActions,
-	voteActions
+	voteActions,
+	mettingroomActions,
+	inquireActions
 }
 
 export  default zmitiActions;
