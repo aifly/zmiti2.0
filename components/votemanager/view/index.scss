@@ -194,6 +194,19 @@
   margin:10px 20px;
   background-color: #ffffff;
   padding:10px 10px 0 10px;
+  .zmiti-question-h1{
+    margin-bottom: 8px;
+    @include displayFlex(row);
+    .zmiti-block-oper{
+      width: 40px;
+      color: #2d8cf0;
+      text-align: center;  
+      margin-left:auto;
+      span{
+        cursor: pointer;
+      }
+    }
+  }
   .zmiti-suboption-img{
     border:1px solid #e8eaec;
   }
@@ -232,19 +245,7 @@
     padding-bottom:10px;
   }
 }
-.zmiti-question-h1{
-  margin-bottom: 8px;
-  @include displayFlex(row);
-  .zmiti-block-oper{
-    width: 40px;
-    color: #2d8cf0;
-    text-align: center;  
-    margin-left:auto;
-    span{
-      cursor: pointer;
-    }
-  }
-}
+
 .zmiti-question-h2{
   padding:8px 0;
 }
@@ -278,6 +279,42 @@
     }
   }
 }
+.zmiti-question-carditems{
+  margin:0 0 15px 0;
+  position: relative;
+  .zmiti-question-h1{
+    margin-bottom: 8px;
+    @include displayFlex(row);
+    .zmiti-block-oper{
+      width: 40px;
+      color: #2d8cf0;
+      text-align: center;  
+      margin-left:auto;
+      span{
+        cursor: pointer;
+      }
+    }
+  }
+  .zmiti-question-carditems-form{
+    border-top:1px solid #dcdee2;
+    padding:15px 0 0 0;
+  }
+  .zmiti-question-cardfoot{
+    margin: 15px 0 0 0;
+    border-top:1px solid #dcdee2;  
+    padding:8px 0 0 0;
+    line-height: 20px;
+    @include displayFlex(row);
+    .zmiti-question-oper{ 
+      margin-left: auto;
+      text-align: right; 
+      .zmiti-question-operbtn{    
+        margin:0 12px;
+        cursor: pointer;
+      }
+    }
+  }
+}
 .zmiti-page-question{
   margin:20px 0 0 0;
   text-align: center;
@@ -288,4 +325,10 @@
     width: 100px;
     height: 100px;
   }
+}
+.zmiti-question-addhandle{
+  margin:0 20px;
+  .ivu-btn{
+    width: 100%;
+  }  
 }
