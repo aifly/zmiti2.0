@@ -31,6 +31,8 @@ import workorderlist from './components/workorderlist';
 import Group from './common/group/index';
 //--2019.8.30--bmyuan--
 import Party from './components/party/index/index.vue';
+import partyDetail from './components/party/index/detail.vue';
+import partyExport from './components/party/index/export.vue';
 import Partyrole from './components/party/partyrole';
 //--2019.8.30-bmyuan end--
 import infomanager from './components/infomanager/index';
@@ -55,6 +57,11 @@ import orderfoodsubmit from './components/orderfood/orderfoodsubmit';
 import orderFoodRole from './components/orderfood/orderfoodrole';
 
 import MeetingRoom from './components/meetingroom/index/'
+import MeetingRoomSetting from './components/meetingroom/setting/'
+
+import Inquire from './components/inquire/index/index.vue'
+import InquireDetail from './components/inquire/index/detail.vue'
+import InquireSetting from './components/inquire/setting/index.vue'
 
 import VueRouter from 'vue-router'
 import './components/css/index.css';
@@ -131,7 +138,8 @@ const router = new VueRouter({
 			{ path: "/tripost/:id?", name: "tripost", component: tripost},
 			{ path: "/triprole/:id?", name: "triprole", component: triprole},
 			{ path: '/rolegroup/', name: 'rolegroup', component:  rolegroup},
-			{ path: '/meetingroom/:id?', name: 'meetingroom', component:  MeetingRoom},
+			{ path: '/meetingroom/:id?', name: 'meetingroom', component: MeetingRoom },
+			{ path: '/meetingroomsetting', name: 'meetingroomsetting', component: MeetingRoomSetting },
 			{ path: "/infomanager/:id?", name: "infomanager", component: infomanager},
 			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
 			{path:"/infomanagermsgdetail/:productid?/:typeid?/:typename?/:id?",name:"infomanagermsgdetail",component:infomanagermsgdetail},
@@ -154,8 +162,14 @@ const router = new VueRouter({
 			{ path: "/orderfoodrole/:id?", name: "orderfoodrole", component: orderFoodRole},
 			//--2019.8.30--bmyuan--
 			{ path: "/party/:id?", name: "party", component: Party},
+			{ path: "/partydetail/:productid?/:isedit?/:id?", name: "partydetail", component: partyDetail },
+			{ path: "/partyexport/:productid?/:id?", name: "partyexport", component: partyExport },
 			{ path: "/partyrole/:id?", name: "partyrole", component: Partyrole},
 			//--2019.8.30-bmyuan end--
+			// 问卷调差
+			{ path: "/inquire/:id?", name: "inquire", component: Inquire},
+			{ path: "/inquiredetail/:productid?/:isedit?/:id?", name: "inquiredetail", component: InquireDetail},
+			{ path: "/inquiresetting/:productid?", name: "inquiresetting", component: InquireSetting},
 		]
 	},
    /*  {

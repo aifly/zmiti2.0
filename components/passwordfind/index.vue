@@ -54,7 +54,7 @@
           <div>
             <p>拨打客服电话找回</p>
             <span>如果上述验证方式均无法完成，请您拨打客服电话&nbsp;&nbsp;</span>
-            <strong>13258779433</strong>
+            <strong>13910904709</strong>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
       </div>
       <div class="zmiti-form-success" v-show="currentStep == 3">
         <div>
-          <p><img :src="imgs.success" alt="">重置成功，请牢记新的登录密码</p>
+          <p><img :src="imgs.success" alt="">重置成功，请前往邮箱查找您的新密码，登录后请别忘记重置密码</p>
         </div>
         <div>
           <a href="#/login">重新登录&nbsp;>></a>

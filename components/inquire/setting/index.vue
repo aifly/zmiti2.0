@@ -15,18 +15,15 @@ export default {
 		RoleGroup
 	},
 	mounted() {
-
 		this.init();
-		
-	
 	},
 	watch: {
-		$route:{
-			handler(){
-				var productid = this.productid;
-				productid && this.$router.push({path:'/partyrole/'+productid});
-			}
-		}
+		// $route:{
+		// 	handler(){
+		// 		var productid = this.productid;
+		// 		productid && this.$router.push({path:'/inquiresetting/'+productid});
+		// 	}
+		// }
 	},
 	methods: {
 		init(){
@@ -42,7 +39,7 @@ export default {
 							}
 						})
 					}
-					this.$router.push({path:'/partyrole/'+productid});
+					this.$router.push({path:'/inquiresetting/'+productid});
 					this.productid = productid;
 				}
 			}, 100);

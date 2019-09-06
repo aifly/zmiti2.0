@@ -223,22 +223,24 @@ let orderFood ={
 	]
 }
 
-let  meetingRoom = {
-	title:"会议室预定",
+let meetingRoom = {
+	title: "会议室预定",
+	keys: ['meetingroom', 'meetingroomsetting'],
 	route: "meetingroom",
-	keys: ['meetingroom'],
 	tabs:[
 		{
-			name:'会议室预定',
-			link:"/meetingroom"
+			name: '会议室预定',
+			link: "/meetingroom"
+		}, {
+			name: '会议室设置',
+			link: "/meetingroomsetting"
 		}
 	]
 }
-
 let  Party = {
 	title:"活动管理",
 	route: "party",
-	keys: ['party','partyrole'],
+	keys: ['party', 'partydetail', 'partyexport','partyrole'],
 	tabs:[
 		{
 			name:'活动列表',
@@ -248,6 +250,24 @@ let  Party = {
 			name:'活动权限设置',
 			link:"/partyrole"
 		}
+	]
+}
+let Inquire = {
+	title:"问卷调差",
+	route: "inquire",
+	keys: ['inquire', 'inquiredetail','inquiresetting'],
+	tabs:[
+		{
+			name:'问卷调查',
+			link:"/inquire"
+		},{
+			name: "配置管理",
+			link: '/inquiresetting',
+			children: [{
+				name: '权限配置',
+				link: '/inquiresetting'
+			}]
+		},
 	]
 };
 
@@ -260,5 +280,6 @@ export {
 	orderFood,
 	meetingRoom,
 	Party,
-	voteManager
+	voteManager,
+	Inquire
 }
