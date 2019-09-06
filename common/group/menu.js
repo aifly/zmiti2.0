@@ -1,6 +1,6 @@
 
 if (!window.isAdmin){
-	var { changyue, company, workorder_workorderlist, triptraffic, infomanager, orderFood, meetingRoom, Party,voteManager} = require('./usermenu');
+	var { changyue, company, workorder_workorderlist, triptraffic, infomanager, orderFood, meetingRoom, Party,voteManager, Inquire} = require('./usermenu');
 	var menuObj = {
 		changyue,
 		company,
@@ -10,7 +10,8 @@ if (!window.isAdmin){
 		orderFood,
 		meetingRoom,
 		Party,
-		voteManager
+		voteManager,
+		Inquire
 	};
 }else{
 	
