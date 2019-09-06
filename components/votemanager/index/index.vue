@@ -103,35 +103,28 @@
 					{
 						title:"编号",
 						key:'voteid',
-						align:'center'
+						align:'center',
+						width:100
 					},
 					{
 						title:"投票标题",
 						key:'votetitle',
-						align:'center',
-						width:180
+						align:'center'						
 					},					
-					{
-						title:"创建时间",
-						key:"createtime",
-						align:"center",
-						render:(h,params)=>{
-							return h('div',{},zmitiUtil.formatDate(params.row.createtime));
-						}
-					},
 					{
 						title:"投票时间",
 						key:"begintime",
 						align:"center",
 						width:180,
 						render:(h,params)=>{
-							return h('div',{},zmitiUtil.formatDate(params.row.begintime)+'~'+zmitiUtil.formatDate(params.row.endtime));
+							return h('div',{},zmitiUtil.formatDate(params.row.begintime)+'~~'+zmitiUtil.formatDate(params.row.endtime));
 						}
 					},
 					{
 						title:"允许匿名",
 						key:"isrealname",
 						align:"center",
+						width:100,
 						render:(h,params)=>{
 							const viewuser=[h('span',{
 								style:{
@@ -145,7 +138,7 @@
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:200,
+						width:180,
 						render:(h,params)=>{
 
 							return h('div', [
