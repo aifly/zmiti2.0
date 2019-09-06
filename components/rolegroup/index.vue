@@ -48,12 +48,12 @@
 								</FormItem>
 								<FormItem label="视图权限列表：">
 									<div class='zmiti-action-list' v-for='(item,i) of pageRoles' :key='i'>
-										<div class='zmiti-action-title' v-if='$route.name.indexOf(item.route)>-1'>{{(i + 1 ) + '、' + item.title}}：</div>
+										<div class='zmiti-action-title' v-if='$route.name.indexOf(item.route)>-1 && false'>{{(i + 1 ) + '、' + item.title}}：</div>
 										<div class='zmiti-action-content' v-if='$route.name.indexOf(item.route)>-1'>
 											<div v-for='(tab,k) of item.tabs.filter(item=> !item.children )' :key='k' :class="{'active':formRoleGroup.pages&& formRoleGroup.pages.some(ac=> ac === tab.link)}" @click="togglePages(tab)" > 
 												{{tab.name}}
 											</div>
-											<template v-for='(tab) of item.tabs.filter(item=>item.children && $route.name.indexOf(item.route)>-1)'  :class="{'active':formRoleGroup.pages&& formRoleGroup.pages.some(ac=> ac === tab.link)}" @click="togglePages(tab)" >
+											<template v-for='(tab) of item.tabs.filter(item=>item.children )'  :class="{'active':formRoleGroup.pages&& formRoleGroup.pages.some(ac=> ac === tab.link)}" @click="togglePages(tab)" >
 												<div :class="{'active':formRoleGroup.pages&& formRoleGroup.pages.some(ac=> ac === child.link)}" @click="togglePages(child)" :key='child.link' v-for='(child) in tab.children'>
 													{{child.name}}
 												</div>
@@ -196,6 +196,53 @@
 								return res;
 							}));
 						},
+					},
+					{
+						title:"视图权限列表",
+						key:'actions',
+						render:(h,params)=> {
+							return h('div',{},this.pageRoles.map(item=>{
+								var res = [];
+								if(this.$route.name.indexOf(item.route)>-1){
+
+									item.tabs.map((tab)=>{
+										if(params.row.pages.indexOf(tab.link)>-1 && !tab.children){
+											res.push(h('span',{
+												style:{
+														display:'inline-block',
+														border:'1px solid #f90',
+														margin:'5px',
+														border:'1px solid #ccc',
+														lineHeight:'16px',
+														height:'24px',
+														padding:'4px',
+														background:'#fff'
+													}
+												},tab.name))
+										}
+										if(tab.children){
+											tab.children.map((tab)=>{
+												if(params.row.pages.indexOf(tab.link)>-1){
+													res.push(h('span',{
+														style:{
+																display:'inline-block',
+																border:'1px solid #f90',
+																margin:'5px',
+																border:'1px solid #ccc',
+																lineHeight:'16px',
+																height:'24px',
+																padding:'4px',
+																background:'#fff'
+															}
+														},tab.name))
+												}
+											})
+										}
+									})
+								}
+								return res;
+							}));
+						},
 					}, 
 					{
 						title:'操作',
@@ -331,8 +378,7 @@
 					tabs:menuObj[menu].tabs
 				})
 			}
-	
-			
+		 
 		},
 
 		watch:{

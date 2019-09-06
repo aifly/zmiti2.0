@@ -241,6 +241,7 @@ let  Party = {
 	title:"活动管理",
 	route: "party",
 	keys: ['party', 'partydetail', 'partyexport','partyrole'],
+	route: "party",
 	tabs:[
 		{
 			name:'活动列表',
@@ -256,6 +257,7 @@ let Inquire = {
 	title:"问卷调差",
 	route: "inquire",
 	keys: ['inquire', 'inquiredetail','inquiresetting'],
+	route: "inquire",
 	tabs:[
 		{
 			name:'问卷调查',
