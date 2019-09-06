@@ -549,12 +549,13 @@
 				var s = this;				
 				var formObj=s.dataSource[questionindex].options[index];//获取第N个选项的内容
 				s.optionsid=optionsid;
+				s.questionid=s.dataSource[questionindex].questionid;
 				var action = s.optionsid ? voteActions.editQuesionOption.action:voteActions.addQuesionOption.action;
 				let info={
 					voteid:s.voteid,
 					companyid:s.companyid,
 					productid:s.productid,
-					questionid:s.dataSource[questionindex].questionid				
+					questionid:s.questionid
 				}
 				let listinfo={
 					options:formObj.options,
@@ -571,7 +572,7 @@
 					datainfo.info.options=formObj.options
 					datainfo.info.optionsurl=formObj.optionsurl
 					datainfo.info.sort=formObj.sort					
-				}else{
+				}else{				
 					datainfo.list=[{
 						options:formObj.options,
 						optionsurl:formObj.optionsurl,
@@ -579,15 +580,19 @@
 					}]
 				}
 				console.log(datainfo,'editOptions');
+				console.log(optionsid,'optionsid===optionsid');
 				zmitiUtil.ajax({
 					remark:s.optionsid ?　'editQuesionOption':'addQuesionOption',
 					data:datainfo,
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
+							s.getDataList();
 							//重新获取当前投票项的数据
 							setTimeout(()=>{
 								s.editQuestion(s.questionid);
+								s.dataSource[questionindex].status=true;
+								console.log(s.dataSource[questionindex].options[index],'options====index====')
 							},1000)
 						}
 					}
