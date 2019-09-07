@@ -123,7 +123,7 @@
 						}
 					},
 					{
-						title:"允许匿名",
+						title:"匿名",
 						key:"isrealname",
 						align:"center",
 						width:100,
