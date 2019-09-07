@@ -103,7 +103,7 @@
 													</div>
 													<div class="zmiti-options-btns" style="width:120px;">
 														<Icon type="ios-image-outline" size="20" @click="openUploadImg(item.questionid,idx)" />
-														<Icon type="md-open" size="20" @click="editOptions(index,ele.optionsid,idx)" />
+														<span class="zmt_iconfont" @click="editOptions(index,ele.optionsid,idx)">&#58966;</span>
 														<Icon type="ios-add-circle-outline" size="20" @click="addoptions(item.questionid,index)" v-if="item.options.length-1===idx" />
 														<Icon type="ios-remove-circle-outline" size="20" @click="deleteQuestionOptions(index,ele.optionsid,idx)" />
 													</div>
@@ -240,6 +240,15 @@
 	}
 	.zmiti-options-item-subcon{
 		margin-left:0px;
+	}
+	.zmiti-options-btns{
+		display: flex;
+		align-items: center;
+		.zmt_iconfont{
+			margin:0 3px;
+			font-size:14px;
+			cursor: pointer;
+		}
 	}
 
 </style>
