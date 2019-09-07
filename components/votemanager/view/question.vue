@@ -1,5 +1,5 @@
 <template>
-	<div class="zmiti-votemanagerview-main-ui">
+	<div class="zmiti-votemanagerviewanswer-main-ui">
 
 		<div class="zmiti-list-main">
 			
@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanager-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>选项管理</span>
+						 <span>查看投票结果</span>
 
 					 </div>
 					 <div>
@@ -15,94 +15,39 @@
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-				 	<div class="zmiti-votemanagerviewquestion-list">
-						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
-							<FormItem label="投票项：">
-								<Input v-model="formObj.questionlabe" placeholder="投票项"></Input>
-							</FormItem>
-							<FormItem label="图片：">
-								<div><Button icon="ios-cloud-upload-outline" @click="showPicture= true">选择图片</Button></div>
-								<Input v-model="formObj.questionurl" placeholder="图片地址"></Input>
-							</FormItem>
-							<FormItem label="类型：">
-								<RadioGroup v-model="formObj.questiontype">
-							        <Radio label="0">单选</Radio>
-							        <Radio label="1">多选</Radio>
-							    </RadioGroup>
-							</FormItem>
-							<FormItem label="选项：">
-								<template v-if="formObj.options.length>0">
-									<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
-										<div style="width:80px;margin-right: 5px;">
-											<Input v-model="item.sort" placeholder="排序" ></Input>
-										</div>
-										<div class="zmiti-options-item" style="margin-right: 5px;">
-											<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
-										</div>
-										<div class="zmiti-options-item zmiti-options-item-imgurl">
-											<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
-											<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
-										</div>
-										<div class="zmiti-options-btns">
-											<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
-											<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
-										</div>
-
-									</div>
-									
-								</template>			
-
-								
-							</FormItem>
-							<FormItem label="">
-								<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
-							</FormItem>
-						</Form>
-					</div>
+				 	<!-- <div class="zmiti-votemanagerviewanswer-list">
+				 		<div class="zmiti-votemanagerviewanswer-items">
+							<Card dis-hover>
+				                <p slot="title">Disable card with hover shadows</p>
+				                <p>Content of card</p>
+				                <p>Content of card</p>
+				                <p>Content of card</p>
+				            </Card>
+			            </div>
+					</div> -->
+					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
+					</ZmitiTable>
 				 </div>
 			 </div>
 		</div>
-		<!-- 选择配图 -->
-		<Modal v-model="showPicture" title='资料库' width='800'>
-			<ResourceList v-if='showPicture' :isAdmin='false' :isDialog='true' @onFinished='onFinishPicture'></ResourceList>
-			<div class="zmiti-resourcelist-footer"  slot='footer'>
-				<Button style='width:100px;' @click="showPicture=false;">取消</Button>
-				<Button style='width:100px;' type='primary' @click='choosePicture'>确定</Button>
-			</div> 
-		</Modal>
-		<!-- 选择子项图片 -->
-		<Modal v-model="showSubimg" title='资料库' width='800'>
-			<ResourceList v-if='showSubimg' :isAdmin='false' :isDialog='true' @onFinished='onFinishSubimg'></ResourceList>
-			<div class="zmiti-resourcelist-footer"  slot='footer'>
-				<Button style='width:100px;' @click="showSubimg=false;">取消</Button>
-				<Button style='width:100px;' type='primary' @click='chooseSubimg(currentOptionIndex)'>确定</Button>
-			</div> 
-		</Modal>
+
 	</div>
 </template>
 
 <style lang="scss" scoped>
-	@import './index.scss';
+	@import './question.scss';
 </style>
 <script>
 
 	import Vue from 'vue';
 	import zmitiUtil from '../../../common/lib/util';
 	import ZmitiTable from '../../../common/table';
-	import ZmitiMask from '../../../common/mask/';
-	import ResourceList from '../../../common/resourcelist'
 	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions,voteActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
 		data(){
-			return{
-				showPicture:false,
-				currentChoosePicture:{},
-				currentOptionIndex:0,
-				showSubimg:false,
-				currentChooseSubimg:{},
-				btnoptions:true,
+			return{				
 				companyid:'',			
 				companyname:'',
 				votetitle:'',
@@ -120,150 +65,51 @@
 				},
 				userinfo:{},
 				productid:0,
-				questionid:undefined,
-				optionsData:{
-					options:'',
-					optionsurl:'',
-					sort:0
-				},
-				formObj:{
-					questionlabe:'',
-					questiontype:'0',//0为单选；1为多选
-					sort:0,
-					questionurl:'',
-					options:[{
-						options:'',
-						optionsurl:'',
-						sort:0
-					}]
-				},
+				voteid:undefined,
 				columns:[
 					{
 						title:"编号",
-						key:'voteid',
-						align:'center'
-					},
-					{
-						title:"投票标题",
-						key:'votetitle',
+						key:'vuid',
 						align:'center',
-						width:180
-					},					
-					{
-						title:"创建时间",
-						key:"createtime",
-						align:"center",
-						render:(h,params)=>{
-							return h('div',{},zmitiUtil.formatDate(params.row.createtime));
-						}
+						width:100
 					},
+					{
+						title:"名字",
+						key:'username',
+						align:'center'						
+					},
+					{
+						title:"邮箱",
+						key:'email',
+						align:'center'
+					},				
 					{
 						title:"投票时间",
-						key:"begintime",
+						key:"createtime",
 						align:"center",
 						width:180,
 						render:(h,params)=>{
-							return h('div',{},zmitiUtil.formatDate(params.row.begintime)+'~'+zmitiUtil.formatDate(params.row.endtime));
-						}
-					},
-					{
-						title:"允许匿名",
-						key:"isrealname",
-						align:"center",
-						render:(h,params)=>{
-							const viewuser=[h('span',{
-								style:{
-									color:"#ff0000"
-								}
-							},'是')];
-							return h('div',{},params.row.isalluser==0?viewuser:'否');
-						}
-					},
-					{
-						title:"操作",
-						key:"action",
-						align:"center",
-						width:120,
-						render:(h,params)=>{
-
-							return h('div', [
-                                h('Poptip',{
-									props:{
-										confirm:true,
-										title:"确定要删除吗？",
-										placement:'left'
-
-									},
-									on:{
-										'on-ok':()=>{
-											this.delete(params.row.infotypeid);
-										},
-										
-									}
-								},[
-									h('span', {
-										props: {
-											type: 'error',
-											size: 'small'
-										},
-										style:{
-											cursor:'pointer',
-											color:'#06C'
-										},
-										on: {
-											click: () => {
-											}
-										}
-									}, '删除')
-								]),
-								h('span',{
-									style:{
-										cursor:'pointer',
-										color:"rgb(0, 102, 204)",
-										marginLeft:'10px'
-									},
-									on:{
-										click:()=>{
-											/*this.formObj = params.row;
-											this.formObj.isalluser=String(params.row.isalluser);
-											this.formObj.status=String(params.row.status);
-											console.log(this.formObj,'this.formObj');
-											this.voteid=params.row.voteid;*/
-											
-										}
-									}
-								},'编辑')
-                            ]);
-							
-							 
+							return h('div',{},this.timestampToTime(params.row.createtime));
 						}
 					}
-				]
+				]			
 			}
 		},
 		components:{
-			ZmitiMask,
-			ZmitiTable,
-			ResourceList
+			ZmitiTable
 		},
 
 		beforeCreate(){
 			
 		},
 		created(){
-			this.formObj.voteid=this.$route.params.voteid;
 			this.companyid=zmitiUtil.getCurrentCompanyId().companyid;
 			this.productid=this.$route.params.id;
-			this.questionid=this.$route.params.questionid;
-			console.log(this.questionid,'this.questionid')
+			this.voteid=this.$route.params.voteid;
 		},
 		mounted(){
-			/*this.init(()=>{
-				setTimeout(()=>{
-					this.getDataList();
-				},100)
-			})*/
 			this.getDataList();
+			//this.getuservoteResultList(20);
 		},
 		computed:{
 
@@ -279,21 +125,20 @@
 			change(e){
 				this.condition.page_index = e -1;
 				this.currentNumber=e;
-				this.getDataList();
+				this.getDataList();				
 			},
 			getDataList(){
-				console.log(voteActions,'voteActions==voteActions')
 						var {condition} = this;
 						var s = this;
 						condition = Object.assign(condition,{
 							companyid:zmitiUtil.getCurrentCompanyId().companyid,
 							productid:s.productid,
-							votetitle:s.votetitle
+							voteid:s.voteid
 						})
 						zmitiUtil.ajax({
-							remark:"getVoteList",
+							remark:"getuservoteList",
 							data:{
-								action:voteActions.getVoteList.action,
+								action:voteActions.getuservoteList.action,
 								condition:condition
 							},
 							error(){
@@ -302,113 +147,48 @@
 							success(data){
 								s.loading = false;
 								console.log(data,'获取列表');
-								s.dataSource=[{
-									voteid:1,
-									votetitle:'标题',
-									begintime:1567382400,
-									endtime:1568678400
-								}]
-								/*if(data.getret === 0){
+								if(data.getret === 0){
 									s.total = data.total;
 									s.dataSource = data.list;
-								}*/
+								}
 							}
 						})
 			},
-
-
-			add(){//添加投票
-				this.formObj = {};
-				this.formObj.isrealname="0";
-				this.voteid=undefined;
-				console.log(this.formObj,'this.formObj')
-				Vue.obserable.trigger({type:'toggleMask',data:true});
-			},
-			adminAction(){//添加并修改
+			getuservoteResultList(vuid){
+				var {condition} = this;
 				var s = this;
-				var action = this.questionid ? voteActions.editquesion.action:voteActions.addquesion.action;
-
-				let info = {
-					voteid:this.$route.params.voteid,
-					companyid:this.companyid,
-					productid:this.productid,
-					questionlabe:this.formObj.questionlabe,
-					questiontype:this.formObj.questiontype,
-					questionurl:this.formObj.questionurl,
-					sort:this.formObj.sort,
-					options:this.formObj.options				
-				}
-				
-
-				if(s.questionid!=undefined){
-					info.questionid=s.questionid
-				}
-
-				console.log(info,'info-info',s.questionid)
+				condition = Object.assign(condition,{
+					companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					productid:s.productid,
+					voteid:s.voteid,
+					vuid:vuid
+				})
 				zmitiUtil.ajax({
-					remark:this.questionid ?　'editquesion':'addquesion',
+					remark:"getuservoteResultList",
 					data:{
-						action,
-						info
+						action:voteActions.getuservoteResultList.action,
+						condition:condition
 					},
-					success(data){						
-						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
-						if(data.getret === 0){
-							window.history.back();
-						}
+					error(){
+						s.loading = false;
+					},
+					success(data){
+						s.loading = false;
+						console.log(data,'获取列表');
+						/*if(data.getret === 0){
+							s.total = data.total;
+							s.dataSource = data.list;
+						}*/
 					}
 				})
 			},
-			delete(voteid){//删除投票
-				console.log(voteid,'voteid');
-				var s = this;
-				zmitiUtil.ajax({
-					remark:'deltypeList',
-					data:{
-						action:voteActions.deleteVote.action,
-						voteid,
-						productid:s.productid
-					},
-					success(data){						
-						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
-						s.getDataList();//更新列表
-					}
-				})
-			},
-			addoptions(index){//添加选项
-				this.formObj.options.push({
-					options:'',
-					optionsurl:'',
-					sort:0
-				})
-			},
-			removeoptions(index){//移除选项
-				this.formObj.options.splice(index);
-			},
-			/**以下为选择配图**/
-		    onFinishPicture(item){
-				this.currentChoosePicture = item;
-			},
-			choosePicture(){
-				this.showPicture = false;
-				this.formObj.questionurl=this.currentChoosePicture.filepath;
-			},
-			/**以下为子选项图片**/
-			openUploadImg(index){
-				this.currentOptionIndex=index;
-				this.showSubimg = true;
-			},
-		    onFinishSubimg(item){
-				this.currentChooseSubimg = item;
-			},
-			chooseSubimg(){
-				this.showSubimg = false;
-				let currentOptionIndex=this.currentOptionIndex;
-				let filepath=this.currentChooseSubimg.filepath;
-				this.formObj.options[currentOptionIndex].optionsurl=filepath;
-			},
-            
-
+			timestampToTime(timestamp) {
+		        var date = new Date(timestamp*1000);
+		        var Y = date.getFullYear() + '-';
+		        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		        var D = (date.getDate()+1 < 10 ? '0'+(date.getDate()) : date.getDate());
+		        return Y+M+D;
+		    }
 		}
 	}
 </script>

@@ -193,7 +193,7 @@
 									on:{
 										click:()=>{
 											this.$router.push({
-												name:'votemanagerview',
+												name:'votemanagerviewquestion',
 												params:{
 													id:this.productid,
 													voteid:params.row.voteid
