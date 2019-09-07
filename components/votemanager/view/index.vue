@@ -8,7 +8,6 @@
 					 </div>
 					 <div>
 					 	<Button type="default" @click='goback()'>返回</Button>
-					 	<Button type="primary" @click='add()'>添加</Button>
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' ref="zmitiscroll" :style="{height:viewH - 110+'px'}">
@@ -197,7 +196,7 @@
 						</Card>
 					</div>
 
-					<div class="zmiti-question-addhandle">
+					<div v-else class="zmiti-question-addhandle">
 						<Button size="large" type="dashed" icon="md-add" @click="add">添加投票项</Button>
 					</div>
 				 </div>
@@ -257,7 +256,7 @@
 		name:'zmitiindex',
 		data(){
 			return{
-				formstatus:false,
+				formstatus:true,
 				show:false,
 				showPicture:false,
 				currentChoosePicture:{},
