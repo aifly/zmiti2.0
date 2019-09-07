@@ -156,7 +156,7 @@ const router = new VueRouter({
 			{path:"/infomanagersetting/:id?",name:"infomanagersetting",component:infomanagersetting},
 			{path:"/votemanager/:id?",name:"votemanager",component:votemanager},
 			{path:"/votemanagerview/:id?/:voteid?",name:"votemanagerview",component:votemanagerview},
-			{path:"/votemanagerviewquestion/:id?/:voteid?/:questionid?",name:"votemanagerviewquestion",component:votemanagerviewquestion},
+			{path:"/votemanagerviewquestion/:id?/:voteid?",name:"votemanagerviewquestion",component:votemanagerviewquestion},
 			{path:"/orderfood/:id?",name:"orderfood",component:OrderFood},
 			{ path: "/orderfoodsubmit/:id?", name: "orderfoodsubmit", component: orderfoodsubmit},
 			{ path: "/orderfoodrole/:id?", name: "orderfoodrole", component: orderFoodRole},
