@@ -129,7 +129,7 @@
 						</div>
 					</div>
 					<!-- 翻页 -->
-					<div class="zmiti-page-question" v-if="total>10">
+					<div class="zmiti-page-question" v-if="total>condition.page_size">
 						<Page :total="total" 
 						size="small" 
 						@on-change="change"
@@ -196,7 +196,7 @@
 						</Card>
 					</div>
 
-					<div v-else class="zmiti-question-addhandle">
+					<div v-else class="zmiti-question-addhandle" style="margin-top: 10px;">
 						<Button size="large" type="dashed" icon="md-add" @click="add">添加投票项</Button>
 					</div>
 				 </div>
@@ -277,7 +277,7 @@
 				currentNumber:1,
 				condition:{
 					page_index:0,
-					page_size:10,
+					page_size:2,
 				},
 				userinfo:{},
 				productid:0,
