@@ -537,6 +537,21 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
 							s.getDataList();
+							if(s.formstatus==true){//新增后恢复表单
+								s.formObj={
+									questionlabe:'',
+									questiontype:0,
+									sort:0,
+									questionurl:'',
+									options:[{
+										options:'',
+										optionsurl:'',
+										sort:0
+									}]
+								}
+								s.optionsid=undefined;
+								s.questionid=undefined;
+							}
 						}
 					}
 				})
