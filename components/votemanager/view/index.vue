@@ -277,7 +277,7 @@
 				currentNumber:1,
 				condition:{
 					page_index:0,
-					page_size:2,
+					page_size:10,
 				},
 				userinfo:{},
 				productid:0,
@@ -620,7 +620,7 @@
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
-							s.getDataList();
+							s.getDataList();//添加时又重新编辑需加载列表
 							//重新获取当前投票项的数据
 							setTimeout(()=>{
 								s.editQuestion(s.questionid);
