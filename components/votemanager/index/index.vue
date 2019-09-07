@@ -38,13 +38,13 @@
 							</FormItem>
 							<FormItem label="实名：">
 								<RadioGroup v-model="formObj.isrealname">
-							        <Radio label="0">匿名</Radio>
-							        <Radio label="1">实名</Radio>
+							        <Radio :label="0">匿名</Radio>
+							        <Radio :label="1">实名</Radio>
 							    </RadioGroup>
 							</FormItem>
 							<FormItem label="选择时间：">
-								<div>开始日期：<DatePicker type="date" :value="formObj.begintime" placeholder="开始日期" style="width: 140px" @on-change="selectDatesBegin"></DatePicker></div>
-								<div>结束日期：<DatePicker type="date" :value="formObj.endtime" placeholder="结束日期" style="width: 140px" @on-change="selectDatesEnd"></DatePicker></div>
+								<div>开始日期：<DatePicker type="date" :value="begintime" placeholder="开始日期" style="width: 140px" @on-change="selectDatesBegin"></DatePicker></div>
+								<div>结束日期：<DatePicker type="date" :value="endtime" placeholder="结束日期" style="width: 140px" @on-change="selectDatesEnd"></DatePicker></div>
 							</FormItem>
 						</Form>
 						<div class='zmiti-add-form-item zmiti-add-btns'>
@@ -93,6 +93,8 @@
 				userinfo:{},
 				productid:0,
 				voteid:undefined,
+				begintime:'2019-01-01',
+				endtime:'2019-01-01',
 				formObj:{
 					votetitle:'',
 					isrealname:0,//0表示可匿名；1表示必须实名
@@ -117,7 +119,7 @@
 						align:"center",
 						width:180,
 						render:(h,params)=>{
-							return h('div',{},zmitiUtil.formatDate(params.row.begintime)+'~~'+zmitiUtil.formatDate(params.row.endtime));
+							return h('div',{},this.timestampToTime(params.row.begintime)+'~~'+this.timestampToTime(params.row.endtime));
 						}
 					},
 					{
@@ -131,14 +133,14 @@
 									color:"#ff0000"
 								}
 							},'是')];
-							return h('div',{},params.row.isalluser==0?viewuser:'否');
+							return h('div',{},params.row.isrealname==1?viewuser:'否');
 						}
 					},
 					{
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:180,
+						width:250,
 						render:(h,params)=>{
 
 							return h('div', [
@@ -151,11 +153,11 @@
 									},
 									on:{
 										click:()=>{
-											/*this.formObj = params.row;
-											this.formObj.isalluser=String(params.row.isalluser);
-											this.formObj.status=String(params.row.status);
-											console.log(this.formObj,'this.formObj');
-											this.voteid=params.row.voteid;*/
+											this.formObj = params.row;
+											this.begintime=this.timestampToTime(params.row.begintime);
+											this.endtime=this.timestampToTime(params.row.endtime);
+											//console.log(this.formObj,'this.formObj');
+											this.voteid=params.row.voteid;
 											Vue.obserable.trigger({
 												type:'toggleMask',
 												data:true
@@ -163,6 +165,24 @@
 										}
 									}
 								},'编辑'),
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginLeft:'10px',
+									},
+									on:{
+										click:()=>{
+											this.$router.push({
+												name:'votemanagerview',
+												params:{
+													id:this.productid,
+													voteid:params.row.voteid
+												}
+											})
+										}
+									}
+								},'投票项管理'),
 								h('span',{
 									style:{
 										cursor:'pointer',
@@ -181,7 +201,7 @@
 											})
 										}
 									}
-								},'投票项管理'),
+								},'查看投票'),
 								h('Poptip',{
 									props:{
 										confirm:true,
@@ -315,10 +335,10 @@
 				Vue.obserable.trigger({type:'toggleMask',data:false});
 			},
 			selectDatesBegin(val){//开始日期
-				this.formObj.begintime=val;
+				this.begintime=val;
 			},
 			selectDatesEnd(val){//结束日期
-				this.formObj.endtime=val;
+				this.endtime=val;
 			},
 			add(){//添加投票
 				this.formObj = {};
@@ -336,8 +356,8 @@
 					companyid:this.companyid,
 					productid:this.productid,
 					isrealname:this.formObj.isrealname,
-					begintime:Date.parse(new Date(s.formObj.begintime))/1000,
-					endtime:Date.parse(new Date(s.formObj.endtime))/1000,
+					begintime:Date.parse(new Date(s.begintime))/1000,
+					endtime:Date.parse(new Date(s.endtime))/1000,
 					abstract:this.formObj.abstract					
 				}
 				
@@ -377,9 +397,14 @@
 						s.getDataList();//更新列表
 					}
 				})
-			}
-            
-
+			},
+			timestampToTime(timestamp) {
+		        var date = new Date(timestamp*1000);
+		        var Y = date.getFullYear() + '-';
+		        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		        var D = date.getDate();
+		        return Y+M+D;
+		    }
 		}
 	}
 </script>
