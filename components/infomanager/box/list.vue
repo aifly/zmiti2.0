@@ -127,7 +127,7 @@
 						title:"编号",
 						key:'infoid',
 						align:'center',
-						width:120
+						width:80
 					},
 					{
 						title:"标题",
@@ -139,6 +139,34 @@
 						title:"状态",
 						key:'status',
 						align:'center',
+						width:80,
+						filters: [
+                            {
+                                label: '待审',
+                                value: 1
+                            },{
+                                label: '通过',
+                                value: 2
+                            },{
+                                label: '拒绝',
+                                value: 3
+                            },{
+                                label: '禁用',
+                                value: 0
+                            }
+                        ],
+                        filterMultiple: false,
+                        filterMethod (value, row) {
+                            if (value === 1) {
+                                return row.status ==1;
+                            }else if (value === 2) {
+                                return row.status ==2;
+                            }else if (value === 3) {
+                                return row.status ==3;
+                            }else if (value === 0) {
+                                return row.status ==0;
+                            }
+                        },
 						render:(h,params)=>{
 							let status='';
 							let color='#2d8cf0';
@@ -174,6 +202,42 @@
 						width:120,
 						render:(h,params)=>{
 							return h('div',{},formatDate(params.row.createtime))
+						}
+					},
+					{
+						title:"审核",
+						key:"check",
+						align:"center",
+						width:120,
+						render:(h,params)=>{
+							let status = params.row.status;
+							let infoid = params.row.infoid;
+							this.formObj = params.row;
+							return h('div',[
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:'rgb(25, 190, 107)',
+										marginRight:'10px'
+									},
+									on:{
+										click:()=>{
+											this.checkHandle(infoid,2)
+										}
+									}
+								},'通过'),
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:'rgb(237, 64, 20)'
+									},
+									on:{
+										click:()=>{
+											this.checkHandle(infoid,3)
+										}
+									}
+								},'拒绝')
+							])
 						}
 					},
 					{
@@ -303,6 +367,25 @@
 						typename:this.typename
 					}
 				})				
+			},
+			checkHandle(id,status){
+				var s = this;
+				let info = this.formObj;
+				info.productid=this.productid;
+				info.typeid=this.typeid;
+				info.infoid=id;
+				info.status=status;			
+				zmitiUtil.ajax({
+					remark:'editnews',
+					data:{
+						action:infomanagerActions.editnews.action,
+						info:info
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						s.getDataList();
+					}
+				})
 			},
 			getDataList(){
 				var s = this;
