@@ -26,6 +26,9 @@
 				        	<DatePicker type="daterange" :start-date="new Date(2018, 12, 1)" placement="bottom-end" placeholder="选择时间段" style="width: 200px" @on-change="selectDates"></DatePicker>
 				        </div>
 				        <Button icon="md-search" @click="searchHandle">搜索</Button>
+				        <Select v-model="statusVal" @on-change="infoStatus" style="margin-left:auto;width:120px">
+					        <Option v-for="item in selectStatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
+					    </Select>
 				 	</section>
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
@@ -131,6 +134,38 @@
 						key:'title',
 						align:'center',
 						
+					},
+					{
+						title:"状态",
+						key:'status',
+						align:'center',
+						render:(h,params)=>{
+							let status='';
+							let color='#2d8cf0';
+							switch(params.row.status){
+								case 0:
+									status='禁用'
+									color='#000';									
+								break;
+								case 2:
+									status='通过'
+									color='#19be6b';
+								break;
+								case 3:
+									status='拒绝'
+									color='#ed4014';
+								break;
+								default:
+									status='待审'
+							}
+
+
+							return h('span',{
+									style:{
+										color:color
+									}
+							},status)
+  						}
 					},
 					{
 						title:"时间",

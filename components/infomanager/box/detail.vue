@@ -20,14 +20,14 @@
 							<FormItem label="标题：">
 								<Input v-model="formObj.title" placeholder="标题"></Input>
 							</FormItem>
-							<!-- <FormItem label="状态：">
+							<FormItem label="状态：">
 							     <RadioGroup v-model="formObj.status">
 							        <Radio label="0">禁用</Radio>
 							        <Radio label="1">待审</Radio>
 							        <Radio label="2">通过</Radio>
 							        <Radio label="3">拒绝</Radio>
 							    </RadioGroup>
-							</FormItem> -->
+							</FormItem>
 							<FormItem label="内容：">
 								<div class="edit_container">
 							        <quill-editor 

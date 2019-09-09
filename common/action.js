@@ -809,6 +809,18 @@ let voteActions={
 	getuservoteResultList:{
 		desc:"获取用户投票相关列表",
 		action:"2001413"
+	},
+	addmorequestion:{
+		desc:"批量添加问题",
+		action:"2001405"
+	},
+	editmorequestion:{
+		desc:"批量修改问题",
+		action:"2001406"
+	},
+	deletemorequestion:{
+		desc:"批量删除问题",
+		action:"2001407"
 	}
 };
 //天气预报

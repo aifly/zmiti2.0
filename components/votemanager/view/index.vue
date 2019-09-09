@@ -8,14 +8,11 @@
 					 </div>
 					 <div>
 					 	<Button type="default" @click='goback()'>返回</Button>
-					 	<Button type="primary" @click='add()'>添加</Button>
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' ref="zmitiscroll" :style="{height:viewH - 110+'px'}">
 
-					<!-- <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :current="currentNumber" :change='change' :page-size='condition.page_size'  :total="total">
-					</ZmitiTable> -->
-					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
+<!-- 					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
 						<div class="zmiti-question-h1">
 							<div class="zmiti-h1-txt">{{item.questionlabe}}</div>
 							<div class="zmiti-block-oper"  @click="currentQuestionStatus(index)"><span>{{item.status==true?'收起':'展开'}}</span></div>
@@ -39,9 +36,6 @@
 												<template v-if="ele.optionsurl!=''">
 													<img :src="ele.optionsurl" class="zmiti-suboption-img">
 												</template>
-												<!-- <template v-else>
-													<img :src="imgs.defaultImg">
-												</template> -->
 												<div class="zmiti-question-suboption-txt">
 													{{ele.options}}
 												</div>
@@ -65,84 +59,144 @@
 								</div>
 							</div>
 						</div>
+					</div> -->
+					<!-- 列表 -->
+					<div class="zmiti-votemanagerviewquestion-list">
+						<div class="zmiti-question-carditems" v-for="(item,index) in dataSource" :key="index">
+					 		<Card :bordered="false">
+					            <div class="zmiti-question-h1">
+									<div class="zmiti-h1-txt">{{item.questionlabe}}</div>
+									<div class="zmiti-block-oper"  @click="currentQuestionStatus(index)"><span>{{item.status==true?'收起':'展开'}}</span></div>
+								</div>
+					            <div style="display: none;">{{show}}</div>
+					            <div class="zmiti-question-carditems-form" v-if="item.status">
+									<Form class='zmiti-add-form-C' :model="item" :label-width="80">
+										<FormItem label="投票项：">
+											<Input v-model="item.questionlabe" placeholder="投票项"></Input>
+										</FormItem>
+										<FormItem label="图片：">
+											<div><Button icon="ios-cloud-upload-outline" @click="openQuestionPicture(index)">选择图片</Button></div>
+											<div class="zmiti-question-thumbimg" v-if="item.questionurl"><img :src="item.questionurl"></div>
+										</FormItem>
+										<FormItem label="类型：">
+											<RadioGroup v-model="item.questiontype">
+										        <Radio :label="0">单选</Radio>
+										        <Radio :label="1">多选</Radio>
+										    </RadioGroup>
+										</FormItem>
+										<FormItem label="选项：">
+											<template v-if="item.options.length>0">
+												<div class="zmiti-votemanagerview-options" v-for="(ele,idx) in item.options" :key="idx">
+													<!-- <div style="width:50px;margin-right: 5px;">
+														<Input v-model="ele.sort" placeholder="排序" ></Input>
+													</div> -->
+													<div class="zmiti-options-content" v-if="ele.optionsurl!=''">
+														<div class="zmiti-options-item-imgurl" style="width: 80px;" >
+															<img :src="ele.optionsurl" style="width:80px;height:80px;">															
+														</div>
+														<div class="zmiti-options-item zmiti-options-item-subcon" style="margin-right: 5px;">
+															<Input type="textarea" v-model="ele.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+														</div>
+													</div>
+													<div v-else class="zmiti-options-item" style="margin-right: 5px;">
+														<Input v-model="ele.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+													</div>
+													<div class="zmiti-options-btns" style="width:120px;">
+														<Icon type="ios-image-outline" size="20" @click="openUploadImg(item.questionid,idx)" />
+														<Icon type="ios-add-circle-outline" size="20" @click="addoptions(item.questionid,index)" v-if="item.options.length-1===idx" />
+														<Poptip
+													        confirm
+													        title="您确认删除选项吗?"
+													        @on-ok="deleteQuestionOptions(index,ele.optionsid,idx)">
+													        <Icon type="ios-remove-circle-outline" size="20" />
+													    </Poptip>														
+													</div>
+												</div>
+											</template>
+										</FormItem>
+									</Form>
+									<div class="zmiti-question-cardfoot">
+										<div class="zmiti-question-num">编号：{{item.questionid}}</div>						
+										<div class="zmiti-question-oper">							
+											<Poptip
+										        confirm
+										        title="您确认删除这条内容吗?"
+										        @on-ok="deletemore(item.questionid)"
+										        @on-cancel="cancelpoptip">
+										        <span class="zmiti-question-operbtn">删除</span>
+										    </Poptip>
+										    |<span class="zmiti-question-operbtn" @click='editmore(item.questionid,index)'>保存</span>
+										</div>
+									</div>
+								</div>							
+							</Card>
+						</div>
 					</div>
 					<!-- 翻页 -->
-					<div class="zmiti-page-question" v-if="total>10">
+					<div class="zmiti-page-question" v-if="total>condition.page_size">
 						<Page :total="total" 
 						size="small" 
 						@on-change="change"
 						:page-size='condition.page_size'
 						show-total />
 					</div>
-					<!-- 添加和修改 -->
-				 	<div class="zmiti-votemanagerviewquestion-list">
+					<!-- 添加 -->
+					
+				 	<div class="zmiti-votemanagerviewquestion-list" v-if="formstatus==true" >
 				 		<Card :bordered="false">
-				            <p slot="title">{{questionid?'编辑':'新增'}}</p>
+				            <p slot="title">新增</p>
 							<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
 								<FormItem label="投票项：">
 									<Input v-model="formObj.questionlabe" placeholder="投票项"></Input>
 								</FormItem>
 								<FormItem label="图片：">
 									<div><Button icon="ios-cloud-upload-outline" @click="showPicture= true">选择图片</Button></div>
-									<div class="zmiti-question-thumbimg" v-if="formObj.questionurl"><img :src="formObj.questionurl"></div>									
-									<!-- <Input v-model="formObj.questionurl" placeholder="图片地址"></Input> -->
+									<div class="zmiti-question-thumbimg" v-if="formObj.questionurl"><img :src="formObj.questionurl"></div>
 								</FormItem>
 								<FormItem label="类型：">
 									<RadioGroup v-model="formObj.questiontype">
-								        <Radio label="0">单选</Radio>
-								        <Radio label="1">多选</Radio>
+								        <Radio :label="0">单选</Radio>
+								        <Radio :label="1">多选</Radio>
 								    </RadioGroup>
 								</FormItem>
 								<template v-if="showFormOptions==true">
 									<FormItem label="选项：">
 										<template v-if="formObj.options.length>0">
 											<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
-												<div style="width:80px;margin-right: 5px;">
+												<!-- <div style="width:80px;margin-right: 5px;">
 													<Input v-model="item.sort" placeholder="排序" ></Input>
+												</div> -->
+												
+												
+												<div class="zmiti-options-content" v-if="item.optionsurl!=''">
+													<div class="zmiti-options-item-imgurl" style="width: 80px;" >
+														<img :src="item.optionsurl" style="width:80px;height:80px;">															
+													</div>
+													<div class="zmiti-options-item zmiti-options-item-subcon" style="margin-right: 5px;">
+														<Input type="textarea" v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
+													</div>
 												</div>
-												<div class="zmiti-options-item" style="margin-right: 5px;">
+												<div v-else class="zmiti-options-item" style="margin-right: 5px;">
 													<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
 												</div>
-												<div class="zmiti-options-item zmiti-options-item-imgurl">
-													<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
-													<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
-												</div>
-												<div class="zmiti-options-btns">
-													<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
-													<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(index)" />
-												</div>
-											</div>									
-										</template>								
-									</FormItem>
-								</template>
-								<template v-else>
-									<FormItem label="选项：">
-										<template v-if="formObj.options.length>0">
-											<div class="zmiti-votemanagerview-options" v-for="(item,index) in formObj.options" :key="index">
-												<div style="width:80px;margin-right: 5px;">
-													<Input v-model="item.sort" placeholder="排序" ></Input>
-												</div>
-												<div class="zmiti-options-item" style="margin-right: 5px;">
-													<Input v-model="item.options" placeholder="选项内容" style="margin-right: 5px;"></Input>	
-												</div>
-												<div class="zmiti-options-item zmiti-options-item-imgurl">
-													<Input v-model="item.optionsurl" placeholder="图片地址"></Input>
-													<Icon type="ios-image-outline" size="20" @click="openUploadImg(index)" />
-												</div>
-												<div class="zmiti-options-btns">
-													<Icon type="md-open" size="20" @click="editOptions(item.optionsid,index)" />
-													<Icon type="ios-add-circle-outline" size="20" @click="addoptions" v-if="formObj.options.length-1===index" />
-													<Icon type="ios-remove-circle-outline" size="20" @click="deleteQuestionOptions(item.optionsid,index)" />
+												<div class="zmiti-options-btns" style="width: 120px;">
+													<Icon type="ios-image-outline" size="20" @click="openUploadImg(-1,index)" />
+													<Icon type="ios-add-circle-outline" size="20" @click="addoptions(0)" v-if="formObj.options.length-1===index" />
+													<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(-1,-1,index)" />
 												</div>
 											</div>									
 										</template>								
 									</FormItem>
 								</template>
 								<FormItem label="">
-									<Button size='large' type='primary' @click='adminAction'>{{questionid?'保存':'确定'}}</Button>
+									<Button size='large' type='primary' @click='addmore'>确定</Button>
 								</FormItem>
 							</Form>
 						</Card>
+					</div>
+
+					<div v-else class="zmiti-question-addhandle" style="margin-top: 10px;">
+						<Button size="large" type="dashed" icon="md-add" @click="add">添加投票项</Button>
 					</div>
 				 </div>
 			 </div>
@@ -165,9 +219,37 @@
 		</Modal>
 	</div>
 </template>
-
+<style type="text/css">
+	textarea.ivu-input{resize: none;}
+	.zmiti-options-item-subcon textarea
+	{
+		height: 80px;
+		border-radius: 0;
+	}
+</style>
 <style lang="scss" scoped>
 	@import './index.scss';
+	.zmiti-votemanagerview-options{
+		align-items: inherit;
+	}
+	.zmiti-options-content{
+		flex:1;
+		display:flex;
+		flex-flow: row;
+	}
+	.zmiti-options-item-subcon{
+		margin-left:0px;
+	}
+	.zmiti-options-btns{
+		display: flex;
+		align-items: center;
+		.zmt_iconfont{
+			margin:0 3px;
+			font-size:14px;
+			cursor: pointer;
+		}
+	}
+
 </style>
 <script>
 
@@ -182,9 +264,11 @@
 		name:'zmitiindex',
 		data(){
 			return{
+				formstatus:true,
 				show:false,
 				showPicture:false,
 				currentChoosePicture:{},
+				currentQuestionIndex:undefined,
 				currentOptionIndex:0,
 				showSubimg:false,
 				currentChooseSubimg:{},
@@ -211,7 +295,7 @@
 				optionsid:undefined,
 				formObj:{
 					questionlabe:'',
-					questiontype:'0',//0为单选；1为多选
+					questiontype:0,//0为单选；1为多选
 					sort:0,
 					questionurl:'',
 					options:[{
@@ -376,11 +460,12 @@
 						})
 			},
 			add(){//添加投票项
-				this.questionid=undefined;				
+				this.formstatus=true;
+				this.questionid=undefined;			
 				this.showFormOptions=true;
 				this.formObj={
 					questionlabe:'',
-					questiontype:'0',//0为单选；1为多选
+					questiontype:0,//0为单选；1为多选
 					sort:0,
 					questionurl:'',
 					options:[{
@@ -389,12 +474,15 @@
 						sort:0
 					}]
 				}
+				this.dataSource.forEach((item,idx)=>{
+					item.status=false;
+				})
 			},
 			editQuestion(questionid){//编辑投票项
 				console.log(this.dataSource,'当前的dataSource');
 				let currentDatas=this.dataSource.filter((item)=>questionid==item.questionid);
 				this.formObj=currentDatas[0];
-				this.formObj.questiontype=currentDatas[0].questiontype.toString();
+				this.formObj.questiontype=currentDatas[0].questiontype;
 
 				console.log(this.formObj,'当前的数据');
 				this.showFormOptions=false;//编辑时隐藏选项
@@ -422,27 +510,145 @@
             cancelpoptip(){//关闭删除提示框
             	
             },
+            /*批量添加*/
+            addmore(){
+            	let action = voteActions.addmorequestion.action;
+            	let bi={
+            		voteid:this.$route.params.voteid,
+            		companyid:this.companyid,
+            		productid:this.productid
+            	}
+            	let listdata=[{
+            		questionlabe:this.formObj.questionlabe,
+            		questiontype:this.formObj.questiontype,
+            		questionurl:this.formObj.questionurl,
+            		sort:this.formObj.sort,
+            		option_list:this.formObj.options
+            	}]
+            	var s = this;
+            	zmitiUtil.ajax({
+					remark:'addmorequestion',
+					data:{
+						action,
+						bi,
+						list:listdata
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						if(data.getret === 0){
+							s.getDataList();
+							if(s.formstatus==true){//新增后恢复表单
+								s.formObj={
+									questionlabe:'',
+									questiontype:0,
+									sort:0,
+									questionurl:'',
+									options:[{
+										options:'',
+										optionsurl:'',
+										sort:0
+									}]
+								}
+								s.optionsid=undefined;
+								s.questionid=undefined;
+							}
+						}
+					}
+				})
+            },
+            /*批量删除*/
+            deletemore(questionid){
+            	let action = voteActions.deletemorequestion.action;            	
+            	let bi={
+            		companyid:this.companyid,
+            		productid:this.productid
+            	}
+            	let listdata=[questionid]
+            	var s = this;
+            	zmitiUtil.ajax({
+					remark:'deletemorequestion',
+					data:{
+						action,
+						bi,
+						list:listdata
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						if(data.getret === 0){
+							s.getDataList();							
+						}
+					}
+				})
+            },
+            /*批量修改*/
+            editmore(questionid,index){
+            	let action = voteActions.editmorequestion.action;
+            	let currentDatas=this.dataSource[index];
+            	let bi={
+            		voteid:this.$route.params.voteid,
+            		companyid:this.companyid,
+            		productid:this.productid
+            	}
+            	let options=[];
+            	currentDatas.options.forEach((ele,idx)=>{
+            		options.push({
+            			optionsid:ele.optionsid==undefined?0:ele.optionsid,
+            			questionid:ele.questionid,
+            			optionsurl:ele.optionsurl,
+            			options:ele.options,
+            			sort:ele.sort
+            		})
+            	})
+            	let listdata=[{
+            		questionid:questionid,
+            		questionlabe:currentDatas.questionlabe,
+            		questiontype:currentDatas.questiontype,
+            		questionurl:currentDatas.questionurl,
+            		sort:currentDatas.sort,
+            		option_list:options   		
+            	}]
+            	var s = this;
+            	zmitiUtil.ajax({
+					remark:'editmorequestion',
+					data:{
+						action,
+						bi,
+						list:listdata
+					},
+					success(data){						
+						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
+						if(data.getret === 0){
+							s.getDataList();
+						}
+					}
+				})
+            },
             /*以下为操作项*/
-            adminAction(){//添加问题并修改
+            adminAction(index){//添加问题并修改
 				var s = this;
-				var action = this.questionid ? voteActions.editquesion.action:voteActions.addquesion.action;
-
 				let info = {
 					voteid:this.$route.params.voteid,
 					companyid:this.companyid,
-					productid:this.productid,
-					questionlabe:this.formObj.questionlabe,
-					questiontype:this.formObj.questiontype,
-					questionurl:this.formObj.questionurl,
-					sort:this.formObj.sort,
-					options:this.formObj.options				
+					productid:this.productid									
 				}
-				
-
-				if(s.questionid!=undefined){
-					info.questionid=s.questionid;										
+				var action='';
+				if(index<0){
+					//新增时
+					action = voteActions.addquesion.action;
+					info.questionlabe=s.formObj.questionlabe;
+					info.questiontype=s.formObj.questiontype;
+					info.questionurl=s.formObj.questionurl;
+					info.sort=s.formObj.sort;
+					info.options=s.formObj.options;
+				}else{//编辑时
+					s.questionid=s.dataSource[index].questionid;
+					action = voteActions.editquesion.action;
+					info.questionid=s.dataSource[index].questionid;
+					info.questionlabe=s.dataSource[index].questionlabe;
+					info.questiontype=s.dataSource[index].questiontype;
+					info.questionurl=s.dataSource[index].questionurl;
+					info.sort=s.dataSource[index].sort;	
 				}
-
 				console.log(info,'info-info',s.questionid)
 				zmitiUtil.ajax({
 					remark:this.questionid ?　'editquesion':'addquesion',
@@ -454,32 +660,57 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
 							s.getDataList();
+							if(s.formstatus==true){//新增后恢复表单
+								s.formObj={
+									questionlabe:'',
+									questiontype:0,
+									sort:0,
+									questionurl:'',
+									options:[{
+										options:'',
+										optionsurl:'',
+										sort:0
+									}]
+								}
+								s.optionsid=undefined;
+								s.questionid=undefined;
+							}
 						}
 					}
 				})
 			},
-            addoptions(index){//添加选项
-				this.formObj.options.push({
-					options:'',
-					optionsurl:'',
-					sort:0
-				})
+            addoptions(questionid,index){//添加选项            	
+            	if(questionid>0){
+            		this.questionid=questionid;
+            		this.dataSource[index].options.push({
+						options:'',
+						optionsurl:'',
+						sort:0
+					})				
+            	}else{
+					this.formObj.options.push({
+						options:'',
+						optionsurl:'',
+						sort:0
+					})
+				}
 				this.optionsid=undefined;
 			},
 			removeoptions(index){//移除选项
 				this.formObj.options.splice(index,1);
 			},
 			/*以下为选项的修改和删除*/
-			editOptions(optionsid,index){//修改选项
+			editOptions(questionindex,optionsid,index){//修改选项
 				var s = this;				
-				var formObj=s.formObj.options[index];//获取第N个选项的内容
-				s.optionsid=s.formObj.options[index].optionsid;
+				var formObj=s.dataSource[questionindex].options[index];//获取第N个选项的内容
+				s.optionsid=optionsid;
+				s.questionid=s.dataSource[questionindex].questionid;
 				var action = s.optionsid ? voteActions.editQuesionOption.action:voteActions.addQuesionOption.action;
 				let info={
 					voteid:s.voteid,
 					companyid:s.companyid,
 					productid:s.productid,
-					questionid:s.questionid					
+					questionid:s.questionid
 				}
 				let listinfo={
 					options:formObj.options,
@@ -491,54 +722,46 @@
 					action:action,
 					info:info
 				}
-				if(s.optionsid!=undefined){
+				if(optionsid!=undefined){
 					datainfo.info.optionsid=formObj.optionsid;
 					datainfo.info.options=formObj.options
 					datainfo.info.optionsurl=formObj.optionsurl
 					datainfo.info.sort=formObj.sort					
-				}else{
+				}else{				
 					datainfo.list=[{
 						options:formObj.options,
 						optionsurl:formObj.optionsurl,
 						sort:formObj.sort
 					}]
 				}
-				//console.log(datainfo,'editOptions');
+				console.log(datainfo,'editOptions');
+				console.log(optionsid,'optionsid===optionsid');
 				zmitiUtil.ajax({
 					remark:s.optionsid ?　'editQuesionOption':'addQuesionOption',
 					data:datainfo,
 					success(data){						
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						if(data.getret === 0){
-							s.getDataList();
-							if(s.optionsid){
-								s.formObj.options.push({
-									options:'',
-									optionsurl:'',
-									sort:0
-								})
-							}else{
-								/*重新获取当前投票项的数据*/
-								setTimeout(()=>{
-									s.editQuestion(s.questionid);
-								},1000)
-							}
+							s.getDataList();//添加时又重新编辑需加载列表
+							//重新获取当前投票项的数据
+							setTimeout(()=>{
+								s.editQuestion(s.questionid);
+								s.dataSource[questionindex].status=true;
+								console.log(s.dataSource[questionindex].options[index],'options====index====')
+							},1000)
 						}
 					}
 				})
 			},
-			deleteQuestionOptions(optionsid,index){//删除选项
+			deleteQuestionOptions(questionindex,optionsid,index){//删除选项
 				var s = this;
-				var info=s.formObj.options[index];//获取第N个选项的内容
-				info.productid=s.productid;
-				//console.log(optionsid,'optionsid')
 				if(optionsid){
 					zmitiUtil.ajax({
 						remark:'deleteQuesionOption',
 						data:{
 							action:voteActions.deleteQuesionOption.action,
 							info:{
-								companyid:info.companyid,
+								companyid:s.companyid,
 								productid:s.productid,
 								optionsid:optionsid
 							}
@@ -546,10 +769,11 @@
 						success(data){						
 							s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 							if(data.getret === 0){
-								console.log(s.formObj.options[index],'s.formObj.options[index]===',index)
+								//console.log(s.formObj.options[index],'s.formObj.options[index]===',index);
 								setTimeout(()=>{
-									s.formObj.options.splice(index,1);
-								},100)
+									//s.formObj.options.splice(index,1);
+									s.dataSource[questionindex].options.splice(index,1);
+								},1000)
 								
 							}
 						}
@@ -559,12 +783,23 @@
 				}
 			},
 			currentQuestionStatus(index){//切换显示与隐藏
+				this.formstatus=false;//隐蔽添加投票项的表单
+				var s = this;
 				this.show=!this.show;
-				this.dataSource[index].status=this.show;
+				this.dataSource.forEach((item,idx)=>{
+					if(index===idx){
+						item.status=s.show
+					}else{
+						item.status=false;
+					}
+				})
 			},
 			scrollthis(){//滚动到底部
 				var div = this.$refs.zmitiscroll;
 				div.scrollTop = div.scrollHeight;
+			},
+			filedstring(val){
+				return val.toString();
 			},
 			/**以下为选择配图**/
 		    onFinishPicture(item){
@@ -572,10 +807,21 @@
 			},
 			choosePicture(){
 				this.showPicture = false;
-				this.formObj.questionurl=this.currentChoosePicture.filepath;
+				let currentQuestionIndex=this.currentQuestionIndex;
+				if(currentQuestionIndex!=undefined){
+					this.dataSource[currentQuestionIndex].questionurl=this.currentChoosePicture.filepath;
+				}else{
+					this.formObj.questionurl=this.currentChoosePicture.filepath;
+				}				
+			},
+			/*更改配图*/
+			openQuestionPicture(index){
+				this.showPicture = true;
+				this.currentQuestionIndex=index;
 			},
 			/**以下为子选项图片**/
-			openUploadImg(index){
+			openUploadImg(questionid,index){				
+				this.questionid=questionid;
 				this.currentOptionIndex=index;
 				this.showSubimg = true;
 			},
@@ -586,7 +832,14 @@
 				this.showSubimg = false;
 				let currentOptionIndex=this.currentOptionIndex;
 				let filepath=this.currentChooseSubimg.filepath;
-				this.formObj.options[currentOptionIndex].optionsurl=filepath;
+				let questionid=this.questionid;
+				if(this.questionid>0){//编辑选项时的图片
+					let currentDatas=this.dataSource.filter((item)=>questionid==item.questionid);
+					let formObj=currentDatas[0].options[currentOptionIndex];
+					formObj.optionsurl=filepath;
+				}else{//新增表单中的选项图片
+					this.formObj.options[currentOptionIndex].optionsurl=filepath;
+				}				
 			},
 
 		}

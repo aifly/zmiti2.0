@@ -1,11 +1,11 @@
 Arguments: 
-  F:\Program Files\nodejs\node.exe C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js run user
+  C:\Program Files\nodejs\node.exe C:\Users\songx\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\Doctrine extensions for PHP\;F:\xuchang2018\tools\Microsoft VS Code\bin;C:\WINDOWS\System32\OpenSSH\;F:\Program Files\Dart\dart-sdk\bin;F:\Program Files\Dart;F:\flutter\flutter_windows_v1.7.1-dev\flutter\bin;F:\Program Files\nodejs\;C:\Ruby25-x64\bin;C:\Users\13910\AppData\Local\Microsoft\WindowsApps;F:\install\Microsoft VS Code\bin;F:\mysql\MySQL Server 5.5\bin;F:\xuchang2018\tools\Microsoft VS Code\bin;F:\Anaconda3;F:\Anaconda3\Scripts;F:\Program Files\nodejs;F:\Program Files (x86)\Egret\Egret Wing 3\bin;C:\Users\13910\AppData\Roaming\npm
+  C:\Users\songx\AppData\Local\GitHub\PortableGit_63435a79518b44808827aa3194b76bea96231189\cmd;C:\Users\songx\AppData\Local\GitHub\PortableGit_63435a79518b44808827aa3194b76bea96231189\usr\bin;C:\Users\songx\AppData\Local\GitHub\PortableGit_63435a79518b44808827aa3194b76bea96231189\usr\share\git-tfs;C:\Users\songx\AppData\Local\Apps\2.0\TO9RDH0E.GXR\6166N9B0.6DZ\gith..tion_317444273a93ac29_0003.0003_cb3f916fdebecb1d;C:\Users\songx\AppData\Local\GitHub\lfs-amd64_1.3.1;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files (x86)\Common Files\Intel\Shared Files\cpp\bin\Intel64;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Python27;C:\Users\songx\Downloads\ADB;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\songx\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\songx\AppData\Local\Programs\Python\Python37-32\;C:\Program Files (x86)\SSH Communications Security\SSH Secure Shell;C:\Users\songx\AppData\Local\Microsoft\WindowsApps;C:\Python27;C:\Ruby23-x64\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\songx\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\songx\AppData\Roaming\npm;C:\Users\songx\AppData\Local\Microsoft\WindowsApps;;C:\Windows\Microsoft.NET\Framework\v4.0.30319\
 
 Yarn version: 
-  1.5.1
+  1.3.2
 
 Node version: 
   10.16.0
@@ -52,6 +52,7 @@ npm manifest:
       "less": "^2.5.3",
       "less-loader": "^4.1.0",
       "less-plugin-clean-css": "^1.5.1",
+      "mini-css-extract-plugin": "^0.8.0",
       "node-sass": "^4.12.0",
       "open-browser-webpack-plugin": "^0.0.5",
       "quill": "^1.3.6",
@@ -5670,6 +5671,15 @@ Lockfile:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   
+  mini-css-extract-plugin@^0.8.0:
+    version "0.8.0"
+    resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-0.8.0.tgz#81d41ec4fe58c713a96ad7c723cdb2d0bd4d70e1"
+    dependencies:
+      loader-utils "^1.1.0"
+      normalize-url "1.9.1"
+      schema-utils "^1.0.0"
+      webpack-sources "^1.1.0"
+  
   minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -5993,7 +6003,7 @@ Lockfile:
     version "0.1.2"
     resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
   
-  normalize-url@^1.4.0:
+  normalize-url@1.9.1, normalize-url@^1.4.0:
     version "1.9.1"
     resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-1.9.1.tgz#2cc0d66b31ea23036458436e3620d85954c66c3c"
     dependencies:
@@ -8839,6 +8849,13 @@ Lockfile:
       source-list-map "^2.0.0"
       source-map "~0.6.1"
   
+  webpack-sources@^1.1.0:
+    version "1.4.3"
+    resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.4.3.tgz#eedd8ec0b928fbf1cbfe994e22d2d890f330a933"
+    dependencies:
+      source-list-map "^2.0.0"
+      source-map "~0.6.1"
+  
   webpack-sources@^1.4.0, webpack-sources@^1.4.1:
     version "1.4.1"
     resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.4.1.tgz#b91b2c5b1c4e890ff50d1d35b7fa3657040da1da"
@@ -9086,16 +9103,5 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zrender/-/zrender-4.0.7.tgz#15ae960822f5efed410995d37e5107fe3de10e6d"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 1
-  Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c webpack -w --config webpack.user.config.js --mode production
-  Directory: F:\xuchang2019\project\zmiti2.0
-  Output:
-  
-      at ProcessTermError.MessageError (C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
-      at new ProcessTermError (C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:226:113)
-      at ChildProcess.<anonymous> (C:\Users\13910\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:30281:17)
-      at ChildProcess.emit (events.js:198:13)
-      at maybeClose (internal/child_process.js:982:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:259:5)
+  Error: connect ETIMEDOUT 104.16.27.35:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1106:14)
