@@ -228,7 +228,7 @@
 	}
 </style>
 <style lang="scss" scoped>
-	@import './index.css';
+	@import './index.scss';
 	.zmiti-votemanagerview-options{
 		align-items: inherit;
 	}
