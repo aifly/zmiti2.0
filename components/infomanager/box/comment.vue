@@ -420,7 +420,7 @@
 					title:'',
 					productid:this.$route.params.productid,
 					content:'',
-					status:'1',
+					status:'2',
 					wordurl:'',
 					pdfurl:'',
 					filearray:''					
