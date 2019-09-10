@@ -140,7 +140,7 @@
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:330,
+						width:250,
 						render:(h,params)=>{
 
 							return h('div', [
@@ -201,26 +201,7 @@
 											})
 										}
 									}
-								},'查看投票'),
-								h('span',{
-									style:{
-										cursor:'pointer',
-										color:"rgb(0, 102, 204)",
-										marginLeft:'10px',
-										marginRight:'10px',
-									},
-									on:{
-										click:()=>{
-											this.$router.push({
-												name:'votemanagerviewquestion',
-												params:{
-													id:this.productid,
-													voteid:params.row.voteid
-												}
-											})
-										}
-									}
-								},'查看参与用户'),
+								},'投票结果'),
 								h('Poptip',{
 									props:{
 										confirm:true,

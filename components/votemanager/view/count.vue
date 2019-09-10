@@ -11,6 +11,7 @@
 
 					 </div>
 					 <div>
+					 	<Button type="primary" @click='gousercount()'>查看参与用户</Button>
 					 	<Button type="default" @click='goback()'>返回</Button>
 					 </div>
 				 </header>
@@ -160,6 +161,15 @@
 		methods:{
 			goback(){
 				window.history.back();
+			},
+			gousercount(){
+				this.$router.push({
+					name:'votemanagerviewquestion',
+					params:{
+						id:this.productid,
+						voteid:this.voteid
+					}
+				})
 			},
 			change(e){
 				this.condition.page_index = e -1;
