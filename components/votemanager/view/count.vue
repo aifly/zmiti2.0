@@ -39,6 +39,7 @@
 
 			            </div>
 					</div>
+					<div class="zmiti-list-nodata" v-if="total==0">暂无数据</div>
 					<!-- 翻页 -->
 					<div class="zmiti-page-question" v-if="total>condition.page_size">
 						<Page :total="total" 

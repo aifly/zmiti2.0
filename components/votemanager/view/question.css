@@ -116,4 +116,11 @@
 .zmiti-votemanagerviewanswer-list {
   margin: 20px; }
 
+.zmiti-list-nodata {
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #e8eaec;
+  margin: 10px;
+  padding: 8px 0; }
+
 /*# sourceMappingURL=question.css.map */

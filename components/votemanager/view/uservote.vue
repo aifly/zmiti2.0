@@ -54,8 +54,8 @@
 		flex-wrap: wrap;
 	}
 	.viewoptions{
-		width:230px;
-		margin:0 20px 15px 0;
+		width:300px;
+		margin:0 30px 15px 0;
 		.options-infor{
 			display: flex;
 			img{
@@ -65,6 +65,10 @@
 			.options_subtxt{
 				flex:1;
 				padding:0 0 0 5px;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 3;
+				overflow: hidden;
 			}
 		}
 		
