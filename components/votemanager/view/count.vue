@@ -15,18 +15,29 @@
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-				 	<!-- <div class="zmiti-votemanagerviewanswer-list">
-				 		<div class="zmiti-votemanagerviewanswer-items">
+				 	<div class="zmiti-votemanagerviewanswer-list">
+				 		<div class="zmiti-votemanagerviewanswer-items" style="margin-bottom: 10px;" v-for="(item,index) in dataSource">
 							<Card dis-hover>
-				                <p slot="title">Disable card with hover shadows</p>
-				                <p>Content of card</p>
-				                <p>Content of card</p>
-				                <p>Content of card</p>
+				                <p slot="title">{{item.questionlabe}}</p>
+				                <p slot="extra" >
+						            编号：{{item.questionid}}
+						        </p>
+				                <div>共：{{item.options | getSum}}</div>
+				                
+				                <div class="viewoptions" v-for="(ele,idx) in item.options">				                	
+				                	<div>{{ele.options}} <span>次数：{{ele.number}}</span></div>
+				                	<template v-if="sumval(item.options)>0">
+					                	<div>
+					                		<Progress :percent="parseInt((ele.number/sumval(item.options))*100)" />
+					                	</div>
+				                	</template>
+				                </div>
+				                			                
 				            </Card>
 			            </div>
-					</div> -->
-					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
-					</ZmitiTable>
+					</div>
+					<!-- <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
+					</ZmitiTable> -->
 				 </div>
 			 </div>
 		</div>
@@ -109,7 +120,6 @@
 		},
 		mounted(){
 			this.getDataList();
-			//this.getuservoteResultList(20);
 		},
 		computed:{
 
@@ -136,9 +146,9 @@
 							voteid:s.voteid
 						})
 						zmitiUtil.ajax({
-							remark:"getuservoteList",
+							remark:"getquesionList",
 							data:{
-								action:voteActions.getuservoteList.action,
+								action:voteActions.getquesionList.action,
 								condition:condition
 							},
 							error(){
@@ -154,41 +164,31 @@
 							}
 						})
 			},
-			getuservoteResultList(vuid){
-				var {condition} = this;
-				var s = this;
-				condition = Object.assign(condition,{
-					companyid:zmitiUtil.getCurrentCompanyId().companyid,
-					productid:s.productid,
-					voteid:s.voteid,
-					vuid:vuid
-				})
-				zmitiUtil.ajax({
-					remark:"getuservoteResultList",
-					data:{
-						action:voteActions.getuservoteResultList.action,
-						condition:condition
-					},
-					error(){
-						s.loading = false;
-					},
-					success(data){
-						s.loading = false;
-						console.log(data,'获取列表');
-						/*if(data.getret === 0){
-							s.total = data.total;
-							s.dataSource = data.list;
-						}*/
-					}
-				})
-			},
 			timestampToTime(timestamp) {
 		        var date = new Date(timestamp*1000);
 		        var Y = date.getFullYear() + '-';
 		        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
 		        var D = (date.getDate()+1 < 10 ? '0'+(date.getDate()) : date.getDate());
 		        return Y+M+D;
-		    }
+		    },
+		    sumval(ar){
+				var sumarray=ar.map((item)=>item.number);
+				var arr=sumarray    
+				var sum=arr.reduce(function(prev, curr, idx, arr){
+			          return prev + curr;
+			    })
+			    return  sum;
+			}
+		},
+		filters:{
+			getSum:function(ar){
+				var sumarray=ar.map((item)=>item.number);
+				var arr=sumarray    
+				var sum=arr.reduce(function(prev, curr, idx, arr){
+			          return prev + curr;
+			    })
+			    return  sum;
+			}
 		}
 	}
 </script>

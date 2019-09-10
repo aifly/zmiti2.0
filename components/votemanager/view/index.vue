@@ -11,55 +11,6 @@
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' ref="zmitiscroll" :style="{height:viewH - 110+'px'}">
-
-<!-- 					<div class="zmiti-question-items" v-for="(item,index) in dataSource" :key="index">
-						<div class="zmiti-question-h1">
-							<div class="zmiti-h1-txt">{{item.questionlabe}}</div>
-							<div class="zmiti-block-oper"  @click="currentQuestionStatus(index)"><span>{{item.status==true?'收起':'展开'}}</span></div>
-						</div>
-						<div class="zmiti-question-inner" v-show="item.status">
-							<div style="display: none;">{{show}}</div>
-							<div class="zmiti-question-sub"><label>类型：</label><div>{{item.questiontype==1?'多选':'单选'}}</div></div>						
-							<template v-if="item.questionurl!=''">
-								<div class="zmiti-question-sub">
-									<label>图片：</label>
-									<div><img :src="item.questionurl" class="zmiti-suboption-img"></div>
-								</div>
-							</template>
-							<div class="zmiti-question-sub">
-								<label>选项：</label>
-								<div class="zmiti-question-ulist">
-									<ul>
-										<li v-for="(ele,idx) in item.options" :key="idx">
-											
-											<div class="zmiti-question-suboption">
-												<template v-if="ele.optionsurl!=''">
-													<img :src="ele.optionsurl" class="zmiti-suboption-img">
-												</template>
-												<div class="zmiti-question-suboption-txt">
-													{{ele.options}}
-												</div>
-											</div>
-											
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="zmiti-question-foot">
-								<div class="zmiti-question-num">编号：{{item.questionid}}</div>						
-								<div class="zmiti-question-oper">							
-									<Poptip
-								        confirm
-								        title="您确认删除这条内容吗?"
-								        @on-ok="deletequestion(item.questionid)"
-								        @on-cancel="cancelpoptip">
-								        <span class="zmiti-question-operbtn">删除</span>
-								    </Poptip>
-								    |<span class="zmiti-question-operbtn" @click="editQuestion(item.questionid)">编辑</span>
-								</div>
-							</div>
-						</div>
-					</div> -->
 					<!-- 列表 -->
 					<div class="zmiti-votemanagerviewquestion-list">
 						<div class="zmiti-question-carditems" v-for="(item,index) in dataSource" :key="index">
@@ -431,33 +382,32 @@
 				this.getDataList();
 			},
 			getDataList(){
-				console.log(voteActions,'voteActions==voteActions')
-						var {condition} = this;
-						var s = this;
-						condition = Object.assign(condition,{
-							companyid:zmitiUtil.getCurrentCompanyId().companyid,
-							productid:s.productid,
-							voteid:s.voteid,
-							questionlabe:s.questionlabe
-						})
-						zmitiUtil.ajax({
-							remark:"getquesionList",
-							data:{
-								action:voteActions.getquesionList.action,
-								condition:condition
-							},
-							error(){
-								s.loading = false;
-							},
-							success(data){
-								s.loading = false;
-								console.log(data,'获取列表');
-								if(data.getret === 0){
-									s.total = data.total;
-									s.dataSource = data.list;
-								}
-							}
-						})
+				var {condition} = this;
+				var s = this;
+				condition = Object.assign(condition,{
+					companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					productid:s.productid,
+					voteid:s.voteid,
+					questionlabe:s.questionlabe
+				})
+				zmitiUtil.ajax({
+					remark:"getquesionList",
+					data:{
+						action:voteActions.getquesionList.action,
+						condition:condition
+					},
+					error(){
+						s.loading = false;
+					},
+					success(data){
+						s.loading = false;
+						console.log(data,'获取列表');
+						if(data.getret === 0){
+							s.total = data.total;
+							s.dataSource = data.list;
+						}
+					}
+				})
 			},
 			add(){//添加投票项
 				this.formstatus=true;
