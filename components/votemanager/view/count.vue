@@ -18,26 +18,34 @@
 				 	<div class="zmiti-votemanagerviewanswer-list">
 				 		<div class="zmiti-votemanagerviewanswer-items" style="margin-bottom: 10px;" v-for="(item,index) in dataSource">
 							<Card dis-hover>
-				                <p slot="title">{{item.questionlabe}}</p>
-				                <p slot="extra" >
-						            编号：{{item.questionid}}
-						        </p>
-				                <div>共：{{item.options | getSum}}</div>
-				                
+				                <p slot="title">{{item.questionlabe}}</p>			                
 				                <div class="viewoptions" v-for="(ele,idx) in item.options">				                	
-				                	<div>{{ele.options}} <span>次数：{{ele.number}}</span></div>
+				                	<div class="options-infor">
+				                		<div class="options-infor-a">{{ele.options}}</div>
+				                		<div class="options-infor-b">票数：{{ele.number}}</div>
+				                	</div>
 				                	<template v-if="sumval(item.options)>0">
 					                	<div>
 					                		<Progress :percent="parseInt((ele.number/sumval(item.options))*100)" />
 					                	</div>
 				                	</template>
 				                </div>
-				                			                
+				                <div class="options-infor options-infor2">			                		
+			                		<div class="options-infor-a">编号：{{item.questionid}}</div>
+			                		<div class="options-infor-b">总票数：{{item.options | getSum}}</div>
+			                	</div>				               			                
 				            </Card>
+
 			            </div>
 					</div>
-					<!-- <ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
-					</ZmitiTable> -->
+					<!-- 翻页 -->
+					<div class="zmiti-page-question" v-if="total>condition.page_size">
+						<Page :total="total" 
+						size="small" 
+						@on-change="change"
+						:page-size='condition.page_size'
+						show-total />
+					</div>
 				 </div>
 			 </div>
 		</div>
@@ -47,6 +55,27 @@
 
 <style lang="scss" scoped>
 	@import './question.scss';
+	.viewoptions{
+		margin-bottom: 10px;
+	}
+	.options-infor{
+		display: flex;
+		padding:5px 0;
+		.options-infor-a{
+			flex:1;
+		}
+		.options-infor-b{
+			margin-left: auto;
+		}
+	}
+	.options-infor2{
+		padding-bottom:0;
+		border-top: 1px solid #e8eaec;
+	}
+	.zmiti-page-question{
+		margin:0 auto;
+		text-align: center;
+	}
 </style>
 <script>
 
