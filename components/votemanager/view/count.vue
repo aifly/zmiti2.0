@@ -1,14 +1,10 @@
 <template>
 	<div class="zmiti-votemanagerviewanswer-main-ui">
-
 		<div class="zmiti-list-main">
-			
-		
 			 <div class='zmiti-informanager-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
 						 <span>查看投票情况</span>
-
 					 </div>
 					 <div>
 					 	<Button type="primary" @click='gousercount()'>查看参与用户</Button>
@@ -20,16 +16,18 @@
 				 		<div class="zmiti-votemanagerviewanswer-items" style="margin-bottom: 10px;" v-for="(item,index) in dataSource" :key="index">
 							<Card dis-hover>
 				                <p slot="title">{{item.questionlabe}}</p>			                
-				                <div class="viewoptions" v-for="(ele,idx) in item.options">				                	
-				                	<div class="options-infor">
-				                		<div class="options-infor-a">{{ele.options}}</div>
-				                		<div class="options-infor-b">票数：{{ele.number}}</div>
-				                	</div>
-				                	<template v-if="sumval(item.options)>0">
-					                	<div>
-					                		<Progress :percent="parseInt((ele.number/sumval(item.options))*100)" />
+				                <div class="viewoptions" v-for="(ele,idx) in item.options">
+				                	<div class="options-subitem">				                		
+				                		<div class="options-infor">
+				                			<img :src="ele.optionsurl" v-if="ele.optionsurl!=''">
+					                		<div class="options-subitem-txt">
+					                			<p>{{ele.options}}</p>
+					                		</div>
 					                	</div>
-				                	</template>
+				                	</div>
+				                	<div class="options-subitem" v-if="sumval(item.options)>0">
+				                		<Progress :percent="parseInt((ele.number/sumval(item.options))*100)" />
+				                	</div>
 				                </div>
 				                <div class="options-infor options-infor2">			                		
 			                		<div class="options-infor-a">编号：{{item.questionid}}</div>
@@ -59,6 +57,29 @@
 	@import './question.scss';
 	.viewoptions{
 		margin-bottom: 10px;
+		display: flex;
+		.options-subitem{
+			width:50%;
+			display: flex;
+			img{
+				width:80px;
+				height: 80px;
+			}
+			.options-subitem-txt{
+				flex:1;
+				margin-right: 30px;
+				padding:0 0 0 5px;
+				p{
+					margin:0;
+					line-height: 20px;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 4;
+					overflow: hidden;
+					text-align: justify;
+				}
+			}
+		}
 	}
 	.options-infor{
 		display: flex;
@@ -68,6 +89,7 @@
 		}
 		.options-infor-b{
 			margin-left: auto;
+			margin-right: 20px;
 		}
 	}
 	.options-infor2{
