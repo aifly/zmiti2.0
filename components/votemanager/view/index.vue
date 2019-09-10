@@ -55,12 +55,14 @@
 													<div class="zmiti-options-btns" style="width:120px;">
 														<Icon type="ios-image-outline" size="20" @click="openUploadImg(item.questionid,idx)" />
 														<Icon type="ios-add-circle-outline" size="20" @click="addoptions(item.questionid,index)" v-if="item.options.length-1===idx" />
-														<Poptip
-													        confirm
-													        title="您确认删除选项吗?"
-													        @on-ok="deleteQuestionOptions(index,ele.optionsid,idx)">
-													        <Icon type="ios-remove-circle-outline" size="20" />
-													    </Poptip>														
+														<template>
+															<Poptip
+														        confirm
+														        title="您确认删除选项吗?"
+														        @on-ok="deleteQuestionOptions(index,ele.optionsid,idx)">
+														        <Icon type="ios-remove-circle-outline" size="20" />
+														    </Poptip>
+													    </template>													
 													</div>
 												</div>
 											</template>
@@ -133,7 +135,7 @@
 												<div class="zmiti-options-btns" style="width: 120px;">
 													<Icon type="ios-image-outline" size="20" @click="openUploadImg(-1,index)" />
 													<Icon type="ios-add-circle-outline" size="20" @click="addoptions(0)" v-if="formObj.options.length-1===index" />
-													<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(-1,-1,index)" />
+													<Icon type="ios-remove-circle-outline" size="20" @click="removeoptions(-1,-1,index)" v-if="formObj.options.length>1" />
 												</div>
 											</div>									
 										</template>								
