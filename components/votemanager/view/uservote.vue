@@ -16,21 +16,27 @@
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
 				 	<div class="zmiti-votemanagerviewanswer-list">
-				 		<div class="zmiti-votemanagerviewanswer-items" style="margin-bottom: 10px;" v-for="(item,index) in dataSource" :key="index">
+				 		<div class="zmiti-votemanagerviewanswer-items" style="margin-bottom: 10px;" v-for="(item,index) in dataSource" :key="index" v-if="item.coloect_options.length>0">
 							<Card dis-hover>
 				                <p slot="title">{{item.questionlabe}}</p>
 				                <div class="optionslists">
-					                <div class="viewoptions" v-for="(ele,idx) in item.options">				                          	
+					                <div class="viewoptions" v-for="(ele,idx) in item.options" :key="idx">				                          	
 					                	<div class="options-infor">
 					                		<template v-if="ele.optionsurl!=''">
 				                				<img :src="ele.optionsurl">
 				                			</template>
-				                			<div class="options_subtxt">{{ele.options}}</div>
-					                	</div>
+				                			<div :class="['options_subtxt',{'options_subtxt2':ele.optionsurl==''}]">
+				                				<p>{{ele.options}}</p>
+			                					<span v-for="(e,i) in item.coloect_options" :key="i">
+			                						<Icon type="md-checkmark-circle-outline" size="20" v-if="parseInt(e)==ele.optionsid" />
+			                					</span>
+				                			</div>
+					                	</div>					                	
 					                </div>
 				                </div>
 				            </Card>
 			            </div>
+			            <!-- <div class="zmiti-list-nodata" v-else>暂无数据</div> -->
 					</div>
 					<!-- 翻页 -->
 					<div class="zmiti-page-question" v-if="total>condition.page_size">
@@ -65,10 +71,26 @@
 			.options_subtxt{
 				flex:1;
 				padding:0 0 0 5px;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 3;
-				overflow: hidden;
+				position: relative;
+				p{
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 3;
+					overflow: hidden;
+					text-align: justify;
+				}
+				.ivu-icon{
+					position:absolute;
+					bottom:0;
+					color:#19be6b;
+				}
+			}
+			.options_subtxt2{
+				.ivu-icon{
+					position:absolute;
+					bottom:0;
+					right:0;
+				}
 			}
 		}
 		
@@ -102,7 +124,7 @@
 				currentNumber:1,
 				condition:{
 					page_index:0,
-					page_size:10,
+					page_size:300,
 				},
 				userinfo:{},
 				productid:0,
@@ -203,6 +225,8 @@
 		        var D = (date.getDate()+1 < 10 ? '0'+(date.getDate()) : date.getDate());
 		        return Y+M+D;
 		    }
+		},
+		filters:{
 		}
 	}
 </script>
