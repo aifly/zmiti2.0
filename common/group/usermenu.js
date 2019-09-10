@@ -193,7 +193,7 @@ let infomanager ={
 let voteManager={
 	title: "投票管理",
 	route: "votemanager",
-	keys: ['votemanager','votemanagerview','votemanagerviewquestion'],
+	keys: ['votemanager','votemanagerview','votemanagerviewquestion','votemanagerviewcount'],
 	tabs:[
 		{
 			name:'投票管理',

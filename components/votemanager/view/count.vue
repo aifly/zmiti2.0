@@ -7,7 +7,7 @@
 			 <div class='zmiti-informanager-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
-						 <span>查看参与用户</span>
+						 <span>查看投票情况</span>
 
 					 </div>
 					 <div>

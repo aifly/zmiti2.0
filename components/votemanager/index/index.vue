@@ -140,7 +140,7 @@
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:250,
+						width:330,
 						render:(h,params)=>{
 
 							return h('div', [
@@ -193,7 +193,7 @@
 									on:{
 										click:()=>{
 											this.$router.push({
-												name:'votemanagerviewquestion',
+												name:'votemanagerviewcount',
 												params:{
 													id:this.productid,
 													voteid:params.row.voteid
@@ -202,6 +202,25 @@
 										}
 									}
 								},'查看投票'),
+								h('span',{
+									style:{
+										cursor:'pointer',
+										color:"rgb(0, 102, 204)",
+										marginLeft:'10px',
+										marginRight:'10px',
+									},
+									on:{
+										click:()=>{
+											this.$router.push({
+												name:'votemanagerviewquestion',
+												params:{
+													id:this.productid,
+													voteid:params.row.voteid
+												}
+											})
+										}
+									}
+								},'查看参与用户'),
 								h('Poptip',{
 									props:{
 										confirm:true,
