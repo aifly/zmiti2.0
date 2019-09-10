@@ -15,16 +15,6 @@
 					 </div>
 				 </header>
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
-				 	<!-- <div class="zmiti-votemanagerviewanswer-list">
-				 		<div class="zmiti-votemanagerviewanswer-items">
-							<Card dis-hover>
-				                <p slot="title">Disable card with hover shadows</p>
-				                <p>Content of card</p>
-				                <p>Content of card</p>
-				                <p>Content of card</p>
-				            </Card>
-			            </div>
-					</div> -->
 					<ZmitiTable :loading='loading' :dataSource='dataSource' :columns='columns' :change='change' :page-size='condition.page_size'  :total="total">
 					</ZmitiTable>
 				 </div>
@@ -91,6 +81,32 @@
 						render:(h,params)=>{
 							return h('div',{},this.timestampToTime(params.row.createtime));
 						}
+					},				
+					{
+						title:"操作",
+						key:"action",
+						align:"center",
+						width:150,
+						render:(h,params)=>{
+							return h('div',{
+								style:{
+									cursor:'pointer',
+									color:"rgb(0, 102, 204)"
+								},
+								on:{
+									click: () => {
+										this.$router.push({
+											name:'votemanagerviewuservote',
+											params:{
+												id:this.productid,
+												voteid:params.row.voteid,
+												vuid:params.row.vuid
+											}
+										})
+									}
+								}
+							},'查看参与的投票');
+						}
 					}
 				]			
 			}
@@ -109,7 +125,6 @@
 		},
 		mounted(){
 			this.getDataList();
-			//this.getuservoteResultList(20);
 		},
 		computed:{
 
@@ -153,34 +168,6 @@
 								}
 							}
 						})
-			},
-			getuservoteResultList(vuid){
-				var {condition} = this;
-				var s = this;
-				condition = Object.assign(condition,{
-					companyid:zmitiUtil.getCurrentCompanyId().companyid,
-					productid:s.productid,
-					voteid:s.voteid,
-					vuid:vuid
-				})
-				zmitiUtil.ajax({
-					remark:"getuservoteResultList",
-					data:{
-						action:voteActions.getuservoteResultList.action,
-						condition:condition
-					},
-					error(){
-						s.loading = false;
-					},
-					success(data){
-						s.loading = false;
-						console.log(data,'获取列表');
-						/*if(data.getret === 0){
-							s.total = data.total;
-							s.dataSource = data.list;
-						}*/
-					}
-				})
 			},
 			timestampToTime(timestamp) {
 		        var date = new Date(timestamp*1000);
