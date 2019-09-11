@@ -124,7 +124,7 @@
 				currentNumber:1,
 				condition:{
 					page_index:0,
-					page_size:300,
+					page_size:20,
 				},
 				userinfo:{},
 				productid:0,
@@ -200,9 +200,9 @@
 					vuid:this.$route.params.vuid
 				})
 				zmitiUtil.ajax({
-					remark:"getuservoteResultList",
+					remark:"getusercurrentResult",
 					data:{
-						action:voteActions.getuservoteResultList.action,
+						action:voteActions.getusercurrentResult.action,
 						condition:condition
 					},
 					error(){
