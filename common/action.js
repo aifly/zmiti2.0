@@ -810,6 +810,10 @@ let voteActions={
 		desc:"获取用户投票相关列表",
 		action:"2001413"
 	},
+	getusercurrentResult:{
+		desc:"获取用户投票选项列表",
+		action:"2001414"
+	},
 	addmorequestion:{
 		desc:"批量添加问题",
 		action:"2001405"
