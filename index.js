@@ -54,6 +54,7 @@ import votemanagerview from './components/votemanager/view';
 import votemanagerviewquestion from './components/votemanager/view/question';
 import votemanagerviewcount from './components/votemanager/view/count';
 import votemanagerviewuservote from './components/votemanager/view/uservote';
+import votemanagersetting from './components/votemanager/setting/index';
 import OrderFood from './components/orderfood/orderfood';
 import orderfoodsubmit from './components/orderfood/orderfoodsubmit';
 import orderFoodRole from './components/orderfood/orderfoodrole';
@@ -161,6 +162,7 @@ const router = new VueRouter({
 			{path:"/votemanagerviewquestion/:id?/:voteid?",name:"votemanagerviewquestion",component:votemanagerviewquestion},
 			{path:"/votemanagerviewcount/:id?/:voteid?",name:"votemanagerviewcount",component:votemanagerviewcount},
 			{path:"/votemanagerviewuservote/:id?/:voteid?/:vuid?",name:"votemanagerviewuservote",component:votemanagerviewuservote},
+			{path:"/votemanagersetting/:id?",name:"votemanagersetting",component:votemanagersetting},
 			{path:"/orderfood/:id?",name:"orderfood",component:OrderFood},
 			{ path: "/orderfoodsubmit/:id?", name: "orderfoodsubmit", component: orderfoodsubmit},
 			{ path: "/orderfoodrole/:id?", name: "orderfoodrole", component: orderFoodRole},

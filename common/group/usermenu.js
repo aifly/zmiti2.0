@@ -198,7 +198,18 @@ let voteManager={
 		{
 			name:'投票管理',
 			link:'/votemanager'
-		}
+		},
+		{
+			name:"配置管理",
+			link:'/votemanager',
+			children:[
+				{
+					name:'权限配置',
+					link:'/votemanagersetting'
+				},
+				
+			]
+		},
 	]
 }
 
