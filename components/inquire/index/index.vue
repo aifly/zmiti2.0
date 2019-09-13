@@ -1,5 +1,5 @@
 <template>
-  <div class="zmiti-meetingroom-main-ui lt-full">
+  <div class="zmiti-inquire-main-ui lt-full">
     <div class="zmiti-list-main">
       <header class="zmiti-tab-header">
         <div>问卷调查</div>

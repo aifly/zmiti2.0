@@ -944,6 +944,7 @@ let mettingroomActions = {
 		desc: '会议预定审核',
 		action: '2001621'
 	},
+	
 }
 //问卷调查action
 let inquireActions = {
@@ -979,14 +980,6 @@ let inquireActions = {
 		desc: '获取问题列表',
 		action: '2001508'
 	},
-	addOptions: {
-		desc: '新增选项',
-		action: '2001509'
-	},
-	editOptions: {
-		desc: '修改选项',
-		action: '2001510'
-	},
 	delOptions: {
 		desc: '删除选项',
 		action: '2001511'
@@ -994,6 +987,10 @@ let inquireActions = {
 	getUserInquireList: {
 		desc: '获取用户调查列表',
 		action: '2001512'
+	},
+	getInquireResult: {
+		desc: '获取调查结果',
+		action: '2001513'
 	}
 }
 

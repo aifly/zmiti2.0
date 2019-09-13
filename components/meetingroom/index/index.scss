@@ -28,11 +28,14 @@ $baseColor:#3390ff;
 					margin-right: 3px;
 					margin-bottom: -3px;
 				}
-				.cyan{
-					background-color: cyan;					
+				.green{
+					background-color: #87d068;
 				}
 				.orange{
 					background-color: orange;
+				}
+				.gray{
+					background-color: #a9a9a9;
 				}
 			}
 		}
@@ -69,8 +72,12 @@ $baseColor:#3390ff;
 							cursor: default;
 						}
 					}
-					.cyan-td {
-						background-color: cyan;
+					.green-td {
+						background-color: #87d068;
+						color: #fff;
+					}
+					.gray-td {
+						background-color: #a9a9a9;
 						color: #fff;
 					}
 
@@ -88,6 +95,7 @@ $baseColor:#3390ff;
 							@include displayFlex(row);
 							align-items: center;
 							justify-content: space-around;
+							height: 40px;
 						}
 					}
 				}
@@ -101,13 +109,13 @@ $baseColor:#3390ff;
 				border-right: 1px solid #ccc;
 				border-bottom: 1px solid #ccc;
 				font-size: 13px;
-				color: #ccc;
-				position: relative;
-				cursor: pointer;
+				color: #727272;
+				position: relative;				
 				&:last-child {
 					border-right: none;
 				}
-				div{
+				&>div{
+					cursor: pointer;
 					height: 60px;
 					padding: 10px 5px;
 					p{

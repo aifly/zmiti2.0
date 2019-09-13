@@ -5,13 +5,16 @@
         <div>会议室预定</div>
         <div>
           <span class="square-color">
-            <i></i>可预定
+            <i class="green"></i>可预定
           </span>
           <span class="square-color">
-            <i class="cyan"></i>审核中
+            <i class="gray"></i>空置
           </span>
           <span class="square-color">
-            <i class="orange"></i>已预定
+            <i class="orange"></i>审核中
+          </span>
+          <span class="square-color">
+            <i></i>已预定
           </span>
           <DatePicker
             v-model="searchDate"
@@ -42,32 +45,53 @@
                   <tr v-for="(item,index) in tableList" :key="index">
                     <td v-for="room in item.rooms" :key="room.roomid+'-'+item.time">
                       <div
-                        v-if="room.isReserve && room.reserve.status == 1"
-                        class="cyan-td"
-                        @click="auditRoom(room)"
+                        v-if="room.isReserve == true && room.reserve.status == 1"
+                        class="orange-td room-item"
+                        @mouseover="mouseover"
                       >
                         <p>{{room.roomname}}</p>
                         <p>待审核</p>
                       </div>
                       <div
-                        v-else-if="room.isReserve && room.reserve.status == 2"
-                        class="orange-td"
-                        @click="viewRoom(room)"
+                        v-else-if="room.isReserve == true && room.reserve.status == 2"
+                        class="room-item"
+                        @mouseover="mouseover"
                       >
-                        <p>预定人：{{room.reserve.briefing}}</p>
+                        <p>预定人：{{room.reserve.username}}</p>
                         <p>会议人数：{{room.reserve.peoplenumber}}</p>
                       </div>
-                      <div v-else @click="viewRoom(room)">
+                      <div v-else :class="{'green-td': !item.isPretDate, 'gray-td': item.isPretDate,'room-item':true}" @mouseover="mouseover">
                         <p>{{item.time}}</p>
-                        <p>可预定</p>
+                        <p>{{item.isPretDate ? '空置':'可预定'}}</p>
                       </div>
-                      <!-- <div class="room-operate" v-show="room.btn">
+                      <div class="room-operate" style="display:none;">
                         <div class="operate">
-                          <Button type="info" size="small" @click="viewRoom()">查看</Button>
-                          <Button type="info" size="small" @click="auditRoom()">审核</Button>
-                          <Button type="info" size="small" @click="changeRoom()">更换</Button>
+                          <Button
+                            type="info"
+                            size="small"
+                            v-if="!room.isReserve"
+                            @click="viewRoom(room)"
+                          >查看</Button>
+                          <Button
+                            type="info"
+                            size="small"
+                            v-if="room.isReserve == true && room.reserve.status == 2"
+                            @click="viewAuditRoom(room)"
+                          >查看</Button>
+                          <Button
+                            type="info"
+                            size="small"
+                            v-if="room.isReserve == true && room.reserve.status == 1"
+                            @click="auditRoom(room)"
+                          >审核</Button>
+                          <!-- <Button
+                            type="info"
+                            size="small"
+                            v-if="room.isReserve == true"
+                            @click="changeRoom(room)"
+                          >更换</Button> -->
                         </div>
-                      </div>-->
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -148,18 +172,21 @@
               class="zmiti-add-form-C"
               :model="formObj"
               :label-width="90"
-              v-if="maskType=='audit'"
+              v-if="maskType=='audit' || maskType=='viewAudit'"
             >
-              <FormItem label="会议室名称：">
+              <FormItem label="预订会议室：">
                 <Input v-model="formObj.roomname" disabled></Input>
               </FormItem>
               <FormItem label="容纳人数：">
                 <InputNumber :min="1" v-model="formObj.peoplenumber" disabled></InputNumber>
               </FormItem>
-              <FormItem label="申请人：">
-                <Input v-model="formObj.briefing" disabled></Input>
+              <FormItem label="会议名称：">
+                <Input v-model="formObj.meetingname" disabled></Input>
               </FormItem>
-              <FormItem label="会议人数：">
+              <FormItem label="预订⼈姓名：">
+                <Input v-model="formObj.username" disabled></Input>
+              </FormItem>
+              <FormItem label="参会⼈数：">
                 <InputNumber :min="1" v-model="formObj.applypeoplenumber" disabled></InputNumber>
               </FormItem>
               <Row>
@@ -174,11 +201,10 @@
                   </FormItem>
                 </Col>
               </Row>
-
-              <FormItem label="申请时间：">
+              <FormItem label="预定时间：">
                 <Input v-model="formObj.orderdate" disabled></Input>
               </FormItem>
-              <FormItem label="备注：">
+              <FormItem label="预定说明：">
                 <Input
                   v-model="formObj.applyremarks"
                   type="textarea"
@@ -188,7 +214,12 @@
               </FormItem>
             </Form>
             <div class="zmiti-add-form-item zmiti-add-btns">
-              <Button v-if="maskType=='view'" size="large" type="primary" @click="closeMaskPage">关闭</Button>
+              <Button
+                v-if="maskType=='view' || maskType=='viewAudit'"
+                size="large"
+                type="primary"
+                @click="closeMaskPage"
+              >关闭</Button>
               <Button
                 v-if="maskType=='audit'"
                 size="large"
@@ -274,7 +305,8 @@ export default {
         roomadress: '',//会议地址
         configids: [],//会议装置设备
         remarks: '',//备注
-        briefing: '',
+        username: '',
+        meetingname: '',
         applypeoplenumber: 0,
         orderdate: '',
         begintime: '',
@@ -298,9 +330,34 @@ export default {
   },
   mounted () {
     this.init();
-
   },
   methods: {
+    checkHover (e, target) {
+      if (e.type == "mouseover") {
+        return !this.contains(target, e.relatedTarget || e.fromElement) && !((e.relatedTarget || e.fromElement) === target);
+      } else {
+        return !this.contains(target, e.relatedTarget || e.toElement) && !((e.relatedTarget || e.toElement) === target);
+      }
+    },
+    contains (parentNode, childNode) {
+      if (parentNode.contains) {
+        return parentNode != childNode && parentNode.contains(childNode);
+      } else {
+        return !!(parentNode.compareDocumentPosition(childNode) & 16);
+      }
+    },
+    mouseover (e) {
+      let target = e.target;
+      if (e.target.nodeName == 'DIV') {
+        target = e.target;
+      } else if (e.target.nodeName == 'P') {
+        target = e.target.parentElement;
+      }
+      if (this.checkHover(e, target)) {
+        $('.zmiti-room-table .room-operate').css('display','none');
+        target.nextElementSibling.style.display = 'block';
+      }
+    },
     viewRoom (room) {
       this.maskTitle = '会议室信息';
       this.maskType = 'view';
@@ -316,6 +373,23 @@ export default {
       this.formObj.remarks = room.remarks;
       Vue.obserable.trigger({ type: 'toggleMask', data: true });
     },
+    viewAuditRoom (room) {
+      this.maskTitle = '会议室信息';
+      this.maskType = 'viewAudit';
+      this.formObj.roomid = room.roomid;
+      this.formObj.roomname = room.roomname;
+      this.formObj.peoplenumber = room.peoplenumber;
+      this.formObj.orderid = room.reserve.orderid;
+      this.formObj.meetingname = room.reserve.meetingname;
+      this.formObj.username = room.reserve.username;
+      this.formObj.applypeoplenumber = room.reserve.peoplenumber;
+      this.formObj.orderdate = this.DateFormatter(room.reserve.orderdate * 1000);
+      this.formObj.begintime = this.DateFormatter(room.reserve.begintime * 1000);
+      this.formObj.endtime = this.DateFormatter(room.reserve.endtime * 1000);
+      this.formObj.applyremarks = room.reserve.remarks;
+      this.formObj.auditStatus = room.reserve.status;
+      Vue.obserable.trigger({ type: 'toggleMask', data: true });
+    },
     auditRoom (room) {
       this.maskTitle = '会议室审核';
       this.maskType = 'audit';
@@ -323,13 +397,17 @@ export default {
       this.formObj.roomname = room.roomname;
       this.formObj.peoplenumber = room.peoplenumber;
       this.formObj.orderid = room.reserve.orderid;
-      this.formObj.briefing = room.reserve.briefing;
+      this.formObj.meetingname = room.reserve.meetingname;
+      this.formObj.username = room.reserve.username;
       this.formObj.applypeoplenumber = room.reserve.peoplenumber;
-      this.formObj.orderdate = DateFormatter(room.reserve.orderdate * 1000);
-      this.formObj.begintime = DateFormatter(room.reserve.begintime * 1000);
-      this.formObj.endtime = DateFormatter(room.reserve.endtime * 1000);
+      this.formObj.orderdate = this.DateFormatter(room.reserve.orderdate * 1000);
+      this.formObj.begintime = this.DateFormatter(room.reserve.begintime * 1000);
+      this.formObj.endtime = this.DateFormatter(room.reserve.endtime * 1000);
       this.formObj.applyremarks = room.reserve.remarks;
       Vue.obserable.trigger({ type: 'toggleMask', data: true });
+    },
+    changeRoom (room) {
+
     },
     auditAction (audit) {
       let info = {
@@ -484,35 +562,56 @@ export default {
     },
     mergedTableList () {
       let arr = [];
+      let currentDate = new Date();
       let year = this.searchDate.getFullYear(), month = this.searchDate.getMonth() + 1, day = this.searchDate.getDate();
       this.timeRange.forEach((time, index) => {
+        let isPretDate = false;
         let roomTime = new Date(year + '-' + month + '-' + day + ' ' + time).getTime() / 1000;
+        if(roomTime < currentDate.getTime()/1000){
+          isPretDate = true;
+        }
         let rooms = [];
         this.roomList.forEach(room => {
+          let temp = {
+            companyroom: room.companyroom,
+            configids: room.configids,
+            createtime: room.createtime,
+            layoutid: room.layoutid,
+            needaudit: room.needaudit,
+            peoplenumber: room.peoplenumber,
+            remarks: room.remarks,
+            roomadress: room.roomadress,
+            roomid: room.roomid,
+            roomlaber: room.roomlaber,
+            roomname: room.roomname
+          };
           for (let i = 0; i < this.reserveList.length; i++) {
             let reserve = this.reserveList[i];
-            if (reserve.begintime <= roomTime && reserve.endtime > roomTime && reserve.status != 0) {
-              room.isReserve = true;
-              room.reserve = reserve;
-              console.log('reserve:', room);
+            if (room.roomid == reserve.roomid && reserve.begintime <= roomTime && reserve.endtime > roomTime && reserve.status != 0) {
+              temp.isReserve = true;
+              temp.reserve = reserve;
+              console.log('reserve:',temp)
               break;
             }
           }
-          rooms.push(room);
+          rooms.push(temp);
         })
         let item = {
           time: time,
-          rooms: rooms
+          rooms: rooms,
+          isPretDate
         }
         arr.push(item);
       })
       this.tableList = arr;
-      console.log(this.tableList)
     },
     DateFormatter (date) {
-      let d = new Date(data);
+      let d = new Date(date);
       let year = d.getFullYear(), month = d.getMonth() + 1, day = d.getDate(), hh = d.getHours(), mm = d.getMinutes(), ss = d.getSeconds();
       if (month <= 9) month = '0' + month;
+      if (hh <= 9) hh = '0' + hh;
+      if (mm <= 9) mm = '0' + mm;
+      if (ss <= 9) ss = '0' + ss;
       return year + '-' + month + '-' + day + ' ' + hh + ':' + mm + ':' + ss;
     }
 

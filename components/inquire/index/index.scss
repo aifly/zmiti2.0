@@ -1,6 +1,6 @@
 ﻿@import "../../css/base.scss";
 $baseColor:#3390ff;
-.zmiti-meetingroom-main-ui {
+.zmiti-inquire-main-ui {
 	background: #f2f2f2;
 	box-sizing: border-box;
 	height: 100%;
@@ -12,7 +12,10 @@ $baseColor:#3390ff;
 		background: #fff;
 		margin: 0 auto;
 	}
-
+	.zmiti-tabs-select {
+		width: 98%;
+		margin: 10px auto;
+	}
 	.zmiti-list-where {
 		font-size: 14px;
 		width: 98%;
