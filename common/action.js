@@ -908,40 +908,92 @@ let partyActions = {
 };
 //会议室action
 let mettingroomActions = {
+	getDeviceList: {
+		desc: '会议室设备列表',
+		action: '2001630'
+	},
+	getLayoutList: {
+		desc: '会议室布局列表',
+		action: '2001631'
+	},
 	addMettingroom: {
-		desc: '新增会议室',
-		action: '2001704'
+		desc: '创建会议室',
+		action: '2001610'
 	},
 	editMettingroom: {
-		desc: '修改会议室',
-		action: '2001704'
+		desc: '更新会议室',
+		action: '2001611'
 	},
 	delMettingroom: {
 		desc: '删除会议室',
-		action: '2001704'
+		action: '2001612'
 	},
 	getMettingroomList: {
-		desc: '获取会议室列表',
-		action: '2001704'
-	}
+		desc: '获取会议室',
+		action: '2001613'
+	},
+	getReserveMettingroomList: {
+		desc: '会议预定列表',
+		action: '2001620'
+	},
+	getMettingroomList2: {
+		desc: '会议室列表',
+		action: '2001632'
+	},
+	auditMettingroom: {
+		desc: '会议预定审核',
+		action: '2001621'
+	},
 }
 //问卷调查action
 let inquireActions = {
 	addInquire: {
 		desc: '新增问卷调查',
-		action: '2001704'
+		action: '2001500'
 	},
 	editInquire: {
 		desc: '修改问卷调查',
-		action: '2001704'
+		action: '2001501'
 	},
 	delInquire: {
 		desc: '删除问卷调查',
-		action: '2001704'
+		action: '2001502'
+	},
+	getInquireDetail: {
+		desc: '获取问卷调查详情',
+		action: '2001504'
 	},
 	getInquireList: {
 		desc: '获取问卷调查列表',
 		action: '2001503'
+	},
+	editQuestion: {
+		desc: '批量修改问题',
+		action: '2001506'
+	},
+	delQuestion: {
+		desc: '批量删除问题',
+		action: '2001507'
+	},
+	getQuestionList: {
+		desc: '获取问题列表',
+		action: '2001508'
+	},
+	addOptions: {
+		desc: '新增选项',
+		action: '2001509'
+	},
+	editOptions: {
+		desc: '修改选项',
+		action: '2001510'
+	},
+	delOptions: {
+		desc: '删除选项',
+		action: '2001511'
+	},
+	getUserInquireList: {
+		desc: '获取用户调查列表',
+		action: '2001512'
 	}
 }
 

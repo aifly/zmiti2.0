@@ -18,6 +18,10 @@ $baseColor:#3390ff;
 		width: 98%;
 		margin: 10px auto;
 		@include displayFlex(row);
+		.ivu-input-wrapper{
+			width:200px;
+			margin-right:10px;
+		}
 	}
 
 	.zmiti-scroll {

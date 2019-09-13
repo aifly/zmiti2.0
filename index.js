@@ -60,9 +60,11 @@ import orderFoodRole from './components/orderfood/orderfoodrole';
 
 import MeetingRoom from './components/meetingroom/index/'
 import MeetingRoomSetting from './components/meetingroom/setting/'
+import MeetingRoomRole from './components/meetingroom/role/'
 
 import Inquire from './components/inquire/index/index.vue'
-import InquireDetail from './components/inquire/index/detail.vue'
+import InquireUserList from './components/inquire/index/userlist.vue'
+import QuestionList from './components/inquire/index/questionlist.vue'
 import InquireSetting from './components/inquire/setting/index.vue'
 
 import VueRouter from 'vue-router'
@@ -142,6 +144,7 @@ const router = new VueRouter({
 			{ path: '/rolegroup/', name: 'rolegroup', component:  rolegroup},
 			{ path: '/meetingroom/:id?', name: 'meetingroom', component: MeetingRoom },
 			{ path: '/meetingroomsetting', name: 'meetingroomsetting', component: MeetingRoomSetting },
+			{ path: '/meetingroomrole/:id?', name: 'meetingroomrole', component: MeetingRoomRole },
 			{ path: "/infomanager/:id?", name: "infomanager", component: infomanager},
 			{path:"/infomanagermsg/:id?",name:"infomanagermsg",component:infomanagermsg},
 			{path:"/infomanagermsgdetail/:productid?/:typeid?/:typename?/:id?",name:"infomanagermsgdetail",component:infomanagermsgdetail},
@@ -172,8 +175,9 @@ const router = new VueRouter({
 			//--2019.8.30-bmyuan end--
 			// 问卷调差
 			{ path: "/inquire/:id?", name: "inquire", component: Inquire},
-			{ path: "/inquiredetail/:productid?/:isedit?/:id?", name: "inquiredetail", component: InquireDetail},
-			{ path: "/inquiresetting/:productid?", name: "inquiresetting", component: InquireSetting},
+			{ path: "/inquireuserlist/:productid?/:id?", name: "inquireuserlist", component: InquireUserList},
+			{ path: "/inquirequestionlist/:productid?/:id?", name: "inquirequestionlist", component: QuestionList},
+			{ path: "/inquiresetting/:id?", name: "inquiresetting", component: InquireSetting},
 		]
 	},
    /*  {

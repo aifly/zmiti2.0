@@ -225,7 +225,7 @@ let orderFood ={
 
 let meetingRoom = {
 	title: "会议室预定",
-	keys: ['meetingroom', 'meetingroomsetting'],
+	keys: ['meetingroom', 'meetingroomsetting','meetingroomrole'],
 	route: "meetingroom",
 	tabs:[
 		{
@@ -234,6 +234,13 @@ let meetingRoom = {
 		}, {
 			name: '会议室设置',
 			link: "/meetingroomsetting"
+		}, {
+			name: "配置管理",
+			link: '/meetingroomrole',
+			children: [{
+				name: '权限配置',
+				link: '/meetingroomrole'
+			}]
 		}
 	]
 }
@@ -254,10 +261,9 @@ let  Party = {
 	]
 }
 let Inquire = {
-	title:"问卷调差",
+	title:"问卷调查",
 	route: "inquire",
-	keys: ['inquire', 'inquiredetail','inquiresetting'],
-	route: "inquire",
+	keys: ['inquire', 'inquirequestionlist','inquiresetting'],
 	tabs:[
 		{
 			name:'问卷调查',

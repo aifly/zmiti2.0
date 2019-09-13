@@ -2,7 +2,7 @@
   <div class="zmiti-meetingroom-main-ui lt-full">
     <div class="zmiti-list-main">
       <header class="zmiti-tab-header">
-        <div>调查问卷</div>
+        <div>问卷调查</div>
         <div>
           <Button :loading="loading" @click="getDataList()" type="primary">刷新</Button>
           <Button type="primary" @click="add()">添加</Button>
@@ -37,6 +37,67 @@
         ></ZmitiTable>
       </div>
     </div>
+    <ZmitiMask v-model="showDetailPage" @closeMaskPage="closeMaskPage">
+      <div slot="mask-content">
+        <transition name="detail">
+          <section class="zmiti-add-form zmiti-scroll">
+            <header class="zmiti-add-header">
+              <img :src="imgs.back" alt @click="closeMaskPage" />
+              <span>调查问卷信息</span>
+            </header>
+            <Form
+              :model="formObj"
+              :label-width="120"
+              :rules="ruleValidate"
+              ref="ruleForm"
+              class="zmiti-add-form-C"
+            >
+              <input v-model="formObj.inquireid" type="hidden" />
+              <FormItem label="问卷标题：" prop="inquiretitle">
+                <Input v-model="formObj.inquiretitle" placeholder="活动名称"></Input>
+              </FormItem>
+
+              <FormItem label="开始时间：" prop="begintime">
+                <DatePicker
+                  type="datetime"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  v-model="formObj.begintime"
+                  placeholder="开始时间"
+                ></DatePicker>
+              </FormItem>
+              <FormItem label="结束时间：" prop="endtime">
+                <DatePicker
+                  type="datetime"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  v-model="formObj.endtime"
+                  placeholder="结束时间"
+                ></DatePicker>
+              </FormItem>
+              <FormItem label="是否实名：" prop="isrealname">
+                <RadioGroup v-model="formObj.isrealname">
+                  <Radio :label="0">否</Radio>
+                  <Radio :label="1">是</Radio>
+                </RadioGroup>
+              </FormItem>
+              <FormItem label="描述：" prop="abstract">
+                <Input
+                  v-model="formObj.abstract"
+                  type="textarea"
+                  :autosize="{minRows: 2,maxRows: 5}"
+                ></Input>
+              </FormItem>
+            </Form>
+            <div class="zmiti-add-form-item zmiti-add-btns">
+              <Button
+                size="large"
+                type="primary"
+                @click="adminAction('ruleForm')"
+              >{{formObj.infoid?'保存':'确定'}}</Button>
+            </div>
+          </section>
+        </transition>
+      </div>
+    </ZmitiMask>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -47,11 +108,26 @@
 import Vue from 'vue';
 import zmitiUtil from '../../../common/lib/util';
 import ZmitiTable from '../../../common/table';
+import ZmitiMask from '../../../common/mask';
 export default {
   props: ['obserable'],
   name: 'inquireindex',
   data () {
+    let timeValidate = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("请输入问卷调查开始/结束时间"));
+      }
+      var date1 = new Date(value);
+      if (rule.fullField == 'begintime' && this.formObj.endtime != "" && date1.getTime() >= new Date(this.formObj.endtime).getTime()) {
+        return callback(new Error("问卷调查开始时间不能大于结束时间"));
+      }
+      if (rule.fullField == 'endtime' && this.formObj.begintime != "" && date1.getTime() <= new Date(this.formObj.begintime).getTime()) {
+        return callback(new Error("问卷调查结束时间不能小于开始时间"));
+      }
+      return callback();
+    }
     return {
+      showDetailPage: -1,
       imgs: window.imgs,
       inquireActions: zmitiUtil.inquireActions,
       company: zmitiUtil.getCurrentCompanyId(),
@@ -62,6 +138,19 @@ export default {
       nameSearch: '',
       beginTimeSearch: 0,
       endTimeSearch: 0,
+      formObj: {
+        inquireid: undefined,
+        inquiretitle: '',
+        isrealname: 0,
+        begintime: '',
+        endtime: '',
+        abstract: ''
+      },
+      ruleValidate: {
+        inquiretitle: [{ required: true, message: '请输入问卷调查名称', trigger: 'blur' }],
+        begintime: [{ required: true, validator: timeValidate, trigger: 'change' }],
+        endtime: [{ required: true, validator: timeValidate, trigger: 'change' }],
+      },
       columns: [{
         title: "问卷标题",
         key: 'inquiretitle',
@@ -103,9 +192,55 @@ export default {
         title: '操作',
         key: 'action',
         align: 'center',
-        width: 200,
+        width: 220,
         render: (h, params) => {
           return h('div', [
+            h('span', {
+              style: {
+                cursor: 'pointer',
+                color: "rgb(0, 102, 204)"                
+              },
+              on: {
+                click: () => {
+                  this.formObj = {
+                    inquireid: params.row.inquireid,
+                    inquiretitle: params.row.inquiretitle,
+                    isrealname: params.row.isrealname,
+                    begintime: new Date(params.row.begintime * 1000),
+                    endtime: new Date(params.row.endtime * 1000),
+                    abstract: params.row.abstract
+                  }
+                  Vue.obserable.trigger({
+                    type: 'toggleMask',
+                    data: true
+                  })
+                }
+              }
+            }, '编辑'),
+             h('span', {
+              style: {
+                cursor: 'pointer',
+                color: "rgb(0, 102, 204)",
+                marginLeft: '10px'
+              },
+              on: {
+                click: () => {
+                  this.$router.push({ name: 'inquirequestionlist', params: { productid: this.productid, id: params.row.inquireid } })
+                }
+              }
+            }, '问题列表'),
+            h('span', {
+              style: {
+                cursor: 'pointer',
+                color: "rgb(0, 102, 204)",
+                marginLeft: '10px'
+              },
+              on: {
+                click: () => {
+                  this.$router.push({ name: 'inquireuserlist', params: { productid: this.productid, id: params.row.inquireid } })
+                }
+              }
+            }, '用户调查'),
             h('Poptip', {
               props: {
                 confirm: true,
@@ -114,7 +249,7 @@ export default {
               },
               on: {
                 'on-ok': () => {
-                  this.delete(params.row.roomid);
+                  this.delete(params.row.inquireid);
                 },
               }
             }, [
@@ -125,27 +260,15 @@ export default {
                   },
                   style: {
                     cursor: 'pointer',
-                    color: '#06C'
+                    color: '#06C',
+                    marginLeft: '10px'
                   },
                   on: {
                     click: () => {
                     }
                   }
                 }, '删除')
-              ]),
-            h('span', {
-              style: {
-                cursor: 'pointer',
-                color: "rgb(0, 102, 204)",
-                marginLeft: '10px'
-              },
-              on: {
-                click: () => {
-                  console.log(params.row)
-                  this.$router.push({ name: 'inquiredetail', params: { productid: this.productid, isedit: 'edit', id: params.row.inquireid } })
-                }
-              }
-            }, '编辑')
+              ])
           ]);
         }
       }],
@@ -157,7 +280,8 @@ export default {
     }
   },
   components: {
-    ZmitiTable
+    ZmitiTable,
+    ZmitiMask
   },
   mounted () {
     this.init();
@@ -185,10 +309,8 @@ export default {
       }, 200);
     },
     selectDates (val) {//按时间段查询
-      console.log(val, '选择的时间');
       this.beginTimeSearch = Date.parse(new Date(val[0])) / 1000;
       this.endTimeSearch = Date.parse(new Date(val[1])) / 1000;
-      console.log(this.beginTimeSearch + ' ' + this.endTimeSearch, '选择的时间戳');
     },
     searchHandle () {//搜索
       this.getDataList();
@@ -231,8 +353,8 @@ export default {
         remark: 'delInquire',
         data: {
           action: this.inquireActions.delInquire.action,
-          condition: {
-            partyid: id,
+          info: {
+            inquireid: id,
             companyid: this.company.companyid,
             productid: this.productid
           }
@@ -245,32 +367,33 @@ export default {
         }
       })
     },
-    add () {//弹出侧弹框     
-      this.$router.push({ name: 'inquiredetail', params: { productid: this.productid, isedit: 'add' } })
+    add () {//弹出侧弹框   
+      Vue.obserable.trigger({ type: 'toggleMask', data: true });
     },
     closeMaskPage () {//关闭侧弹框
       this.$refs['ruleForm'].resetFields();
-      this.formObj.devices = [];
-      this.formObj.roomlaber = [];
+      this.formObj.inquireid = undefined;
       Vue.obserable.trigger({ type: 'toggleMask', data: false });
     },
     adminAction (name) {//保存or 修改
-      console.log(this.formObj)
       this.$refs[name].validate((valid) => {
         if (valid) {
-          let action = this.formObj.roomid ? this.inquireActions.editInquire.action : this.inquireActions.addInquire.action;
+          let action = this.formObj.inquireid ? this.inquireActions.editInquire.action : this.inquireActions.addInquire.action;
           let info = {
-            typeid: 3,//信息类型标识：0消息；1意见箱；2通知；3公告；4新闻；5资料
-            status: 2,//-1所有 0表示禁用；1表示待审；2表示通过；3表示拒绝
-            infoid: this.formObj.infoid,
-            title: this.formObj.title,
-            content: this.formObj.content,
+            productid: this.productid,
             companyid: this.company.companyid,
-            productid: this.productid
+            inquiretitle: this.formObj.inquiretitle,
+            isrealname: this.formObj.isrealname,
+            abstract: this.formObj.abstract,
+            begintime: new Date(this.formObj.begintime).getTime() / 1000,
+            endtime: new Date(this.formObj.endtime).getTime() / 1000
+          };
+          if (this.formObj.inquireid) {//编辑
+            info.inquireid = this.formObj.inquireid;
           }
           let s = this;
           zmitiUtil.ajax({
-            remark: this.formObj.roomid ? 'editInquire' : 'addInquire',
+            remark: this.formObj.inquireid ? 'editInquire' : 'addInquire',
             data: {
               action,
               info

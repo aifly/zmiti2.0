@@ -6,11 +6,14 @@
         <div>
           <Button :loading="loading" @click="getDataList()" type="primary">刷新</Button>
           <Button type="primary" @click="add()">添加</Button>
+          <Button type="primary" @click="deletes()">删除</Button>
         </div>
       </header>
       <div class="zmiti-submit-main zmiti-scroll" :style="{height:viewH - 130+'px' }">
         <section class="zmiti-list-where">
-          <Input v-model="nameSearch" placeholder="请输入会议室名称" style="width:200px; margin-right:10px"></Input>
+          <Input v-model="searchForm.roomname" placeholder="请输入会议室名称"></Input>
+          <Input v-model="searchForm.companyroom" placeholder="请输入所属单位"></Input>
+          <Input v-model="searchForm.roomlaber" placeholder="请输入会议室标签"></Input>
           <Button icon="md-search" @click="searchHandle">搜索</Button>
         </section>
         <ZmitiTable
@@ -18,6 +21,7 @@
           :dataSource="dataSource"
           :columns="columns"
           :change="change"
+          @getSelection="getSelection"
           :page-size="condition.page_size"
           :total="total"
         ></ZmitiTable>
@@ -44,7 +48,11 @@
               </FormItem>
               <FormItem label="布局：" prop="layoutid">
                 <RadioGroup v-model="formObj.layoutid">
-                  <Radio :label="item.value" v-for="item in layout" :key="item.value">{{item.label}}</Radio>
+                  <Radio
+                    :label="item.layoutid"
+                    v-for="item in layout"
+                    :key="item.layoutid"
+                  >{{item.layoutname}}</Radio>
                 </RadioGroup>
               </FormItem>
               <FormItem label="容纳人数：" prop="peoplenumber">
@@ -53,25 +61,16 @@
               <FormItem label="所属单位：" prop="companyroom">
                 <Input v-model="formObj.companyroom" placeholder="所属单位"></Input>
               </FormItem>
-              <FormItem label="详细地址：" prop="roomaddress">
-                <Input v-model="formObj.roomaddress" placeholder="详细地址"></Input>
+              <FormItem label="详细地址：" prop="roomadress">
+                <Input v-model="formObj.roomadress" placeholder="详细地址"></Input>
               </FormItem>
-              <!-- <FormItem label="楼栋：" prop="building">
-                <Input v-model="formObj.building" placeholder="楼栋"></Input>
-              </FormItem>
-              <FormItem label="楼层：" prop="floor">
-                <Input v-model="formObj.floor" placeholder="楼层"></Input>
-              </FormItem>
-              <FormItem label="房间号：" prop="roomNum">
-                <Input v-model="formObj.roomNum" placeholder="房间号"></Input>
-              </FormItem>-->
-              <FormItem label="设备：" prop="devices">                
-                <CheckboxGroup v-model="formObj.devices">
+              <FormItem label="设备：" prop="configids">
+                <CheckboxGroup v-model="formObj.configids">
                   <Checkbox
-                    :label="item.value"
+                    :label="item.configid"
                     v-for="item in devicesData"
-                    :key="item.value"
-                  >{{item.label}}</Checkbox>
+                    :key="item.configid"
+                  >{{item.configname}}</Checkbox>
                 </CheckboxGroup>
               </FormItem>
               <FormItem label="标签：">
@@ -88,7 +87,7 @@
                 <Button icon="ios-add" type="dashed" size="small" @click="handleAddLaber">添加标签</Button>
               </FormItem>
               <FormItem label="是否需审核：" prop="needaudit">
-                <Switch v-model="formObj.needaudit" @on-change="change" />
+                <Switch v-model="formObj.needaudit" :false-value="0" :true-value="1" />
               </FormItem>
               <FormItem label="备注：" prop="remarks">
                 <Input
@@ -133,40 +132,30 @@ export default {
       viewH: window.innerHeight,
       productid: 0,
       selectList: [],
-      nameSearch: '',
+      searchForm: {
+        roomname: '',
+        companyroom: '',
+        roomlaber: ''
+      },
       label: '',
-      devicesData: [{
-        value: "2",
-        label: '音响'
-      }, {
-        value: "1",
-        label: '投影'
-      }],
-      layout: [{
-        value: "2",
-        label: '会议式'
-      }, {
-        value: "1",
-        label: '课堂式'
-      }, {
-        value: "0",
-        label: '圆桌式'
-      }],
+      devicesData: [],
+      layout: [],
       columns: [{
         title: "名称",
         key: 'roomname',
         align: 'center',
       }, {
         title: '布局',
-        width: 200,
+        width: 100,
         key: 'layoutid',
         align: 'center',
         render: (h, params) => {
-          let a = this.layout.filter(item => item.value == params.row.layoutid);
-          return h('div', {}, a[0].label)
+          let a = this.layout.filter(item => item.layoutid == params.row.layoutid);
+          return h('div', {}, a[0].layoutname)
         }
       }, {
         title: "容纳人数",
+        width: 100,
         key: 'peoplenumber',
         align: 'center',
       }, {
@@ -175,27 +164,29 @@ export default {
         align: 'center',
       }, {
         title: "详细地址",
-        key: 'roomaddress',
+        key: 'roomadress',
         align: 'center',
       }, {
         title: "设备",
-        key: 'devices',
+        width: 200,
+        key: 'configids',
         align: 'center',
         render: (h, params) => {
-          let devices = [];
-          params.row.devices.split(',').forEach(item => {
-            devices.push(this.devicesData.filter(d=>d.value == item)[0].label);
+          let configids = [];
+          params.row.configids.forEach(item => {
+            configids.push(this.devicesData.filter(d => d.configid == item)[0].configname);
           })
-          return h('div', devices.join(','))
+          return h('div', configids.join(','))
         }
       }, {
         title: "标签",
+        width: 200,
         key: 'roomlaber',
         align: 'center',
         render: (h, params) => {
           let label = [];
-          params.row.roomlaber.split(',').forEach(item => {
-            label.push(h('Tag', {
+          params.row.roomlaber.forEach(item => {
+            item != '' && label.push(h('Tag', {
               props: {
                 color: 'green',
                 type: 'border'
@@ -206,6 +197,7 @@ export default {
         }
       }, {
         title: "是否需审核",
+        width: 120,
         key: 'needaudit',
         align: 'center',
         render: (h, params) => {
@@ -218,6 +210,34 @@ export default {
         width: 200,
         render: (h, params) => {
           return h('div', [
+            h('span', {
+              style: {
+                cursor: 'pointer',
+                color: "rgb(0, 102, 204)"                
+              },
+              on: {
+                click: () => {
+                  console.log(params.row)
+                  let labels = params.row.roomlaber, device = params.row.configids;
+                  this.formObj = {
+                    roomid: params.row.roomid,
+                    roomname: params.row.roomname,
+                    layoutid: params.row.layoutid,
+                    roomlaber: params.row.roomlaber,
+                    needaudit: params.row.needaudit,
+                    peoplenumber: params.row.peoplenumber,
+                    companyroom: params.row.companyroom,
+                    roomadress: params.row.roomadress,
+                    configids: params.row.configids,
+                    remarks: params.row.remarks
+                  }
+                  Vue.obserable.trigger({
+                    type: 'toggleMask',
+                    data: true
+                  })
+                }
+              }
+            }, '编辑'),
             h('Poptip', {
               props: {
                 confirm: true,
@@ -237,43 +257,15 @@ export default {
                   },
                   style: {
                     cursor: 'pointer',
-                    color: '#06C'
+                    color: '#06C',
+                    marginLeft: '10px'
                   },
                   on: {
                     click: () => {
                     }
                   }
                 }, '删除')
-              ]),
-            h('span', {
-              style: {
-                cursor: 'pointer',
-                color: "rgb(0, 102, 204)",
-                marginLeft: '10px'
-              },
-              on: {
-                click: () => {
-                  console.log(params.row)
-                  let labels = params.row.roomlaber, device = params.row.devices;
-                  this.formObj = {
-                    roomid: params.row.roomid,
-                    roomname: params.row.roomname,
-                    layoutid: params.row.layoutid,
-                    roomlaber: labels.split(','),
-                    needaudit: params.row.needaudit,
-                    peoplenumber: params.row.peoplenumber,
-                    companyroom: params.row.companyroom,
-                    roomaddress: params.row.roomaddress,
-                    devices: device.split(','),
-                    remarks: params.row.remarks
-                  }
-                  Vue.obserable.trigger({
-                    type: 'toggleMask',
-                    data: true
-                  })
-                }
-              }
-            }, '编辑')
+              ])
           ]);
         }
       }],
@@ -284,24 +276,21 @@ export default {
       },
       showDetailPage: -1,
       formObj: {
-        roomid: '',
+        roomid: undefined,
         roomname: '',//会议名称
         layoutid: '',//布局
         roomlaber: [],//标签
-        needaudit: false,//会议名称
+        needaudit: 0,//会议名称
         peoplenumber: 0,//容纳人数
         companyroom: '',//所属单位
-        roomaddress: '',//会议地址
-        devices: [],//会议装置设备
+        roomadress: '',//会议地址
+        configids: [],//会议装置设备
         remarks: '',//备注
-        //   building: '',//楼栋
-        //   floor: '',//楼层
-        //   roomNum: '',//房间号
       },
       ruleValidate: {
         roomname: [{ required: true, message: '请输入会议室名称', trigger: 'blur' }],
         companyroom: [{ required: true, message: '请输入会议室所属单位', trigger: 'blur' }],
-        roomaddress: [{ required: true, message: '请输入会议室地址', trigger: 'blur' }],
+        roomadress: [{ required: true, message: '请输入会议室地址', trigger: 'blur' }],
       },
     }
   },
@@ -328,79 +317,109 @@ export default {
               }
             })
             if (this.productid) {
+              this.getDeviceList();
+              this.getLayoutList();
               this.getDataList();
             }
           }
         }
       }, 200);
     },
+    getDeviceList () {
+      let s = this;
+      let conditions = {
+        companyid: this.company.companyid,
+        productid: this.productid,
+        page_index: 0,
+        page_size: 100
+      };
+      zmitiUtil.ajax({
+        remark: "getDeviceList",
+        data: {
+          action: this.mettingroomActions.getDeviceList.action,
+          condition: conditions
+        },
+        success (data) {
+          if (data.getret === 0) {
+            s.devicesData = data.list;
+          }
+        }
+      })
+    },
+    getLayoutList () {
+      let s = this;
+      let conditions = {
+        companyid: this.company.companyid,
+        productid: this.productid,
+        page_index: 0,
+        page_size: 100
+      };
+      zmitiUtil.ajax({
+        remark: "getLayoutList",
+        data: {
+          action: this.mettingroomActions.getLayoutList.action,
+          condition: conditions
+        },
+        success (data) {
+          if (data.getret === 0) {
+            s.layout = data.list;
+          }
+        }
+      })
+    },
     searchHandle () {//搜索
       this.getDataList();
     },
+    getSelection (val) {
+      console.log(val)
+    },
     getDataList () {
-      this.dataSource = [{
-        roomid: '1',
-        roomname: '第一会议室',//会议名称
-        layoutid: '1',//布局
-        roomlaber: '早会,接待厅',//标签
-        needaudit: false,//会议名称
-        peoplenumber: 10,//容纳人数
-        companyroom: '新华社',//所属单位
-        roomaddress: '北京市西城区',//会议地址
-        devices: '1',//会议装置设备
-        remarks: '测试数据',//备注
-      }, {
-        roomid: '2',
-        roomname: '第二会议室',//会议名称
-        layoutid: '2',//布局
-        roomlaber: '接待厅',//标签
-        needaudit: true,//会议名称
-        peoplenumber: 20,//容纳人数
-        companyroom: '人民报社',//所属单位
-        roomaddress: '北京市西城区',//会议地址
-        devices: '1,2',//会议装置设备
-        remarks: '测试数据222',//备注
-      }]
-      // let s = this;
-      // s.loading = true;
-      // let conditions = Object.assign({
-      //   companyid: this.company.companyid,
-      //   productid: this.productid,
-      // name:this.nameSearch
-      // }, this.condition)
-      // zmitiUtil.ajax({
-      //   remark: "getMettingroomList",
-      //   data: {
-      //     action: this.mettingroomActions.getMettingroomList.action,
-      //     condition: conditions
-      //   },
-      //   error () {
-      //     s.loading = false;
-      //   },
-      //   success (data) {
-      //     s.loading = false;
-      //     if (data.getret === 0) {
-      //       s.total = data.total;
-      //       s.dataSource = data.list;
-      //     }
-      //   }
-      // })
+      let s = this;
+      s.loading = true;
+      let conditions = Object.assign({
+        companyid: this.company.companyid,
+        productid: this.productid
+      }, this.condition, this.searchForm);
+      zmitiUtil.ajax({
+        remark: "getMettingroomList",
+        data: {
+          action: this.mettingroomActions.getMettingroomList.action,
+          condition: conditions,
+          list: []
+        },
+        error () {
+          s.loading = false;
+        },
+        success (data) {
+          s.loading = false;
+          if (data.getret === 0) {
+            s.total = data.total;
+            s.dataSource = data.list;
+          }
+        }
+      })
     },
     change (e) {
       this.condition.page_index = e - 1;
       this.getDataList();
     },
+    deletes () {//获选删除
+
+    },
     delete (id) {
+      this.goDelete([id]);
+    },
+    goDelete (ids) {
       var s = this;
       zmitiUtil.ajax({
         remark: 'delMettingroom',
         data: {
           action: this.mettingroomActions.delMettingroom.action,
-          condition: {
-            partyid: id,
+          info: {
             companyid: this.company.companyid,
             productid: this.productid
-          }
+          },
+          list: ids
         },
         success (data) {
           s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg || data.getmsg);
@@ -415,24 +434,20 @@ export default {
     },
     closeMaskPage () {//关闭侧弹框
       this.$refs['ruleForm'].resetFields();
-      this.formObj.devices = [];
+      this.formObj.configids = [];
       this.formObj.roomlaber = [];
+      this.formObj.roomid = undefined;
       Vue.obserable.trigger({ type: 'toggleMask', data: false });
     },
     adminAction (name) {//保存or 修改
-        console.log(this.formObj)
+      console.log(this.formObj)
       this.$refs[name].validate((valid) => {
         if (valid) {
           let action = this.formObj.roomid ? this.mettingroomActions.editMettingroom.action : this.mettingroomActions.addMettingroom.action;
-          let info = {
-            typeid: 3,//信息类型标识：0消息；1意见箱；2通知；3公告；4新闻；5资料
-            status: 2,//-1所有 0表示禁用；1表示待审；2表示通过；3表示拒绝
-            infoid: this.formObj.infoid,
-            title: this.formObj.title,
-            content: this.formObj.content,
+          let info = Object.assign({
             companyid: this.company.companyid,
             productid: this.productid
-          }
+          }, this.formObj);
           let s = this;
           zmitiUtil.ajax({
             remark: this.formObj.roomid ? 'editMettingroom' : 'addMettingroom',

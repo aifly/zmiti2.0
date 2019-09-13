@@ -92,7 +92,7 @@
 	import ZmitiMask from '../../common/mask/';
 	import ZmitiTable from '../../common/table';
 	import menuObj from '../../common/group/menu';
-	let {resourceActions,orderFoodActions,userActions,companyActions,tripActions,changYueAcions,infomanagerActions,partyActions} = zmitiUtil;
+	let {resourceActions,orderFoodActions,userActions,companyActions,tripActions,changYueAcions,infomanagerActions,partyActions,inquireActions,mettingroomActions} = zmitiUtil;
 	var	actions = [
 		{
 			name:'畅阅',
@@ -121,6 +121,16 @@
 			name:"活动管理",
 			actions:Object.values(partyActions),
 			route:'party'
+		},{
+			//id:'8773475502',
+			name:"调查问卷管理",
+			actions:Object.values(inquireActions),
+			route:'inquire'
+		},{
+			//id:'8773475502',
+			name:"会议室管理",
+			actions:Object.values(mettingroomActions),
+			route:'meetingroom'
 		}
 	];
 	export default {
