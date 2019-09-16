@@ -43,6 +43,12 @@
 							<FormItem label="类型名称：">
 								<Input v-model="formObj.typename" placeholder="类型名称"></Input>
 							</FormItem>
+							<FormItem label="支持匿名：">
+								<RadioGroup v-model="formObj.isanonymous">
+							        <Radio label="0">否</Radio>
+							        <Radio label="1">是</Radio>
+							    </RadioGroup>
+							</FormItem>
 							<FormItem label="权限人员：">
 								<RadioGroup v-model="formObj.isalluser" @on-change="changeUserStatus">
 							        <Radio label="0">全部人员</Radio>
@@ -71,24 +77,6 @@
 				</transition>
 			</div>
 		</ZmitiMask>
-
-		<!-- <Modal
-	        v-model="modal1"
-	        title="信息管理权限"
-	        width="470"
-	        @on-ok="ok"
-	        @on-cancel="cancel">
-		        <Transfer
-		        :titles="['选择用户','已分配用户']"
-		        :data="data1"
-		        :target-keys="targetKeys1"
-		        :render-format="render1"
-		        @on-change="handleChange1">
-		        </Transfer>
-		        <div slot="footer"></div>
-	    </Modal>
- -->
-
 	</div>
 </template>
 
@@ -158,6 +146,7 @@
 				formObj:{
 					specialnum:'',
 					typename:'',
+					isanonymous:0,
 					isalluser:0,
 					infotypeid:'',
 					users:[],
@@ -285,6 +274,7 @@
 										click:()=>{
 											this.formObj = params.row;
 											this.formObj.isalluser=String(params.row.isalluser);
+											this.formObj.isanonymous=String(params.row.isanonymous);
 											this.formObj.status=String(params.row.status);
 											console.log(this.formObj,'this.formObj');
 											this.infotypeid=params.row.infotypeid;
@@ -428,6 +418,7 @@
 				this.showSelectUser=false;
 				this.formObj = {};
 				this.formObj.specialnum=this.specialnumVal;
+				this.formObj.isanonymous="0";
 				this.formObj.isalluser="0";
 				this.formObj.status="1";
 				this.infotypeid=undefined;
@@ -446,6 +437,7 @@
 					typename:this.formObj.typename,
 					infotypeid:this.formObj.infotypeid,
 					status:this.formObj.status,
+					isanonymous:this.formObj.isanonymous,
 					companyid:this.companyid,
 					productid:this.productid
 				}
