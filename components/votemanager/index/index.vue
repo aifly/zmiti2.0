@@ -1,14 +1,10 @@
 <template>
 	<div class="zmiti-votemanager-main-ui">
-
 		<div class="zmiti-list-main">
-			
-		
 			 <div class='zmiti-informanager-table lt-full'>
 				 <header class="zmiti-tab-header">
 					 <div>
 						 <span>投票管理</span>
-
 					 </div>
 					 <div>
 					 	<Button type="primary" @click='add()'>添加</Button>
@@ -298,37 +294,29 @@
 			},
 			getDataList(){
 				console.log(voteActions,'voteActions==voteActions')
-						var {condition} = this;
-						var s = this;
-						condition = Object.assign(condition,{
-							companyid:zmitiUtil.getCurrentCompanyId().companyid,
-							productid:s.productid,
-							votetitle:s.votetitle
-						})
-						zmitiUtil.ajax({
-							remark:"getVoteList",
-							data:{
-								action:voteActions.getVoteList.action,
-								condition:condition
-							},
-							error(){
-								s.loading = false;
-							},
-							success(data){
-								s.loading = false;
-								console.log(data,'获取列表');
-								s.dataSource=data.list;
-								
-							}
-						})
-						/*var s = this;
+				var {condition} = this;
+				var s = this;
+				condition = Object.assign(condition,{
+					companyid:zmitiUtil.getCurrentCompanyId().companyid,
+					productid:s.productid,
+					votetitle:s.votetitle
+				})
+				zmitiUtil.ajax({
+					remark:"getVoteList",
+					data:{
+						action:voteActions.getVoteList.action,
+						condition:condition
+					},
+					error(){
 						s.loading = false;
-					s.dataSource=[{
-									voteid:1,
-									votetitle:'标题',
-									begintime:1567382400,
-									endtime:1568678400
-								}]*/
+					},
+					success(data){
+						s.loading = false;
+						console.log(data,'获取列表');
+						s.dataSource=data.list;
+						
+					}
+				})
 			},
 			closeMaskPage(){
 				console.log('关闭右侧');
