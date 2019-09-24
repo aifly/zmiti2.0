@@ -152,6 +152,9 @@ $primary-color: #00c1de;
 								}
 								&.zmiti-hover-company{
 									border-bottom: 1px solid #444;
+									overflow: hidden;
+									white-space: nowrap;
+									text-overflow: ellipsis;
 								}
 								&.zmiti-hover-exit{
 									border:1px solid #777;

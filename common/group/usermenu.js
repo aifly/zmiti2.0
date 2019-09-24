@@ -59,7 +59,7 @@ let workorder_workorderlist = {
 
 let company = {
 	title:"单位管理",
-	keys: ['companyinfo', 'user', 'usercheck', 'checkproduct', 'companydetail', 'order', 'consume','rolegroup'],
+	keys: ['companyinfo', 'user', 'usercheck', 'checkproduct', 'companydetail', 'order', 'consume', 'rolegroup','companydepartment'],
 	tabs:[
 		{
 			name:'概览',
@@ -70,6 +70,9 @@ let company = {
 			link:'',
 			children:[
 				{
+					name:'部门管理',
+					link:'/companydepartment'
+				},{
 					name:'用户列表',
 					link:'/user'
 				},{
@@ -169,7 +172,7 @@ let infomanager ={
 			link:'/infomanagernews'
 		},
 		{
-			name:'资料',
+			name:'其他',
 			link:'/infomanagerdoc'
 		},
 		{
@@ -236,9 +239,9 @@ let orderFood ={
 
 let meetingRoom = {
 	title: "会议室预定",
-	keys: ['meetingroom', 'meetingroomsetting','meetingroomrole'],
+	keys: ['meetingroom', 'meetingroomsetting', 'meetingroomrole'],
 	route: "meetingroom",
-	tabs:[
+	tabs: [
 		{
 			name: '会议室预定',
 			link: "/meetingroom"
@@ -255,36 +258,54 @@ let meetingRoom = {
 		}
 	]
 }
-let  Party = {
-	title:"活动管理",
+let Party = {
+	title: "活动管理",
 	route: "party",
-	keys: ['party', 'partydetail', 'partyexport','partyrole'],
+	keys: ['party', 'partydetail', 'partyexport', 'partyrole'],
 	route: "party",
-	tabs:[
+	tabs: [
 		{
-			name:'活动列表',
-			link:"/party"
+			name: '活动列表',
+			link: "/party"
 		},
 		{
-			name:'活动权限设置',
-			link:"/partyrole"
+			name: '活动权限设置',
+			link: "/partyrole"
 		}
 	]
 }
 let Inquire = {
-	title:"问卷调查",
+	title: "问卷调查",
 	route: "inquire",
-	keys: ['inquire', 'inquirequestionlist','inquiresetting'],
-	tabs:[
+	keys: ['inquire', 'inquirequestionlist', 'inquiresetting'],
+	tabs: [
 		{
-			name:'问卷调查',
-			link:"/inquire"
-		},{
+			name: '问卷调查',
+			link: "/inquire"
+		}, {
 			name: "配置管理",
 			link: '/inquiresetting',
 			children: [{
 				name: '权限配置',
 				link: '/inquiresetting'
+			}]
+		},
+	]
+};
+let Duty = {
+	title: "用户值班",
+	route: "duty",
+	keys: ['duty', 'dutysetting'],
+	tabs: [
+		{
+			name: '值班一览表',
+			link: "/duty"
+		}, {
+			name: "配置管理",
+			link: '/dutysetting',
+			children: [{
+				name: '权限配置',
+				link: '/dutysetting'
 			}]
 		},
 	]
@@ -300,5 +321,6 @@ export {
 	meetingRoom,
 	Party,
 	voteManager,
-	Inquire
+	Inquire,
+	Duty
 }

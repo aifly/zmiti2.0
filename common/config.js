@@ -6,8 +6,14 @@ var workOrderType = {
 		4:"其它类"
 	};
 
-
-
+let sexStatus={
+	0:{
+		status:'女'
+	},
+	1:{
+		status:'男'
+	}
+};
 let  orderStatus = {
 	0: {
 		status: '已禁用'
@@ -142,7 +148,8 @@ let defaultRolePages = [
 	'resourcelist',
 	'workorder',
 	'workorderlist',
-	'home'
+	'home',
+	'myself'
 	
 ]
 
@@ -154,5 +161,6 @@ let defaultRolePages = [
 	defaultClass,
 	defaultExtNames,
 	manuscriptStatus,
-	timeRange
+	timeRange,
+	sexStatus
 };

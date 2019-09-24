@@ -1,0 +1,134 @@
+﻿@import "../css/base.scss";
+
+
+
+.zmiti-myself-detail-main-ui{
+	background: #fff;
+	box-sizing: border-box;
+	height: 99%;
+	width: 99%;
+	margin: .25% auto;
+
+	.zmiti-myself-header{
+		font-size:30px;
+		text-indent: 1em;
+		padding-top: 10px;
+	}
+	.zmt_iconfont{
+		font-size: 24px;
+	}
+	@at-root.zmiti-myself-list{
+		@include displayFlex(row);
+		flex-wrap: wrap;
+		li{
+			margin:10px;
+			width: 100px;
+			height: 30px;
+			text-align: center;
+			line-height: 30px;
+			background: #ddd;
+			padding: 0 10px;
+			cursor: pointer;
+			@include transition(.2s);
+			&.active{
+				background: #3390ff;
+				color:#fff;
+			}
+			&:hover{
+
+				background: #3390ff;
+				color:#fff;
+			}
+		}
+	}
+
+	.zmiti-myself-logo-C{
+		width: 100px;
+		height: 200px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.zmiti-myself-logo{
+		width: 100px;
+		height: 100px;
+		background: rgba(51, 144, 255, 0.1);
+		@include br();
+		margin: 20px auto;
+		overflow: hidden;
+		@include displayFlex(row);
+		align-items: center;
+		img{
+			display: block;
+			width: 100%;
+
+		}
+	}
+
+	.zmiti-myself-item{
+		width: 90%;
+		margin: 20px auto;
+		@include displayFlex(row);
+		justify-content: space-between;
+		-webkit-justify-content: space-between;
+		&>div{
+			font-size:14px;
+			line-height: 40px;
+			&:nth-of-type(1){width: 100px; text-align: right;}
+			&:nth-of-type(2){
+				flex: 1;
+				-webkit-flex: 1;
+				border-bottom: 1px solid #ccc;
+				line-height: 40px;
+				font-size:16px;
+			}
+			@include pos(r);
+			span{
+				@include pos(a);
+				right: 0;
+				cursor: pointer;
+				margin-right: 10px;
+				font-size:14px;
+				i{
+					font-size:20px;
+					vertical-align:middle;
+					margin-top: -5px;
+				}
+			}
+		}
+
+	}
+
+	.zmiti-myself-file{
+		@include displayFlex(row);
+		width: 50%;
+		margin:20px 30px;
+		-webkit-justify-content:space-around;
+		justify-content:space-around;
+		text-align: center;
+	}
+	.zmiti-myself-img{
+		width: 100px;
+		height: 160px;
+		overflow: hidden;
+		margin-bottom: 5px;
+		background-color: #f2f2f2 !important;
+		cursor: pointer;
+		
+		
+		
+		@include displayFlex(row);
+		-webkit-align-items:flex-end;
+		align-items: flex-end;
+		@include pos(r);
+		span{
+			
+			@include pos(a);
+			left: 50%;
+			color:#ccc;
+			top:50%;
+			@include transform(translate(-50%,-50%));
+			font-size:30px;
+		}
+	}
+}

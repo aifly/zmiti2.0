@@ -120,8 +120,8 @@ module.exports = {
 			loader: 'babel-loader',
 			options: {
 				'babelrc': false,
-				"plugins": [
-					"dynamic-import-webpack"
+				plugins: [
+					"syntax-dynamic-import"
 				]
 			}
 		}, {

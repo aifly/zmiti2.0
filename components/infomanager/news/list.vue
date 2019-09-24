@@ -123,20 +123,20 @@
 					{
 						title:"编号",
 						key:'infoid',
-						align:'center',
-						width:120
+						align:'left',
+						width:80
 					},
 					{
 						title:"标题",
 						key:'title',
-						align:'center',
+						align:'left',
 						
 					},
 					{
 						title:"时间",
 						key:"createtime",
-						align:"center",
-						width:120,
+						align:"left",
+						width:100,
 						render:(h,params)=>{
 							return h('div',{},formatDate(params.row.createtime))
 						}
@@ -145,7 +145,7 @@
 						title:"操作",
 						key:"action",
 						align:"center",
-						width:180,
+						width:200,
 						render:(h,params)=>{
 
 							return h('div', [

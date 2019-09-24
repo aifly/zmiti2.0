@@ -1,0 +1,252 @@
+.zmiti-duty-main-ui {
+  width: 98%;
+  height: 98%;
+  left: 1%;
+  top: 1%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C {
+  flex: 1;
+  height: 100%;
+  background: #fff;
+  overflow: auto;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-tip {
+  height: 40px;
+  line-height: 40px;
+  font-size: 13px;
+  padding-left: 20px;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-tip span {
+  margin-right: 10px;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-tip span:first-child {
+  color: #3390ff;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table {
+  width: 98%;
+  margin: 0 auto;
+  border: 1px solid #eee;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table header {
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: space-around;
+  height: 45px;
+  line-height: 45px;
+  border-bottom: 1px solid #eee;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table header span {
+  margin: 0 0px;
+  text-align: center;
+  text-indent: -.1em;
+  width: 50px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table header span i {
+  width: 12px;
+  font-size: 24px;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li {
+  text-align: center;
+  width: 14%;
+  height: 75px;
+  cursor: pointer;
+  line-height: 30px;
+  margin: 4px 0 0 0;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li span {
+  display: block;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li.active {
+  background: #3390ff;
+  color: #fff;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li.active span {
+  color: #fff !important;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li:hover {
+  background: #3390ff;
+  color: #fff;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li:hover span {
+  color: #fff !important;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li.zmiti-duty-week:hover {
+  background: transparent;
+  color: #888;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li .zmiti-datepicker-detail {
+  height: 20px;
+  font-size: 12px;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li .zmiti-datepicker-detail label {
+  margin-left: 5px;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-left-table-C .zmiti-duty-table .zmiti-duty-datepicker li.disabled {
+  background-color: #eee;
+  border-color: #eee;
+  color: #57a3f3;
+  cursor: not-allowed;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting {
+  width: 420px;
+  margin-left: 10px;
+  background: #fff;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting > header {
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
+  text-indent: 1em;
+  border-bottom: 1px solid #eee;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting > header .zmt_iconfont {
+  font-size: 16px;
+  color: #975ae0;
+  position: relative;
+  margin-right: 10px;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting > header .zmt_iconfont:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #975ae0;
+  opacity: .2;
+  position: absolute;
+  -webkit-transform: scale(1.8);
+  transform: scale(1.8);
+  left: 0;
+  top: 0;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting .zmiti-duty-list {
+  margin: 20px;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting .zmiti-duty-list .zmiti-duty-item .title {
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: bold;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting .zmiti-duty-list .zmiti-duty-item .detail {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+  line-height: 30px;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting .zmiti-duty-list .zmiti-duty-item .detail .duty-person {
+  flex: 1;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting .zmiti-duty-list .zmiti-duty-item .detail .duty-person div {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: flex-start;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting .zmiti-duty-list .zmiti-duty-item .detail .duty-person div span {
+  margin-left: 10px;
+  flex: 1;
+}
+
+.zmiti-duty-main-ui .zmiti-duty-right-setting .zmiti-duty-list .zmiti-duty-item .detail .duty-person div span:first-child {
+  width: 70px;
+  flex: none;
+}
+
+.zmiti-add-form {
+  width: 500px;
+  overflow: auto;
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  height: 100%;
+  box-shadow: 0 0 0 1px #ccc;
+  box-sizing: border-box;
+  background: #f9f9f9;
+}
+
+.zmiti-add-form .zmiti-add-form-C {
+  margin: 10px auto 2px;
+  width: 90%;
+}
+
+.zmiti-add-form .zmiti-add-form-item {
+  line-height: 50px;
+  height: 50px;
+}
+
+.zmiti-add-form .zmiti-add-form-item.zmiti-add-btns {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.zmiti-add-form .zmiti-add-form-item.zmiti-add-btns button {
+  margin: 0 20px;
+  padding: 2px 20px;
+}
+
+.zmiti-add-form .zmiti-add-form-item input {
+  padding-left: 6px;
+  height: 32px;
+  width: 70%;
+  border: 1px solid #d8d8d8;
+  outline: none;
+}
+
+.zmiti-add-form .zmiti-add-form-item label {
+  font-size: 16px;
+}
+
+.zmiti-add-form .zmiti-add-form-item .ivu-icon {
+  margin-left: 10px;
+}

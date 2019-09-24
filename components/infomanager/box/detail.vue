@@ -17,17 +17,17 @@
 				 <div class='zmiti-submit-main zmiti-scroll' :style="{height:viewH - 110+'px'}">
 					<div class="zmiti-informanagerdetail-form">					
 						<Form :model="formObj" :label-width="120">
-							<FormItem label="标题：">
+							<!-- <FormItem label="标题：">
 								<Input v-model="formObj.title" placeholder="标题"></Input>
-							</FormItem>
-							<FormItem label="状态：">
+							</FormItem> -->
+							<!-- <FormItem label="状态：">
 							     <RadioGroup v-model="formObj.status">
 							        <Radio label="0">禁用</Radio>
 							        <Radio label="1">待审</Radio>
 							        <Radio label="2">通过</Radio>
 							        <Radio label="3">拒绝</Radio>
 							    </RadioGroup>
-							</FormItem>
+							</FormItem> -->
 							<FormItem label="内容：">
 								<div class="edit_container">
 							        <quill-editor 
@@ -227,6 +227,8 @@
 				var action = this.id!=undefined?infomanagerActions.editnews.action:infomanagerActions.addnews.action;
 				let info = this.formObj;
 				info.typeid=this.$route.params.typeid;
+				var reg=/<[^<>]+>/g;
+   				info.title=this.formObj.content.replace(reg,'');
 				if(this.id!=undefined){//编辑
 					info.infoid=this.$route.params.id;
 				}else{//新增

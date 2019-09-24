@@ -276,7 +276,7 @@ export default {
     let year = currentDate.getFullYear(), month = currentDate.getMonth() + 1, day = currentDate.getDate();
     if (month <= 9) month = '0' + month;
     return {
-      imgs: window.imgs,
+      imgs: Object.freeze(window.imgs),
       viewH: window.innerHeight,
       productid: 0,
       mettingroomActions: zmitiUtil.mettingroomActions,
@@ -374,7 +374,7 @@ export default {
       Vue.obserable.trigger({ type: 'toggleMask', data: true });
     },
     viewAuditRoom (room) {
-      this.maskTitle = '会议室信息';
+      this.maskTitle = '会议室预定信息';
       this.maskType = 'viewAudit';
       this.formObj.roomid = room.roomid;
       this.formObj.roomname = room.roomname;

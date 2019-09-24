@@ -126,19 +126,19 @@
 					{
 						title:"编号",
 						key:'infoid',
-						align:'center',
+						align:'left',
 						width:80
 					},
 					{
 						title:"标题",
 						key:'title',
-						align:'center',
+						align:'left',
 						
 					},
 					{
 						title:"状态",
 						key:'status',
-						align:'center',
+						align:'left',
 						width:80,
 						filters: [
                             {
@@ -199,7 +199,7 @@
 						title:"时间",
 						key:"createtime",
 						align:"center",
-						width:120,
+						width:100,
 						render:(h,params)=>{
 							return h('div',{},formatDate(params.row.createtime))
 						}
@@ -208,11 +208,11 @@
 						title:"审核",
 						key:"check",
 						align:"center",
-						width:120,
+						width:100,
 						render:(h,params)=>{
 							let status = params.row.status;
 							let infoid = params.row.infoid;
-							this.formObj = params.row;
+							
 							return h('div',[
 								h('span',{
 									style:{
@@ -222,7 +222,10 @@
 									},
 									on:{
 										click:()=>{
-											this.checkHandle(infoid,2)
+											this.formObj = params.row;
+											setTimeout(()=>{												
+												this.checkHandle(infoid,2)
+											},300)											
 										}
 									}
 								},'通过'),
@@ -233,7 +236,10 @@
 									},
 									on:{
 										click:()=>{
-											this.checkHandle(infoid,3)
+											this.formObj = params.row;
+											setTimeout(()=>{
+												this.checkHandle(infoid,3)
+											},300)
 										}
 									}
 								},'拒绝')
@@ -368,14 +374,17 @@
 					}
 				})				
 			},
-			checkHandle(id,status){
+			checkHandle(id,status){//审核
 				var s = this;
 				let info = this.formObj;
 				info.productid=this.productid;
 				info.typeid=this.typeid;
 				info.infoid=id;
-				info.status=status;			
-				zmitiUtil.ajax({
+				info.status=status;
+				info.title=this.formObj.title;
+				info.content=this.formObj.title;	
+				console.log(info,'审核信息')		
+				/*zmitiUtil.ajax({
 					remark:'editnews',
 					data:{
 						action:infomanagerActions.editnews.action,
@@ -385,7 +394,7 @@
 						s.$Message[data.getret === 0 ? 'success':'error'](data.msg||data.getmsg);
 						s.getDataList();
 					}
-				})
+				})*/
 			},
 			getDataList(){
 				var s = this;

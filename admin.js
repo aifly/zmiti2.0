@@ -1,86 +1,44 @@
 import Vue from "vue";
 import './common/directive';
 import Obserable from './common/lib/obserable';
-import Main from './common/main';
-/* import Product from './admin/product';
-
-import Admin from './admin/admin';
-import Pv from './admin/pv';
-import Form from './admin/form';
- import User from './admin/user';
-import Company from './admin/company/index';
-import RoleGroup from './admin/rolegroup';
-import Basicconfig from './admin/basicconfig';
-import SetRole from './admin/setrole'; 
-
-import WorkOrder from './admin/workorder';
-import WorkOrderList from './admin/workorderlist';
-import ResourceList from './admin/resourcelist';
-import ChangYue from './admin/changyue';
-import ProductRole from './admin/productrole';
-import Group from './common/group';
-import Weather from './admin/weather'; */
-import changyuesetting from './admin/changyuesetting';
+const Main = () => import(/* webpackChunkName: "main" */'./common/main');
 import iView from 'iview';
 import VueRouter from 'vue-router';
-import Login from './admin/login';
-import Home from './admin/home';
-
-
-
-
 
 import './admin/css/index.css';
 import './admin/css/quill.css';
 import './components/css/theme.less'
-///import 'iview/dist/styles/iview.css';
 
-/* var resourcelist = ()=> import('./admin/resourcelist/index.vue');
-var workorderlist = ()=> import('./admin/workorderlist/index.vue');
-var workorder = ()=> import('./admin/workorder/index.vue')
-var news = ()=> import('./admin/news/index.vue')
-var group = ()=>  import('./common/group/index.vue');
-var user = ()=> import('./admin/user/index.vue') 
-var changyue = ()=>import('./admin/changyue/index.vue') 
-var changyuelog = ()=> import('./admin/changyuelog/index.vue')
-var company = ()=> import('./admin/company/index.vue')
-var admin = ()=> import('./admin/admin/index.vue')
-var pv = ()=> import('./admin/pv/index.vue')
-var form = ()=> import('./admin/form/index.vue');
-var rolegroup = ()=> import('./admin/rolegroup/index.vue')
-var setrole = ()=> import('./admin/setrole/index.vue')
-var basicconfig =()=>import('./admin/basicconfig/index.vue') 
-var product = ()=> import('./admin/product/index.vue')
-var productrole = ()=>import('./admin/productrole/index.vue') */
+const adminchangyuesetting = () => import(/* webpackChunkName: "adminchangyuesetting" */ './admin/changyuesetting');
+const Login = () => import(/* webpackChunkName: "login" */ './admin/login');
+const Home = () => import(/* webpackChunkName: "home" */ './admin/home');
+ 
+const changyue = () => import(/* webpackChunkName: "changyue" */ './admin/changyue');
+const resourcelist = () => import(/* webpackChunkName: "resourcelist" */ './admin/resourcelist');
+const workorderlist = () => import(/* webpackChunkName: "workorderlist" */ './admin/workorderlist');
+const doneworkorder = () => import(/* webpackChunkName: "doneworkorder" */ './admin/doneworkorder');
+const unworkorder = () => import(/* webpackChunkName: "unworkorder" */ './admin/unworkorder');
+const workorder = () => import(/* webpackChunkName: "workorder" */ './admin/workorder');
+const news = () => import(/* webpackChunkName: "news" */ './admin/news');
+const article = () => import(/* webpackChunkName: "article" */ './admin/news/article');
+const group = () => import(/* webpackChunkName: "group" */ './common/group');
 
-import changyue from './admin/changyue';
-import resourcelist from './admin/resourcelist';
-import workorderlist from './admin/workorderlist';
-import doneworkorder from './admin/doneworkorder';
-import unworkorder from './admin/unworkorder';
-import workorder from './admin/workorder';
-import news from './admin/news';
-import article from './admin/news/article';
-import group from './common/group';
-import user from './admin/user';
-import changyuelog from './admin/changyuelog';
-import company from './admin/company';
-import admin from './admin/admin';
-import pv from './admin/pv';
-import form from './admin/form';
-import rolegroup from './admin/rolegroup';
-import setrole from './admin/setrole';
-import productrole from './admin/productrole';
-import product from './admin/product';
-import basicconfig  from './admin/basicconfig';
-
-
+const user = () => import(/* webpackChunkName: "user" */ './admin/user');
+const changyuelog = () => import(/* webpackChunkName: "changyuelog" */ './admin/changyuelog');
+const company = () => import(/* webpackChunkName: "company" */ './admin/company');
+const admin = () => import(/* webpackChunkName: "adminpage" */ './admin/admin');
+const pv = () => import(/* webpackChunkName: "pv" */ './admin/pv');
+const form = () => import(/* webpackChunkName: "form" */ './admin/form');
+const rolegroup = () => import(/* webpackChunkName: "rolegroup" */ './admin/rolegroup');
+const setrole = () => import(/* webpackChunkName: "setrole" */ './admin/setrole');
+const productrole = () => import(/* webpackChunkName: "productrole" */ './admin/productrole');
+const product = () => import(/* webpackChunkName: "product" */ './admin/product');
+const basicconfig = () => import(/* webpackChunkName: "basicconfig" */ './admin/basicconfig');
 
 
 Vue.use(VueRouter)
 Vue.use(iView)
 var obserable = new Obserable();
-
 
 Vue.obserable = obserable;
 const router = new VueRouter({
@@ -118,7 +76,7 @@ const router = new VueRouter({
 				{ path: '/unworkorder/:id?', name: 'unworkorder', component: unworkorder },
 				{ path: '/user/:companyid?', name: 'user', component:user  },
 				{ path: '/adminchangyue/:id?', name: 'adminchangyue', component:changyue  },
-				{ path: '/adminchangyuesetting', name: 'adminchangyuesetting', component: changyuesetting },
+				 { path: '/adminchangyuesetting', name: 'adminchangyuesetting', component: adminchangyuesetting },
 				{ path: '/adminchangyuelog', name: 'adminchangyuelog', component:  changyuelog},
 				{ path: '/company/', name: 'company', component: company },
 				{ path: '/admin/', name: 'admin', component:admin},
@@ -129,10 +87,8 @@ const router = new VueRouter({
 				{ path: '/basicconfig/', name: 'basicconfig', component: basicconfig} , 
 				{ path: '/product/', name: 'product', component: product },
 				{ path: '/productrole/', name: 'productrole', component:  productrole},
-				
 			]
 		} 
-		
 	]
 });
 

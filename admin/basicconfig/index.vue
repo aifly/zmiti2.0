@@ -19,17 +19,19 @@
 					<FormItem label="上传图片路径：">
 						<Input v-model="formBasicConfig.info.file_path" placeholder="上传图片路径：" />
 					</FormItem>
-						<FormItem label="是否生成缩略图：">
+					<FormItem label="是否生成缩略图：">
 						<RadioGroup v-model="formBasicConfig.info.is_thumb">
 							<Radio :value='1' :label="1">是</Radio>
 							<Radio :value='0' :label="0">否</Radio>
 						</RadioGroup>
 					</FormItem>
 
+				 
+
 					
 					<FormItem label="缩略图列表：">
 						<div style="height:20px"></div>
-						<div v-for='(thumb,i) of formBasicConfig.info.thumb_list' :key="i" class='zmiti-thumb-list'>
+						<div v-for='(thumb,i) of formBasicConfig.info.thumb_list' :key="i+1000" class='zmiti-thumb-list'>
 							<div>
 								<div>前缀列表：</div>
 								<div class='zmiti-thumb-item'>
@@ -130,7 +132,7 @@
 						<Input v-model="formBasicConfig.info.audio_size_list" placeholder="最大音频文件大小,与文件格式相对应：" />
 					</FormItem>
 
-					<div v-for="(list,i) in formBasicConfig.info.oss_list" :key="i">
+					<div v-for="(list,i) in formBasicConfig.info.oss_list" :key="i+500">
 						<h2 class='zmiti-oss-title' :class="{'active':formBasicConfig.info.oss_selected === i+1}">第{{i+1}}个OSS配置</h2>
 						<FormItem label="索引：">
 							<Input v-model="list.idx" placeholder="索引：" />
@@ -158,6 +160,25 @@
 							<Button @click="serverAction(formBasicConfig.info.oss_list,'delete')" :disabled='formBasicConfig.info.oss_list.length<=1'>删除</Button>
 						</FormItem>
 					</div>
+
+					<FormItem label="是否支持匿名上传：">
+						<RadioGroup v-model="formBasicConfig.info.anonymous_upload.is_upload">
+							<Radio :value='1' :label="1">支持</Radio>
+							<Radio :value='0' :label="0">不支持</Radio>
+						</RadioGroup>
+					</FormItem>
+					<FormItem label="文件格式列表：">
+						<Input v-model="formBasicConfig.info.anonymous_upload.file_ext_list" placeholder="文件格式列表以“,”分隔 统一小写" />
+					</FormItem>
+					<FormItem label="最大文件大小：">
+						<Input v-model="formBasicConfig.info.anonymous_upload.file_size_list" placeholder="最大文件大小与文件格式相对应以“,”分隔(字节)" />
+					</FormItem>
+					<FormItem label="是否上传到本地：">
+						<RadioGroup v-model="formBasicConfig.info.anonymous_upload.is_local">
+							<Radio :value='1' :label="1">本地</Radio>
+							<Radio :value='2' :label="2">OSS</Radio>
+						</RadioGroup>
+					</FormItem>
 
 					<FormItem label="短信服务配置：">
 
@@ -284,6 +305,7 @@
 				visible:false,
 				formBasicConfig:{
 					info:{
+						is_anonymous_upload:1,
 						is_oss_upload:1,
 						file_path:'',
 						oss_selected:1,
@@ -292,9 +314,8 @@
 							w:0,
 							height:0
 						}],
-						oss_list:{
-							
-						},
+						oss_list:[],
+						anonymous_upload:{},
 						smtp_config:{
 							status:1,
 							smtp_server:'',
@@ -422,7 +443,26 @@
 						break;
 				}
 			},
+			uploadAction(data,type){
+				switch (type) {
+					case 'add':
+						data.push({
+							is_upload:1,
+							file_ext_list:'',
+							file_size_list:'',
+							is_local:2
 
+						});
+						break;
+					case 'delete':
+					if(data.length>1){
+						data.pop();
+					}
+					break;
+					default:
+						break;
+				}
+			},
 			serverAction(data,type){
 				switch (type) {
 					case 'add':
@@ -466,6 +506,7 @@
 			save(){
 				var s = this;
 				s.formBasicConfig.info.accessKeySecret = (s.formBasicConfig.info.accessKeySecret||"").replace(/\s+/g, "");
+				//s.formBasicConfig.info.anonymous_upload = [];
 				zmitiUtil.adminAjax({
 					remark:'updateBasicConfig',
 					data:{
@@ -491,25 +532,26 @@
 					success(data){
 						if(data.getret === 0){
 							s.formBasicConfig = data;
+							console.log(data.info.is_anonymous_upload,'...');
+							console.log(data.info.is_oss_upload,'...');
 							s.formBasicConfig.info.smtp_config = s.formBasicConfig.info.smtp_config ||{
-						status:1,
-						smtp_server:'',
-						smtp_port:'465',
-						smtp_user:"",
-						smtp_password:'',
-						smtp_ssl:"",
-						smtp_template:[
-							{
-								type:1,
-								smtp_body:'',
-								smtp_title:'',
-								status:1
+								status:1,
+								smtp_server:'',
+								smtp_port:'465',
+								smtp_user:"",
+								smtp_password:'',
+								smtp_ssl:"",
+								smtp_template:[
+									{
+										type:1,
+										smtp_body:'',
+										smtp_title:'',
+										status:1
 
-							}
-						]
-					};
-					s.formBasicConfig.info.oss_selected = s.formBasicConfig.info.oss_selected || 1;
-
+									}
+								]
+							};
+							s.formBasicConfig.info.oss_selected = s.formBasicConfig.info.oss_selected || 1;
 							
 						}
 						

@@ -41,13 +41,20 @@ export default {
           title: "选择人数",
           key: 'number',
           align: 'left',
-          width: 120
+          width: 100
         },
         {
           title: "百分比",
           key: 'percent',
           align: 'left',
-          width: 120
+          width: 200,
+          render: (h, params) => {
+              return h('Progress', {
+                props:{
+                  percent:Number(params.row.percent.toFixed(2))
+                }
+              })
+          }
         }],
     }
   },

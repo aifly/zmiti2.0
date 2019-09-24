@@ -1,0 +1,161 @@
+@import '../../css/base.scss';
+
+.zmiti-department-main-ui {
+	height: 98%;
+	padding: 10px 10px 0 10px;
+	@include displayFlex(row);
+
+	.zmiti-department-left {
+		padding: 10px;
+		width: 250px;
+		background: #fff;
+		overflow: auto;
+		border-right: 1px solid #ccc;
+		.zmiti-company{
+			@include displayFlex(row);
+			justify-content: space-between;
+			font-size: 16px;
+			height: 45px;
+			line-height: 45px;
+			border-bottom: 1px solid #ccc;
+			div:first-child{
+				flex: 1;
+				font-size: 16px;
+				margin-right: 10px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				cursor: pointer;
+			}
+		}
+		.active{
+			color: #00c1de;
+		}
+		.zmiti-department-list{
+			margin-top: 10px;
+			.department-item{
+				@include displayFlex(row);
+				justify-content: space-between;
+				font-size: 14px;
+				height: 30px;
+				line-height: 30px;
+				div:first-child{
+					flex: 1;
+					font-size: 16px;
+					margin-right: 10px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					padding: 0 5px;
+					cursor: pointer;
+
+				}
+			}			
+		}
+	}
+
+	.zmiti-department-right {
+		flex: 1;
+		background: #fff;
+		overflow: auto;
+		padding: 10px;
+
+		header {
+			font-size: 16px;
+			width: 100%;
+			@include displayFlex(row);
+			justify-content: space-between;
+			height: 45px;
+			line-height: 45px;
+			border-bottom: 1px solid #eee;
+
+			span {
+				margin: 0 0px;
+				text-align: center;
+				text-indent: -.1em;
+				width: 50px;
+				cursor: pointer;
+				display: inline-block;
+
+				i {
+					width: 12px;
+					font-size: 24px;
+				}
+			}
+		}
+
+		.zmiti-list-where {
+			font-size: 14px;
+			width: 98%;
+			margin: 10px auto;
+			@include displayFlex(row);
+
+			.ivu-input-wrapper {
+				width: 200px;
+				margin-right: 10px;
+			}
+		}
+
+		.zmiti-scroll {
+			overflow: auto;
+		}
+
+		.zmiti-submit-main {
+			flex: 5;
+			-webkit-flex: 5;
+			width: 100%;
+
+			&>div {
+				@include transition(0.3s);
+			}
+
+			.zmiti-submit-table {
+				width: 98%;
+				margin: 0 auto;
+			}
+		}
+
+	}
+
+	@at-root.zmiti-add-form {
+		width: 500px;
+		overflow: auto;
+		position: absolute !important;
+		top: 0;
+		right: 0;
+		z-index: 100;
+		height: 100%;
+		box-shadow: 0 0 0 1px #ccc;
+		box-sizing: border-box;
+		background: #f9f9f9;
+
+		.zmiti-add-form-C {
+			margin: 10px auto 2px;
+			width: 90%;
+		}
+
+		.zmiti-add-form-item {
+			line-height: 50px;
+			height: 50px;
+
+			&.zmiti-add-btns {
+				text-align: center;
+				@include pos(r);
+				z-index: 10;
+
+				button {
+					margin: 0 20px;
+					padding: 2px 20px;
+				}
+			}
+
+			input {
+				padding-left: 6px;
+				height: 32px;
+				width: 70%;
+				border: 1px solid#d8d8d8;
+				outline: none;
+			}
+		}
+	}
+}

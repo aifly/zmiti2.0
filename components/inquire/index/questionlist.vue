@@ -45,6 +45,7 @@
                     <img :src="item.questionurl||imgs.defaultImg" alt />
                     <Button icon="ios-cloud-upload-outline" @click="chooseQuestionImg(item)">选择图片</Button>
                     <input v-model="item.questionurl" type="hidden" />
+                    <span style="margin-left: 20px;color: red;">图片建议使用宽度大于或等于 750PX的图片</span>
                   </div>
                 </FormItem>
                 <FormItem label="类型：">
@@ -89,6 +90,9 @@
                         size="20"
                         @click="removeOptions(opt.optionsid,index,o)"
                       />
+                    </div>
+                    <div>
+                      <span style="margin-left: 20px;color: red;">图片建议使用1：1尺寸的图</span>
                     </div>
                   </FormItem>
                 </div>
@@ -180,6 +184,7 @@ export default {
   mounted () {
     this.productid = this.$route.params.productid;
     this.inquireid = this.$route.params.id;
+    this.columntitle = this.$route.params.title;
     this.getQuestionList();
   },
   methods: {

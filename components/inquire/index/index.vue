@@ -18,7 +18,7 @@
           <div class="zmiti-search-dates">
             <DatePicker
               type="daterange"
-              :start-date="new Date(2018, 12, 1)"
+              :start-date="new Date()"
               placement="bottom-end"
               placeholder="选择时间段"
               style="width: 200px"
@@ -32,6 +32,7 @@
           :dataSource="dataSource"
           :columns="columns"
           :change="change"
+          :current="condition.page_index+1"
           :page-size="condition.page_size"
           :total="total"
         ></ZmitiTable>
@@ -225,10 +226,10 @@ export default {
               },
               on: {
                 click: () => {
-                  this.$router.push({ name: 'inquirequestionlist', params: { productid: this.productid, id: params.row.inquireid } })
+                  this.$router.push({ name: 'inquirequestionlist', params: { productid: this.productid, id: params.row.inquireid,title:params.row.inquiretitle } })
                 }
               }
-            }, '问题列表'),
+            }, '设计问卷'),
             h('span', {
               style: {
                 cursor: 'pointer',
@@ -237,10 +238,10 @@ export default {
               },
               on: {
                 click: () => {
-                  this.$router.push({ name: 'inquireuserlist', params: { productid: this.productid, id: params.row.inquireid } })
+                  this.$router.push({ name: 'inquireuserlist', params: { productid: this.productid, id: params.row.inquireid,title:params.row.inquiretitle } })
                 }
               }
-            }, '用户调查'),
+            }, '答卷分析'),
             h('Poptip', {
               props: {
                 confirm: true,
@@ -313,6 +314,7 @@ export default {
       this.endTimeSearch = Date.parse(new Date(val[1])) / 1000;
     },
     searchHandle () {//搜索
+      this.condition.page_index = 0;
       this.getDataList();
     },
     getDataList () {

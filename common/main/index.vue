@@ -58,11 +58,12 @@
 								{{userinfo.username||'无'}}
 							</li>
 							<li class='zmiti-hover-tab'>
-								<div>基本信息</div>
+								<div><router-link to='/myself'>基本信息</router-link> </div>
 								<div @click="showModifyPass=true">安全管理</div>
 							</li>
 							<li class='zmiti-hover-company'>
-								<span class='zmt_iconfont'>&#xe6a1;</span> 单位信息
+								<span class='zmt_iconfont'>&#xe6a1;</span>
+								<span :title="currentComapny.companyname">{{currentComapny.companyname}}</span>
 							</li>
 							<li class='zmiti-hover-exit' @click='logout'>
 								退出平台
@@ -210,21 +211,20 @@
 		},
         beforeCreate(){
             
-            if(this.$route.name !== 'login' && this.$route.name !== 'register'){
-            }
+          
 
         },
 		mounted(){
-           ///this.menus = this.defaultMenu.concat([]);
+			if(this.$route.name !== 'login' && this.$route.name !== 'register'|| this.$route.name !== 'passwordfind'){
+				
+				!this.isAdmin && zmitiUtil.listener(); 
+            }
 			var obserable = Vue.obserable;
-	
-			
 			var userinfo = zmitiUtil[this.isAdmin ? 'getAdminUserInfo':'getUserInfo']();
 			
 			this.userinfo = userinfo||{info:{}};  
 			
 			var s = this;
-
 
 			obserable.on('loginError',()=>{
 				this.$Modal.warning({
@@ -249,7 +249,9 @@
 				}
 			});
 
-			this.getUserRole();
+			setTimeout(() => {
+				this.getUserRole();
+			}, 100);
 
 
 			

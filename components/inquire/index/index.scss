@@ -60,6 +60,36 @@ $baseColor:#3390ff;
 		.zmiti-add-form-C {
 			margin: 10px auto 2px;
 			width: 90%;
+		}
+		.zmiti-question{
+			padding-top: 10px;
+			.question-title{
+				margin-top: 10px;
+				font-size: 16px;
+				img{
+					width: 100px;
+					height: 100px;
+					margin: 5px 20px;
+				}
+			}
+			.question-option{
+				font-size: 14px;
+				margin: 10px 0 10px 15px;
+				img{
+					width: 50px;
+					height: 50px;
+				}
+				div{
+					display: flex;
+					align-items: center;
+					margin: 5px 0;
+				}
+				input[type="radio"],input[type="checkbox"]{
+					width: 16px;
+					height: 16px;
+					margin-right: 10px;
+				}
+			}
 		}		
 		.zmiti-add-form-item {
 			line-height: 50px;

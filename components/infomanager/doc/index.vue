@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<template v-if="showTemplate==true">
-		<ininfor-manager :productid="productid" columntitle="资料" specialnum="5"></ininfor-manager>
+		<ininfor-manager :productid="productid" columntitle="其他" specialnum="5"></ininfor-manager>
 		</template>
 	</div>
 </template>

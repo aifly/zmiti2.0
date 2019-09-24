@@ -32,7 +32,9 @@
 		@include br(4px);
 	}
 }
-
+.zmiti-scroll {
+	overflow: auto;
+}
 .zmiti-submit-main-ui {
 	background: #f2f2f2;
 	box-sizing: border-box;
@@ -121,7 +123,6 @@
     .zmiti-list-where {
       width: 98%;
       margin: 10px auto 0;
-      height: 40px;
 	  line-height: 40px;
 	  font-size:14px;
 	  @include pos(r);

@@ -35,11 +35,6 @@
 						</header>
 					
 						<Form class='zmiti-add-form-C' :model="formObj" :label-width="80">
-							<!-- <FormItem label="信息类型：">
-								<Select v-model="formObj.specialnum">
-									<Option :value="item.value" :lable='Number(item.label)' v-for="(item,i) in specialnumData" :key="i">{{item.label}}</Option>
-								</Select>								
-							</FormItem> -->
 							<FormItem label="类型名称：">
 								<Input v-model="formObj.typename" placeholder="类型名称"></Input>
 							</FormItem>
@@ -171,7 +166,7 @@
 					label:'新闻',
 					value:4
 				},{
-					label:'资料',
+					label:'其他',
 					value:5
 				}],
 				persons:0,
@@ -183,26 +178,45 @@
 					{
 						title:"编号",
 						key:'infotypeid',
-						align:'center'
+						align:'left',
+						width:80
 					},
 					{
-						title:"名称",
+						title:"子栏目名称",
 						key:'typename',
-						align:'center',
-						width:180
+						align:'left'
 					},					
 					{
 						title:"创建时间",
 						key:"createtime",
-						align:"center",
+						align:"left",
 						render:(h,params)=>{
 							return h('div',{},zmitiUtil.formatDate(params.row.createtime));
+						},
+						width:100
+					},
+					{
+						title:"允许匿名",
+						key:"isanonymous",
+						align:"left",
+						width:100,
+						render:(h,params)=>{
+							var isanonymous='';
+							if(params.row.isanonymous===0){
+								isanonymous='禁止'
+							}else if(params.row.isanonymous===1){
+								isanonymous='允许'
+							}else{								
+								isanonymous='--'
+							}
+							return h('div',{},isanonymous);
 						}
 					},
 					{
 						title:"状态",
 						key:"status",
-						align:"center",
+						align:"left",
+						width:80,
 						render:(h,params)=>{
 							var status='';
 							if(params.row.status===0){
@@ -218,7 +232,8 @@
 					{
 						title:"权限人员",
 						key:"isalluser",
-						align:"center",
+						align:"left",
+						width:100,
 						render:(h,params)=>{
 							const viewuser=[h('span',{
 								style:{
@@ -232,6 +247,7 @@
 						title:"操作",
 						key:"action",
 						align:"center",
+						width:100,
 						render:(h,params)=>{
 
 							return h('div', [
@@ -511,8 +527,6 @@
 									username:item.user.username
 								})								
 							})
-							//console.log(s.userSource,'s.userSource')
-
 						}
 					}
 				})
@@ -546,14 +560,12 @@
             },
             handleChange1 (newTargetKeys, direction, moveKeys) {                
                 /*if(direction==='right'){
-                	console.log('增加');
                 	moveKeys.forEach((item,index)=>{
 	                	this.addpermission(item,infotypeid);
 	                	console.log(item,'添加用户')
 	                })
 	                
-                }else{
-                	console.log('移除');                	
+                }else{              	
                 	moveKeys.forEach((item,index)=>{
 	                	this.delpermission(item,infotypeid);
 	                	console.log(item,'删除用户');

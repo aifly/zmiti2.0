@@ -206,6 +206,7 @@
 							
 
 							
+							
 
 							if(_this.checked){
 								window.localStorage.setItem('zmiti_user_username',_this.username);
@@ -228,6 +229,7 @@
 								}, 30);
 								_this.isLogined = true;
 							}
+							///zmitiUtil.listener();
 							
 						}else{
 							_this.errMsg = data.msg;
@@ -298,7 +300,6 @@
 				}
 				this.getWXCode(function(info){			
 					zmitiUtil.getTempToken(info.token);
-					console.log(info.token,'getTempToken');
 					s.$refs['loginqrcode'].innerHTML = '';										
 					zmitiUtil.createQrCode(s.$refs['loginqrcode'],info.url,170);
 					s.url = s.$refs['loginqrcode'].querySelector('img').src;

@@ -304,9 +304,25 @@ let userActions = {
 		desc: "获取公司用户列表",
 		action:"2000106"
 	},
+	getCompanyUserSearchList: {
+		desc: "高级查询用户列表",
+		action:"2000009"
+	},
 	addCompanyUser:{
 		desc:"添加公司会员",
 		action:'2000107'
+	},
+	validateCompanyUserName:{
+		desc:"检测用户名是否存在",
+		action:"2000011"
+	},
+	validateCompanyUserMobile:{
+		desc:"检测手机号是否存在",
+		action:"2000012"
+	},
+	validateCompanyUserEmail:{
+		desc:"检测邮箱是否存在",
+		action:"2000013"
 	},
 	editCompanyUser:{
 		desc:"修改公司会员状态",
@@ -315,6 +331,10 @@ let userActions = {
 	delCompanyUser:{
 		desc:"删除公司会员",
 		action:'2000109'
+	},
+	initPwdCompanyUser:{
+		desc:"初始化用户密码",
+		action:'2000007'
 	},
 	getCompanyInfo:{
 		desc:'查看公司详细',
@@ -395,6 +415,10 @@ let userActions = {
 	getUserRole:{
 		desc:'通过公司ID获取公司下相关权限组信息',
 		action:'2000116'
+	},
+	editUserInfo:{
+		desc:'修改用户信息',
+		action:"2000002"
 	}
 
 };
@@ -669,6 +693,10 @@ let resourceActions = {
 		desc:'获取打包列表',
 		action:'3001317'
 	},
+	fileToImage:{
+		desc:'文件转图片',
+		action:'3001318'
+	}
 };
 let infomanagerActions = {	
 	addtypeList:{
@@ -989,8 +1017,66 @@ let inquireActions = {
 		action: '2001512'
 	},
 	getInquireResult: {
-		desc: '获取调查结果',
+		desc: '获取用户调查相关列表',
 		action: '2001513'
+	},
+	getInquireUserAnswer: {
+		desc: '通过问题ID获取用户回答',
+		action: '2001533'
+	}
+}
+
+//值班
+let dutyActions = {
+	getDutyList: {
+		desc: '获取值班列表',
+		action: '2001603'
+	},
+	addDuty: {
+		desc: '新增用户值班',
+		action: '2001605'
+	},
+	editDuty: {
+		desc: '修改值班',
+		action: '2001602'
+	},
+	delDuty: {
+		desc: '删除用户值班',
+		action: '2001601'
+	}
+}
+let departmentAction={
+	getDepartmentList: {
+		desc: '获取部门列表',
+		action: '2000023'
+	},
+	addDepartment: {
+		desc: '新增部门',
+		action: '2000020'
+	},
+	delDepartment: {
+		desc: '删除部门',
+		action: '2000021'
+	},
+	editDepartment: {
+		desc: '修改部门',
+		action: '2000022'
+	},
+	getDepartmentUserList: {
+		desc: '获取部门下有效用户',
+		action: '2000024'
+	},
+	addDepartmentUser: {
+		desc: '部门下新增用户',
+		action: '2000025'
+	},
+	delDepartmentUser: {
+		desc: '删除部门下用户',
+		action: '2000026'
+	},
+	getCompanyUserList: {
+		desc: '获取公司下所有用户',
+		action: '2000027'
 	}
 }
 
@@ -1011,7 +1097,9 @@ var zmitiActions =   /*#__PURE__*/{
 	partyActions,
 	voteActions,
 	mettingroomActions,
-	inquireActions
+	inquireActions,
+	dutyActions,
+	departmentAction
 }
 
 export  default zmitiActions;

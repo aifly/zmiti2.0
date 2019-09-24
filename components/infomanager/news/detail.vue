@@ -89,27 +89,16 @@
 		</div>
 		<!-- 选择WORD -->
 		<Modal v-model="showWord" title='资料库' width='800'>
-			<ResourceList v-if='showWord' :isAdmin='false' :isDialog='true' @onFinished='onFinishWord'></ResourceList>
-			<div class="zmiti-resourcelist-footer"  slot='footer'>
-				<Button style='width:100px;' @click="showWord=false;">取消</Button>
-				<Button style='width:100px;' type='primary' @click='chooseWord'>确定</Button>
-			</div> 
+			<ResourceList v-if='showWord' :isAdmin='false' :isDialog='true' type='doc|docx' @onFinished='onFinishWord'></ResourceList>
 		</Modal>
 		<!-- 选择PDF -->
 		<Modal v-model="showPdf" title='资料库' width='800'>
-			<ResourceList v-if='showPdf' :isAdmin='false' :isDialog='true' @onFinished='onFinishPdf'></ResourceList>
-			<div class="zmiti-resourcelist-footer"  slot='footer'>
-				<Button style='width:100px;' @click="showPdf=false;">取消</Button>
-				<Button style='width:100px;' type='primary' @click='choosePdf'>确定</Button>
-			</div> 
+			<ResourceList v-if='showPdf' :isAdmin='false' :isDialog='true' type='pdf' @onFinished='onFinishPdf'></ResourceList>
 		</Modal>
 		<!-- 选择多个附件 -->
 		<Modal v-model="showResource" title='资料库' width='800'>
 			<ResourceList v-if='showResource' :isAdmin='false' :isDialog='true' @onFinished='onFinished'></ResourceList>
-			<div class="zmiti-resourcelist-footer"  slot='footer'>
-				<Button style='width:100px;' @click="showResource=false;">取消</Button>
-				<Button style='width:100px;' type='primary' @click='chooseImg'>确定</Button>
-			</div> 
+		
 		</Modal>
 
 
@@ -130,7 +119,7 @@
 	import { quillEditor } from 'vue-quill-editor'
 	import '../../../common/css/quill.css'
 	import ResourceList from '../../../common/resourcelist'
-	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions} = zmitiUtil;
+	var {companyActions,zmitiActions,infomanagerActions,formatDate,userActions,resourceActions} = zmitiUtil;
 	export default {
 		props:['obserable'],
 		name:'zmitiindex',
@@ -355,8 +344,33 @@
 			},
 			/**以下为选择pdf**/
 		    onFinishPdf(item){//选择word后
-				this.currentChoosePdf = item;
+				
+				if(item.fileextname !== 'pdf'){
+					this.$Message.error('请选择pdf文件');
+					return;
+				}
+				this.formObj.currentChoosePdf = item.filepath;
+
+				zmitiUtil.ajax({
+					remark:'filetoimg',
+					_ui:{
+						type:2,
+					},
+					data:{
+						action:resourceActions.fileToImage.action,
+						info:{
+							pdfurl:item.filepath
+						}
+					},
+					success(data){
+						console.log(data);
+					}
+				})
+				
+				console.log(this.formObj.currentChoosePdf);
+
 			},
+			
 			choosePdf(){//选择word
 				this.showPdf = false;
 				this.formObj.pdfurl=this.currentChoosePdf.filepath;

@@ -1,0 +1,248 @@
+﻿@import "../../css/base.scss";
+$baseColor:#3390ff;
+
+.zmiti-duty-main-ui {
+	width: 98%;
+	height: 98%;
+	left: 1%;
+	top: 1%;
+	@include displayFlex(row);
+
+	.zmiti-duty-left-table-C {
+		flex: 1;
+		height: 100%;
+		background: #fff;
+		overflow: auto;
+
+		.zmiti-duty-tip {
+			height: 40px;
+			line-height: 40px;
+			font-size: 13px;
+			padding-left: 20px;
+
+			span {
+				margin-right: 10px;
+
+				&:first-child {
+					color: $baseColor;
+				}
+			}
+		}
+
+
+		.zmiti-duty-table {
+			width: 98%;
+			margin: 0 auto;
+			border: 1px solid #eee;
+
+			header {
+				width: 100%;
+				@include displayFlex(row);
+				justify-content: space-around;
+				height: 45px;
+				line-height: 45px;
+				border-bottom: 1px solid #eee;
+
+				span {
+					margin: 0 0px;
+					text-align: center;
+					text-indent: -.1em;
+					width: 50px;
+					cursor: pointer;
+					display: inline-block;
+
+					i {
+						width: 12px;
+						font-size: 24px;
+					}
+				}
+			}
+
+			.zmiti-duty-datepicker {
+				@include displayFlex(row);
+				flex-wrap: wrap;
+				justify-content: space-between;
+
+				li {
+					text-align: center;
+					width: 14%;
+					height: 75px;
+					cursor: pointer;
+					line-height: 30px;
+					margin:4px 0 0 0;
+
+					span {
+						display: block;
+					}
+
+					&.active {
+						background: $baseColor;
+						color: #fff;
+
+						span {
+							color: #fff !important;
+						}
+					}
+
+					&:hover {
+						background: $baseColor;
+						color: #fff;
+
+						span {
+							color: #fff !important;
+						}
+					}
+
+					&.zmiti-duty-week {
+						&:hover {
+							background: transparent;
+							color: #888;
+
+						}
+					}
+
+					.zmiti-datepicker-detail {
+						height: 20px;
+						font-size: 12px;
+						text-align: left;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+						label {
+							margin-left: 5px;
+						}
+					}
+
+				}
+
+				li.disabled {
+					background-color: #eee;
+					border-color: #eee;
+					color: #57a3f3;
+					cursor: not-allowed;
+				}
+			}
+		}
+
+	}
+
+	.zmiti-duty-right-setting {
+		width: 420px;
+		margin-left: 10px;
+		background: #fff;
+
+		&>header {
+			height: 50px;
+			line-height: 50px;
+			font-size: 16px;
+			text-indent: 1em;
+			border-bottom: 1px solid #eee;
+
+			.zmt_iconfont {
+				font-size: 16px;
+				color: #975ae0;
+				@include pos(r);
+				margin-right: 10px;
+
+				&:before {
+
+					content: '';
+					width: 16px;
+					height: 16px;
+					@include br();
+					background: #975ae0;
+					opacity: .2;
+					@include pos(a);
+					@include transform(scale(1.8));
+					left: 0;
+					top: 0;
+				}
+			}
+		}
+
+		.zmiti-duty-list {
+			margin: 20px;
+
+			.zmiti-duty-item {
+				.title {
+					font-size: 14px;
+					height: 40px;
+					line-height: 40px;
+					font-weight: bold;
+				}
+
+				.detail {
+					@include displayFlex(row);
+					justify-content: flex-start;
+					margin-bottom: 5px;
+					line-height: 30px;
+					.duty-person {
+						flex: 1;
+						div {
+							@include displayFlex(row);
+							justify-content: flex-start;
+							span {
+								margin-left: 10px;
+								flex: 1;
+								&:first-child{
+									width: 70px;
+									flex: none;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@at-root.zmiti-add-form {
+		width: 500px;
+		overflow: auto;
+		position: absolute !important;
+		top: 0;
+		right: 0;
+		z-index: 100;
+		height: 100%;
+		box-shadow: 0 0 0 1px #ccc;
+		box-sizing: border-box;
+		background: #f9f9f9;
+
+		.zmiti-add-form-C {
+			margin: 10px auto 2px;
+			width: 90%;
+		}
+
+		.zmiti-add-form-item {
+			line-height: 50px;
+			height: 50px;
+
+			&.zmiti-add-btns {
+				text-align: center;
+				@include pos(r);
+				z-index: 10;
+
+				button {
+					margin: 0 20px;
+					padding: 2px 20px;
+				}
+			}
+
+			input {
+				padding-left: 6px;
+				height: 32px;
+				width: 70%;
+				border: 1px solid#d8d8d8;
+				outline: none;
+			}
+
+			label {
+				font-size: 16px;
+			}
+
+			.ivu-icon {
+				margin-left: 10px;
+			}
+		}
+	}
+}

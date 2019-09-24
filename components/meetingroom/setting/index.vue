@@ -22,6 +22,7 @@
           :columns="columns"
           :change="change"
           @getSelection="getSelection"
+          :current="condition.page_index+1"
           :page-size="condition.page_size"
           :total="total"
         ></ZmitiTable>
@@ -219,18 +220,16 @@ export default {
                 click: () => {
                   console.log(params.row)
                   let labels = params.row.roomlaber, device = params.row.configids;
-                  this.formObj = {
-                    roomid: params.row.roomid,
-                    roomname: params.row.roomname,
-                    layoutid: params.row.layoutid,
-                    roomlaber: params.row.roomlaber,
-                    needaudit: params.row.needaudit,
-                    peoplenumber: params.row.peoplenumber,
-                    companyroom: params.row.companyroom,
-                    roomadress: params.row.roomadress,
-                    configids: params.row.configids,
-                    remarks: params.row.remarks
-                  }
+                  this.formObj.roomid =  params.row.roomid;
+                  this.formObj.roomname =  params.row.roomname;
+                  this.formObj.layoutid =  params.row.layoutid;
+                  this.formObj.roomlaber =  params.row.roomlaber;
+                  this.formObj.needaudit =  params.row.needaudit;
+                  this.formObj.peoplenumber =  params.row.peoplenumber;
+                  this.formObj.companyroom =  params.row.companyroom;
+                  this.formObj.roomadress =  params.row.roomadress;
+                  this.formObj.configids =  params.row.configids;
+                  this.formObj.remarks =  params.row.remarks;
                   Vue.obserable.trigger({
                     type: 'toggleMask',
                     data: true
@@ -278,7 +277,7 @@ export default {
       formObj: {
         roomid: undefined,
         roomname: '',//会议名称
-        layoutid: '',//布局
+        layoutid: 0,//布局
         roomlaber: [],//标签
         needaudit: 0,//会议名称
         peoplenumber: 0,//容纳人数
@@ -289,9 +288,11 @@ export default {
       },
       ruleValidate: {
         roomname: [{ required: true, message: '请输入会议室名称', trigger: 'blur' }],
+        // layoutid: [{ required: true, message: '请选择会议室布局', trigger: 'blur' }],
         companyroom: [{ required: true, message: '请输入会议室所属单位', trigger: 'blur' }],
         roomadress: [{ required: true, message: '请输入会议室地址', trigger: 'blur' }],
       },
+      selectList:[],
     }
   },
   components: {
@@ -363,15 +364,18 @@ export default {
         success (data) {
           if (data.getret === 0) {
             s.layout = data.list;
+            s.formObj.layoutid = s.layout[0] ? s.layout[0].layoutid : 0;
           }
         }
       })
     },
     searchHandle () {//搜索
+      this.condition.page_index = 0;
       this.getDataList();
     },
     getSelection (val) {
       console.log(val)
+      this.selectList = val;
     },
     getDataList () {
       let s = this;
@@ -404,7 +408,15 @@ export default {
       this.getDataList();
     },
     deletes () {//获选删除
-
+      if(this.selectList.length <= 0){
+        this.$Message.warning('请选择要删除的会议室！');
+      }else{
+        let ids = [];
+        this.selectList.forEach(item=>{
+          ids.push(item.roomid);
+        })
+        this.goDelete(ids)
+      }
     },
     delete (id) {
       this.goDelete([id]);
@@ -425,6 +437,7 @@ export default {
           s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg || data.getmsg);
           if (data.getret === 0) {
             s.getDataList();
+            s.selectList=[];
           }
         }
       })
@@ -457,8 +470,8 @@ export default {
             },
             success (data) {
               s.$Message[data.getret === 0 ? 'success' : 'error'](data.msg || data.getmsg);
-              s.closeMaskPage();
               if (data.getret === 0) {
+                s.closeMaskPage();
                 s.getDataList();
               }
             }

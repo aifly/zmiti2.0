@@ -23,6 +23,7 @@
           :dataSource="dataSource"
           :columns="columns"
           :change="change"
+          :current="condition.page_index+1"
           :page-size="condition.page_size"
           :total="total"
           @getSelection="getSelection"

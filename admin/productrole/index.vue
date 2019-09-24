@@ -223,6 +223,14 @@
 											var s = this;
 											s.showDetail = true;
 											s.formUser = params.row;
+											var D = new Date();
+			
+											var year = D.getFullYear();
+											const month = D.getMonth()+1;
+											const day = D.getDate();
+
+											this.formUser.startdate = [year,month,day].join('-');
+
 											Vue.obserable.trigger({type:'toggleMask',data:true});
 										
                                         }
@@ -262,7 +270,7 @@
 				},
 				powerListCondition:{
 					page_index:0,
-					page_size:10
+					page_size:1000
 				},
 				userinfo:{}
 			}
@@ -281,6 +289,9 @@
 			window.s = this;
 			this.userinfo = zmitiUtil.getAdminUserInfo();
 			this.getDataList();
+			
+		
+			
 		},
 
 		watch:{
@@ -306,6 +317,8 @@
 		},
 		
 		methods:{
+
+			
 
 
 		 

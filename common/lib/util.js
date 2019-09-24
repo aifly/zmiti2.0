@@ -21,6 +21,8 @@ var zmitiUtil = {
 	voteActions:zmitiActions.voteActions,
 	mettingroomActions: zmitiActions.mettingroomActions,
 	inquireActions: zmitiActions.inquireActions,
+	dutyActions: zmitiActions.dutyActions,
+	departmentAction: zmitiActions.departmentAction,
 	createQrCode(container, url,size=150) {
 		//实例化
 		var qrcode = new QRCode(
@@ -95,8 +97,12 @@ var zmitiUtil = {
 		if (!this.getUserInfo() || !this.getUserInfo().ui){
 			return;
 		}
+
 		var { userid, token } = this.getUserInfo().ui;
 		var { socket} = this;
+		if (!socket){
+			return;
+		}
 		setTimeout(() => {
 			var json = JSON.stringify({ action: 500, ui: { userid: userid, token: token } })			
 			socket.send(json);
@@ -106,7 +112,6 @@ var zmitiUtil = {
 	getTempToken(token){
 		if (!this.socket){
 			this.socket = new WebSocket("ws://newapi.zmiti.com:50294");
-			
 			var { socket } = this;
 			this.socket.onopen = function () {
 				
@@ -116,10 +121,13 @@ var zmitiUtil = {
 			};
 			
 			this.heart();
+			this.socket.onclose = this.socket.onerror = ()=>{
+				this.socket = null;
+			}
 			this.socket.onmessage = (evt) => {
 				
 				var data = JSON.parse(evt.data);
-				console.log(data,'===');
+				//console.log(data,'===');
 				
 				switch (data.action) {
 					case 0:
@@ -140,17 +148,14 @@ var zmitiUtil = {
 						});
 						break;
 					case 500:
-						//this.heart();?500
+						this.heart();
 						break;
 					default:
 						break;
 				}
 			};
 		}else{
-		
-
 		}
-		
 		
 	},
 
@@ -160,12 +165,12 @@ var zmitiUtil = {
 		if (!this.getUserInfo()){
 			return;
 		}
-		var { userid, token } = this.getUserInfo().ui;
+		var { userid, token } = this.getUserInfo().ui||{};
 
 		if (!userid || !token) {
-			userid = uid;
-			token = tk;
+		  return;
 		}
+		
 		if (this.socket) {
 			return;
 		}
@@ -180,15 +185,20 @@ var zmitiUtil = {
 		this.socket = socket;
 		this.heart();
 
+		this.socket.onclose = this.socket.onerror = () => {
+			this.socket = null;
+		}
+
+
 		socket.onmessage = (evt) => {
 			var data = JSON.parse(evt.data);
-			console.log(data, 'onmessage');
+			console.log(data,'..msg..')
 			if (data.getret === 0) {
 
 				switch (data.action) {
 					case 0:
 					case 9995:
-
+						
 						break;
 					case 90000001:
 						Vue.obserable.trigger({
@@ -205,8 +215,9 @@ var zmitiUtil = {
 				}
 			}
 			if (data.getret === 9995 || data.getret === 9994) {
-				window.localStorage.clear();
-				window.location.href = window.location.href.split('#')[0];
+				Vue.obserable.trigger({
+					type: 'loginError'
+				});
 			}
 		};
 
@@ -303,7 +314,7 @@ var zmitiUtil = {
 
 	createViewData(h5id) {
 		axios.post('http://newapi.zmiti.com:50293/api/viewdata', JSON.stringify({ h5id, appsecret: 'c9GxtUre3kOJCgvp' })).then(data => {
-			console.log(data.data);
+			//console.log(data.data);
 		})
 	},
 

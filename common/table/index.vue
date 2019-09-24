@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class='zmiti-user-table' >
-			<Table :border='border' @on-selection-change='selection' ref='selection' :loading='loading' :data='dataSource' :columns='myColumns'></Table>
+			<Table :height='height' :border='border' @on-selection-change='selection' ref='selection' :loading='loading' :data='dataSource' :columns='myColumns'></Table>
 		</div>
 		<div class='zmiti-pager'>
 			<div>
@@ -55,6 +55,9 @@
 <script>
 export default {
 	props:{
+		height:{
+			type:Number
+		},
 		current:{
 			type:Number,
 			default:1

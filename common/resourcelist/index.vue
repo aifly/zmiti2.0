@@ -290,6 +290,10 @@ export default {
 			type:Boolean,
 			default:false
 		},
+		type:{
+			type:String,
+			default:'all'
+		},
 		isAdmin:{
 			type:Boolean,
 			default:true,
@@ -594,7 +598,7 @@ export default {
 					//$Message[data.getret === 0 ?　'success':'error'](data.msg);
 					if(data.getret === 0 ){
 						s.total = data.total;
-						s.defaultResourceList = data.list.concat([]);
+						//s.defaultResourceList = data.list.concat([]);
 						var iNow = 0;
 						data.list.forEach((list)=>{
 							list.filepath = window.config.host + list.filepath;
@@ -635,6 +639,19 @@ export default {
 						});
 						s.loading = false;
 						s.resourceList = data.list;
+						if(s.type !== 'all'){//过滤文件类型。
+							let types = s.type.split('|');
+							let arr = [];
+							s.resourceList.forEach(res=>{
+								types.forEach(t=>{
+									if(res.fileextname === t){
+										arr.push(res)
+									}									
+								})
+							});
+							s.resourceList = arr;
+							s.total = arr.length;
+						}
 
 						
 					}

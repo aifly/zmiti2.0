@@ -16,6 +16,8 @@
 @mixin center ($k:center) {
   align-items: $k;
   justify-content: center;
+  padding-left: 12px;
+  background-image: ""
 }
 .zmiti-changye-main-ui {
   background: #ffffff;

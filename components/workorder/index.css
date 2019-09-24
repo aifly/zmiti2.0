@@ -1,11 +1,120 @@
-/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
-    background-color: #fff;
-    border-color: #bf1616;
-    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
-}*/
+.zmiti-upload-before {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  text-indent: 1em;
+  border-bottom: 1px solid #f2f2f2;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid red;
+  position: absolute;
+  top: 0px;
+  opacity: 0;
+}
+
+.zmiti-upload-before input {
+  margin-left: -20px;
+  cursor: pointer;
+}
+
+.zmiti-upload-before > div:nth-of-type(2) {
+  cursor: pointer;
+  border: 1px solid red;
+  width: 80px !important;
+  height: 40px !important;
+}
+
 .zmiti-workorder-main-ui {
   background: #fff;
   padding: 10px;
+}
+
+.zmiti-workorder-main-ui .zmiti-upload-view {
+  position: absolute;
+  height: 100px;
+  width: 88%;
+  right: 0;
+  top: 0;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+
+.zmiti-workorder-main-ui .zmiti-upload-view .zmiti-upload-item {
+  border: 1px solid #ccc;
+  width: 100px;
+  text-align: center;
+  line-height: 100px;
+  overflow: hidden;
+}
+
+.zmiti-workorder-main-ui .zmiti-upload-view .zmiti-upload-item img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.zmiti-workorder-main-ui .zmiti-upload-view .wm-news-encryptfile-progressbar {
+  border: 1px solid #fab82e;
+  display: block;
+  height: 25px;
+  line-height: 25px;
+  position: relative;
+  border-radius: 11px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.zmiti-workorder-main-ui .zmiti-upload-view .wm-news-encryptfile-progressbar label {
+  position: relative;
+  z-index: 10;
+}
+
+.zmiti-workorder-main-ui .zmiti-upload-view .wm-news-encryptfile-progressbar span {
+  position: absolute;
+  width: 99.5%;
+  height: 20px;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+  margin: 1px;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+  background-size: 3em 3em;
+  background-image: linear-gradient(-45deg, transparent 0em, transparent 0.8em, rgba(250, 184, 46, 0.7) 0.9em, rgba(250, 184, 46, 0.7) 2.1em, transparent 2.1em, transparent 2.9em, rgba(250, 184, 46, 0.7) 3.1em);
+  -webkit-animation: warning-animation 750ms infinite linear;
+  -moz-animation: warning-animation 750ms infinite linear;
+  animation: warning-animation 750ms infinite linear;
+}
+
+.zmiti-workorder-main-ui .zmiti-upload-view .wm-news-encryptfile-progressbar span:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background-image: linear-gradient(to bottom, rgba(250, 184, 46, 0.7), rgba(250, 184, 46, 0.7) 15%, transparent 60%, rgba(250, 184, 46, 0.7));
+}
+
+@-webkit-keyframes warning-animation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 3em 0;
+  }
+}
+
+@keyframes warning-animation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 3em 0;
+  }
 }
 
 .zmiti-workorder-main-ui .zmiti-workorder-choose {
@@ -41,12 +150,12 @@
   display: flex;
   display: -webkit-flex;
   flex-flow: row;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
 }
 
 .zmiti-workorder-main-ui .zmiti-workorder-choose > ul li {
-  margin: 0 10px;
+  margin: 5px 10px;
 }
 
 .zmiti-workorder-main-ui .zmiti-workorder-choose > ul .zmiti-workerorder-type-top {
